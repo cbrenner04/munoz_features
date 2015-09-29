@@ -33,7 +33,7 @@ Capybara.configure do |config|
   config.register_driver :selenium do |app|
     Capybara::Selenium::Driver.new(app, browser: browser)
   end
-  config.page.driver.browser.manage.window.resize_to(1280, 743)
+  config.page.driver.browser.manage.window.resize_to(360, 591)
   config.save_and_open_page_path = 'screenshots/'
 end
 
