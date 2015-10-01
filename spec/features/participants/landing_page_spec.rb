@@ -1,4 +1,4 @@
-# filename: spec/features/landing_page_spec.rb
+# filename: spec/features/participants/landing_page_spec.rb
 
 describe 'A visitor to the site', type: :feature do
   before do

@@ -1,4 +1,4 @@
-# filename: spec/features/eligibility_spec.rb
+# filename: spec/features/participants/eligibility_spec.rb
 
 describe 'A registered user', type: :feature do
   context 'in English' do
