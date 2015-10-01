@@ -112,3 +112,6 @@ DEPENDENCIES
   sauce (= 3.5.3)
   selenium-webdriver (= 2.44.0)
   uuid
+
+BUNDLED WITH
+   1.10.6
