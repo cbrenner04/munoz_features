@@ -45,16 +45,15 @@ describe 'A registered user', type: :feature do
       visit "#{ENV['Base_URL']}/#/eligibility"
       find('.ng-binding', text: 'How old are you?')
       fill_in 'Q1', with: '17'
-      within('.form-group', text: 'Are you currently a smoker?') do
-        choose 'No'
-      end
+      qs = ['Are you currently a smoker?',
+            'Are you thinking of quitting smoking within the next 30 days?',
+            'Do you currently live in California?']
+      ans = ['No', 'Yes', 'Yes']
 
-      within('.form-group', text: 'Are you thinking of quitting') do
-        choose 'Yes'
-      end
-
-      within('.form-group', text: 'Do you currently live in California?') do
-        choose 'Yes'
+      qs.zip(ans).each do |ques, answ|
+        within('.form-group', text: ques) do
+          choose answ
+        end
       end
 
       check 'Ocean Park Health Center'
@@ -67,16 +66,15 @@ describe 'A registered user', type: :feature do
       visit "#{ENV['Base_URL']}/#/eligibility"
       find('.ng-binding', text: 'How old are you?')
       fill_in 'Q1', with: '17'
-      within('.form-group', text: 'Are you currently a smoker?') do
-        choose 'Yes'
-      end
+      qs = ['Are you currently a smoker?',
+            'Are you thinking of quitting smoking within the next 30 days?',
+            'Do you currently live in California?']
+      ans = ['Yes', 'No', 'Yes']
 
-      within('.form-group', text: 'Are you thinking of quitting') do
-        choose 'No'
-      end
-
-      within('.form-group', text: 'Do you currently live in California?') do
-        choose 'Yes'
+      qs.zip(ans).each do |ques, answ|
+        within('.form-group', text: ques) do
+          choose answ
+        end
       end
 
       check 'Ocean Park Health Center'
@@ -129,16 +127,15 @@ describe 'A registered user', type: :feature do
       visit "#{ENV['Base_URL']}/#/eligibility"
       find('.ng-binding', text: '¿Cuántos años tiene?')
       fill_in 'Q1', with: '17'
-      within('.form-group', text: '¿Fuma usted actualmente?') do
-        choose 'No'
-      end
+      qs = ['¿Fuma usted actualmente?',
+            '¿Está pensando en dejar de fumar dentro de los próximos 30 días?',
+            '¿Actualmente vive en California?']
+      ans = ['No', 'Sí', 'Sí']
 
-      within('.form-group', text: '¿Está pensando en dejar de fumar') do
-        choose 'Sí'
-      end
-
-      within('.form-group', text: '¿Actualmente vive en California?') do
-        choose 'Sí'
+      qs.zip(ans).each do |ques, answ|
+        within('.form-group', text: ques) do
+          choose answ
+        end
       end
 
       check 'Centro de Salud Ocean Park'
@@ -151,16 +148,15 @@ describe 'A registered user', type: :feature do
       visit "#{ENV['Base_URL']}/#/eligibility"
       find('.ng-binding', text: '¿Cuántos años tiene?')
       fill_in 'Q1', with: '17'
-      within('.form-group', text: '¿Fuma usted actualmente?') do
-        choose 'Sí'
-      end
+      qs = ['¿Fuma usted actualmente?',
+            '¿Está pensando en dejar de fumar dentro de los próximos 30 días?',
+            '¿Actualmente vive en California?']
+      ans = ['Sí', 'No', 'Sí']
 
-      within('.form-group', text: '¿Está pensando en dejar de fumar') do
-        choose 'No'
-      end
-
-      within('.form-group', text: '¿Actualmente vive en California?') do
-        choose 'Sí'
+      qs.zip(ans).each do |ques, answ|
+        within('.form-group', text: ques) do
+          choose answ
+        end
       end
 
       check 'Centro de Salud Ocean Park'
