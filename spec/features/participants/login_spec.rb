@@ -1,4 +1,4 @@
-# filename: spec/features/participants/landing_page_spec.rb
+# filename: spec/features/participants/login_spec.rb
 
 describe 'A visitor to the site', type: :feature do
   before do
@@ -6,23 +6,6 @@ describe 'A visitor to the site', type: :feature do
   end
 
   context 'is English speaking' do
-    it 'selects English' do
-      click_on 'English'
-      expect(page).to have_content 'Sign up'
-    end
-
-    it 'registers' do
-      click_on 'English'
-      find('a', text: 'Sign up').click
-      fill_in 'participant_email', with: 'fake@example.com'
-      fill_in 'participant_password', with: 'fakePassword'
-      fill_in 'participant_password_confirmation', with: 'fakePassword'
-      click_on 'Sign up'
-      expect(page).to have_content 'A message with a confirmation link has ' \
-                                   'been sent to your email address. Please ' \
-                                   'follow the link to activate your account.'
-    end
-
     it 'confirms email' do
       visit "#{ENV['Base_URL']}/en/participants/confirmation?" \
             "confirmation_token=#{ENV['Pt_3_Confirmation']}"
@@ -36,10 +19,18 @@ describe 'A visitor to the site', type: :feature do
 
     it 'is a registered participant and signs in' do
       click_on 'Sign in'
-      fill_in 'participant_email', with: ENV['Pt_101_Email']
-      fill_in 'participant_password', with: ENV['Pt_101_Password']
+      fill_in 'participant_email', with: ENV['Pt_112_Email']
+      fill_in 'participant_password', with: ENV['Pt_112_Password']
       click_on 'Sign in'
       expect(page).to have_content 'Signed in successfully.'
+    end
+
+    it 'is not a registered participant, cannot sign in' do
+      click_on 'Sign in'
+      fill_in 'participant_email', with: 'fake@example.com'
+      fill_in 'participant_password', with: 'fake password'
+      click_on 'Sign in'
+      expect(page).to have_content 'Invalid email or password'
     end
 
     it "selects 'Sign up' from the sign in page" do
@@ -53,7 +44,7 @@ describe 'A visitor to the site', type: :feature do
       click_on 'Sign in'
       find('h2', text: 'Sign in')
       click_on 'Forgot your password?'
-      fill_in 'participant_email', with: ENV['Pt_101_Email']
+      fill_in 'participant_email', with: ENV['Pt_110_Email']
       click_on 'Send me reset password instructions'
       expect(page).to have_content 'You will receive an email with ' \
                                    'instructions on how to reset your ' \
@@ -106,60 +97,14 @@ describe 'A visitor to the site', type: :feature do
                                    'account in a few minutes.'
     end
 
-    it "selects 'Sign in' from the sign up page" do
-      click_on 'English'
-      click_on 'Sign up'
-      find('h2', text: 'Sign up')
-      click_on 'Sign in'
-      expect(page).to have_css('h2', text: 'Sign in')
+    it 'signs in, is able to sign out' do
+      sign_in_pt_en(ENV['Pt_111_Email'], ENV['Pt_111_Password'])
+      find('.navbar-toggle').click
+      click_on 'Sign out'
     end
-
-    it "selects 'Forgot your password?' from the sign up page" do
-      click_on 'English'
-      click_on 'Sign up'
-      find('h2', text: 'Sign up')
-      click_on 'Forgot your password?'
-      expect(page).to have_css('h2', text: 'Forgot your password?')
-    end
-
-    it "selects 'Didn't receive confirmation instructions?' on sign up page" do
-      click_on 'English'
-      click_on 'Sign up'
-      find('h2', text: 'Sign up')
-      click_on "Didn't receive confirmation instructions?"
-      expect(page).to have_css('h2', text: 'Resend confirmation instructions')
-    end
-
-    it "selects 'Didn't receive unlock instructions?' from sign up page" do
-      click_on 'English'
-      click_on 'Sign up'
-      find('h2', text: 'Sign up')
-      click_on "Didn't receive unlock instructions?"
-      expect(page).to have_css('h2', text: 'Resend unlock instructions')
-    end
-
-    it 'is a registered participant, has selected English previously, ' \
-       ' English is set in subsequent logins'
   end
 
   context 'is Spanish speaking' do
-    it 'selects Español' do
-      click_on 'Español'
-      expect(page).to have_content 'Registrarse'
-    end
-
-    it 'registers ' do
-      click_on 'Español'
-      find('a', text: 'Registrarse').click
-      fill_in 'participant_email', with: 'fake_alt@example.com'
-      fill_in 'participant_password', with: 'fakePassword'
-      fill_in 'participant_password_confirmation', with: 'fakePassword'
-      click_on 'Registrarse'
-      expect(page).to have_content 'Se ha enviado un mensaje con un enlace ' \
-                                   'de confirmación a tu correo electrónico. ' \
-                                   'Abre el enlace para activar tu cuenta.'
-    end
-
     it 'confirms email' do
       visit "#{ENV['Base_URL']}/es/participants/confirmation?" \
             "confirmation_token=#{ENV['Pt_4_Confirmation']}"
@@ -173,10 +118,18 @@ describe 'A visitor to the site', type: :feature do
 
     it 'is a registered participant and signs in in Español' do
       click_on 'Iniciar sésion'
-      fill_in 'participant_email', with: ENV['Pt_201_Email']
-      fill_in 'participant_password', with: ENV['Pt_201_Password']
+      fill_in 'participant_email', with: ENV['Pt_212_Email']
+      fill_in 'participant_password', with: ENV['Pt_212_Password']
       click_on 'Iniciar sésion'
       expect(page).to have_content 'Sesión iniciada.'
+    end
+
+    it 'is not a registered participant, cannot sign in' do
+      click_on 'Iniciar sésion'
+      fill_in 'participant_email', with: 'fake@example.com'
+      fill_in 'participant_password', with: 'fake password'
+      click_on 'Iniciar sésion'
+      expect(page).to have_content 'Email o contraseña no válidos.'
     end
 
     it "selects 'Sign up' from the sign in page" do
@@ -190,7 +143,7 @@ describe 'A visitor to the site', type: :feature do
       click_on 'Iniciar sésion'
       find('h2', text: 'Iniciar sésion')
       click_on '¿Ha olvidado su contraseña?'
-      fill_in 'participant_email', with: ENV['Pt_201_Email']
+      fill_in 'participant_email', with: ENV['Pt_210_Email']
       click_on 'Envíeme las instrucciones para resetear mi contraseña'
       expect(page).to have_content 'Recibirás un correo con instrucciones ' \
                                    'sobre cómo resetear tu contraseña en ' \
@@ -243,43 +196,10 @@ describe 'A visitor to the site', type: :feature do
                                    'minutos.'
     end
 
-    it "selects 'Iniciar sésion' from the sign up page" do
-      click_on 'Español'
-      find('a', text: 'Registrarse').click
-      find('h2', text: 'Registrarse')
-      click_on 'Iniciar sésion'
-      expect(page).to have_css('h2', text: 'Iniciar sésion')
+    it 'signs in, is able to sign out' do
+      sign_in_pt_en(ENV['Pt_111_Email'], ENV['Pt_111_Password'])
+      find('.navbar-toggle').click
+      click_on 'Finalizar la sesión'
     end
-
-    it "selects '¿Ha olvidado su contraseña?' from the sign up page" do
-      click_on 'Español'
-      find('a', text: 'Registrarse').click
-      find('h2', text: 'Registrarse')
-      click_on '¿Ha olvidado su contraseña?'
-      expect(page).to have_css('h2', text: '¿Ha olvidado su contraseña?')
-    end
-
-    it "selects '¿No ha recibido las instrucciones de confirmación?' on sign " \
-       'up page' do
-      click_on 'Español'
-      find('a', text: 'Registrarse').click
-      find('h2', text: 'Registrarse')
-      click_on '¿No ha recibido las instrucciones de confirmación?'
-      expect(page)
-        .to have_css('h2', text: 'Reenviar instrucciones de confirmación')
-    end
-
-    it "selects 'No ha recibido instrucciones para desbloquear?' from sign " \
-       'up page' do
-      click_on 'Español'
-      find('a', text: 'Registrarse').click
-      find('h2', text: 'Registrarse')
-      click_on 'No ha recibido instrucciones para desbloquear?'
-      expect(page)
-        .to have_css('h2', text: 'Reenviar instrucciones para desbloquear')
-    end
-
-    it 'is a registered participant, has selected Español previously, ' \
-       'Español is set on subsequent logins'
   end
 end
