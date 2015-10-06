@@ -20,6 +20,12 @@ describe 'An eligible pt signs in and navigates to the consent form',
       click_on 'Submit'
       # expect(page).to have_content ''
     end
+
+    it 'is able to review consent form' do
+      sign_in_pt_en(ENV['Pt_108_Email', ENV['Pt_108_Password']])
+      click_on 'Review Consent'
+      expect(page).to have_content 'PALO ALTO UNIVERSITY CONSENT'
+    end
   end
 
   context 'in Español' do
@@ -39,6 +45,12 @@ describe 'An eligible pt signs in and navigates to the consent form',
       page.all('.ng-pristine.ng-untouched.ng-valid')[1].click
       click_on 'Submit'
       # expect(page).to have_content ''
+    end
+
+    it 'is able to review consent form' do
+      sign_in_pt_en(ENV['Pt_208_Email', ENV['Pt_208_Password']])
+      click_on 'Review Consent'
+      expect(page).to have_content 'UNIVERSIDAD DE PALO ALTO CONSENTIMIENTO'
     end
   end
 end
