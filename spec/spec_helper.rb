@@ -39,7 +39,7 @@ end
 
 # capybara-screenshot configuration options
 Capybara::Screenshot.register_filename_prefix_formatter(:rspec) do |example|
-  "#{example.description.gsub(' ', '-').gsub(/^.*\/spec\//, '')}"
+  "#{example.description.tr(' ', '-').gsub(/^.*\/spec\//, '')}"
 end
 Capybara::Screenshot.autosave_on_failure = true
 Capybara::Screenshot.prune_strategy = :keep_last_run
