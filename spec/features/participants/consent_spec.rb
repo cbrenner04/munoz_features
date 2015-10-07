@@ -68,13 +68,13 @@ describe 'A visitor to the site', type: :feature do
     end
 
     it 'is able to review consent form' do
-      sign_in_pt_en(ENV['Pt_108_Email'], ENV['Pt_108_Password'])
+      sign_in_pt_en(ENV['Pt_109_Email'], ENV['Pt_109_Password'])
       click_on 'Review Consent'
       expect(page).to have_content 'PALO ALTO UNIVERSITY CONSENT'
     end
 
     it 'is a participant who did not give consent, can still use app' do
-      sign_in_pt_en(ENV['Pt_109_Email'], ENV['Pt_109_Password'])
+      sign_in_pt_en(ENV['Pt_108_Email'], ENV['Pt_108_Password'])
       # expect to be able to do something
     end
   end
@@ -147,13 +147,13 @@ describe 'A visitor to the site', type: :feature do
     end
 
     it 'is able to review consent form' do
-      sign_in_pt_es(ENV['Pt_208_Email'], ENV['Pt_208_Password'])
+      sign_in_pt_es(ENV['Pt_209_Email'], ENV['Pt_209_Password'])
       click_on 'Consentimiento Opinión'
       expect(page).to have_content 'UNIVERSIDAD DE PALO ALTO CONSENTIMIENTO'
     end
 
     it 'is a participant who did not give consent, can still use app' do
-      sign_in_pt_es(ENV['Pt_209_Email'], ENV['Pt_209_Password'])
+      sign_in_pt_es(ENV['Pt_208_Email'], ENV['Pt_208_Password'])
       # expect to be able to do something
     end
   end
