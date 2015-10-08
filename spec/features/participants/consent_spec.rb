@@ -122,6 +122,7 @@ describe 'A visitor to the site', type: :feature do
       end
 
       click_on 'Submit'
+      click_on 'View the consent form'
       find('h2', text: 'UNIVERSIDAD DE PALO ALTO CONSENTIMIENTO')
       first('.ng-pristine.ng-untouched.ng-valid').click
       click_on 'Submit'

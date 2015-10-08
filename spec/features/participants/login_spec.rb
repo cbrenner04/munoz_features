@@ -197,7 +197,7 @@ describe 'A visitor to the site', type: :feature do
     end
 
     it 'signs in, is able to sign out' do
-      sign_in_pt_en(ENV['Pt_111_Email'], ENV['Pt_111_Password'])
+      sign_in_pt_en(ENV['Pt_211_Email'], ENV['Pt_211_Password'])
       find('.navbar-toggle').click
       click_on 'Finalizar la sesión'
     end
