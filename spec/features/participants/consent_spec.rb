@@ -46,7 +46,7 @@ describe 'A visitor to the site', type: :feature do
       find('h2', text: 'PALO ALTO UNIVERSITY CONSENT')
       first('.ng-pristine.ng-untouched.ng-valid').click
       click_on 'Submit'
-      expect(page).to have_css('h2', text: 'Stop Smoking App')
+      expect(page).to have_css('a', text: 'Review Consent')
     end
 
     it 'signs in and consents to participate' do
@@ -55,7 +55,7 @@ describe 'A visitor to the site', type: :feature do
       find('h2', text: 'PALO ALTO UNIVERSITY CONSENT')
       first('.ng-pristine.ng-untouched.ng-valid').click
       click_on 'Submit'
-      expect(page).to have_css('h2', text: 'Stop Smoking App')
+      expect(page).to have_css('a', text: 'Review Consent')
     end
 
     it 'signs in and does not consent to participate' do
@@ -64,7 +64,7 @@ describe 'A visitor to the site', type: :feature do
       find('h2', text: 'PALO ALTO UNIVERSITY CONSENT')
       page.all('.ng-pristine.ng-untouched.ng-valid')[1].click
       click_on 'Submit'
-      expect(page).to have_css('h2', text: 'Stop Smoking App')
+      expect(page).to have_css('a', text: 'Review Consent')
     end
 
     it 'is able to review consent form' do
@@ -126,7 +126,7 @@ describe 'A visitor to the site', type: :feature do
       find('h2', text: 'UNIVERSIDAD DE PALO ALTO CONSENTIMIENTO')
       first('.ng-pristine.ng-untouched.ng-valid').click
       click_on 'Submit'
-      expect(page).to have_css('h2', text: 'Stop Smoking App')
+      expect(page).to have_css('a', text: 'Review Consent')
     end
 
     it 'signs in and consents to participate' do
@@ -135,7 +135,7 @@ describe 'A visitor to the site', type: :feature do
       find('h2', text: 'UNIVERSIDAD DE PALO ALTO CONSENTIMIENTO')
       first('.ng-pristine.ng-untouched.ng-valid').click
       click_on 'Submit'
-      expect(page).to have_css('h2', text: 'Stop Smoking App')
+      expect(page).to have_css('a', text: 'Review Consent')
     end
 
     it 'sign in and does not consent to participate' do
@@ -144,7 +144,7 @@ describe 'A visitor to the site', type: :feature do
       find('h2', text: 'UNIVERSIDAD DE PALO ALTO CONSENTIMIENTO')
       page.all('.ng-pristine.ng-untouched.ng-valid')[1].click
       click_on 'Submit'
-      expect(page).to have_css('h2', text: 'Stop Smoking App')
+      expect(page).to have_css('a', text: 'Review Consent')
     end
 
     it 'is able to review consent form' do
