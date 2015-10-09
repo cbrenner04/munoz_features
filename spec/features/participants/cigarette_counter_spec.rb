@@ -3,14 +3,22 @@
 describe 'A registered and consented participant signs in', type: :feature do
   context 'in English' do
     it 'accesses the cigarette counter' do
-      sign_in_pt_en(ENV['Pt_113_Email'], ENV['Pt_113_Password'])
+      sign_in_pt_en('113')
       click_on 'Cigarette Counter'
       expect(page).to have_content 'Yesterday'
       expect(page).to have_css '.btn-group-vertical'
     end
 
+    it 'switches to Español in cigarette counter' do
+      sign_in_pt_en('132')
+      click_on 'Cigarette Counter'
+      find('.col-xs-6.col-sm-4.col-md-2.ng-scope', text: 'Yesterday')
+      switch_lang('Español')
+      expect(page).to have_content 'Ayer'
+    end
+
     it "sees yesterday's cigarette count" do
-      sign_in_pt_en(ENV['Pt_17_Email'], ENV['Pt_17_Password'])
+      sign_in_pt_en('17')
       visit "#{ENV['Base_URL']}/#/en/cigarette-count"
       find('.col-xs-6.col-sm-4.col-md-2.ng-scope', text: 'Yesterday') # remove when navigation fixed
       visit "#{ENV['Base_URL']}/#/en/cigarette-count" # remove when navigation fixed
@@ -20,7 +28,7 @@ describe 'A registered and consented participant signs in', type: :feature do
     end
 
     it "increments yesterday's cigarette count" do
-      sign_in_pt_en(ENV['Pt_18_Email'], ENV['Pt_18_Password'])
+      sign_in_pt_en('18')
       visit "#{ENV['Base_URL']}/#/en/cigarette-count"
       find('.col-xs-6.col-sm-4.col-md-2.ng-scope', text: 'Yesterday') # remove when navigation fixed
       visit "#{ENV['Base_URL']}/#/en/cigarette-count" # remove when navigation fixed
@@ -32,7 +40,7 @@ describe 'A registered and consented participant signs in', type: :feature do
     end
 
     it "decrements yesterday's cigarette count" do
-      sign_in_pt_en(ENV['Pt_19_Email'], ENV['Pt_19_Password'])
+      sign_in_pt_en('19')
       visit "#{ENV['Base_URL']}/#/en/cigarette-count"
       find('.col-xs-6.col-sm-4.col-md-2.ng-scope', text: 'Yesterday') # remove when navigation fixed
       visit "#{ENV['Base_URL']}/#/en/cigarette-count" # remove when navigation fixed
@@ -44,7 +52,7 @@ describe 'A registered and consented participant signs in', type: :feature do
     end
 
     it "sees today's cigarette count" do
-      sign_in_pt_en(ENV['Pt_114_Email'], ENV['Pt_114_Password'])
+      sign_in_pt_en('114')
       visit "#{ENV['Base_URL']}/#/en/cigarette-count"
       find('.col-xs-6.col-sm-4.col-md-2.ng-scope', text: 'Today') # remove when navigation fixed
       visit "#{ENV['Base_URL']}/#/en/cigarette-count" # remove when navigation fixed
@@ -54,7 +62,7 @@ describe 'A registered and consented participant signs in', type: :feature do
     end
 
     it "increments today's cigarette count" do
-      sign_in_pt_en(ENV['Pt_115_Email'], ENV['Pt_115_Password'])
+      sign_in_pt_en('115')
       visit "#{ENV['Base_URL']}/#/en/cigarette-count"
       find('.col-xs-6.col-sm-4.col-md-2.ng-scope', text: 'Today') # remove when navigation fixed
       visit "#{ENV['Base_URL']}/#/en/cigarette-count" # remove when navigation fixed
@@ -66,7 +74,7 @@ describe 'A registered and consented participant signs in', type: :feature do
     end
 
     it "decrements today's cigarette count" do
-      sign_in_pt_en(ENV['Pt_116_Email'], ENV['Pt_116_Password'])
+      sign_in_pt_en('116')
       visit "#{ENV['Base_URL']}/#/en/cigarette-count"
       find('.col-xs-6.col-sm-4.col-md-2.ng-scope', text: 'Today') # remove when navigation fixed
       visit "#{ENV['Base_URL']}/#/en/cigarette-count" # remove when navigation fixed
@@ -80,14 +88,22 @@ describe 'A registered and consented participant signs in', type: :feature do
 
   context 'in Español' do
     it 'access the cigarette counter' do
-      sign_in_pt_es(ENV['Pt_213_Email'], ENV['Pt_213_Password'])
+      sign_in_pt_es('213')
       click_on 'Cigarette Counter' # need to update with Spanish
       expect(page).to have_content 'Ayer'
       expect(page).to have_css '.btn-group-vertical'
     end
 
+    it 'switches to English in cigarette counter' do
+      sign_in_pt_es('213')
+      click_on 'Cigarette Counter' # need to update with Spanish
+      find('.col-xs-6.col-sm-4.col-md-2.ng-scope', text: 'Ayer')
+      switch_lang('English')
+      expect(page).to have_content 'Yesterday'
+    end
+
     it "sees yesterday's cigarette count" do
-      sign_in_pt_en(ENV['Pt_20_Email'], ENV['Pt_20_Password'])
+      sign_in_pt_es('20')
       visit "#{ENV['Base_URL']}/#/es/cigarette-count"
       find('.col-xs-6.col-sm-4.col-md-2.ng-scope', text: 'Ayer') # remove when navigation fixed
       visit "#{ENV['Base_URL']}/#/es/cigarette-count" # remove when navigation fixed
@@ -97,7 +113,7 @@ describe 'A registered and consented participant signs in', type: :feature do
     end
 
     it "increments yesterday's cigarette count" do
-      sign_in_pt_en(ENV['Pt_21_Email'], ENV['Pt_21_Password'])
+      sign_in_pt_es('21')
       visit "#{ENV['Base_URL']}/#/es/cigarette-count"
       find('.col-xs-6.col-sm-4.col-md-2.ng-scope', text: 'Ayer') # remove when navigation fixed
       visit "#{ENV['Base_URL']}/#/es/cigarette-count" # remove when navigation fixed
@@ -109,7 +125,7 @@ describe 'A registered and consented participant signs in', type: :feature do
     end
 
     it "decrements yesterday's cigarette count" do
-      sign_in_pt_en(ENV['Pt_22_Email'], ENV['Pt_22_Password'])
+      sign_in_pt_es('22')
       visit "#{ENV['Base_URL']}/#/es/cigarette-count"
       find('.col-xs-6.col-sm-4.col-md-2.ng-scope', text: 'Ayer') # remove when navigation fixed
       visit "#{ENV['Base_URL']}/#/es/cigarette-count" # remove when navigation fixed
@@ -121,7 +137,7 @@ describe 'A registered and consented participant signs in', type: :feature do
     end
 
     it "sees today's cigarette count" do
-      sign_in_pt_en(ENV['Pt_214_Email'], ENV['Pt_214_Password'])
+      sign_in_pt_es('214')
       visit "#{ENV['Base_URL']}/#/es/cigarette-count"
       find('.col-xs-6.col-sm-4.col-md-2.ng-scope', text: 'Hoy') # remove when navigation fixed
       visit "#{ENV['Base_URL']}/#/es/cigarette-count" # remove when navigation fixed
@@ -131,7 +147,7 @@ describe 'A registered and consented participant signs in', type: :feature do
     end
 
     it "increments today's cigarette count" do
-      sign_in_pt_en(ENV['Pt_215_Email'], ENV['Pt_215_Password'])
+      sign_in_pt_es('215')
       visit "#{ENV['Base_URL']}/#/es/cigarette-count"
       find('.col-xs-6.col-sm-4.col-md-2.ng-scope', text: 'Hoy') # remove when navigation fixed
       visit "#{ENV['Base_URL']}/#/es/cigarette-count" # remove when navigation fixed
@@ -143,7 +159,7 @@ describe 'A registered and consented participant signs in', type: :feature do
     end
 
     it "decrements today's cigarette count" do
-      sign_in_pt_en(ENV['Pt_216_Email'], ENV['Pt_216_Password'])
+      sign_in_pt_en('216')
       visit "#{ENV['Base_URL']}/#/es/cigarette-count"
       find('.col-xs-6.col-sm-4.col-md-2.ng-scope', text: 'Hoy') # remove when navigation fixed
       visit "#{ENV['Base_URL']}/#/es/cigarette-count" # remove when navigation fixed

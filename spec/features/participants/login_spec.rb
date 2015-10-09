@@ -97,8 +97,8 @@ describe 'A visitor to the site', type: :feature do
                                    'account in a few minutes.'
     end
 
-    it 'signs in, is able to sign out' do
-      sign_in_pt_en(ENV['Pt_111_Email'], ENV['Pt_111_Password'])
+    it 'signs in, signs out' do
+      sign_in_pt_en('111')
       find('.navbar-toggle').click
       click_on 'Sign out'
     end
@@ -196,8 +196,8 @@ describe 'A visitor to the site', type: :feature do
                                    'minutos.'
     end
 
-    it 'signs in, is able to sign out' do
-      sign_in_pt_en(ENV['Pt_211_Email'], ENV['Pt_211_Password'])
+    it 'signs in, signs out' do
+      sign_in_pt_es('211')
       find('.navbar-toggle').click
       click_on 'Finalizar la sesión'
     end

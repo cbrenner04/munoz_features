@@ -9,6 +9,12 @@ describe 'A visitor to the site', type: :feature do
       expect(page).to have_content 'How old are you?'
     end
 
+    it 'switches to Español when filling out eligibility'
+      # visit "#{ENV['Base_URL']}"
+      # click_on 'English'
+      # click_on 'Eligibility'
+      # find('.form-group.col-md-6', text: 'How old are you?')
+
     it 'completes eligibility survey and is eligible' do
       visit "#{ENV['Base_URL']}/en/pages/application#/en/eligibility"
       find('.ng-binding', text: 'How old are you?')
@@ -366,6 +372,12 @@ describe 'A visitor to the site', type: :feature do
       click_on 'Eligibility' # need to update with Spanish
       expect(page).to have_content '¿Cuántos años tiene?'
     end
+
+    it 'switches to English when filling out eligibility'
+      # visit "#{ENV['Base_URL']}"
+      # click_on 'Español'
+      # click_on 'Eligibility' # need to update with Spanish
+      # find('.form-group.col-md-6', text: '¿Cuántos años tiene?')
 
     it 'completes eligibility survey and is eligible' do
       visit "#{ENV['Base_URL']}/es/pages/application#/es/eligibility"

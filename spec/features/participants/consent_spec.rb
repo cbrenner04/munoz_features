@@ -2,12 +2,18 @@
 
 describe 'A visitor to the site', type: :feature do
   context 'in English' do
-    it 'can review consent immediately following eligible decision' do
+    it 'reviews consent immediately following eligible decision' do
       visit "#{ENV['Base_URL']}" \
             '/en/pages/application#/en/eligibility-result?isEligible=true'
       click_on 'View the consent form'
       expect(page).to have_css('h2', text: 'PALO ALTO UNIVERSITY CONSENT')
     end
+
+    it 'switches to Español when consenting'
+      # visit "#{ENV['Base_URL']}" \
+      #       '/en/pages/application#/en/eligibility-result?isEligible=true'
+      # click_on 'View the consent form'
+      # find('h2', text: 'PALO ALTO UNIVERSITY CONSENT')
 
     it 'cannot review consent immediately following ineligible decision' do
       visit "#{ENV['Base_URL']}" \
@@ -50,7 +56,7 @@ describe 'A visitor to the site', type: :feature do
     end
 
     it 'signs in and consents to participate' do
-      sign_in_pt_en(ENV['Pt_106_Email'], ENV['Pt_106_Password'])
+      sign_in_pt_en('106')
       visit "#{ENV['Base_URL']}/#/en/consent"
       find('h2', text: 'PALO ALTO UNIVERSITY CONSENT')
       first('.ng-pristine.ng-untouched.ng-valid').click
@@ -59,7 +65,7 @@ describe 'A visitor to the site', type: :feature do
     end
 
     it 'signs in and does not consent to participate' do
-      sign_in_pt_en(ENV['Pt_107_Email'], ENV['Pt_107_Password'])
+      sign_in_pt_en('107')
       visit "#{ENV['Base_URL']}/#/en/consent"
       find('h2', text: 'PALO ALTO UNIVERSITY CONSENT')
       page.all('.ng-pristine.ng-untouched.ng-valid')[1].click
@@ -67,14 +73,22 @@ describe 'A visitor to the site', type: :feature do
       expect(page).to have_css('a', text: 'Review Consent')
     end
 
-    it 'is able to review consent form' do
-      sign_in_pt_en(ENV['Pt_109_Email'], ENV['Pt_109_Password'])
+    it 'reviews consent form' do
+      sign_in_pt_en('109')
       click_on 'Review Consent'
       expect(page).to have_content 'PALO ALTO UNIVERSITY CONSENT'
     end
 
+    it 'switches to Español when reviewing consent form' do
+      sign_in_pt_en('131')
+      click_on 'Review Consent'
+      find('h2', text: 'PALO ALTO UNIVERSITY CONSENT')
+      switch_lang('Español')
+      expect(page).to have_content 'UNIVERSIDAD DE PALO ALTO CONSENTIMIENTO'
+    end
+
     it 'is a participant who did not give consent, can still use app' do
-      sign_in_pt_en(ENV['Pt_108_Email'], ENV['Pt_108_Password'])
+      sign_in_pt_en('108')
       # click_on 'Set Your Quit Date'
       # expect(page).to have_content ''
 
@@ -93,13 +107,19 @@ describe 'A visitor to the site', type: :feature do
   end
 
   context 'in Español' do
-    it 'can review consent immediately following eligible decision' do
+    it 'reviews consent immediately following eligible decision' do
       visit "#{ENV['Base_URL']}" \
             '/es/pages/application#/es/eligibility-result?isEligible=true'
       click_on 'View the consent form'
       expect(page)
         .to have_css('h2', text: 'UNIVERSIDAD DE PALO ALTO CONSENTIMIENTO')
     end
+
+    it 'switches to English when consenting'
+      # visit "#{ENV['Base_URL']}" \
+      #       '/es/pages/application#/es/eligibility-result?isEligible=true'
+      # click_on 'View the consent form'
+      # find('h2', text: 'UNIVERSIDAD DE PALO ALTO CONSENTIMIENTO')
 
     it 'cannot review consent immediately following ineligible decision' do
       visit "#{ENV['Base_URL']}" \
@@ -143,7 +163,7 @@ describe 'A visitor to the site', type: :feature do
     end
 
     it 'signs in and consents to participate' do
-      sign_in_pt_es(ENV['Pt_206_Email'], ENV['Pt_206_Password'])
+      sign_in_pt_es('206')
       visit "#{ENV['Base_URL']}/#/es/consent"
       find('h2', text: 'UNIVERSIDAD DE PALO ALTO CONSENTIMIENTO')
       first('.ng-pristine.ng-untouched.ng-valid').click
@@ -151,8 +171,8 @@ describe 'A visitor to the site', type: :feature do
       expect(page).to have_css('a', text: 'Review Consent')
     end
 
-    it 'sign in and does not consent to participate' do
-      sign_in_pt_es(ENV['Pt_207_Email'], ENV['Pt_207_Password'])
+    it 'signs in and does not consent to participate' do
+      sign_in_pt_es('207')
       visit "#{ENV['Base_URL']}/#/es/consent"
       find('h2', text: 'UNIVERSIDAD DE PALO ALTO CONSENTIMIENTO')
       page.all('.ng-pristine.ng-untouched.ng-valid')[1].click
@@ -160,14 +180,22 @@ describe 'A visitor to the site', type: :feature do
       expect(page).to have_css('a', text: 'Review Consent')
     end
 
-    it 'is able to review consent form' do
-      sign_in_pt_es(ENV['Pt_209_Email'], ENV['Pt_209_Password'])
+    it 'reviews consent form' do
+      sign_in_pt_es('209')
       click_on 'Review Consent' # need to update with Spanish
       expect(page).to have_content 'UNIVERSIDAD DE PALO ALTO CONSENTIMIENTO'
     end
 
+    it 'switches to English when reviewing the consent form' do
+      sign_in_pt_es('231')
+      click_on 'Review Consent' # need to update with Spanish
+      find('h2', text: 'UNIVERSIDAD DE PALO ALTO CONSENTIMIENTO')
+      switch_lang('English')
+      expect(page).to have_content 'PALO ALTO UNIVERSITY CONSENT'
+    end
+
     it 'is a participant who did not give consent, can still use app' do
-      sign_in_pt_es(ENV['Pt_208_Email'], ENV['Pt_208_Password'])
+      sign_in_pt_es('208')
       # click_on 'Set Your Quit Date' # need to update with Spanish
       # expect(page).to have_content ''
 
@@ -177,7 +205,7 @@ describe 'A visitor to the site', type: :feature do
 
       visit ENV['Base_URL']
       click_on 'Cigarette Counter' # need to update with Spanish
-      expect(page).to have_content 'Yesterday' # need to update with Spanish
+      expect(page).to have_content 'Ayer'
 
       visit ENV['Base_URL']
       click_on 'Review Consent' # need to update with Spanish

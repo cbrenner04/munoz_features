@@ -12,8 +12,6 @@ describe 'A visitor to the site', type: :feature do
     fill_in 'user_password', with: ENV['User_1_Password']
     click_on 'Sign in'
     expect(page).to have_content 'Signed in successfully'
-
-    visit "#{ENV['Base_URL']}/admin"
     expect(page).to have_css('h1', text: 'Site Administration')
   end
 
