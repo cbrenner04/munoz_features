@@ -6,7 +6,7 @@ describe 'A visitor to the site', type: :feature do
       visit "#{ENV['Base_URL']}"
       click_on 'English'
       click_on 'Eligibility'
-      expect(page.current_path).to eq '/en/pages/application#/en/eligibility'
+      expect(page).to have_content 'How old are you?'
     end
 
     it 'completes eligibility survey and is eligible' do
@@ -363,8 +363,8 @@ describe 'A visitor to the site', type: :feature do
     it 'navigates to the eligibilty page' do
       visit "#{ENV['Base_URL']}"
       click_on 'Español'
-      click_on 'Eligibility'
-      expect(page.current_path).to eq '/es/pages/application#/es/eligibility'
+      click_on 'Eligibility' # need to update with Spanish
+      expect(page).to have_content '¿Cuántos años tiene?'
     end
 
     it 'completes eligibility survey and is eligible' do
@@ -394,8 +394,8 @@ describe 'A visitor to the site', type: :feature do
         fill_in "Q#{i}", with: response
       end
 
-      click_on 'Submit'
-      expect(page).to have_content 'You are eligible to participate'
+      click_on 'Submit' # need to update with Spanish
+      expect(page).to have_content 'You are eligible to participate' # need to update with Spanish
     end
 
     it 'completes eligibility survey and is ineligible due to age' do
@@ -425,8 +425,8 @@ describe 'A visitor to the site', type: :feature do
         fill_in "Q#{i}", with: response
       end
 
-      click_on 'Submit'
-      expect(page).to have_content 'You are not eligible to participate'
+      click_on 'Submit' # need to update with Spanish
+      expect(page).to have_content 'You are not eligible to participate' # need to update with Spanish
     end
 
     it 'completes eligibility survey, is ineligible due to neg response Q2' do
@@ -456,8 +456,8 @@ describe 'A visitor to the site', type: :feature do
         fill_in "Q#{i}", with: response
       end
 
-      click_on 'Submit'
-      expect(page).to have_content 'You are not eligible to participate'
+      click_on 'Submit' # need to update with Spanish
+      expect(page).to have_content 'You are not eligible to participate' # need to update with Spanish
     end
 
     it 'completes eligibility survey, is ineligible due to neg response Q3' do
@@ -487,8 +487,8 @@ describe 'A visitor to the site', type: :feature do
         fill_in "Q#{i}", with: response
       end
 
-      click_on 'Submit'
-      expect(page).to have_content 'You are not eligible to participate'
+      click_on 'Submit' # need to update with Spanish
+      expect(page).to have_content 'You are not eligible to participate' # need to update with Spanish
     end
 
     it 'does not fill in age, sees proper error'
@@ -632,8 +632,8 @@ describe 'A visitor to the site', type: :feature do
       end
 
       fill_in 'Q8', with: ENV['Pt_10_Password']
-      click_on 'Submit'
-      expect(page).to have_content 'You are not eligible to participate'
+      click_on 'Submit' # need to update with Spanish
+      expect(page).to have_content 'You are not eligible to participate' # need to update with Spanish
     end
 
     it 'does not fill in password, sees proper error'
@@ -684,8 +684,8 @@ describe 'A visitor to the site', type: :feature do
 
       fill_in 'Q6', with: ENV['Pt_13_Email']
       fill_in 'Q8', with: ENV['Pt_13_Password']
-      click_on 'Submit'
-      expect(page).to have_content 'You are eligible to participate'
+      click_on 'Submit' # need to update with Spanish
+      expect(page).to have_content 'You are eligible to participate' # need to update with Spanish
     end
 
     it 'completes eligibility without giving email, is eligible' do
@@ -710,8 +710,8 @@ describe 'A visitor to the site', type: :feature do
 
       fill_in 'Q7', with: ENV['Pt_14_Phone_Number']
       fill_in 'Q8', with: ENV['Pt_14_Password']
-      click_on 'Submit'
-      expect(page).to have_content 'You are eligible to participate'
+      click_on 'Submit' # need to update with Spanish
+      expect(page).to have_content 'You are eligible to participate' # need to update with Spanish
     end
   end
 end

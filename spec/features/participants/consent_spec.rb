@@ -75,7 +75,20 @@ describe 'A visitor to the site', type: :feature do
 
     it 'is a participant who did not give consent, can still use app' do
       sign_in_pt_en(ENV['Pt_108_Email'], ENV['Pt_108_Password'])
-      # expect to be able to do something
+      # click_on 'Set Your Quit Date'
+      # expect(page).to have_content ''
+
+      visit ENV['Base_URL']
+      click_on 'Stop Smoking Guide'
+      expect(page).to have_css('a', text: 'Why Should I Quit?')
+
+      visit ENV['Base_URL']
+      click_on 'Cigarette Counter'
+      expect(page).to have_content 'Yesterday'
+
+      visit ENV['Base_URL']
+      click_on 'Review Consent'
+      expect(page).to have_content 'PALO ALTO UNIVERSITY CONSENT'
     end
   end
 
@@ -149,13 +162,26 @@ describe 'A visitor to the site', type: :feature do
 
     it 'is able to review consent form' do
       sign_in_pt_es(ENV['Pt_209_Email'], ENV['Pt_209_Password'])
-      click_on 'Consentimiento Opinión'
+      click_on 'Review Consent' # need to update with Spanish
       expect(page).to have_content 'UNIVERSIDAD DE PALO ALTO CONSENTIMIENTO'
     end
 
     it 'is a participant who did not give consent, can still use app' do
       sign_in_pt_es(ENV['Pt_208_Email'], ENV['Pt_208_Password'])
-      # expect to be able to do something
+      # click_on 'Set Your Quit Date' # need to update with Spanish
+      # expect(page).to have_content ''
+
+      visit ENV['Base_URL']
+      click_on 'Stop Smoking Guide' # need to update with Spanish
+      expect(page).to have_css('a', text: 'Why Should I Quit?') # need to update with Spanish
+
+      visit ENV['Base_URL']
+      click_on 'Cigarette Counter' # need to update with Spanish
+      expect(page).to have_content 'Yesterday' # need to update with Spanish
+
+      visit ENV['Base_URL']
+      click_on 'Review Consent' # need to update with Spanish
+      expect(page).to have_content 'UNIVERSIDAD DE PALO ALTO CONSENTIMIENTO'
     end
   end
 end
