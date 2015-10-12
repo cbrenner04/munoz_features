@@ -25,18 +25,16 @@ describe 'A registered and consented participant signs in', type: :feature do
       if today_num.between?(1, 9)
         wrong_date = first('.text-right.ng-binding.ng-scope',
                            text: "#{today_num}").text
-        if wrong_date.to_i > 10
-          if today_num == 2 && wrong_date.to_i >= 20
-            puts 'NOT TESTED' # it gets way too convoluted here, isn't worth it
-          elsif today_num == 3 && wrong_date.to_i >= 30
-            calendar_today = page.all('.text-right.ng-binding.ng-scope',
-                                      text: "#{today_num}")[2]
-            calendar_today.native.style('font-weight').should eq('bold')
-          else
-            calendar_today = page.all('.text-right.ng-binding.ng-scope',
-                                      text: "#{today_num}")[1]
-            calendar_today.native.style('font-weight').should eq('bold')
-          end
+        if today_num == 2 && wrong_date.to_i >= 20
+          puts 'NOT TESTED' # it gets way too convoluted here, isn't worth it
+        elsif today_num == 3 && wrong_date.to_i >= 30
+          calendar_today = page.all('.text-right.ng-binding.ng-scope',
+                                    text: "#{today_num}")[2]
+          calendar_today.native.style('font-weight').should eq('bold')
+        elsif wrong_date.to_i > 10
+          calendar_today = page.all('.text-right.ng-binding.ng-scope',
+                                    text: "#{today_num}")[1]
+          calendar_today.native.style('font-weight').should eq('bold')
         else
           first('.text-right.ng-binding.ng-scope', text: "#{today_num}")
             .native.style('font-weight').should eq('bold')

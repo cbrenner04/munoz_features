@@ -159,7 +159,7 @@ describe 'A registered and consented participant signs in', type: :feature do
     end
 
     it "decrements today's cigarette count" do
-      sign_in_pt_en('216')
+      sign_in_pt_es('216')
       visit "#{ENV['Base_URL']}/#/es/cigarette-count"
       find('.col-xs-6.col-sm-4.col-md-2.ng-scope', text: 'Hoy') # remove when navigation fixed
       visit "#{ENV['Base_URL']}/#/es/cigarette-count" # remove when navigation fixed

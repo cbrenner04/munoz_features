@@ -42,6 +42,8 @@ describe 'A registered and consented participant signs in', type: :feature do
       click_on 'How do I Help Someone Quit?' # remove when navigation fixed
       find('h2', text: 'How to help page 1 title')
       switch_lang('Español')
+      page.evaluate_script('window.history.back()') # remove when navigation fixed
+      page.evaluate_script('window.history.forward()') # remove when navigation fixed
       expect(page).to have_css('h2', text: 'Como ayudar 1 título')
       expect(page).to have_content 'Como ayudar 1 cuerpo'
     end
@@ -72,6 +74,8 @@ describe 'A registered and consented participant signs in', type: :feature do
       click_on 'How Can I Quit?' # remove when navigation fixed
       find('h2', text: 'How to quit page 1 title')
       switch_lang('Español')
+      page.evaluate_script('window.history.back()') # remove when navigation fixed
+      page.evaluate_script('window.history.forward()') # remove when navigation fixed
       expect(page)
         .to have_css('h2', text: 'Cómo dejar de fumar página 1 título')
       expect(page).to have_content 'Cómo dejar de fumar página 1 cuerpo'
@@ -103,6 +107,8 @@ describe 'A registered and consented participant signs in', type: :feature do
       click_on 'What if I Start Smoking Again?' # remove when navigation fixed
       find('h2', text: 'What if? page 1 title')
       switch_lang('Español')
+      page.evaluate_script('window.history.back()') # remove when navigation fixed
+      page.evaluate_script('window.history.forward()') # remove when navigation fixed
       expect(page).to have_css('h2', text: '¿Y sí? página 1 título')
       expect(page).to have_content '¿Y sí? página 1 cuerpo'
     end
@@ -133,6 +139,8 @@ describe 'A registered and consented participant signs in', type: :feature do
       click_on 'Why Should I Quit?' # remove when navigation fixed
       find('h2', text: 'Why Quit? page 1 title')
       switch_lang('Español')
+      page.evaluate_script('window.history.back()') # remove when navigation fixed
+      page.evaluate_script('window.history.forward()') # remove when navigation fixed
       expect(page)
         .to have_css('h2', text: '¿Por qué dejar de fumar? página 1 título')
       expect(page).to have_content '¿Por qué dejar de fumar? página 1 cuerpo'
@@ -178,6 +186,9 @@ describe 'A registered and consented participant signs in', type: :feature do
       # page.evaluate_script('window.history.back()') # remove when navigation fixed
       # click_on '' # remove when navigation fixed
       # find('h2', text: 'Como ayudar página 1 título')
+      # switch_lang('English')
+      # page.evaluate_script('window.history.back()') # remove when navigation fixed
+      # page.evaluate_script('window.history.forward()') # remove when navigation fixed
     #   expect(page).to have_css('h2', text: 'How to help page 1 title')
     #   expect(page).to have_content 'How to help page 1 body'
     # end
@@ -208,6 +219,9 @@ describe 'A registered and consented participant signs in', type: :feature do
       # page.evaluate_script('window.history.back()') # remove when navigation fixed
       # click_on '' # remove when navigation fixed
       # find('h2', text: 'Cómo dejar de fumar página 1 título')
+      # switch_lang('English')
+      # page.evaluate_script('window.history.back()') # remove when navigation fixed
+      # page.evaluate_script('window.history.forward()') # remove when navigation fixed
       # expect(page).to have_css('h2', text: 'How to quit page 1 title')
       # expect(page).to have_content 'How to quit page 1 body'
     # end
@@ -237,6 +251,9 @@ describe 'A registered and consented participant signs in', type: :feature do
       # page.evaluate_script('window.history.back()') # remove when navigation fixed
       # click_on '' # remove when navigation fixed
       # find('h2', text: '¿Y sí? página 1 título')
+      # switch_lang('English')
+      # page.evaluate_script('window.history.back()') # remove when navigation fixed
+      # page.evaluate_script('window.history.forward()') # remove when navigation fixed
     #   expect(page).to have_css('h2', text: 'What if? page 1 title')
     #   expect(page).to have_content 'What if? page 1 body'
     # end
@@ -267,6 +284,9 @@ describe 'A registered and consented participant signs in', type: :feature do
       # page.evaluate_script('window.history.back()') # remove when navigation fixed
       # click_on '' # remove when navigation fixed
       # find('h2', text: '¿Por qué dejar de fumar? página 1 título')
+      # switch_lang('English')
+      # page.evaluate_script('window.history.back()') # remove when navigation fixed
+      # page.evaluate_script('window.history.forward()') # remove when navigation fixed
     #   expect(page).to have_css('h2', text: 'Why Quit? page 1 title')
     #   expect(page).to have_content 'Why Quit? page 1 body'
     # end
