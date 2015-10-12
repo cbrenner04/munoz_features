@@ -33,13 +33,6 @@ describe 'A visitor to the site', type: :feature do
       expect(page).to have_content 'Invalid email or password'
     end
 
-    it "selects 'Sign up' from the sign in page" do
-      click_on 'Sign in'
-      find('h2', text: 'Sign in')
-      click_on 'Sign up'
-      expect(page).to have_css('h2', text: 'Sign up')
-    end
-
     it 'is a registered participant and resets their password' do
       click_on 'Sign in'
       find('h2', text: 'Sign in')
@@ -130,13 +123,6 @@ describe 'A visitor to the site', type: :feature do
       fill_in 'participant_password', with: 'fake password'
       click_on 'Iniciar sésion'
       expect(page).to have_content 'Email o contraseña no válidos.'
-    end
-
-    it "selects 'Sign up' from the sign in page" do
-      click_on 'Iniciar sésion'
-      find('h2', text: 'Iniciar sésion')
-      click_on 'Registrarse'
-      expect(page).to have_css('h2', text: 'Registrarse')
     end
 
     it 'is a registered participant and resets their password' do

@@ -28,7 +28,7 @@ end
 
 # Capybara configuration options
 Capybara.configure do |config|
-  config.default_wait_time = 10
+  config.default_wait_time = 5
   config.default_driver = :selenium
   config.register_driver :selenium do |app|
     Capybara::Selenium::Driver.new(app, browser: browser)

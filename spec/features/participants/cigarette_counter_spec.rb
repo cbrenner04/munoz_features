@@ -20,8 +20,6 @@ describe 'A registered and consented participant signs in', type: :feature do
     it "sees yesterday's cigarette count" do
       sign_in_pt_en('17')
       visit "#{ENV['Base_URL']}/#/en/cigarette-count"
-      find('.col-xs-6.col-sm-4.col-md-2.ng-scope', text: 'Yesterday') # remove when navigation fixed
-      visit "#{ENV['Base_URL']}/#/en/cigarette-count" # remove when navigation fixed
       within('.col-xs-6.col-sm-4.col-md-2.ng-scope', text: 'Yesterday') do
         expect(page).to have_content '15'
       end
@@ -30,8 +28,6 @@ describe 'A registered and consented participant signs in', type: :feature do
     it "increments yesterday's cigarette count" do
       sign_in_pt_en('18')
       visit "#{ENV['Base_URL']}/#/en/cigarette-count"
-      find('.col-xs-6.col-sm-4.col-md-2.ng-scope', text: 'Yesterday') # remove when navigation fixed
-      visit "#{ENV['Base_URL']}/#/en/cigarette-count" # remove when navigation fixed
       within('.col-xs-6.col-sm-4.col-md-2.ng-scope', text: 'Yesterday') do
         find('.lead.ng-binding', text: '15')
         find('.btn.btn-lg.btn-default', text: '+').click
@@ -42,8 +38,6 @@ describe 'A registered and consented participant signs in', type: :feature do
     it "decrements yesterday's cigarette count" do
       sign_in_pt_en('19')
       visit "#{ENV['Base_URL']}/#/en/cigarette-count"
-      find('.col-xs-6.col-sm-4.col-md-2.ng-scope', text: 'Yesterday') # remove when navigation fixed
-      visit "#{ENV['Base_URL']}/#/en/cigarette-count" # remove when navigation fixed
       within('.col-xs-6.col-sm-4.col-md-2.ng-scope', text: 'Yesterday') do
         find('.lead.ng-binding', text: '15')
         find('.btn.btn-lg.btn-default', text: '-').click
@@ -54,8 +48,6 @@ describe 'A registered and consented participant signs in', type: :feature do
     it "sees today's cigarette count" do
       sign_in_pt_en('114')
       visit "#{ENV['Base_URL']}/#/en/cigarette-count"
-      find('.col-xs-6.col-sm-4.col-md-2.ng-scope', text: 'Today') # remove when navigation fixed
-      visit "#{ENV['Base_URL']}/#/en/cigarette-count" # remove when navigation fixed
       within('.col-xs-6.col-sm-4.col-md-2.ng-scope', text: 'Today') do
         expect(page).to have_content '15'
       end
@@ -64,8 +56,6 @@ describe 'A registered and consented participant signs in', type: :feature do
     it "increments today's cigarette count" do
       sign_in_pt_en('115')
       visit "#{ENV['Base_URL']}/#/en/cigarette-count"
-      find('.col-xs-6.col-sm-4.col-md-2.ng-scope', text: 'Today') # remove when navigation fixed
-      visit "#{ENV['Base_URL']}/#/en/cigarette-count" # remove when navigation fixed
       within('.col-xs-6.col-sm-4.col-md-2.ng-scope', text: 'Today') do
         find('.lead.ng-binding', text: '15')
         find('.btn.btn-lg.btn-default', text: '+').click
@@ -76,8 +66,6 @@ describe 'A registered and consented participant signs in', type: :feature do
     it "decrements today's cigarette count" do
       sign_in_pt_en('116')
       visit "#{ENV['Base_URL']}/#/en/cigarette-count"
-      find('.col-xs-6.col-sm-4.col-md-2.ng-scope', text: 'Today') # remove when navigation fixed
-      visit "#{ENV['Base_URL']}/#/en/cigarette-count" # remove when navigation fixed
       within('.col-xs-6.col-sm-4.col-md-2.ng-scope', text: 'Today') do
         find('.lead.ng-binding', text: '15')
         find('.btn.btn-lg.btn-default', text: '-').click
@@ -105,8 +93,6 @@ describe 'A registered and consented participant signs in', type: :feature do
     it "sees yesterday's cigarette count" do
       sign_in_pt_es('20')
       visit "#{ENV['Base_URL']}/#/es/cigarette-count"
-      find('.col-xs-6.col-sm-4.col-md-2.ng-scope', text: 'Ayer') # remove when navigation fixed
-      visit "#{ENV['Base_URL']}/#/es/cigarette-count" # remove when navigation fixed
       within('.col-xs-6.col-sm-4.col-md-2.ng-scope', text: 'Ayer') do
         expect(page).to have_content '15'
       end
@@ -115,8 +101,6 @@ describe 'A registered and consented participant signs in', type: :feature do
     it "increments yesterday's cigarette count" do
       sign_in_pt_es('21')
       visit "#{ENV['Base_URL']}/#/es/cigarette-count"
-      find('.col-xs-6.col-sm-4.col-md-2.ng-scope', text: 'Ayer') # remove when navigation fixed
-      visit "#{ENV['Base_URL']}/#/es/cigarette-count" # remove when navigation fixed
       within('.col-xs-6.col-sm-4.col-md-2.ng-scope', text: 'Ayer') do
         find('.lead.ng-binding', text: '15')
         find('.btn.btn-lg.btn-default', text: '+').click
@@ -127,8 +111,6 @@ describe 'A registered and consented participant signs in', type: :feature do
     it "decrements yesterday's cigarette count" do
       sign_in_pt_es('22')
       visit "#{ENV['Base_URL']}/#/es/cigarette-count"
-      find('.col-xs-6.col-sm-4.col-md-2.ng-scope', text: 'Ayer') # remove when navigation fixed
-      visit "#{ENV['Base_URL']}/#/es/cigarette-count" # remove when navigation fixed
       within('.col-xs-6.col-sm-4.col-md-2.ng-scope', text: 'Ayer') do
         find('.lead.ng-binding', text: '15')
         find('.btn.btn-lg.btn-default', text: '-').click
@@ -139,8 +121,6 @@ describe 'A registered and consented participant signs in', type: :feature do
     it "sees today's cigarette count" do
       sign_in_pt_es('214')
       visit "#{ENV['Base_URL']}/#/es/cigarette-count"
-      find('.col-xs-6.col-sm-4.col-md-2.ng-scope', text: 'Hoy') # remove when navigation fixed
-      visit "#{ENV['Base_URL']}/#/es/cigarette-count" # remove when navigation fixed
       within('.col-xs-6.col-sm-4.col-md-2.ng-scope', text: 'Hoy') do
         expect(page).to have_content '15'
       end
@@ -149,8 +129,6 @@ describe 'A registered and consented participant signs in', type: :feature do
     it "increments today's cigarette count" do
       sign_in_pt_es('215')
       visit "#{ENV['Base_URL']}/#/es/cigarette-count"
-      find('.col-xs-6.col-sm-4.col-md-2.ng-scope', text: 'Hoy') # remove when navigation fixed
-      visit "#{ENV['Base_URL']}/#/es/cigarette-count" # remove when navigation fixed
       within('.col-xs-6.col-sm-4.col-md-2.ng-scope', text: 'Hoy') do
         find('.lead.ng-binding', text: '15')
         find('.btn.btn-lg.btn-default', text: '+').click
@@ -161,8 +139,6 @@ describe 'A registered and consented participant signs in', type: :feature do
     it "decrements today's cigarette count" do
       sign_in_pt_es('216')
       visit "#{ENV['Base_URL']}/#/es/cigarette-count"
-      find('.col-xs-6.col-sm-4.col-md-2.ng-scope', text: 'Hoy') # remove when navigation fixed
-      visit "#{ENV['Base_URL']}/#/es/cigarette-count" # remove when navigation fixed
       within('.col-xs-6.col-sm-4.col-md-2.ng-scope', text: 'Hoy') do
         find('.lead.ng-binding', text: '15')
         find('.btn.btn-lg.btn-default', text: '-').click

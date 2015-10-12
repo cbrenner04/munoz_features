@@ -89,8 +89,8 @@ describe 'A visitor to the site', type: :feature do
 
     it 'is a participant who did not give consent, can still use app' do
       sign_in_pt_en('108')
-      # click_on 'Set Your Quit Date'
-      # expect(page).to have_content ''
+      click_on 'Set Your Quit Date'
+      expect(page).to have_css('.ng-binding.ng-scope', text: 'We')
 
       visit ENV['Base_URL']
       click_on 'Stop Smoking Guide'
@@ -196,8 +196,8 @@ describe 'A visitor to the site', type: :feature do
 
     it 'is a participant who did not give consent, can still use app' do
       sign_in_pt_es('208')
-      # click_on 'Set Your Quit Date' # need to update with Spanish
-      # expect(page).to have_content ''
+      click_on 'Set Your Quit Date' # need to update with Spanish
+      expect(page).to have_css('.ng-binding.ng-scope', text: 'Mi')
 
       visit ENV['Base_URL']
       click_on 'Stop Smoking Guide' # need to update with Spanish
