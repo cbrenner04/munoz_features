@@ -1,6 +1,7 @@
 # filename: spec/features/participants/stop_smoking_guide_spec.rb
 
-describe 'A registered and consented participant signs in', type: :feature do
+describe 'A registered and consented participant signs in',
+         type: :feature, metadata: :participant do
   context 'in English' do
     it 'navigates to the Stop Smoking Guide menu' do
       sign_in_pt_en('117')
@@ -12,8 +13,25 @@ describe 'A registered and consented participant signs in', type: :feature do
       sign_in_pt_en('126')
       click_on 'Stop Smoking Guide'
       find('a', text: 'Why Should I Quit?')
-      switch_lang('Español')
+      navigate_to('Español')
       expect(page).to have_css('a', text: 'Why Should I Quit?') # need to update with Spanish
+    end
+
+    it 'navigates to Set Your Quit Date from Stop Smoking Guide menu' do
+      sign_in_pt_en('126')
+      click_on 'Stop Smoking Guide'
+      find('a', text: 'Why Should I Quit?')
+      navigate_to('Set Your Quit Date')
+      expect(page).to have_css '.previous'
+    end
+
+    it 'navigates to Cigarette Counter from Stop Smoking Guide menu' do
+      sign_in_pt_en('126')
+      click_on 'Stop Smoking Guide'
+      find('a', text: 'Why Should I Quit?')
+      navigate_to('Cigarette Counter')
+      expect(page)
+        .to have_css('.col-xs-6.col-sm-4.col-md-2.ng-scope', text: 'Yesterday')
     end
 
     it 'navigates to How to Help guide' do
@@ -42,10 +60,29 @@ describe 'A registered and consented participant signs in', type: :feature do
       visit "#{ENV['Base_URL']}/#/en/stop-smoking-guide"
       click_on 'How do I Help Someone Quit?'
       find('h2', text: 'How to help page 1 title')
-      switch_lang('Español')
+      navigate_to('Español')
       page.evaluate_script('window.location.reload()') # remove when navigation fixed
       expect(page).to have_css('h2', text: 'Como ayudar página 1 título')
       expect(page).to have_content 'Como ayudar página 1 cuerpo'
+    end
+
+    it 'navigates to Set Your Quit Date from How to Help guide' do
+      sign_in_pt_en('127')
+      visit "#{ENV['Base_URL']}/#/en/stop-smoking-guide"
+      click_on 'How do I Help Someone Quit?'
+      find('h2', text: 'How to help page 1 title')
+      navigate_to('Set Your Quit Date')
+      expect(page).to have_css '.previous'
+    end
+
+    it 'navigates to Cigarette Counter from How to Help guide' do
+      sign_in_pt_en('127')
+      visit "#{ENV['Base_URL']}/#/en/stop-smoking-guide"
+      click_on 'How do I Help Someone Quit?'
+      find('h2', text: 'How to help page 1 title')
+      navigate_to('Cigarette Counter')
+      expect(page)
+        .to have_css('.col-xs-6.col-sm-4.col-md-2.ng-scope', text: 'Yesterday')
     end
 
     it 'navigates to How to Quit guide' do
@@ -75,11 +112,30 @@ describe 'A registered and consented participant signs in', type: :feature do
       visit "#{ENV['Base_URL']}/#/en/stop-smoking-guide"
       click_on 'How Can I Quit?'
       find('h2', text: 'How to quit page 1 title')
-      switch_lang('Español')
+      navigate_to('Español')
       page.evaluate_script('window.location.reload()') # remove when navigation fixed
       expect(page)
         .to have_css('h2', text: 'Cómo dejar de fumar página 1 título')
       expect(page).to have_content 'Cómo dejar de fumar página 1 cuerpo'
+    end
+
+    it 'navigates to Set Your Quit Date from How to Quit guide' do
+      sign_in_pt_en('128')
+      visit "#{ENV['Base_URL']}/#/en/stop-smoking-guide"
+      click_on 'How Can I Quit?'
+      find('h2', text: 'How to quit page 1 title')
+      navigate_to('Set Your Quit Date')
+      expect(page).to have_css '.previous'
+    end
+
+    it 'navigates to Cigarette Counter from How to Quit guide' do
+      sign_in_pt_en('128')
+      visit "#{ENV['Base_URL']}/#/en/stop-smoking-guide"
+      click_on 'How Can I Quit?'
+      find('h2', text: 'How to quit page 1 title')
+      navigate_to('Cigarette Counter')
+      expect(page)
+        .to have_css('.col-xs-6.col-sm-4.col-md-2.ng-scope', text: 'Yesterday')
     end
 
     it 'navigates to What If guide' do
@@ -109,10 +165,29 @@ describe 'A registered and consented participant signs in', type: :feature do
       visit "#{ENV['Base_URL']}/#/en/stop-smoking-guide"
       click_on 'What if I Start Smoking Again?'
       find('h2', text: 'What if? page 1 title')
-      switch_lang('Español')
+      navigate_to('Español')
       page.evaluate_script('window.location.reload()') # remove when navigation fixed
       expect(page).to have_css('h2', text: '¿Y sí? página 1 título')
       expect(page).to have_content '¿Y sí? página 1 cuerpo'
+    end
+
+    it 'navigates to Set Your Quit Date from What if guide' do
+      sign_in_pt_en('129')
+      visit "#{ENV['Base_URL']}/#/en/stop-smoking-guide"
+      click_on 'What if I Start Smoking Again?'
+      find('h2', text: 'What if? page 1 title')
+      navigate_to('Set Your Quit Date')
+      expect(page).to have_css '.previous'
+    end
+
+    it 'navigates to Cigarette Counter from What if guide' do
+      sign_in_pt_en('129')
+      visit "#{ENV['Base_URL']}/#/en/stop-smoking-guide"
+      click_on 'What if I Start Smoking Again?'
+      find('h2', text: 'What if? page 1 title')
+      navigate_to('Cigarette Counter')
+      expect(page)
+        .to have_css('.col-xs-6.col-sm-4.col-md-2.ng-scope', text: 'Yesterday')
     end
 
     it 'navigates to Why Quit guide' do
@@ -142,11 +217,30 @@ describe 'A registered and consented participant signs in', type: :feature do
       visit "#{ENV['Base_URL']}/#/en/stop-smoking-guide"
       click_on 'Why Should I Quit?'
       find('h2', text: 'Why Quit? page 1 title')
-      switch_lang('Español')
+      navigate_to('Español')
       page.evaluate_script('window.location.reload()') # remove when navigation fixed
       expect(page)
         .to have_css('h2', text: '¿Por qué dejar de fumar? página 1 título')
       expect(page).to have_content '¿Por qué dejar de fumar? página 1 cuerpo'
+    end
+
+    it 'navigates to Set Your Quit Date from Why Quit guide' do
+      sign_in_pt_en('130')
+      visit "#{ENV['Base_URL']}/#/en/stop-smoking-guide"
+      click_on 'Why Should I Quit?'
+      find('h2', text: 'Why Quit? page 1 title')
+      navigate_to('Set Your Quit Date')
+      expect(page).to have_css '.previous'
+    end
+
+    it 'navigates to Cigarette Counter from Why Quit guide' do
+      sign_in_pt_en('130')
+      visit "#{ENV['Base_URL']}/#/en/stop-smoking-guide"
+      click_on 'Why Should I Quit?'
+      find('h2', text: 'Why Quit? page 1 title')
+      navigate_to('Cigarette Counter')
+      expect(page)
+        .to have_css('.col-xs-6.col-sm-4.col-md-2.ng-scope', text: 'Yesterday')
     end
   end
 
@@ -161,9 +255,26 @@ describe 'A registered and consented participant signs in', type: :feature do
       sign_in_pt_es('226')
       click_on 'Stop Smoking Guide (ES)' # need to update with Spanish
       find('a', text: 'Why Should I Quit?') # need to update with Spanish
-      switch_lang('English')
+      navigate_to('English')
       page.evaluate_script('window.location.reload()') # remove when navigation fixed
       expect(page).to have_css('a', text: 'Why Should I Quit?')
+    end
+
+    it 'navigates to Set Your Quit Date from Stop Smoking Guide Menu' do
+      sign_in_pt_es('226')
+      click_on 'Stop Smoking Guide (ES)' # need to update with Spanish
+      find('a', text: 'Why Should I Quit?') # need to update with Spanish
+      navigate_to('Set Your Quit Date (ES)') # need to update with Spanish
+      expect(page).to have_css '.previous'
+    end
+
+    it 'navigates to Cigarette Counter from Stop Smoking Guide Menu' do
+      sign_in_pt_es('226')
+      click_on 'Stop Smoking Guide (ES)' # need to update with Spanish
+      find('a', text: 'Why Should I Quit?') # need to update with Spanish
+      navigate_to('Cigarette Counter (ES)') # need to update with Spanish
+      expect(page)
+        .to have_css('.col-xs-6.col-sm-4.col-md-2.ng-scope', text: 'Ayer')
     end
 
     it 'navigates to How to Help guide' do
@@ -192,10 +303,29 @@ describe 'A registered and consented participant signs in', type: :feature do
       visit "#{ENV['Base_URL']}/#/es/stop-smoking-guide"
       click_on 'How do I Help Someone Quit'  # need to update with Spanish
       find('h2', text: 'Como ayudar página 1 título')
-      switch_lang('English')
+      navigate_to('English')
       page.evaluate_script('window.location.reload()') # remove when navigation fixed
       expect(page).to have_css('h2', text: 'How to help page 1 title')
       expect(page).to have_content 'How to help page 1 body'
+    end
+
+    it 'navigates to Set Your Quit Date from How to Help guide' do
+      sign_in_pt_es('227')
+      visit "#{ENV['Base_URL']}/#/es/stop-smoking-guide"
+      click_on 'How do I Help Someone Quit'  # need to update with Spanish
+      find('h2', text: 'Como ayudar página 1 título')
+      navigate_to('Set Your Quit Date (ES)') # need to update with Spanish
+      expect(page).to have_css '.previous'
+    end
+
+    it 'navigates to Cigarette Counter from How to Help guide' do
+      sign_in_pt_es('227')
+      visit "#{ENV['Base_URL']}/#/es/stop-smoking-guide"
+      click_on 'How do I Help Someone Quit'  # need to update with Spanish
+      find('h2', text: 'Como ayudar página 1 título')
+      navigate_to('Cigarette Counter (ES)') # need to update with Spanish
+      expect(page)
+        .to have_css('.col-xs-6.col-sm-4.col-md-2.ng-scope', text: 'Ayer')
     end
 
     it 'navigates to How to Quit guide' do
@@ -226,10 +356,29 @@ describe 'A registered and consented participant signs in', type: :feature do
       visit "#{ENV['Base_URL']}/#/es/stop-smoking-guide"
       click_on 'How Can I Quit?' # need to update with Spanish
       find('h2', text: 'Cómo dejar de fumar página 1 título')
-      switch_lang('English')
+      navigate_to('English')
       page.evaluate_script('window.location.reload()') # remove when navigation fixed
       expect(page).to have_css('h2', text: 'How to quit page 1 title')
       expect(page).to have_content 'How to quit page 1 body'
+    end
+
+    it 'navigates to Set Your Quit Date from How to Quit guide' do
+      sign_in_pt_es('228')
+      visit "#{ENV['Base_URL']}/#/es/stop-smoking-guide"
+      click_on 'How Can I Quit?' # need to update with Spanish
+      find('h2', text: 'Cómo dejar de fumar página 1 título')
+      navigate_to('Set Your Quit Date (ES)') # need to update with Spanish
+      expect(page).to have_css '.previous'
+    end
+
+    it 'navigates to Cigarette Counter from How to Quit guide' do
+      sign_in_pt_es('228')
+      visit "#{ENV['Base_URL']}/#/es/stop-smoking-guide"
+      click_on 'How Can I Quit?' # need to update with Spanish
+      find('h2', text: 'Cómo dejar de fumar página 1 título')
+      navigate_to('Cigarette Counter (ES)') # need to update with Spanish
+      expect(page)
+        .to have_css('.col-xs-6.col-sm-4.col-md-2.ng-scope', text: 'Ayer')
     end
 
     it 'navigates to What If guide' do
@@ -259,10 +408,29 @@ describe 'A registered and consented participant signs in', type: :feature do
       visit "#{ENV['Base_URL']}/#/es/stop-smoking-guide"
       click_on 'What if I Start Smoking Again?' # need to update with Spanish
       find('h2', text: '¿Y sí? página 1 título')
-      switch_lang('English')
+      navigate_to('English')
       page.evaluate_script('window.location.reload()') # remove when navigation fixed
       expect(page).to have_css('h2', text: 'What if? page 1 title')
       expect(page).to have_content 'What if? page 1 body'
+    end
+
+    it 'navigates to Set Your Quit Date from What if guide' do
+      sign_in_pt_es('229')
+      visit "#{ENV['Base_URL']}/#/es/stop-smoking-guide"
+      click_on 'What if I Start Smoking Again?' # need to update with Spanish
+      find('h2', text: '¿Y sí? página 1 título')
+      navigate_to('Set Your Quit Date (ES)') # need to update with Spanish
+      expect(page).to have_css '.previous'
+    end
+
+    it 'navigates to Cigarette Counter from What if guide' do
+      sign_in_pt_es('229')
+      visit "#{ENV['Base_URL']}/#/es/stop-smoking-guide"
+      click_on 'What if I Start Smoking Again?' # need to update with Spanish
+      find('h2', text: '¿Y sí? página 1 título')
+      navigate_to('Cigarette Counter') # need to update with Spanish
+      expect(page)
+        .to have_css('.col-xs-6.col-sm-4.col-md-2.ng-scope', text: 'Ayer')
     end
 
     it 'navigates to Why Quit guide' do
@@ -293,10 +461,29 @@ describe 'A registered and consented participant signs in', type: :feature do
       visit "#{ENV['Base_URL']}/#/es/stop-smoking-guide"
       click_on 'Why Should I Quit?' # need to update with Spanish
       find('h2', text: '¿Por qué dejar de fumar? página 1 título')
-      switch_lang('English')
+      navigate_to('English')
       page.evaluate_script('window.location.reload()') # remove when navigation fixed
       expect(page).to have_css('h2', text: 'Why Quit? page 1 title')
       expect(page).to have_content 'Why Quit? page 1 body'
+    end
+
+    it 'navigates to Set Your Quit Date from Why Quit guide' do
+      sign_in_pt_es('230')
+      visit "#{ENV['Base_URL']}/#/es/stop-smoking-guide"
+      click_on 'Why Should I Quit?' # need to update with Spanish
+      find('h2', text: '¿Por qué dejar de fumar? página 1 título')
+      navigate_to('Set Your Quit Date') # need to update with Spanish
+      expect(page).to have_css '.previous'
+    end
+
+    it 'navigates to Cigarette Counter from Why Quit guide' do
+      sign_in_pt_es('230')
+      visit "#{ENV['Base_URL']}/#/es/stop-smoking-guide"
+      click_on 'Why Should I Quit?' # need to update with Spanish
+      find('h2', text: '¿Por qué dejar de fumar? página 1 título')
+      navigate_to('Cigarette Counter') # need to update with Spanish
+      expect(page)
+        .to have_css('.col-xs-6.col-sm-4.col-md-2.ng-scope', text: 'Ayer')
     end
   end
 end

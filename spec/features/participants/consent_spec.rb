@@ -1,6 +1,6 @@
 # filename: spec/features/participants/consent_spec.rb
 
-describe 'A visitor to the site', type: :feature do
+describe 'A visitor to the site', type: :feature, metadata: :participant do
   context 'in English' do
     it 'reviews consent immediately following eligible decision' do
       visit "#{ENV['Base_URL']}" \
@@ -24,7 +24,7 @@ describe 'A visitor to the site', type: :feature do
     it 'completes eligibility, is eligible, is able to consent immediately' do
       visit "#{ENV['Base_URL']}/en/pages/application#/en/eligibility"
       find('.ng-binding', text: 'How old are you?')
-      fill_in 'Q1', with: '25'
+      find('input[type = number]').set('25')
       q = ['Are you currently a smoker?',
            'Are you thinking of quitting smoking within the next 30 days?',
            'Do you currently live in California?']
@@ -41,10 +41,11 @@ describe 'A visitor to the site', type: :feature do
         select 'Ocean Park Health Center'
       end
 
+      i = ['email', 'tel', 'password']
       r = [ENV['Pt_15_Email'], ENV['Pt_15_Phone_Number'], ENV['Pt_15_Password']]
 
-      (6..8).zip(r).each do |i, response|
-        fill_in "Q#{i}", with: response
+      i.zip(r).each do |item, response|
+        find("input[type = #{item}]").set(response)
       end
 
       click_on 'Submit'
@@ -83,7 +84,7 @@ describe 'A visitor to the site', type: :feature do
       sign_in_pt_en('131')
       click_on 'Review Consent'
       find('h2', text: 'PALO ALTO UNIVERSITY CONSENT')
-      switch_lang('Español')
+      navigate_to('Español')
       expect(page).to have_content 'UNIVERSIDAD DE PALO ALTO CONSENTIMIENTO'
     end
 
@@ -130,7 +131,7 @@ describe 'A visitor to the site', type: :feature do
     it 'completes eligibility, is eligible, is able to consent immediately' do
       visit "#{ENV['Base_URL']}/es/pages/application#/es/eligibility"
       find('.ng-binding', text: '¿Cuántos años tiene?')
-      fill_in 'Q1', with: '25'
+      find('input[type = number]').set('25')
       q = ['¿Fuma usted actualmente?',
            '¿Está pensando en dejar de fumar dentro de los próximos 30 días?',
            '¿Actualmente vive en California?']
@@ -147,11 +148,12 @@ describe 'A visitor to the site', type: :feature do
         select 'Centro de Salud Ocean Park'
       end
 
+      i = ['email', 'tel', 'password']
       r = [ENV['Pt_201_Email'], ENV['Pt_201_Phone_Number'],
            ENV['Pt_201_Password']]
 
-      (6..8).zip(r).each do |i, response|
-        fill_in "Q#{i}", with: response
+      i.zip(r).each do |item, response|
+        find("input[type = #{item}]").set(response)
       end
 
       click_on 'Submit'
@@ -190,7 +192,7 @@ describe 'A visitor to the site', type: :feature do
       sign_in_pt_es('231')
       click_on 'Review Consent' # need to update with Spanish
       find('h2', text: 'UNIVERSIDAD DE PALO ALTO CONSENTIMIENTO')
-      switch_lang('English')
+      navigate_to('English')
       expect(page).to have_content 'PALO ALTO UNIVERSITY CONSENT'
     end
 
@@ -199,15 +201,15 @@ describe 'A visitor to the site', type: :feature do
       click_on 'Set Your Quit Date' # need to update with Spanish
       expect(page).to have_css('.ng-binding.ng-scope', text: 'Mi')
 
-      visit ENV['Base_URL']
+      visit "#{ENV['Base_URL']}/#/es"
       click_on 'Stop Smoking Guide' # need to update with Spanish
       expect(page).to have_css('a', text: 'Why Should I Quit?') # need to update with Spanish
 
-      visit ENV['Base_URL']
+      visit "#{ENV['Base_URL']}/#/es"
       click_on 'Cigarette Counter' # need to update with Spanish
       expect(page).to have_content 'Ayer'
 
-      visit ENV['Base_URL']
+      visit "#{ENV['Base_URL']}/#/es"
       click_on 'Review Consent' # need to update with Spanish
       expect(page).to have_content 'UNIVERSIDAD DE PALO ALTO CONSENTIMIENTO'
     end

@@ -1,6 +1,6 @@
 # filename: spec/features/participants/login_spec.rb
 
-describe 'A visitor to the site', type: :feature do
+describe 'A visitor to the site', type: :feature, metadata: :participant do
   before do
     visit ENV['Base_URL']
   end
@@ -94,6 +94,7 @@ describe 'A visitor to the site', type: :feature do
       sign_in_pt_en('111')
       find('.navbar-toggle').click
       click_on 'Sign out'
+      expect(page).to have_css('a', text: 'Sign in')
     end
   end
 
@@ -115,6 +116,7 @@ describe 'A visitor to the site', type: :feature do
       fill_in 'participant_password', with: ENV['Pt_212_Password']
       click_on 'Iniciar sésion'
       expect(page).to have_content 'Sesión iniciada.'
+      expect(page).to have_css('a', text: 'Set Your Quit Date (ES)') # need to update with Spanish
     end
 
     it 'is not a registered participant, cannot sign in' do
@@ -186,6 +188,24 @@ describe 'A visitor to the site', type: :feature do
       sign_in_pt_es('211')
       find('.navbar-toggle').click
       click_on 'Finalizar la sesión'
+      expect(page).to have_css('a', text: 'Iniciar sésion')
+    end
+
+    it 'signs in, visits Google, returns to app, sees correct home page' do
+      sign_in_pt_es('211')
+      find('a', text: 'Set Your Quit Date (ES)')
+      visit 'https://www.google.com'
+      find('.content')
+      visit ENV['Base_URL']
+      expect(page).to have_content 'Set Your Quit Date (ES)' # need to update with Spanish
+    end
+
+    it 'signs in, navigates to another page, uses brand link, sees correct home' do
+      sign_in_pt_es('211')
+      click_on 'Stop Smoking Guide (ES)' # need to update with Spanish
+      find('h2', text: 'Stop Smoking Guide')
+      find('.navbar-brand').click
+      expect(page).to have_content 'Set Your Quit Date (ES)'
     end
   end
 end

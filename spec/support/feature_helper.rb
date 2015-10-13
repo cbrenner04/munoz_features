@@ -34,7 +34,7 @@ def sign_in_pt_es(id)
   expect(page).to have_content 'Sesión iniciada.'
 end
 
-def switch_lang(language)
+def navigate_to(button)
   find('.navbar-toggle').click
-  find('.navbar-link.ng-binding', text: language).click
+  find('.ng-binding', text: button).click
 end

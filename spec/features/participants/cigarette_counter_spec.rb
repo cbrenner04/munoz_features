@@ -1,6 +1,7 @@
 # filename: spec/features/participants/cigarette_counter.rb
 
-describe 'A registered and consented participant signs in', type: :feature do
+describe 'A registered and consented participant signs in',
+         type: :feature, metadata: :participant do
   context 'in English' do
     it 'accesses the cigarette counter' do
       sign_in_pt_en('113')
@@ -13,8 +14,16 @@ describe 'A registered and consented participant signs in', type: :feature do
       sign_in_pt_en('132')
       click_on 'Cigarette Counter'
       find('.col-xs-6.col-sm-4.col-md-2.ng-scope', text: 'Yesterday')
-      switch_lang('Español')
+      navigate_to('Español')
       expect(page).to have_content 'Ayer'
+    end
+
+    it 'navigates to Set Your Quit Date from cigarette counter' do
+      sign_in_pt_en('132')
+      click_on 'Cigarette Counter'
+      find('.col-xs-6.col-sm-4.col-md-2.ng-scope', text: 'Yesterday')
+      navigate_to('Set Your Quit Date')
+      expect(page).to have_css '.previous'
     end
 
     it "sees yesterday's cigarette count" do
@@ -86,8 +95,16 @@ describe 'A registered and consented participant signs in', type: :feature do
       sign_in_pt_es('213')
       click_on 'Cigarette Counter' # need to update with Spanish
       find('.col-xs-6.col-sm-4.col-md-2.ng-scope', text: 'Ayer')
-      switch_lang('English')
+      navigate_to('English')
       expect(page).to have_content 'Yesterday'
+    end
+
+    it 'navigates to Set Your Quit Date from cigarette counter' do
+      sign_in_pt_es('213')
+      click_on 'Cigarette Counter' # need to update with Spanish
+      find('.col-xs-6.col-sm-4.col-md-2.ng-scope', text: 'Ayer')
+      navigate_to('Set Your Quit Date (ES)') # need to update with Spanish
+      expect(page).to have_css '.previous'
     end
 
     it "sees yesterday's cigarette count" do

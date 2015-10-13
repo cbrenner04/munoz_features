@@ -24,6 +24,20 @@ RSpec.configure do |config|
     c.syntax = [:should, :expect]
   end
   config.profile_examples = 10
+  config.register_ordering(:global) do |list|
+    list.sort_by do |group|
+      case group.metadata[:metadata]
+      when :user then 10
+      else 20
+      end
+    end
+  end
+  config.before(:all, metadata: :participant) do |c|
+    c.page.driver.browser.manage.window.resize_to(360, 591)
+  end
+  config.before(:all, metadata: :user) do |c|
+    c.page.driver.browser.manage.window.resize_to(1280, 743)
+  end
 end
 
 # Capybara configuration options
@@ -33,7 +47,6 @@ Capybara.configure do |config|
   config.register_driver :selenium do |app|
     Capybara::Selenium::Driver.new(app, browser: browser)
   end
-  config.page.driver.browser.manage.window.resize_to(360, 591)
   config.save_and_open_page_path = 'screenshots/'
 end
 

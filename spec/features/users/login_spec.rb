@@ -1,8 +1,7 @@
 # filename: spec/features/users/landing_page_spec.rb
 
-describe 'A visitor to the site', type: :feature do
+describe 'A visitor to the site', type: :feature, metadata: :user do
   before do
-    page.driver.browser.manage.window.resize_to(1280, 743)
     visit "#{ENV['Base_URL']}/admin"
   end
 

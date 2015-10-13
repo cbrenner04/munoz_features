@@ -1,6 +1,7 @@
 # filename: spec/features/participants/quit_date_spec.rb
 
-describe 'A registered and consented participant signs in', type: :feature do
+describe 'A registered and consented participant signs in',
+         type: :feature, metadata: :participant do
   context 'in English' do
     it 'navigates to Your Quit Date' do
       sign_in_pt_en('133')
@@ -12,8 +13,17 @@ describe 'A registered and consented participant signs in', type: :feature do
       sign_in_pt_en('134')
       visit "#{ENV['Base_URL']}/#/en/quit-date"
       find('.ng-binding.ng-scope', text: 'We')
-      switch_lang('Español')
+      navigate_to('Español')
       expect(page).to have_css('.ng-binding.ng-scope', text: 'Mi')
+    end
+
+    it 'navigates to Cigarette Counter from Set Your Quit Date' do
+      sign_in_pt_en('134')
+      visit "#{ENV['Base_URL']}/#/en/quit-date"
+      find('.ng-binding.ng-scope', text: 'We')
+      navigate_to('Cigarette Counter')
+      expect(page)
+        .to have_css('.col-xs-6.col-sm-4.col-md-2.ng-scope', text: 'Yesterday')
     end
 
     it "sees today's date highlighted" do
@@ -101,7 +111,11 @@ describe 'A registered and consented participant signs in', type: :feature do
 
       select_day("#{yesterday}")
       sleep(2)
-      expect(page).to_not have_css('.text-right.ng-binding.ng-scope.success')
+      expect(page).to_not have_css('.text-right.ng-binding.ng-scope.success',
+                                   text: "#{yesterday.strftime('%-d')}")
+      tomorrow = Date.today + 1
+      expect(page).to have_css('.text-right.ng-binding.ng-scope.success',
+                               text: "#{tomorrow.strftime('%-d')}")
     end
 
     it 'sees Quit Date highlighted' do
@@ -148,8 +162,17 @@ describe 'A registered and consented participant signs in', type: :feature do
       sign_in_pt_es('234')
       visit "#{ENV['Base_URL']}/#/es/quit-date"
       find('.ng-binding.ng-scope', text: 'Mi')
-      switch_lang('English')
+      navigate_to('English')
       expect(page).to have_css('.ng-binding.ng-scope', text: 'We')
+    end
+
+    it 'navigates to Cigarette Counter from Set Your Quit Date' do
+      sign_in_pt_es('234')
+      visit "#{ENV['Base_URL']}/#/es/quit-date"
+      find('.ng-binding.ng-scope', text: 'Mi')
+      navigate_to('Cigarette Counter (ES)') # need to update with Spanish
+      expect(page)
+        .to have_css('.col-xs-6.col-sm-4.col-md-2.ng-scope', text: 'Hoy')
     end
 
     it "sees today's date highlighted" do
@@ -236,7 +259,11 @@ describe 'A registered and consented participant signs in', type: :feature do
 
       select_day("#{yes}")
       sleep(2)
-      expect(page).to_not have_css('.text-right.ng-binding.ng-scope.success')
+      expect(page).to_not have_css('.text-right.ng-binding.ng-scope.success',
+                                   text: "#{yes.strftime('%-d')}")
+      tom = Date.today + 1
+      expect(page).to have_css('.text-right.ng-binding.ng-scope.success',
+                               text: "#{tom.strftime('%-d')}")
     end
 
     it 'sees Quit Date highlighted' do
