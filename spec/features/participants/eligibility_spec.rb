@@ -9,11 +9,19 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       expect(page).to have_content 'How old are you?'
     end
 
-    it 'switches to Español when filling out eligibility'
-      # visit "#{ENV['Base_URL']}"
-      # click_on 'English'
-      # click_on 'Eligibility'
-      # find('.form-group.col-md-6', text: 'How old are you?')
+    it 'switches to Español when filling out eligibility' do
+      visit "#{ENV['Base_URL']}"
+      click_on 'English'
+      click_on 'Eligibility'
+      find('.ng-binding', text: 'How old are you?')
+      find('input[type = number]').set('25')
+      within('.navbar') do
+        click_on 'Español'
+      end
+
+      find('.ng-binding', text: '¿Cuántos años tiene?')
+      expect(page).to have_css('input[type = number]', text: '25')
+    end
 
     it 'completes eligibility survey and is eligible' do
       visit "#{ENV['Base_URL']}/en/pages/application#/en/eligibility"
@@ -389,11 +397,19 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       expect(page).to have_content '¿Cuántos años tiene?'
     end
 
-    it 'switches to English when filling out eligibility'
-      # visit "#{ENV['Base_URL']}"
-      # click_on 'Español'
-      # click_on 'Eligibility' # need to update with Spanish
-      # find('.form-group.col-md-6', text: '¿Cuántos años tiene?')
+    it 'switches to English when filling out eligibility' do
+      visit "#{ENV['Base_URL']}"
+      click_on 'Español'
+      click_on 'Eligibility' # need to update with Spanish
+      find('.ng-binding', text: '¿Cuántos años tiene?')
+      find('input[type = number]').set('25')
+      within('.navbar') do
+        click_on 'English'
+      end
+
+      find('.ng-binding', text: 'How old are you?')
+      expect(page).to have_css('input[type = number]', text: '25')
+    end
 
     it 'completes eligibility survey and is eligible' do
       visit "#{ENV['Base_URL']}/es/pages/application#/es/eligibility"

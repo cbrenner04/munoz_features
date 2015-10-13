@@ -9,11 +9,23 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       expect(page).to have_css('h2', text: 'PALO ALTO UNIVERSITY CONSENT')
     end
 
-    it 'switches to Español when consenting'
-      # visit "#{ENV['Base_URL']}" \
-      #       '/en/pages/application#/en/eligibility-result?isEligible=true'
-      # click_on 'View the consent form'
-      # find('h2', text: 'PALO ALTO UNIVERSITY CONSENT')
+    it 'switches to Español when consenting' do
+      visit "#{ENV['Base_URL']}" \
+            '/en/pages/application#/en/eligibility-result?isEligible=true'
+      click_on 'View the consent form'
+      find('h2', text: 'PALO ALTO UNIVERSITY CONSENT')
+      first('.ng-pristine.ng-untouched.ng-valid').click
+      within('.navbar') do
+        click_on 'Español'
+      end
+
+      expect(page).to have_content 'UNIVERSIDAD DE PALO ALTO CONSENTIMIENTO'
+
+      within first('.form-group') do
+        expect(page)
+          .to have_css '.ng-untouched.ng-valid.ng-dirty.ng-valid-parse'
+      end
+    end
 
     it 'cannot review consent immediately following ineligible decision' do
       visit "#{ENV['Base_URL']}" \
@@ -54,6 +66,43 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       first('.ng-pristine.ng-untouched.ng-valid').click
       click_on 'Submit'
       expect(page).to have_css('a', text: 'Review Consent')
+    end
+
+    it 'switches to Español while filling in eligibility, ' \
+       'is eligible, sees consent form in Español' do
+      visit "#{ENV['Base_URL']}/en/pages/application#/en/eligibility"
+      find('.ng-binding', text: 'How old are you?')
+      find('input[type = number]').set('25')
+      q = ['Are you currently a smoker?',
+           'Are you thinking of quitting smoking within the next 30 days?',
+           'Do you currently live in California?']
+      a = ['Yes', 'Yes', 'Yes']
+
+      q.zip(a).each do |ques, answ|
+        within('.form-group', text: ques) do
+          choose answ
+        end
+      end
+
+      within('.navbar') do
+        click_on 'Español'
+      end
+
+      within('.form-group',
+             text: '¿Dónde recibe la mayor parte de su atención médica?') do
+        select 'Centro de Salud Ocean Park'
+      end
+
+      i = ['email', 'tel', 'password']
+      r = [ENV['Pt_23_Email'], ENV['Pt_23_Phone_Number'], ENV['Pt_23_Password']]
+
+      i.zip(r).each do |item, response|
+        find("input[type = #{item}]").set(response)
+      end
+
+      click_on 'Submit'
+      click_on 'View the consent form' # need to update with Spanish
+      find('h2', text: 'UNIVERSIDAD DE PALO ALTO CONSENTIMIENTO')
     end
 
     it 'signs in and consents to participate' do
@@ -117,10 +166,22 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
     end
 
     it 'switches to English when consenting'
-      # visit "#{ENV['Base_URL']}" \
-      #       '/es/pages/application#/es/eligibility-result?isEligible=true'
-      # click_on 'View the consent form'
-      # find('h2', text: 'UNIVERSIDAD DE PALO ALTO CONSENTIMIENTO')
+      visit "#{ENV['Base_URL']}" \
+            '/es/pages/application#/es/eligibility-result?isEligible=true'
+      click_on 'View the consent form'
+      find('h2', text: 'UNIVERSIDAD DE PALO ALTO CONSENTIMIENTO')
+      first('.ng-pristine.ng-untouched.ng-valid').click
+      within('.navbar') do
+        click_on 'English'
+      end
+
+      expect(page).to have_content 'PALO ALTO UNIVERSITY CONSENT'
+
+      within first('.form-group') do
+        expect(page)
+          .to have_css '.ng-untouched.ng-valid.ng-dirty.ng-valid-parse'
+      end
+    end
 
     it 'cannot review consent immediately following ineligible decision' do
       visit "#{ENV['Base_URL']}" \
@@ -164,6 +225,43 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       expect(page).to have_css('a', text: 'Review Consent')
     end
 
+    it 'switches to English while filling in eligibility, ' \
+       'is eligible, sees consent form in Español' do
+      visit "#{ENV['Base_URL']}/en/pages/application#/en/eligibility"
+      find('.ng-binding', text: '¿Cuántos años tiene?')
+      find('input[type = number]').set('25')
+      q = ['¿Fuma usted actualmente?',
+           '¿Está pensando en dejar de fumar dentro de los próximos 30 días?',
+           '¿Actualmente vive en California?']
+      a = ['Sí', 'Sí', 'Sí']
+
+      q.zip(a).each do |ques, answ|
+        within('.form-group', text: ques) do
+          choose answ
+        end
+      end
+
+      within('.navbar') do
+        click_on 'English'
+      end
+
+      within('.form-group',
+             text: 'Where do you get most of your medical care?') do
+        select 'Ocean Park Health Center'
+      end
+
+      i = ['email', 'tel', 'password']
+      r = [ENV['Pt_24_Email'], ENV['Pt_24_Phone_Number'], ENV['Pt_24_Password']]
+
+      i.zip(r).each do |item, response|
+        find("input[type = #{item}]").set(response)
+      end
+
+      click_on 'Submit'
+      click_on 'View the consent form' # need to update with Spanish
+      find('h2', text: 'PALO ALTO UNIVERSITY CONSENT')
+    end
+
     it 'signs in and consents to participate' do
       sign_in_pt_es('206')
       visit "#{ENV['Base_URL']}/#/es/consent"
@@ -201,15 +299,15 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       click_on 'Set Your Quit Date' # need to update with Spanish
       expect(page).to have_css('.ng-binding.ng-scope', text: 'Mi')
 
-      visit "#{ENV['Base_URL']}/#/es"
+      visit "#{ENV['Base_URL']}/#/es" # update when navigation is fixed
       click_on 'Stop Smoking Guide' # need to update with Spanish
       expect(page).to have_css('a', text: 'Why Should I Quit?') # need to update with Spanish
 
-      visit "#{ENV['Base_URL']}/#/es"
+      visit "#{ENV['Base_URL']}/#/es" # update when navigation is fixed
       click_on 'Cigarette Counter' # need to update with Spanish
       expect(page).to have_content 'Ayer'
 
-      visit "#{ENV['Base_URL']}/#/es"
+      visit "#{ENV['Base_URL']}/#/es" # update when navigation is fixed
       click_on 'Review Consent' # need to update with Spanish
       expect(page).to have_content 'UNIVERSIDAD DE PALO ALTO CONSENTIMIENTO'
     end
