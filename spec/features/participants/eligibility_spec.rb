@@ -13,14 +13,13 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       visit "#{ENV['Base_URL']}"
       click_on 'English'
       click_on 'Eligibility'
-      find('.ng-binding', text: 'How old are you?')
-      find('input[type = number]').set('25')
-      within('.navbar') do
-        click_on 'Español'
+      within('.form-group', text: 'Are you currently a smoker?') do
+        choose 'Yes'
       end
 
+      navigate_to('Español')
       find('.ng-binding', text: '¿Cuántos años tiene?')
-      expect(page).to have_css('input[type = number]', text: '25')
+      first('input[value = true]').should be_checked
     end
 
     it 'completes eligibility survey and is eligible' do
@@ -401,14 +400,13 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       visit "#{ENV['Base_URL']}"
       click_on 'Español'
       click_on 'Eligibility' # need to update with Spanish
-      find('.ng-binding', text: '¿Cuántos años tiene?')
-      find('input[type = number]').set('25')
-      within('.navbar') do
-        click_on 'English'
+      within('.form-group', text: '¿Fuma usted actualmente?') do
+        choose 'Sí'
       end
 
+      navigate_to('English')
       find('.ng-binding', text: 'How old are you?')
-      expect(page).to have_css('input[type = number]', text: '25')
+      first('input[value = true]').should be_checked
     end
 
     it 'completes eligibility survey and is eligible' do

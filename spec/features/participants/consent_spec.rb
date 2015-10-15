@@ -15,16 +15,10 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       click_on 'View the consent form'
       find('h2', text: 'PALO ALTO UNIVERSITY CONSENT')
       first('.ng-pristine.ng-untouched.ng-valid').click
-      within('.navbar') do
-        click_on 'Español'
-      end
+      navigate_to('Español')
 
       expect(page).to have_content 'UNIVERSIDAD DE PALO ALTO CONSENTIMIENTO'
-
-      within first('.form-group') do
-        expect(page)
-          .to have_css '.ng-untouched.ng-valid.ng-dirty.ng-valid-parse'
-      end
+      find('input[value = true]').should be_checked
     end
 
     it 'cannot review consent immediately following ineligible decision' do
@@ -84,9 +78,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
         end
       end
 
-      within('.navbar') do
-        click_on 'Español'
-      end
+      navigate_to('Español')
 
       within('.form-group',
              text: '¿Dónde recibe la mayor parte de su atención médica?') do
@@ -110,7 +102,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       visit "#{ENV['Base_URL']}/#/en/consent"
       find('h2', text: 'PALO ALTO UNIVERSITY CONSENT')
       first('.ng-pristine.ng-untouched.ng-valid').click
-      click_on 'Submit'
+      find('.btn.btn-default', text: 'Submit')
       expect(page).to have_css('a', text: 'Review Consent')
     end
 
@@ -119,7 +111,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       visit "#{ENV['Base_URL']}/#/en/consent"
       find('h2', text: 'PALO ALTO UNIVERSITY CONSENT')
       page.all('.ng-pristine.ng-untouched.ng-valid')[1].click
-      click_on 'Submit'
+      find('.btn.btn-default', text: 'Submit')
       expect(page).to have_css('a', text: 'Review Consent')
     end
 
@@ -165,22 +157,17 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
         .to have_css('h2', text: 'UNIVERSIDAD DE PALO ALTO CONSENTIMIENTO')
     end
 
-    it 'switches to English when consenting'
+    it 'switches to English when consenting' do
       visit "#{ENV['Base_URL']}" \
             '/es/pages/application#/es/eligibility-result?isEligible=true'
       click_on 'View the consent form'
       find('h2', text: 'UNIVERSIDAD DE PALO ALTO CONSENTIMIENTO')
       first('.ng-pristine.ng-untouched.ng-valid').click
-      within('.navbar') do
-        click_on 'English'
-      end
+      navigate_to('English')
 
       expect(page).to have_content 'PALO ALTO UNIVERSITY CONSENT'
 
-      within first('.form-group') do
-        expect(page)
-          .to have_css '.ng-untouched.ng-valid.ng-dirty.ng-valid-parse'
-      end
+      find('input[value = true]').should be_checked
     end
 
     it 'cannot review consent immediately following ineligible decision' do
@@ -226,8 +213,8 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
     end
 
     it 'switches to English while filling in eligibility, ' \
-       'is eligible, sees consent form in Español' do
-      visit "#{ENV['Base_URL']}/en/pages/application#/en/eligibility"
+       'is eligible, sees consent form in English' do
+      visit "#{ENV['Base_URL']}/es/pages/application#/es/eligibility"
       find('.ng-binding', text: '¿Cuántos años tiene?')
       find('input[type = number]').set('25')
       q = ['¿Fuma usted actualmente?',
@@ -241,9 +228,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
         end
       end
 
-      within('.navbar') do
-        click_on 'English'
-      end
+      navigate_to('English')
 
       within('.form-group',
              text: 'Where do you get most of your medical care?') do
@@ -267,7 +252,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       visit "#{ENV['Base_URL']}/#/es/consent"
       find('h2', text: 'UNIVERSIDAD DE PALO ALTO CONSENTIMIENTO')
       first('.ng-pristine.ng-untouched.ng-valid').click
-      click_on 'Submit'
+      find('.btn.btn-default', text: 'Submit')
       expect(page).to have_css('a', text: 'Review Consent')
     end
 
@@ -276,7 +261,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       visit "#{ENV['Base_URL']}/#/es/consent"
       find('h2', text: 'UNIVERSIDAD DE PALO ALTO CONSENTIMIENTO')
       page.all('.ng-pristine.ng-untouched.ng-valid')[1].click
-      click_on 'Submit'
+      find('.btn.btn-default', text: 'Submit')
       expect(page).to have_css('a', text: 'Review Consent')
     end
 
@@ -299,15 +284,15 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       click_on 'Set Your Quit Date' # need to update with Spanish
       expect(page).to have_css('.ng-binding.ng-scope', text: 'Mi')
 
-      visit "#{ENV['Base_URL']}/#/es" # update when navigation is fixed
+      visit "#{ENV['Base_URL']}"
       click_on 'Stop Smoking Guide' # need to update with Spanish
       expect(page).to have_css('a', text: 'Why Should I Quit?') # need to update with Spanish
 
-      visit "#{ENV['Base_URL']}/#/es" # update when navigation is fixed
+      visit "#{ENV['Base_URL']}"
       click_on 'Cigarette Counter' # need to update with Spanish
       expect(page).to have_content 'Ayer'
 
-      visit "#{ENV['Base_URL']}/#/es" # update when navigation is fixed
+      visit "#{ENV['Base_URL']}"
       click_on 'Review Consent' # need to update with Spanish
       expect(page).to have_content 'UNIVERSIDAD DE PALO ALTO CONSENTIMIENTO'
     end

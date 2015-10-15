@@ -13,7 +13,7 @@ describe 'A registered and consented participant signs in',
     it 'switches to Español in cigarette counter' do
       sign_in_pt_en('132')
       click_on 'Cigarette Counter'
-      find('.col-xs-6.col-sm-4.col-md-2.ng-scope', text: 'Yesterday')
+      find('.pull-left.ng-scope', text: 'Yesterday')
       navigate_to('Español')
       expect(page).to have_content 'Ayer'
     end
@@ -21,7 +21,7 @@ describe 'A registered and consented participant signs in',
     it 'navigates to Set Your Quit Date from cigarette counter' do
       sign_in_pt_en('132')
       click_on 'Cigarette Counter'
-      find('.col-xs-6.col-sm-4.col-md-2.ng-scope', text: 'Yesterday')
+      find('.pull-left.ng-scope', text: 'Yesterday')
       navigate_to('Set Your Quit Date')
       expect(page).to have_css '.previous'
     end
@@ -29,7 +29,7 @@ describe 'A registered and consented participant signs in',
     it "sees yesterday's cigarette count" do
       sign_in_pt_en('17')
       visit "#{ENV['Base_URL']}/#/en/cigarette-count"
-      within('.col-xs-6.col-sm-4.col-md-2.ng-scope', text: 'Yesterday') do
+      within('.pull-left.ng-scope', text: 'Yesterday') do
         expect(page).to have_content '15'
       end
     end
@@ -37,7 +37,7 @@ describe 'A registered and consented participant signs in',
     it "increments yesterday's cigarette count" do
       sign_in_pt_en('18')
       visit "#{ENV['Base_URL']}/#/en/cigarette-count"
-      within('.col-xs-6.col-sm-4.col-md-2.ng-scope', text: 'Yesterday') do
+      within('.pull-left.ng-scope', text: 'Yesterday') do
         find('.lead.ng-binding', text: '15')
         find('.btn.btn-lg.btn-default', text: '+').click
         expect(page).to have_content '16'
@@ -47,7 +47,7 @@ describe 'A registered and consented participant signs in',
     it "decrements yesterday's cigarette count" do
       sign_in_pt_en('19')
       visit "#{ENV['Base_URL']}/#/en/cigarette-count"
-      within('.col-xs-6.col-sm-4.col-md-2.ng-scope', text: 'Yesterday') do
+      within('.pull-left.ng-scope', text: 'Yesterday') do
         find('.lead.ng-binding', text: '15')
         find('.btn.btn-lg.btn-default', text: '-').click
         expect(page).to have_content '14'
@@ -57,7 +57,7 @@ describe 'A registered and consented participant signs in',
     it "sees today's cigarette count" do
       sign_in_pt_en('114')
       visit "#{ENV['Base_URL']}/#/en/cigarette-count"
-      within('.col-xs-6.col-sm-4.col-md-2.ng-scope', text: 'Today') do
+      within('.pull-left.col-xs-offset-1.ng-scope', text: 'Today') do
         expect(page).to have_content '15'
       end
     end
@@ -65,7 +65,7 @@ describe 'A registered and consented participant signs in',
     it "increments today's cigarette count" do
       sign_in_pt_en('115')
       visit "#{ENV['Base_URL']}/#/en/cigarette-count"
-      within('.col-xs-6.col-sm-4.col-md-2.ng-scope', text: 'Today') do
+      within('.pull-left.col-xs-offset-1.ng-scope', text: 'Today') do
         find('.lead.ng-binding', text: '15')
         find('.btn.btn-lg.btn-default', text: '+').click
         expect(page).to have_content '16'
@@ -75,7 +75,7 @@ describe 'A registered and consented participant signs in',
     it "decrements today's cigarette count" do
       sign_in_pt_en('116')
       visit "#{ENV['Base_URL']}/#/en/cigarette-count"
-      within('.col-xs-6.col-sm-4.col-md-2.ng-scope', text: 'Today') do
+      within('.pull-left.col-xs-offset-1.ng-scope', text: 'Today') do
         find('.lead.ng-binding', text: '15')
         find('.btn.btn-lg.btn-default', text: '-').click
         expect(page).to have_content '14'
@@ -94,7 +94,7 @@ describe 'A registered and consented participant signs in',
     it 'switches to English in cigarette counter' do
       sign_in_pt_es('213')
       click_on 'Cigarette Counter' # need to update with Spanish
-      find('.col-xs-6.col-sm-4.col-md-2.ng-scope', text: 'Ayer')
+      find('.pull-left.ng-scope', text: 'Ayer')
       navigate_to('English')
       expect(page).to have_content 'Yesterday'
     end
@@ -102,7 +102,7 @@ describe 'A registered and consented participant signs in',
     it 'navigates to Set Your Quit Date from cigarette counter' do
       sign_in_pt_es('213')
       click_on 'Cigarette Counter' # need to update with Spanish
-      find('.col-xs-6.col-sm-4.col-md-2.ng-scope', text: 'Ayer')
+      find('.pull-left.ng-scope', text: 'Ayer')
       navigate_to('Set Your Quit Date (ES)') # need to update with Spanish
       expect(page).to have_css '.previous'
     end
@@ -110,7 +110,7 @@ describe 'A registered and consented participant signs in',
     it "sees yesterday's cigarette count" do
       sign_in_pt_es('20')
       visit "#{ENV['Base_URL']}/#/es/cigarette-count"
-      within('.col-xs-6.col-sm-4.col-md-2.ng-scope', text: 'Ayer') do
+      within('.pull-left.ng-scope', text: 'Ayer') do
         expect(page).to have_content '15'
       end
     end
@@ -118,7 +118,7 @@ describe 'A registered and consented participant signs in',
     it "increments yesterday's cigarette count" do
       sign_in_pt_es('21')
       visit "#{ENV['Base_URL']}/#/es/cigarette-count"
-      within('.col-xs-6.col-sm-4.col-md-2.ng-scope', text: 'Ayer') do
+      within('.pull-left.ng-scope', text: 'Ayer') do
         find('.lead.ng-binding', text: '15')
         find('.btn.btn-lg.btn-default', text: '+').click
         expect(page).to have_content '16'
@@ -128,7 +128,7 @@ describe 'A registered and consented participant signs in',
     it "decrements yesterday's cigarette count" do
       sign_in_pt_es('22')
       visit "#{ENV['Base_URL']}/#/es/cigarette-count"
-      within('.col-xs-6.col-sm-4.col-md-2.ng-scope', text: 'Ayer') do
+      within('.pull-left.ng-scope', text: 'Ayer') do
         find('.lead.ng-binding', text: '15')
         find('.btn.btn-lg.btn-default', text: '-').click
         expect(page).to have_content '14'
@@ -138,7 +138,7 @@ describe 'A registered and consented participant signs in',
     it "sees today's cigarette count" do
       sign_in_pt_es('214')
       visit "#{ENV['Base_URL']}/#/es/cigarette-count"
-      within('.col-xs-6.col-sm-4.col-md-2.ng-scope', text: 'Hoy') do
+      within('.pull-left.col-xs-offset-1.ng-scope', text: 'Hoy') do
         expect(page).to have_content '15'
       end
     end
@@ -146,7 +146,7 @@ describe 'A registered and consented participant signs in',
     it "increments today's cigarette count" do
       sign_in_pt_es('215')
       visit "#{ENV['Base_URL']}/#/es/cigarette-count"
-      within('.col-xs-6.col-sm-4.col-md-2.ng-scope', text: 'Hoy') do
+      within('.pull-left.col-xs-offset-1.ng-scope', text: 'Hoy') do
         find('.lead.ng-binding', text: '15')
         find('.btn.btn-lg.btn-default', text: '+').click
         expect(page).to have_content '16'
@@ -156,7 +156,7 @@ describe 'A registered and consented participant signs in',
     it "decrements today's cigarette count" do
       sign_in_pt_es('216')
       visit "#{ENV['Base_URL']}/#/es/cigarette-count"
-      within('.col-xs-6.col-sm-4.col-md-2.ng-scope', text: 'Hoy') do
+      within('.pull-left.col-xs-offset-1.ng-scope', text: 'Hoy') do
         find('.lead.ng-binding', text: '15')
         find('.btn.btn-lg.btn-default', text: '-').click
         expect(page).to have_content '14'

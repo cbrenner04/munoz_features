@@ -14,6 +14,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       fill_in 'participant_email', with: ENV['Pt_3_Email']
       fill_in 'participant_password', with: ENV['Pt_3_Password']
       click_on 'Sign in'
+      find('a', text: 'Set Your Quit Date')
       expect(page).to have_content 'Signed in successfully.'
     end
 
@@ -22,6 +23,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       fill_in 'participant_email', with: ENV['Pt_112_Email']
       fill_in 'participant_password', with: ENV['Pt_112_Password']
       click_on 'Sign in'
+      find('a', text: 'Set Your Quit Date')
       expect(page).to have_content 'Signed in successfully.'
     end
 
@@ -33,7 +35,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       expect(page).to have_content 'Invalid email or password'
     end
 
-    it 'is a registered participant and resets their password' do
+    it 'is a registered participant and request password reset' do
       click_on 'Sign in'
       find('h2', text: 'Sign in')
       click_on 'Forgot your password?'
@@ -42,6 +44,14 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       expect(page).to have_content 'You will receive an email with ' \
                                    'instructions on how to reset your ' \
                                    'password in a few minutes.'
+    end
+
+    it 'is a registered participant and resets password' do
+      visit "#{ENV['Base_URL']}/en/participants/password/edit?reset_password_token=wBejyLo69CVmAW4fzmYtn"
+      fill_in 'participant_password', with: 'newpassword'
+      fill_in 'participant_password_confirmation', with: 'newpassword'
+      click_on 'Change my password'
+      expect(page).to have_content 'something silly'
     end
 
     it "uses 'Didn't receive confirmation instructions?'" do
@@ -107,6 +117,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       fill_in 'participant_email', with: ENV['Pt_4_Email']
       fill_in 'participant_password', with: ENV['Pt_4_Password']
       click_on 'Iniciar sésion'
+      find('a', text: 'Set Your Quit Date (ES)')
       expect(page).to have_content 'Sesión iniciada.'
     end
 
@@ -115,8 +126,8 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       fill_in 'participant_email', with: ENV['Pt_212_Email']
       fill_in 'participant_password', with: ENV['Pt_212_Password']
       click_on 'Iniciar sésion'
+      find('a', text: 'Set Your Quit Date (ES)') # need to update with Spanish
       expect(page).to have_content 'Sesión iniciada.'
-      expect(page).to have_css('a', text: 'Set Your Quit Date (ES)') # need to update with Spanish
     end
 
     it 'is not a registered participant, cannot sign in' do
@@ -127,7 +138,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       expect(page).to have_content 'Email o contraseña no válidos.'
     end
 
-    it 'is a registered participant and resets their password' do
+    it 'is a registered participant and requests password reset' do
       click_on 'Iniciar sésion'
       find('h2', text: 'Iniciar sésion')
       click_on '¿Ha olvidado su contraseña?'
@@ -136,6 +147,14 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       expect(page).to have_content 'Recibirás un correo con instrucciones ' \
                                    'sobre cómo resetear tu contraseña en ' \
                                    'unos pocos minutos.'
+    end
+
+    it 'is a registered participant and resets password' do
+      visit "#{ENV['Base_URL']}/es/participants/password/edit?reset_password_token=IOaknionuwe67423867h"
+      fill_in 'participant_password', with: 'newpassword'
+      fill_in 'participant_password_confirmation', with: 'newpassword'
+      click_on 'Cambiar mi contraseña'
+      expect(page).to have_content 'something silly'
     end
 
     it "uses 'Didn't receive confirmation instructions?'" do

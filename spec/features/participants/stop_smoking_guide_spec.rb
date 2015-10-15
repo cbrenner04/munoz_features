@@ -30,8 +30,7 @@ describe 'A registered and consented participant signs in',
       click_on 'Stop Smoking Guide'
       find('a', text: 'Why Should I Quit?')
       navigate_to('Cigarette Counter')
-      expect(page)
-        .to have_css('.col-xs-6.col-sm-4.col-md-2.ng-scope', text: 'Yesterday')
+      expect(page).to have_css('.pull-left.ng-scope', text: 'Yesterday')
     end
 
     it 'navigates to How to Help guide' do
@@ -61,7 +60,6 @@ describe 'A registered and consented participant signs in',
       click_on 'How do I Help Someone Quit?'
       find('h2', text: 'How to help page 1 title')
       navigate_to('Español')
-      page.evaluate_script('window.location.reload()') # remove when navigation fixed
       expect(page).to have_css('h2', text: 'Como ayudar página 1 título')
       expect(page).to have_content 'Como ayudar página 1 cuerpo'
     end
@@ -81,8 +79,7 @@ describe 'A registered and consented participant signs in',
       click_on 'How do I Help Someone Quit?'
       find('h2', text: 'How to help page 1 title')
       navigate_to('Cigarette Counter')
-      expect(page)
-        .to have_css('.col-xs-6.col-sm-4.col-md-2.ng-scope', text: 'Yesterday')
+      expect(page).to have_css('.pull-left.ng-scope', text: 'Yesterday')
     end
 
     it 'navigates to How to Quit guide' do
@@ -103,7 +100,7 @@ describe 'A registered and consented participant signs in',
       find('a', text: 'Next').click
       find('h2', text: 'How to quit page 3 title')
       find('a', text: 'Next').click
-      page.evaluate_script('window.location.reload()') # remove when navigation fixed
+      page.execute_script('window.location.reload()')
       expect(page).to have_content 'What if? page 1 title'
     end
 
@@ -113,7 +110,6 @@ describe 'A registered and consented participant signs in',
       click_on 'How Can I Quit?'
       find('h2', text: 'How to quit page 1 title')
       navigate_to('Español')
-      page.evaluate_script('window.location.reload()') # remove when navigation fixed
       expect(page)
         .to have_css('h2', text: 'Cómo dejar de fumar página 1 título')
       expect(page).to have_content 'Cómo dejar de fumar página 1 cuerpo'
@@ -134,8 +130,7 @@ describe 'A registered and consented participant signs in',
       click_on 'How Can I Quit?'
       find('h2', text: 'How to quit page 1 title')
       navigate_to('Cigarette Counter')
-      expect(page)
-        .to have_css('.col-xs-6.col-sm-4.col-md-2.ng-scope', text: 'Yesterday')
+      expect(page).to have_css('.pull-left.ng-scope', text: 'Yesterday')
     end
 
     it 'navigates to What If guide' do
@@ -156,7 +151,7 @@ describe 'A registered and consented participant signs in',
       find('a', text: 'Next').click
       find('h2', text: 'What if? page 3 title')
       find('a', text: 'Next').click
-      page.evaluate_script('window.location.reload()') # remove when navigation fixed
+      page.execute_script('window.location.reload()')
       expect(page).to have_content 'How to help page 1 title'
     end
 
@@ -166,7 +161,6 @@ describe 'A registered and consented participant signs in',
       click_on 'What if I Start Smoking Again?'
       find('h2', text: 'What if? page 1 title')
       navigate_to('Español')
-      page.evaluate_script('window.location.reload()') # remove when navigation fixed
       expect(page).to have_css('h2', text: '¿Y sí? página 1 título')
       expect(page).to have_content '¿Y sí? página 1 cuerpo'
     end
@@ -186,8 +180,7 @@ describe 'A registered and consented participant signs in',
       click_on 'What if I Start Smoking Again?'
       find('h2', text: 'What if? page 1 title')
       navigate_to('Cigarette Counter')
-      expect(page)
-        .to have_css('.col-xs-6.col-sm-4.col-md-2.ng-scope', text: 'Yesterday')
+      expect(page).to have_css('.pull-left.ng-scope', text: 'Yesterday')
     end
 
     it 'navigates to Why Quit guide' do
@@ -208,7 +201,7 @@ describe 'A registered and consented participant signs in',
       find('a', text: 'Next').click
       find('h2', text: 'Why Quit? page 3 title')
       find('a', text: 'Next').click
-      page.evaluate_script('window.location.reload()') # remove when navigation fixed
+      page.execute_script('window.location.reload()')
       expect(page).to have_content 'How to quit page 1 title'
     end
 
@@ -218,7 +211,6 @@ describe 'A registered and consented participant signs in',
       click_on 'Why Should I Quit?'
       find('h2', text: 'Why Quit? page 1 title')
       navigate_to('Español')
-      page.evaluate_script('window.location.reload()') # remove when navigation fixed
       expect(page)
         .to have_css('h2', text: '¿Por qué dejar de fumar? página 1 título')
       expect(page).to have_content '¿Por qué dejar de fumar? página 1 cuerpo'
@@ -239,8 +231,7 @@ describe 'A registered and consented participant signs in',
       click_on 'Why Should I Quit?'
       find('h2', text: 'Why Quit? page 1 title')
       navigate_to('Cigarette Counter')
-      expect(page)
-        .to have_css('.col-xs-6.col-sm-4.col-md-2.ng-scope', text: 'Yesterday')
+      expect(page).to have_css('.pull-left.ng-scope', text: 'Yesterday')
     end
   end
 
@@ -256,7 +247,6 @@ describe 'A registered and consented participant signs in',
       click_on 'Stop Smoking Guide (ES)' # need to update with Spanish
       find('a', text: 'Why Should I Quit?') # need to update with Spanish
       navigate_to('English')
-      page.evaluate_script('window.location.reload()') # remove when navigation fixed
       expect(page).to have_css('a', text: 'Why Should I Quit?')
     end
 
@@ -273,8 +263,7 @@ describe 'A registered and consented participant signs in',
       click_on 'Stop Smoking Guide (ES)' # need to update with Spanish
       find('a', text: 'Why Should I Quit?') # need to update with Spanish
       navigate_to('Cigarette Counter (ES)') # need to update with Spanish
-      expect(page)
-        .to have_css('.col-xs-6.col-sm-4.col-md-2.ng-scope', text: 'Ayer')
+      expect(page).to have_css('.pull-left.ng-scope', text: 'Ayer')
     end
 
     it 'navigates to How to Help guide' do
@@ -304,7 +293,6 @@ describe 'A registered and consented participant signs in',
       click_on 'How do I Help Someone Quit'  # need to update with Spanish
       find('h2', text: 'Como ayudar página 1 título')
       navigate_to('English')
-      page.evaluate_script('window.location.reload()') # remove when navigation fixed
       expect(page).to have_css('h2', text: 'How to help page 1 title')
       expect(page).to have_content 'How to help page 1 body'
     end
@@ -324,8 +312,7 @@ describe 'A registered and consented participant signs in',
       click_on 'How do I Help Someone Quit'  # need to update with Spanish
       find('h2', text: 'Como ayudar página 1 título')
       navigate_to('Cigarette Counter (ES)') # need to update with Spanish
-      expect(page)
-        .to have_css('.col-xs-6.col-sm-4.col-md-2.ng-scope', text: 'Ayer')
+      expect(page).to have_css('.pull-left.ng-scope', text: 'Ayer')
     end
 
     it 'navigates to How to Quit guide' do
@@ -347,7 +334,7 @@ describe 'A registered and consented participant signs in',
       find('a', text: 'Next').click
       find('h2', text: 'Cómo dejar de fumar página 3 título')
       find('a', text: 'Next').click
-      page.evaluate_script('window.location.reload()') # remove when navigation fixed
+      page.execute_script('window.location.reload()')
       expect(page).to have_content '¿Y sí? página 1 título'
     end
 
@@ -357,7 +344,6 @@ describe 'A registered and consented participant signs in',
       click_on 'How Can I Quit?' # need to update with Spanish
       find('h2', text: 'Cómo dejar de fumar página 1 título')
       navigate_to('English')
-      page.evaluate_script('window.location.reload()') # remove when navigation fixed
       expect(page).to have_css('h2', text: 'How to quit page 1 title')
       expect(page).to have_content 'How to quit page 1 body'
     end
@@ -377,8 +363,7 @@ describe 'A registered and consented participant signs in',
       click_on 'How Can I Quit?' # need to update with Spanish
       find('h2', text: 'Cómo dejar de fumar página 1 título')
       navigate_to('Cigarette Counter (ES)') # need to update with Spanish
-      expect(page)
-        .to have_css('.col-xs-6.col-sm-4.col-md-2.ng-scope', text: 'Ayer')
+      expect(page).to have_css('.pull-left.ng-scope', text: 'Ayer')
     end
 
     it 'navigates to What If guide' do
@@ -399,7 +384,7 @@ describe 'A registered and consented participant signs in',
       find('a', text: 'Next').click
       find('h2', text: '¿Y sí? página 3 título')
       find('a', text: 'Next').click
-      page.evaluate_script('window.location.reload()') # remove when navigation fixed
+      page.execute_script('window.location.reload()')
       expect(page).to have_content 'Como ayudar página 1 título'
     end
 
@@ -409,7 +394,6 @@ describe 'A registered and consented participant signs in',
       click_on 'What if I Start Smoking Again?' # need to update with Spanish
       find('h2', text: '¿Y sí? página 1 título')
       navigate_to('English')
-      page.evaluate_script('window.location.reload()') # remove when navigation fixed
       expect(page).to have_css('h2', text: 'What if? page 1 title')
       expect(page).to have_content 'What if? page 1 body'
     end
@@ -429,8 +413,7 @@ describe 'A registered and consented participant signs in',
       click_on 'What if I Start Smoking Again?' # need to update with Spanish
       find('h2', text: '¿Y sí? página 1 título')
       navigate_to('Cigarette Counter') # need to update with Spanish
-      expect(page)
-        .to have_css('.col-xs-6.col-sm-4.col-md-2.ng-scope', text: 'Ayer')
+      expect(page).to have_css('.pull-left.ng-scope', text: 'Ayer')
     end
 
     it 'navigates to Why Quit guide' do
@@ -452,7 +435,7 @@ describe 'A registered and consented participant signs in',
       find('a', text: 'Next').click
       find('h2', text: '¿Por qué dejar de fumar? página 3 título')
       find('a', text: 'Next').click
-      page.evaluate_script('window.location.reload()') # remove when navigation fixed
+      page.execute_script('window.location.reload()')
       expect(page).to have_content 'Cómo dejar de fumar página 1 título'
     end
 
@@ -462,7 +445,6 @@ describe 'A registered and consented participant signs in',
       click_on 'Why Should I Quit?' # need to update with Spanish
       find('h2', text: '¿Por qué dejar de fumar? página 1 título')
       navigate_to('English')
-      page.evaluate_script('window.location.reload()') # remove when navigation fixed
       expect(page).to have_css('h2', text: 'Why Quit? page 1 title')
       expect(page).to have_content 'Why Quit? page 1 body'
     end
@@ -482,8 +464,7 @@ describe 'A registered and consented participant signs in',
       click_on 'Why Should I Quit?' # need to update with Spanish
       find('h2', text: '¿Por qué dejar de fumar? página 1 título')
       navigate_to('Cigarette Counter') # need to update with Spanish
-      expect(page)
-        .to have_css('.col-xs-6.col-sm-4.col-md-2.ng-scope', text: 'Ayer')
+      expect(page).to have_css('.pull-left.ng-scope', text: 'Ayer')
     end
   end
 end

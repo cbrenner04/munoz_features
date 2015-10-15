@@ -22,8 +22,7 @@ describe 'A registered and consented participant signs in',
       visit "#{ENV['Base_URL']}/#/en/quit-date"
       find('.ng-binding.ng-scope', text: 'We')
       navigate_to('Cigarette Counter')
-      expect(page)
-        .to have_css('.col-xs-6.col-sm-4.col-md-2.ng-scope', text: 'Yesterday')
+      expect(page).to have_css('.pull-left.ng-scope', text: 'Yesterday')
     end
 
     it "sees today's date highlighted" do
@@ -171,8 +170,7 @@ describe 'A registered and consented participant signs in',
       visit "#{ENV['Base_URL']}/#/es/quit-date"
       find('.ng-binding.ng-scope', text: 'Mi')
       navigate_to('Cigarette Counter (ES)') # need to update with Spanish
-      expect(page)
-        .to have_css('.col-xs-6.col-sm-4.col-md-2.ng-scope', text: 'Hoy')
+      expect(page).to have_css('.pull-left.ng-scope', text: 'Ayer')
     end
 
     it "sees today's date highlighted" do

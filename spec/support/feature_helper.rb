@@ -14,7 +14,7 @@ def sign_in_pt_en(id)
   fill_in 'participant_email', with: ENV["Pt_#{id}_Email"]
   fill_in 'participant_password', with: ENV["Pt_#{id}_Password"]
   click_on 'Sign in'
-  expect(page).to have_content 'Signed in successfully.'
+  find('a', text: 'Set Your Quit Date')
 end
 
 def sign_in_pt_es(id)
@@ -31,7 +31,7 @@ def sign_in_pt_es(id)
   fill_in 'participant_email', with: ENV["Pt_#{id}_Email"]
   fill_in 'participant_password', with: ENV["Pt_#{id}_Password"]
   click_on 'Iniciar sésion'
-  expect(page).to have_content 'Sesión iniciada.'
+  find('a', text: 'Set Your Quit Date (ES)') # need to update with Spanish
 end
 
 def navigate_to(button)
