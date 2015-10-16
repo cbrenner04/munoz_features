@@ -46,14 +46,6 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
                                    'password in a few minutes.'
     end
 
-    it 'is a registered participant and resets password' do
-      visit "#{ENV['Base_URL']}/en/participants/password/edit?reset_password_token=BejyLo69CVmAW4fzmYtn"
-      fill_in 'participant_password', with: 'newpassword'
-      fill_in 'participant_password_confirmation', with: 'newpassword'
-      click_on 'Change my password'
-      expect(page).to have_content 'Your password has been changed successfully. You are now signed in.'
-    end
-
     it "uses 'Didn't receive confirmation instructions?'" do
       click_on 'Sign in'
       find('h2', text: 'Sign in')
@@ -147,14 +139,6 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       expect(page).to have_content 'Recibirás un correo con instrucciones ' \
                                    'sobre cómo resetear tu contraseña en ' \
                                    'unos pocos minutos.'
-    end
-
-    it 'is a registered participant and resets password' do
-      visit "#{ENV['Base_URL']}/es/participants/password/edit?reset_password_token=IOaknionuwe67423867h"
-      fill_in 'participant_password', with: 'newpassword'
-      fill_in 'participant_password_confirmation', with: 'newpassword'
-      click_on 'Cambiar mi contraseña'
-      expect(page).to have_content 'Your password has been changed successfully. You are now signed in.' # need to update with Spanish
     end
 
     it "uses 'Didn't receive confirmation instructions?'" do

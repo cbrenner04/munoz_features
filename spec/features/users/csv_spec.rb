@@ -5,7 +5,7 @@ require 'fileutils'
 require 'csv'
 require_relative '../../support/headers/consent_responses.rb'
 
-describe 'Admin signs in' do
+describe 'Admin signs in', metadata: :user do
   before do
     @download_dir = File.join(Dir.pwd, UUID.new.generate)
     FileUtils.mkdir_p @download_dir
