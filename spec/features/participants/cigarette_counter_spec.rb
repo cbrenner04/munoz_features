@@ -99,11 +99,16 @@ describe 'A registered and consented participant signs in',
       end
     end
 
-    it 'sees cigarette count for more than a week ago' do
+    it 'sees cigarette count for more than a week ago', :date do
       sign_in_pt_en('143')
       visit "#{ENV['Base_URL']}/#/en/cigarette-count"
-      unless Date.today.strftime('%-d') == 15
-        expect(page).to_not have_content '15'
+      today = Date.today.strftime('%d').to_i
+      if today.between?(1, 6) && page.has_text?('30')
+        expect(page).to have_content('0', count: 8)
+      elsif today.between?(10, 16) || today.between?(20, 26) || today >= 30
+        expect(page).to have_content('0', count: 8)
+      else
+        expect(page).to have_content('0', count: 7)
       end
       find('#previous-week').click
       prev_day = Date.today - 9
@@ -233,11 +238,16 @@ describe 'A registered and consented participant signs in',
       end
     end
 
-    it 'sees cigarette count for more than a week ago' do
+    it 'sees cigarette count for more than a week ago', :date do
       sign_in_pt_es('243')
       visit "#{ENV['Base_URL']}/#/es/cigarette-count"
-      unless Date.today.strftime('%-d') == 15
-        expect(page).to_not have_content '15'
+      today = Date.today.strftime('%d').to_i
+      if today.between?(1, 6) && page.has_text?('30')
+        expect(page).to have_content('0', count: 8)
+      elsif today.between?(10, 16) || today.between?(20, 26) || today >= 30
+        expect(page).to have_content('0', count: 8)
+      else
+        expect(page).to have_content('0', count: 7)
       end
       find('#previous-week').click
       prev_day = Date.today - 9

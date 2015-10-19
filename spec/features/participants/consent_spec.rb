@@ -286,7 +286,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
 
       visit "#{ENV['Base_URL']}"
       click_on 'Stop Smoking Guide' # need to update with Spanish
-      expect(page).to have_css('a', text: 'Why Should I Quit?') # need to update with Spanish
+      expect(page).to have_css('a', text: '¿Por qué debo dejar de fumar?')
 
       visit "#{ENV['Base_URL']}"
       click_on 'Cigarette Counter' # need to update with Spanish
