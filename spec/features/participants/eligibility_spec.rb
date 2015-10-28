@@ -1,18 +1,22 @@
 # filename: spec/features/participants/eligibility_spec.rb
 
+require_relative '../../support/zip_codes.rb'
+
 describe 'A visitor to the site', type: :feature, metadata: :participant do
   context 'in English' do
-    it 'navigates to the eligibilty page' do
+    it 'navigates to the eligibility page' do
       visit "#{ENV['Base_URL']}"
       click_on 'English'
-      click_on 'Eligibility'
+      expect(page).to have_content 'Please answer the following questions to ' \
+                                   "determine if you're eligible to participate."
+      click_on 'Continue'
       expect(page).to have_content 'How old are you?'
     end
 
     it 'switches to Español when filling out eligibility' do
       visit "#{ENV['Base_URL']}"
       click_on 'English'
-      click_on 'Eligibility'
+      click_on 'Continue'
       within('.form-group', text: 'Are you currently a smoker?') do
         choose 'Yes'
       end
@@ -25,11 +29,10 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
     it 'completes eligibility survey and is eligible' do
       visit "#{ENV['Base_URL']}/en/pages/application#/en/eligibility"
       find('.ng-binding', text: 'How old are you?')
-      find('input[type = number]').set('25')
+      first('input[type = tel]').set('25')
       q = ['Are you currently a smoker?',
-           'Are you thinking of quitting smoking within the next 30 days?',
-           'Do you currently live in California?']
-      a = ['Yes', 'Yes', 'Yes']
+           'Are you thinking of quitting smoking within the next 30 days?']
+      a = ['Yes', 'Yes']
 
       q.zip(a).each do |ques, answ|
         within('.form-group', text: ques) do
@@ -37,32 +40,26 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
         end
       end
 
+      page.all('input[type = tel]')[1].set(ZipCodes::SF.sample)
       within('.form-group',
              text: 'Where do you get most of your medical care?') do
         select 'Ocean Park Health Center'
       end
 
-      i = ['email', 'tel', 'password']
-
-      r = [ENV['Pt_101_Email'], ENV['Pt_101_Phone_Number'],
-           ENV['Pt_101_Password']]
-
-      i.zip(r).each do |item, response|
-        find("input[type = #{item}]").set(response)
-      end
-
-      click_on 'Submit'
+      find('input[type = email]').set(ENV['Pt_101_Email'])
+      page.all('input[type = tel]')[2].set(ENV['Pt_101_Phone_Number'])
+      find('input[type = password]').set(ENV['Pt_101_Password'])
+      find('input[type = submit]').click
       expect(page).to have_content 'You are eligible to participate'
     end
 
     it 'completes eligibility survey and is ineligible due to age' do
       visit "#{ENV['Base_URL']}/en/pages/application#/en/eligibility"
       find('.ng-binding', text: 'How old are you?')
-      find('input[type = number]').set('17')
+      first('input[type = tel]').set('17')
       q = ['Are you currently a smoker?',
-           'Are you thinking of quitting smoking within the next 30 days?',
-           'Do you currently live in California?']
-      a = ['Yes', 'Yes', 'Yes']
+           'Are you thinking of quitting smoking within the next 30 days?']
+      a = ['Yes', 'Yes']
 
       q.zip(a).each do |ques, answ|
         within('.form-group', text: ques) do
@@ -70,32 +67,26 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
         end
       end
 
+      page.all('input[type = tel]')[1].set(ZipCodes::SF.sample)
       within('.form-group',
              text: 'Where do you get most of your medical care?') do
         select 'Ocean Park Health Center'
       end
 
-      i = ['email', 'tel', 'password']
-
-      r = [ENV['Pt_102_Email'], ENV['Pt_102_Phone_Number'],
-           ENV['Pt_102_Password']]
-
-      i.zip(r).each do |item, response|
-        find("input[type = #{item}]").set(response)
-      end
-
-      click_on 'Submit'
+      find('input[type = email]').set(ENV['Pt_102_Email'])
+      page.all('input[type = tel]')[2].set(ENV['Pt_102_Phone_Number'])
+      find('input[type = password]').set(ENV['Pt_102_Password'])
+      find('input[type = submit]').click
       expect(page).to have_content 'You are not eligible to participate'
     end
 
     it 'completes eligibility survey, is ineligible due to neg response Q2' do
       visit "#{ENV['Base_URL']}/en/pages/application#/en/eligibility"
       find('.ng-binding', text: 'How old are you?')
-      find('input[type = number]').set('25')
+      first('input[type = tel]').set('25')
       q = ['Are you currently a smoker?',
-           'Are you thinking of quitting smoking within the next 30 days?',
-           'Do you currently live in California?']
-      a = ['No', 'Yes', 'Yes']
+           'Are you thinking of quitting smoking within the next 30 days?']
+      a = ['No', 'Yes']
 
       q.zip(a).each do |ques, answ|
         within('.form-group', text: ques) do
@@ -103,32 +94,26 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
         end
       end
 
+      page.all('input[type = tel]')[1].set(ZipCodes::SF.sample)
       within('.form-group',
              text: 'Where do you get most of your medical care?') do
         select 'Ocean Park Health Center'
       end
 
-      i = ['email', 'tel', 'password']
-
-      r = [ENV['Pt_103_Email'], ENV['Pt_103_Phone_Number'],
-           ENV['Pt_103_Password']]
-
-      i.zip(r).each do |item, response|
-        find("input[type = #{item}]").set(response)
-      end
-
-      click_on 'Submit'
+      find('input[type = email]').set(ENV['Pt_103_Email'])
+      page.all('input[type = tel]')[2].set(ENV['Pt_103_Phone_Number'])
+      find('input[type = password]').set(ENV['Pt_103_Password'])
+      find('input[type = submit]').click
       expect(page).to have_content 'You are not eligible to participate'
     end
 
     it 'completes eligibility survey, is ineligible due to neg response Q3' do
       visit "#{ENV['Base_URL']}/en/pages/application#/en/eligibility"
       find('.ng-binding', text: 'How old are you?')
-      find('input[type = number]').set('25')
+      first('input[type = tel]').set('25')
       q = ['Are you currently a smoker?',
-           'Are you thinking of quitting smoking within the next 30 days?',
-           'Do you currently live in California?']
-      a = ['Yes', 'No', 'Yes']
+           'Are you thinking of quitting smoking within the next 30 days?']
+      a = ['Yes', 'No']
 
       q.zip(a).each do |ques, answ|
         within('.form-group', text: ques) do
@@ -136,160 +121,25 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
         end
       end
 
+      page.all('input[type = tel]')[1].set(ZipCodes::SF.sample)
       within('.form-group',
              text: 'Where do you get most of your medical care?') do
         select 'Ocean Park Health Center'
       end
 
-      i = ['email', 'tel', 'password']
-
-      r = [ENV['Pt_104_Email'], ENV['Pt_104_Phone_Number'],
-           ENV['Pt_104_Password']]
-
-      i.zip(r).each do |item, response|
-        find("input[type = #{item}]").set(response)
-      end
-
-      click_on 'Submit'
+      find('input[type = email]').set(ENV['Pt_104_Email'])
+      page.all('input[type = tel]')[2].set(ENV['Pt_104_Phone_Number'])
+      find('input[type = password]').set(ENV['Pt_104_Password'])
+      find('input[type = submit]').click
       expect(page).to have_content 'You are not eligible to participate'
     end
 
-    it 'does not fill in age, sees proper error'
-    #   visit "#{ENV['Base_URL']}/en/pages/application#/en/eligibility"
-    #   find('.ng-binding', text: 'How old are you?')
-    #   q = ['Are you currently a smoker?',
-    #        'Are you thinking of quitting smoking within the next 30 days?',
-    #        'Do you currently live in California?']
-    #   a = ['Yes', 'Yes', 'Yes']
-
-    #   q.zip(a).each do |ques, answ|
-    #     within('.form-group', text: ques) do
-    #       choose answ
-    #     end
-    #   end
-
-    #   within('.form-group',
-    #          text: 'Where do you get most of your medical care?') do
-    #     select 'Ocean Park Health Center'
-    #   end
-
-      # i = ['email', 'tel', 'password']
-
-    #   r = [ENV['Pt_9_Email'], ENV['Pt_9_Phone_Number'],
-    #        ENV['Pt_9_Password']]
-
-      # i.zip(r).each do |item, response|
-      #   find("input[type = #{item}]").set(response)
-      # end
-
-    #   click_on 'Submit'
-    #   expect(page).to have_content ''
-    # end
-
-    it 'does not fill in Q2, sees proper error'
-    #   visit "#{ENV['Base_URL']}/en/pages/application#/en/eligibility"
-    #   find('.ng-binding', text: 'How old are you?')
-    #   find('input[type = number]').set('25')
-    #   q = ['Are you thinking of quitting smoking within the next 30 days?',
-    #        'Do you currently live in California?']
-    #   a = ['Yes', 'Yes']
-
-    #   q.zip(a).each do |ques, answ|
-    #     within('.form-group', text: ques) do
-    #       choose answ
-    #     end
-    #   end
-
-    #   within('.form-group',
-    #          text: 'Where do you get most of your medical care?') do
-    #     select 'Ocean Park Health Center'
-    #   end
-
-      # i = ['email', 'tel', 'password']
-
-    #   r = [ENV['Pt_9_Email'], ENV['Pt_9_Phone_Number'],
-    #        ENV['Pt_9_Password']]
-
-      # i.zip(r).each do |item, response|
-      #   find("input[type = #{item}]").set(response)
-      # end
-
-    #   click_on 'Submit'
-    #   expect(page).to have_content ''
-    # end
-
-    it 'does not fill in Q3, sees proper error'
-    #   visit "#{ENV['Base_URL']}/en/pages/application#/en/eligibility"
-    #   find('.ng-binding', text: 'How old are you?')
-    #   find('input[type = number]').set('25')
-    #   q = ['Are you currently a smoker?',
-    #        'Do you currently live in California?']
-    #   a = ['Yes', 'Yes']
-
-    #   q.zip(a).each do |ques, answ|
-    #     within('.form-group', text: ques) do
-    #       choose answ
-    #     end
-    #   end
-
-    #   within('.form-group',
-    #          text: 'Where do you get most of your medical care?') do
-    #     select 'Ocean Park Health Center'
-    #   end
-
-      # i = ['email', 'tel', 'password']
-
-    #   r = [ENV['Pt_9_Email'], ENV['Pt_9_Phone_Number'],
-    #        ENV['Pt_9_Password']]
-
-      # i.zip(r).each do |item, response|
-      #   find("input[type = #{item}]").set(response)
-      # end
-
-    #   click_on 'Submit'
-    #   expect(page).to have_content ''
-    # end
-
-    it 'does not fill in Q4, sees proper error'
-    #   visit "#{ENV['Base_URL']}/en/pages/application#/en/eligibility"
-    #   find('.ng-binding', text: 'How old are you?')
-    #   find('input[type = number]').set('25')
-    #   q = ['Are you currently a smoker?',
-    #        'Are you thinking of quitting smoking within the next 30 days?']
-    #   a = ['Yes', 'Yes']
-
-    #   q.zip(a).each do |ques, answ|
-    #     within('.form-group', text: ques) do
-    #       choose answ
-    #     end
-    #   end
-
-    #   within('.form-group',
-    #          text: 'Where do you get most of your medical care?') do
-    #     select 'Ocean Park Health Center'
-    #   end
-
-      # i = ['email', 'tel', 'password']
-
-    #   r = [ENV['Pt_9_Email'], ENV['Pt_9_Phone_Number'],
-    #        ENV['Pt_9_Password']]
-
-      # i.zip(r).each do |item, response|
-      #   find("input[type = #{item}]").set(response)
-      # end
-
-    #   click_on 'Submit'
-    #   expect(page).to have_content ''
-    # end
-
-    it 'does not fill in email or phone number, sees proper error' do
+    it 'does not fill in age, cannot submit form' do
       visit "#{ENV['Base_URL']}/en/pages/application#/en/eligibility"
       find('.ng-binding', text: 'How old are you?')
-      find('input[type = number]').set('25')
       q = ['Are you currently a smoker?',
-           'Are you thinking of quitting smoking within the next 30 days?',
-           'Do you currently live in California?']
-      a = ['Yes', 'Yes', 'Yes']
+           'Are you thinking of quitting smoking within the next 30 days?']
+      a = ['Yes', 'Yes']
 
       q.zip(a).each do |ques, answ|
         within('.form-group', text: ques) do
@@ -297,50 +147,65 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
         end
       end
 
+      page.all('input[type = tel]')[1].set(ZipCodes::SF.sample)
       within('.form-group',
              text: 'Where do you get most of your medical care?') do
         select 'Ocean Park Health Center'
       end
 
+      find('input[type = email]').set(ENV['Pt_9_Email'])
+      page.all('input[type = tel]')[2].set(ENV['Pt_9_Phone_Number'])
       find('input[type = password]').set(ENV['Pt_9_Password'])
-      click_on 'Submit'
-      expect(page).to have_content 'You are not eligible to participate'
+      find('input[type = submit]')[:disabled].should eq 'true'
     end
 
-    it 'does not fill in password, sees proper error'
-    #   visit "#{ENV['Base_URL']}/en/pages/application#/en/eligibility"
-    #   find('.ng-binding', text: 'How old are you?')
-    #   find('input[type = number]').set('25')
-    #   q = ['Are you currently a smoker?',
-    #        'Are you thinking of quitting smoking within the next 30 days?',
-    #        'Do you currently live in California?']
-    #   a = ['Yes', 'Yes', 'Yes']
-
-    #   q.zip(a).each do |ques, answ|
-    #     within('.form-group', text: ques) do
-    #       choose answ
-    #     end
-    #   end
-
-    #   within('.form-group',
-    #          text: 'Where do you get most of your medical care?') do
-    #     select 'Ocean Park Health Center'
-    #   end
-
-    #   find('input[type = email]').set(ENV['Pt_9_Email'])
-    #   find('input[type = tel]').set(ENV['Pt_9_Phone_Number'])
-    #   click_on 'Submit'
-    #   expect(page).to have_content ''
-    # end
-
-    it 'completes eligibility survey without giving email and is eligible' do
+    it 'does not fill in Q2, cannot submit form' do
       visit "#{ENV['Base_URL']}/en/pages/application#/en/eligibility"
       find('.ng-binding', text: 'How old are you?')
-      find('input[type = number]').set('25')
+      first('input[type = tel]').set('25')
+      within('.form-group', text: 'Are you thinking of quitting') do
+        choose 'Yes'
+      end
+
+      page.all('input[type = tel]')[1].set(ZipCodes::SF.sample)
+      within('.form-group',
+             text: 'Where do you get most of your medical care?') do
+        select 'Ocean Park Health Center'
+      end
+
+      find('input[type = email]').set(ENV['Pt_9_Email'])
+      page.all('input[type = tel]')[2].set(ENV['Pt_9_Phone_Number'])
+      find('input[type = password]').set(ENV['Pt_9_Password'])
+      find('input[type = submit]')[:disabled].should eq 'true'
+    end
+
+    it 'does not fill in Q3, cannot submit form' do
+      visit "#{ENV['Base_URL']}/en/pages/application#/en/eligibility"
+      find('.ng-binding', text: 'How old are you?')
+      first('input[type = tel]').set('25')
+      within('.form-group', text: 'Are you currently a smoker?') do
+        choose 'Yes'
+      end
+
+      page.all('input[type = tel]')[1].set(ZipCodes::SF.sample)
+      within('.form-group',
+             text: 'Where do you get most of your medical care?') do
+        select 'Ocean Park Health Center'
+      end
+
+      find('input[type = email]').set(ENV['Pt_9_Email'])
+      page.all('input[type = tel]')[2].set(ENV['Pt_9_Phone_Number'])
+      find('input[type = password]').set(ENV['Pt_9_Password'])
+      find('input[type = submit]')[:disabled].should eq 'true'
+    end
+
+    it 'does not fill zip code, can submit form' do
+      visit "#{ENV['Base_URL']}/en/pages/application#/en/eligibility"
+      find('.ng-binding', text: 'How old are you?')
+      first('input[type = tel]').set('25')
       q = ['Are you currently a smoker?',
-           'Are you thinking of quitting smoking within the next 30 days?',
-           'Do you currently live in California?']
-      a = ['Yes', 'Yes', 'Yes']
+           'Are you thinking of quitting smoking within the next 30 days?']
+      a = ['Yes', 'Yes']
 
       q.zip(a).each do |ques, answ|
         within('.form-group', text: ques) do
@@ -348,26 +213,20 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
         end
       end
 
-      within('.form-group',
-             text: 'Where do you get most of your medical care?') do
-        select 'Ocean Park Health Center'
-      end
-
-      find('input[type = tel]').set(ENV['Pt_11_Phone_Number'])
-      find('input[type = password]').set(ENV['Pt_11_Password'])
-
-      click_on 'Submit'
+      find('input[type = email]').set(ENV['Pt_9_Email'])
+      page.all('input[type = tel]')[2].set(ENV['Pt_9_Phone_Number'])
+      find('input[type = password]').set(ENV['Pt_9_Password'])
+      find('input[type = submit]').click
       expect(page).to have_content 'You are eligible to participate'
     end
 
-    it 'completes eligibility survey without giving phone and is eligible' do
+    it 'fills in a SF zip code, sees the drop down for selecting clinic' do
       visit "#{ENV['Base_URL']}/en/pages/application#/en/eligibility"
       find('.ng-binding', text: 'How old are you?')
-      find('input[type = number]').set('25')
+      first('input[type = tel]').set('25')
       q = ['Are you currently a smoker?',
-           'Are you thinking of quitting smoking within the next 30 days?',
-           'Do you currently live in California?']
-      a = ['Yes', 'Yes', 'Yes']
+           'Are you thinking of quitting smoking within the next 30 days?']
+      a = ['Yes', 'Yes']
 
       q.zip(a).each do |ques, answ|
         within('.form-group', text: ques) do
@@ -375,16 +234,108 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
         end
       end
 
+      expect(page)
+        .to_not have_content 'Where do you get most of your medical care?'
+      page.all('input[type = tel]')[1].set(ZipCodes::SF.sample)
+      expect(page)
+        .to have_css('.form-group',
+                     text: 'Where do you get most of your medical care?')
+    end
+
+    it 'fills in a zip other than SF, does not see the drop down for clinic' do
+      visit "#{ENV['Base_URL']}/en/pages/application#/en/eligibility"
+      find('.ng-binding', text: 'How old are you?')
+      first('input[type = tel]').set('25')
+      q = ['Are you currently a smoker?',
+           'Are you thinking of quitting smoking within the next 30 days?']
+      a = ['Yes', 'Yes']
+
+      q.zip(a).each do |ques, answ|
+        within('.form-group', text: ques) do
+          choose answ
+        end
+      end
+
+      expect(page)
+        .to_not have_content 'Where do you get most of your medical care?'
+      page.all('input[type = tel]')[1].set(ZipCodes::CHI.sample)
+      expect(page)
+        .to_not have_content 'Where do you get most of your medical care?'
+    end
+
+    it 'does not fill in email, cannot submit form' do
+      visit "#{ENV['Base_URL']}/en/pages/application#/en/eligibility"
+      find('.ng-binding', text: 'How old are you?')
+      first('input[type = tel]').set('25')
+      q = ['Are you currently a smoker?',
+           'Are you thinking of quitting smoking within the next 30 days?']
+      a = ['Yes', 'Yes']
+
+      q.zip(a).each do |ques, answ|
+        within('.form-group', text: ques) do
+          choose answ
+        end
+      end
+
+      page.all('input[type = tel]')[1].set(ZipCodes::SF.sample)
       within('.form-group',
              text: 'Where do you get most of your medical care?') do
         select 'Ocean Park Health Center'
       end
 
-      find('input[type = email]').set(ENV['Pt_12_Email'])
-      find('input[type = password]').set(ENV['Pt_12_Password'])
+      page.all('input[type = tel]')[2].set(ENV['Pt_25_Phone_Number'])
+      find('input[type = password]').set(ENV['Pt_25_Password'])
+      find('input[type = submit]')[:disabled].should eq 'true'
+    end
 
-      click_on 'Submit'
-      expect(page).to have_content 'You are eligible to participate'
+    it 'does not fill in phone number, cannot submit form' do
+      visit "#{ENV['Base_URL']}/en/pages/application#/en/eligibility"
+      find('.ng-binding', text: 'How old are you?')
+      first('input[type = tel]').set('25')
+      q = ['Are you currently a smoker?',
+           'Are you thinking of quitting smoking within the next 30 days?']
+      a = ['Yes', 'Yes']
+
+      q.zip(a).each do |ques, answ|
+        within('.form-group', text: ques) do
+          choose answ
+        end
+      end
+
+      page.all('input[type = tel]')[1].set(ZipCodes::SF.sample)
+      within('.form-group',
+             text: 'Where do you get most of your medical care?') do
+        select 'Ocean Park Health Center'
+      end
+
+      find('input[type = email]').set(ENV['Pt_9_Email'])
+      find('input[type = password]').set(ENV['Pt_9_Password'])
+      find('input[type = submit]')[:disabled].should eq 'true'
+    end
+
+    it 'does not fill in password, cannot submit form' do
+      visit "#{ENV['Base_URL']}/en/pages/application#/en/eligibility"
+      find('.ng-binding', text: 'How old are you?')
+      first('input[type = tel]').set('25')
+      q = ['Are you currently a smoker?',
+           'Are you thinking of quitting smoking within the next 30 days?']
+      a = ['Yes', 'Yes']
+
+      q.zip(a).each do |ques, answ|
+        within('.form-group', text: ques) do
+          choose answ
+        end
+      end
+
+      page.all('input[type = tel]')[1].set(ZipCodes::SF.sample)
+      within('.form-group',
+             text: 'Where do you get most of your medical care?') do
+        select 'Ocean Park Health Center'
+      end
+
+      find('input[type = email]').set(ENV['Pt_25_Email'])
+      page.all('input[type = tel]')[2].set(ENV['Pt_25_Phone_Number'])
+      find('input[type = submit]')[:disabled].should eq 'true'
     end
   end
 
@@ -392,14 +343,17 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
     it 'navigates to the eligibilty page' do
       visit "#{ENV['Base_URL']}"
       click_on 'Español'
-      click_on 'Eligibility' # need to update with Spanish
+      expect(page)
+        .to have_content 'Por favor responda las siguientes preguntas para ' \
+                         'determinar si es elegible para participar.'
+      click_on 'Continue' # need to update with Spanish
       expect(page).to have_content '¿Cuántos años tiene?'
     end
 
     it 'switches to English when filling out eligibility' do
       visit "#{ENV['Base_URL']}"
       click_on 'Español'
-      click_on 'Eligibility' # need to update with Spanish
+      click_on 'Continue' # need to update with Spanish
       within('.form-group', text: '¿Fuma usted actualmente?') do
         choose 'Sí'
       end
@@ -412,11 +366,10 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
     it 'completes eligibility survey and is eligible' do
       visit "#{ENV['Base_URL']}/es/pages/application#/es/eligibility"
       find('.ng-binding', text: '¿Cuántos años tiene?')
-      find('input[type = number]').set('25')
+      first('input[type = tel]').set('25')
       q = ['¿Fuma usted actualmente?',
-           '¿Está pensando en dejar de fumar dentro de los próximos 30 días?',
-           '¿Actualmente vive en California?']
-      a = ['Sí', 'Sí', 'Sí']
+           '¿Está pensando en dejar de fumar dentro de los próximos 30 días?']
+      a = ['Sí', 'Sí']
 
       q.zip(a).each do |ques, answ|
         within('.form-group', text: ques) do
@@ -424,32 +377,26 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
         end
       end
 
+      page.all('input[type = tel]')[1].set(ZipCodes::SF.sample)
       within('.form-group',
              text: '¿Dónde recibe la mayor parte de su atención médica?') do
         select 'Centro de Salud Ocean Park'
       end
 
-      i = ['email', 'tel', 'password']
-
-      r = [ENV['Pt_201_Email'], ENV['Pt_201_Phone_Number'],
-           ENV['Pt_201_Password']]
-
-      i.zip(r).each do |item, response|
-        find("input[type = #{item}]").set(response)
-      end
-
-      click_on 'Submit' # need to update with Spanish
+      find('input[type = email]').set(ENV['Pt_201_Email'])
+      page.all('input[type = tel]')[2].set(ENV['Pt_201_Phone_Number'])
+      find('input[type = password]').set(ENV['Pt_201_Password'])
+      find('input[type = submit]').click
       expect(page).to have_content 'You are eligible to participate' # need to update with Spanish
     end
 
     it 'completes eligibility survey and is ineligible due to age' do
       visit "#{ENV['Base_URL']}/es/pages/application#/es/eligibility"
       find('.ng-binding', text: '¿Cuántos años tiene?')
-      find('input[type = number]').set('17')
+      first('input[type = tel]').set('17')
       q = ['¿Fuma usted actualmente?',
-           '¿Está pensando en dejar de fumar dentro de los próximos 30 días?',
-           '¿Actualmente vive en California?']
-      a = ['Sí', 'Sí', 'Sí']
+           '¿Está pensando en dejar de fumar dentro de los próximos 30 días?']
+      a = ['Sí', 'Sí']
 
       q.zip(a).each do |ques, answ|
         within('.form-group', text: ques) do
@@ -457,32 +404,26 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
         end
       end
 
+      page.all('input[type = tel]')[1].set(ZipCodes::SF.sample)
       within('.form-group',
              text: '¿Dónde recibe la mayor parte de su atención médica?') do
         select 'Centro de Salud Ocean Park'
       end
 
-      i = ['email', 'tel', 'password']
-
-      r = [ENV['Pt_202_Email'], ENV['Pt_202_Phone_Number'],
-           ENV['Pt_202_Password']]
-
-      i.zip(r).each do |item, response|
-        find("input[type = #{item}]").set(response)
-      end
-
-      click_on 'Submit' # need to update with Spanish
+      find('input[type = email]').set(ENV['Pt_202_Email'])
+      page.all('input[type = tel]')[2].set(ENV['Pt_202_Phone_Number'])
+      find('input[type = password]').set(ENV['Pt_202_Password'])
+      find('input[type = submit]').click
       expect(page).to have_content 'You are not eligible to participate' # need to update with Spanish
     end
 
     it 'completes eligibility survey, is ineligible due to neg response Q2' do
       visit "#{ENV['Base_URL']}/es/pages/application#/es/eligibility"
       find('.ng-binding', text: '¿Cuántos años tiene?')
-      find('input[type = number]').set('25')
+      first('input[type = tel]').set('25')
       q = ['¿Fuma usted actualmente?',
-           '¿Está pensando en dejar de fumar dentro de los próximos 30 días?',
-           '¿Actualmente vive en California?']
-      a = ['No', 'Sí', 'Sí']
+           '¿Está pensando en dejar de fumar dentro de los próximos 30 días?']
+      a = ['No', 'Sí']
 
       q.zip(a).each do |ques, answ|
         within('.form-group', text: ques) do
@@ -490,32 +431,26 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
         end
       end
 
+      page.all('input[type = tel]')[1].set(ZipCodes::SF.sample)
       within('.form-group',
              text: '¿Dónde recibe la mayor parte de su atención médica?') do
         select 'Centro de Salud Ocean Park'
       end
 
-      i = ['email', 'tel', 'password']
-
-      r = [ENV['Pt_203_Email'], ENV['Pt_203_Phone_Number'],
-           ENV['Pt_203_Password']]
-
-      i.zip(r).each do |item, response|
-        find("input[type = #{item}]").set(response)
-      end
-
-      click_on 'Submit' # need to update with Spanish
+      find('input[type = email]').set(ENV['Pt_203_Email'])
+      page.all('input[type = tel]')[2].set(ENV['Pt_203_Phone_Number'])
+      find('input[type = password]').set(ENV['Pt_203_Password'])
+      find('input[type = submit]').click
       expect(page).to have_content 'You are not eligible to participate' # need to update with Spanish
     end
 
     it 'completes eligibility survey, is ineligible due to neg response Q3' do
       visit "#{ENV['Base_URL']}/es/pages/application#/es/eligibility"
       find('.ng-binding', text: '¿Cuántos años tiene?')
-      find('input[type = number]').set('25')
+      first('input[type = tel]').set('25')
       q = ['¿Fuma usted actualmente?',
-           '¿Está pensando en dejar de fumar dentro de los próximos 30 días?',
-           '¿Actualmente vive en California?']
-      a = ['Sí', 'No', 'Sí']
+           '¿Está pensando en dejar de fumar dentro de los próximos 30 días?']
+      a = ['Sí', 'No']
 
       q.zip(a).each do |ques, answ|
         within('.form-group', text: ques) do
@@ -523,160 +458,25 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
         end
       end
 
+      page.all('input[type = tel]')[1].set(ZipCodes::SF.sample)
       within('.form-group',
              text: '¿Dónde recibe la mayor parte de su atención médica?') do
         select 'Centro de Salud Ocean Park'
       end
 
-      i = ['email', 'tel', 'password']
-
-      r = [ENV['Pt_204_Email'], ENV['Pt_204_Phone_Number'],
-           ENV['Pt_204_Password']]
-
-      i.zip(r).each do |item, response|
-        find("input[type = #{item}]").set(response)
-      end
-
-      click_on 'Submit' # need to update with Spanish
+      find('input[type = email]').set(ENV['Pt_204_Email'])
+      page.all('input[type = tel]')[2].set(ENV['Pt_204_Phone_Number'])
+      find('input[type = password]').set(ENV['Pt_204_Password'])
+      find('input[type = submit]').click
       expect(page).to have_content 'You are not eligible to participate' # need to update with Spanish
     end
 
-    it 'does not fill in age, sees proper error'
-    #   visit "#{ENV['Base_URL']}/es/pages/application#/es/eligibility"
-    #   find('.ng-binding', text: '¿Cuántos años tiene?')
-    #   q = ['¿Fuma usted actualmente?',
-    #        '¿Está pensando en dejar de fumar dentro de los próximos 30 días?',
-    #        '¿Actualmente vive en California?']
-    #   a = ['Sí', 'Sí', 'Sí']
-
-    #   q.zip(a).each do |ques, answ|
-    #     within('.form-group', text: ques) do
-    #       choose answ
-    #     end
-    #   end
-
-    #   within('.form-group',
-    #          text: '¿Dónde recibe la mayor parte de su atención médica?') do
-    #     select 'Centro de Salud Ocean Park'
-    #   end
-
-      # i = ['email', 'tel', 'password']
-
-    #   r = [ENV['Pt_10_Email'], ENV['Pt_10_Phone_Number'],
-    #        ENV['Pt_10_Password']]
-
-      # i.zip(r).each do |item, response|
-      #   find("input[type = #{item}]").set(response)
-      # end
-
-    #   click_on 'Submit'
-    #   expect(page).to have_content ''
-    # end
-
-    it 'does not fill in Q2, sees proper error'
-    #   visit "#{ENV['Base_URL']}/es/pages/application#/es/eligibility"
-    #   find('.ng-binding', text: '¿Cuántos años tiene?')
-    #   find('input[type = number]').set('25')
-    #   q = ['¿Está pensando en dejar de fumar dentro de los próximos 30 días?',
-    #        '¿Actualmente vive en California?']
-    #   a = ['Sí', 'Sí']
-
-    #   q.zip(a).each do |ques, answ|
-    #     within('.form-group', text: ques) do
-    #       choose answ
-    #     end
-    #   end
-
-    #   within('.form-group',
-    #          text: '¿Dónde recibe la mayor parte de su atención médica?') do
-    #     select 'Centro de Salud Ocean Park'
-    #   end
-
-      # i = ['email', 'tel', 'password']
-
-    #   r = [ENV['Pt_10_Email'], ENV['Pt_10_Phone_Number'],
-    #        ENV['Pt_10_Password']]
-
-      # i.zip(r).each do |item, response|
-      #   find("input[type = #{item}]").set(response)
-      # end
-
-    #   click_on 'Submit'
-    #   expect(page).to have_content ''
-    # end
-
-    it 'does not fill in Q3, sees proper error'
-    #   visit "#{ENV['Base_URL']}/es/pages/application#/es/eligibility"
-    #   find('.ng-binding', text: '¿Cuántos años tiene?')
-    #   find('input[type = number]').set('25')
-    #   q = ['¿Fuma usted actualmente?',
-    #        '¿Actualmente vive en California?']
-    #   a = ['Sí', 'Sí']
-
-    #   q.zip(a).each do |ques, answ|
-    #     within('.form-group', text: ques) do
-    #       choose answ
-    #     end
-    #   end
-
-    #   within('.form-group',
-    #          text: '¿Dónde recibe la mayor parte de su atención médica?') do
-    #     select 'Centro de Salud Ocean Park'
-    #   end
-
-      # i = ['email', 'tel', 'password']
-
-    #   r = [ENV['Pt_10_Email'], ENV['Pt_10_Phone_Number'],
-    #        ENV['Pt_10_Password']]
-
-      # i.zip(r).each do |item, response|
-      #   find("input[type = #{item}]").set(response)
-      # end
-
-    #   click_on 'Submit'
-    #   expect(page).to have_content ''
-    # end
-
-    it 'does not fill in Q4, sees proper error'
-    #   visit "#{ENV['Base_URL']}/es/pages/application#/es/eligibility"
-    #   find('.ng-binding', text: '¿Cuántos años tiene?')
-    #   find('input[type = number]').set('25')
-    #   q = ['¿Fuma usted actualmente?',
-    #        '¿Está pensando en dejar de fumar dentro de los próximos 30 días?']
-    #   a = ['Sí', 'Sí']
-
-    #   q.zip(a).each do |ques, answ|
-    #     within('.form-group', text: ques) do
-    #       choose answ
-    #     end
-    #   end
-
-    #   within('.form-group',
-    #          text: '¿Dónde recibe la mayor parte de su atención médica?') do
-    #     select 'Centro de Salud Ocean Park'
-    #   end
-
-      # i = ['email', 'tel', 'password']
-
-    #   r = [ENV['Pt_10_Email'], ENV['Pt_10_Phone_Number'],
-    #        ENV['Pt_10_Password']]
-
-      # i.zip(r).each do |item, response|
-      #   find("input[type = #{item}]").set(response)
-      # end
-
-    #   click_on 'Submit'
-    #   expect(page).to have_content ''
-    # end
-
-    it 'does not fill in email or phone number, sees proper error' do
+    it 'does not fill in age, cannot submit form' do
       visit "#{ENV['Base_URL']}/es/pages/application#/es/eligibility"
       find('.ng-binding', text: '¿Cuántos años tiene?')
-      find('input[type = number]').set('25')
       q = ['¿Fuma usted actualmente?',
-           '¿Está pensando en dejar de fumar dentro de los próximos 30 días?',
-           '¿Actualmente vive en California?']
-      a = ['Sí', 'Sí', 'Sí']
+           '¿Está pensando en dejar de fumar dentro de los próximos 30 días?']
+      a = ['Sí', 'Sí']
 
       q.zip(a).each do |ques, answ|
         within('.form-group', text: ques) do
@@ -684,50 +484,65 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
         end
       end
 
+      page.all('input[type = tel]')[1].set(ZipCodes::SF.sample)
       within('.form-group',
              text: '¿Dónde recibe la mayor parte de su atención médica?') do
         select 'Centro de Salud Ocean Park'
       end
 
+      find('input[type = email]').set(ENV['Pt_10_Email'])
+      page.all('input[type = tel]')[2].set(ENV['Pt_10_Phone_Number'])
       find('input[type = password]').set(ENV['Pt_10_Password'])
-      click_on 'Submit' # need to update with Spanish
-      expect(page).to have_content 'You are not eligible to participate' # need to update with Spanish
+      find('input[type = submit]')[:disabled].should eq 'true'
     end
 
-    it 'does not fill in password, sees proper error'
-    #   visit "#{ENV['Base_URL']}/es/pages/application#/es/eligibility"
-    #   find('.ng-binding', text: '¿Cuántos años tiene?')
-    #   find('input[type = number]').set('25')
-    #   q = ['¿Fuma usted actualmente?',
-    #        '¿Está pensando en dejar de fumar dentro de los próximos 30 días?',
-    #        '¿Actualmente vive en California?']
-    #   a = ['Sí', 'Sí', 'Sí']
-
-    #   q.zip(a).each do |ques, answ|
-    #     within('.form-group', text: ques) do
-    #       choose answ
-    #     end
-    #   end
-
-    #   within('.form-group',
-    #          text: '¿Dónde recibe la mayor parte de su atención médica?') do
-    #     select 'Centro de Salud Ocean Park'
-    #   end
-
-    #   find('input[type = email]').set(ENV['Pt_10_Email'])
-    #   find('input[type = tel]').set(ENV['Pt_10_Phone_Number'])
-    #   click_on 'Submit'
-    #   expect(page).to have_content ''
-    # end
-
-    it 'completes eligibility without giving phone number, is eligible' do
+    it 'does not fill in Q2, cannot submit form' do
       visit "#{ENV['Base_URL']}/es/pages/application#/es/eligibility"
       find('.ng-binding', text: '¿Cuántos años tiene?')
-      find('input[type = number]').set('25')
+      first('input[type = tel]').set('25')
+      within('.form-group', text: '¿Está pensando en dejar de fumar dentro') do
+        choose 'Sí'
+      end
+
+      page.all('input[type = tel]')[1].set(ZipCodes::SF.sample)
+      within('.form-group',
+             text: '¿Dónde recibe la mayor parte de su atención médica?') do
+        select 'Centro de Salud Ocean Park'
+      end
+
+      find('input[type = email]').set(ENV['Pt_10_Email'])
+      page.all('input[type = tel]')[2].set(ENV['Pt_10_Phone_Number'])
+      find('input[type = password]').set(ENV['Pt_10_Password'])
+      find('input[type = submit]')[:disabled].should eq 'true'
+    end
+
+    it 'does not fill in Q3, cannot submit form' do
+      visit "#{ENV['Base_URL']}/es/pages/application#/es/eligibility"
+      find('.ng-binding', text: '¿Cuántos años tiene?')
+      first('input[type = tel]').set('25')
+      within('.form-group', text: '¿Fuma usted actualmente?') do
+        choose 'Sí'
+      end
+
+      page.all('input[type = tel]')[1].set(ZipCodes::SF.sample)
+      within('.form-group',
+             text: '¿Dónde recibe la mayor parte de su atención médica?') do
+        select 'Centro de Salud Ocean Park'
+      end
+
+      find('input[type = email]').set(ENV['Pt_10_Email'])
+      page.all('input[type = tel]')[2].set(ENV['Pt_10_Phone_Number'])
+      find('input[type = password]').set(ENV['Pt_10_Password'])
+      find('input[type = submit]')[:disabled].should eq 'true'
+    end
+
+    it 'does not fill in zip code, can submit form' do
+      visit "#{ENV['Base_URL']}/es/pages/application#/es/eligibility"
+      find('.ng-binding', text: '¿Cuántos años tiene?')
+      first('input[type = tel]').set('25')
       q = ['¿Fuma usted actualmente?',
-           '¿Está pensando en dejar de fumar dentro de los próximos 30 días?',
-           '¿Actualmente vive en California?']
-      a = ['Sí', 'Sí', 'Sí']
+           '¿Está pensando en dejar de fumar dentro de los próximos 30 días?']
+      a = ['Sí', 'Sí']
 
       q.zip(a).each do |ques, answ|
         within('.form-group', text: ques) do
@@ -735,25 +550,20 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
         end
       end
 
-      within('.form-group',
-             text: '¿Dónde recibe la mayor parte de su atención médica?') do
-        select 'Centro de Salud Ocean Park'
-      end
-
-      find('input[type = email]').set(ENV['Pt_13_Email'])
-      find('input[type = password]').set(ENV['Pt_13_Password'])
-      click_on 'Submit' # need to update with Spanish
+      find('input[type = email]').set(ENV['Pt_10_Email'])
+      page.all('input[type = tel]')[2].set(ENV['Pt_10_Phone_Number'])
+      find('input[type = password]').set(ENV['Pt_10_Password'])
+      find('input[type = submit]').click
       expect(page).to have_content 'You are eligible to participate' # need to update with Spanish
     end
 
-    it 'completes eligibility without giving email, is eligible' do
+    it 'fills in a SF zip code, sees the drop down for selecting a clinic' do
       visit "#{ENV['Base_URL']}/es/pages/application#/es/eligibility"
       find('.ng-binding', text: '¿Cuántos años tiene?')
-      find('input[type = number]').set('25')
+      first('input[type = tel]').set('25')
       q = ['¿Fuma usted actualmente?',
-           '¿Está pensando en dejar de fumar dentro de los próximos 30 días?',
-           '¿Actualmente vive en California?']
-      a = ['Sí', 'Sí', 'Sí']
+           '¿Está pensando en dejar de fumar dentro de los próximos 30 días?']
+      a = ['Sí', 'Sí']
 
       q.zip(a).each do |ques, answ|
         within('.form-group', text: ques) do
@@ -761,15 +571,108 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
         end
       end
 
+      expect(page)
+        .to_not have_content '¿Dónde recibe la mayor parte de su atención médic'
+      page.all('input[type = tel]')[1].set(ZipCodes::SF.sample)
+      expect(page)
+        .to have_css('.form-group',
+                     text: '¿Dónde recibe la mayor parte de su atención médica')
+    end
+
+    it 'fills in a zip code other than SF, does not see drop down for clinic' do
+      visit "#{ENV['Base_URL']}/es/pages/application#/es/eligibility"
+      find('.ng-binding', text: '¿Cuántos años tiene?')
+      first('input[type = tel]').set('25')
+      q = ['¿Fuma usted actualmente?',
+           '¿Está pensando en dejar de fumar dentro de los próximos 30 días?']
+      a = ['Sí', 'Sí']
+
+      q.zip(a).each do |ques, answ|
+        within('.form-group', text: ques) do
+          choose answ
+        end
+      end
+
+      expect(page)
+        .to_not have_content '¿Dónde recibe la mayor parte de su atención médic'
+      page.all('input[type = tel]')[1].set(ZipCodes::CHI.sample)
+      expect(page)
+        .to_not have_content '¿Dónde recibe la mayor parte de su atención médic'
+    end
+
+    it 'does not fill in email, cannot submit form' do
+      visit "#{ENV['Base_URL']}/es/pages/application#/es/eligibility"
+      find('.ng-binding', text: '¿Cuántos años tiene?')
+      first('input[type = tel]').set('25')
+      q = ['¿Fuma usted actualmente?',
+           '¿Está pensando en dejar de fumar dentro de los próximos 30 días?']
+      a = ['Sí', 'Sí']
+
+      q.zip(a).each do |ques, answ|
+        within('.form-group', text: ques) do
+          choose answ
+        end
+      end
+
+      page.all('input[type = tel]')[1].set(ZipCodes::SF.sample)
       within('.form-group',
              text: '¿Dónde recibe la mayor parte de su atención médica?') do
         select 'Centro de Salud Ocean Park'
       end
 
-      find('input[type = tel]').set(ENV['Pt_14_Phone_Number'])
-      find('input[type = password]').set(ENV['Pt_14_Password'])
-      click_on 'Submit' # need to update with Spanish
-      expect(page).to have_content 'You are eligible to participate' # need to update with Spanish
+      page.all('input[type = tel]')[2].set(ENV['Pt_26_Phone_Number'])
+      find('input[type = password]').set(ENV['Pt_26_Password'])
+      find('input[type = submit]')[:disabled].should eq 'true'
+    end
+
+    it 'does not fill in phone number, cannot submit form' do
+      visit "#{ENV['Base_URL']}/es/pages/application#/es/eligibility"
+      find('.ng-binding', text: '¿Cuántos años tiene?')
+      first('input[type = tel]').set('25')
+      q = ['¿Fuma usted actualmente?',
+           '¿Está pensando en dejar de fumar dentro de los próximos 30 días?']
+      a = ['Sí', 'Sí']
+
+      q.zip(a).each do |ques, answ|
+        within('.form-group', text: ques) do
+          choose answ
+        end
+      end
+
+      page.all('input[type = tel]')[1].set(ZipCodes::SF.sample)
+      within('.form-group',
+             text: '¿Dónde recibe la mayor parte de su atención médica?') do
+        select 'Centro de Salud Ocean Park'
+      end
+
+      find('input[type = email]').set(ENV['Pt_26_Email'])
+      find('input[type = password]').set(ENV['Pt_26_Password'])
+      find('input[type = submit]')[:disabled].should eq 'true'
+    end
+
+    it 'does not fill in password, cannot submit form' do
+      visit "#{ENV['Base_URL']}/es/pages/application#/es/eligibility"
+      find('.ng-binding', text: '¿Cuántos años tiene?')
+      first('input[type = tel]').set('25')
+      q = ['¿Fuma usted actualmente?',
+           '¿Está pensando en dejar de fumar dentro de los próximos 30 días?']
+      a = ['Sí', 'Sí']
+
+      q.zip(a).each do |ques, answ|
+        within('.form-group', text: ques) do
+          choose answ
+        end
+      end
+
+      page.all('input[type = tel]')[1].set(ZipCodes::SF.sample)
+      within('.form-group',
+             text: '¿Dónde recibe la mayor parte de su atención médica?') do
+        select 'Centro de Salud Ocean Park'
+      end
+
+      find('input[type = email]').set(ENV['Pt_26_Email'])
+      page.all('input[type = tel]')[2].set(ENV['Pt_26_Phone_Number'])
+      find('input[type = submit]')[:disabled].should eq 'true'
     end
   end
 end
