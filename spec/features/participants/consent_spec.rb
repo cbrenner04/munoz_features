@@ -107,7 +107,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
 
     it 'signs in and consents to participate' do
       sign_in_pt_en('106')
-      visit "#{ENV['Base_URL']}/#/en/consent"
+      visit "#{ENV['Base_URL']}/#/en/consent" # this should redirect automatically
       find('h3', text: 'PALO ALTO UNIVERSITY CONSENT')
       first('.ng-pristine.ng-untouched.ng-invalid.ng-invalid-required').click
       find('.btn.btn-primary', text: 'Submit').click
@@ -116,7 +116,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
 
     it 'signs in and does not consent to participate' do
       sign_in_pt_en('107')
-      visit "#{ENV['Base_URL']}/#/en/consent"
+      visit "#{ENV['Base_URL']}/#/en/consent" # this should redirect automatically
       find('h3', text: 'PALO ALTO UNIVERSITY CONSENT')
       page.all('.ng-pristine.ng-untouched.ng-invalid.ng-invalid-required')[1].click
       find('.btn.btn-primary', text: 'Submit').click
@@ -264,7 +264,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
 
     it 'signs in and consents to participate' do
       sign_in_pt_es('206')
-      visit "#{ENV['Base_URL']}/#/es/consent"
+      visit "#{ENV['Base_URL']}/#/es/consent" # this should redirect automatically
       find('h3', text: 'UNIVERSIDAD DE PALO ALTO CONSENTIMIENTO')
       first('.ng-pristine.ng-untouched.ng-invalid.ng-invalid-required').click
       find('.btn.btn-primary', text: 'Submit').click
@@ -273,7 +273,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
 
     it 'signs in and does not consent to participate' do
       sign_in_pt_es('207')
-      visit "#{ENV['Base_URL']}/#/es/consent"
+      visit "#{ENV['Base_URL']}/#/es/consent" # this should redirect automatically
       find('h3', text: 'UNIVERSIDAD DE PALO ALTO CONSENTIMIENTO')
       page.all('.ng-pristine.ng-untouched.ng-invalid.ng-invalid-required')[1].click
       find('.btn.btn-primary', text: 'Submit').click
