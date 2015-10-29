@@ -15,11 +15,14 @@ def sign_in_pt_en(id)
   fill_in 'participant_password', with: ENV["Pt_#{id}_Password"]
   click_on 'Sign in'
   find('a', text: 'Set Your Quit Date')
+  within('.alert.alert-info.alert-dismissable') do
+    find('button[type = button]').click
+  end
 end
 
 def sign_in_pt_es(id)
   visit ENV['Base_URL']
-  unless page.has_css?('a', text: 'Iniciar sésion')
+  unless page.has_css?('a', text: 'Iniciar sesión')
     find('.navbar-toggle').click
     if page.has_text?('Finalizar la sesión')
       click_on 'Finalizar la sesión'
@@ -27,11 +30,14 @@ def sign_in_pt_es(id)
       click_on 'Sign out'
     end
   end
-  click_on 'Iniciar sésion'
+  click_on 'Iniciar sesión'
   fill_in 'participant_email', with: ENV["Pt_#{id}_Email"]
   fill_in 'participant_password', with: ENV["Pt_#{id}_Password"]
-  click_on 'Iniciar sésion'
+  click_on 'Iniciar sesión'
   find('a', text: 'Set Your Quit Date (ES)') # need to update with Spanish
+  within('.alert.alert-info.alert-dismissable') do
+    find('button[type = button]').click
+  end
 end
 
 def navigate_to(button)

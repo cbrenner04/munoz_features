@@ -108,31 +108,31 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
         .to have_content 'Tu cuenta ha sido confirmada satisfactoriamente.'
       fill_in 'participant_email', with: ENV['Pt_4_Email']
       fill_in 'participant_password', with: ENV['Pt_4_Password']
-      click_on 'Iniciar sésion'
+      click_on 'Iniciar sesión'
       find('a', text: 'Set Your Quit Date (ES)')
       expect(page).to have_content 'Sesión iniciada.'
     end
 
     it 'is a registered participant and signs in in Español' do
-      click_on 'Iniciar sésion'
+      click_on 'Iniciar sesión'
       fill_in 'participant_email', with: ENV['Pt_212_Email']
       fill_in 'participant_password', with: ENV['Pt_212_Password']
-      click_on 'Iniciar sésion'
+      click_on 'Iniciar sesión'
       find('a', text: 'Set Your Quit Date (ES)') # need to update with Spanish
       expect(page).to have_content 'Sesión iniciada.'
     end
 
     it 'is not a registered participant, cannot sign in' do
-      click_on 'Iniciar sésion'
+      click_on 'Iniciar sesión'
       fill_in 'participant_email', with: 'fake@example.com'
       fill_in 'participant_password', with: 'fake password'
-      click_on 'Iniciar sésion'
+      click_on 'Iniciar sesión'
       expect(page).to have_content 'Email o contraseña no válidos.'
     end
 
     it 'is a registered participant and requests password reset' do
-      click_on 'Iniciar sésion'
-      find('h2', text: 'Iniciar sésion')
+      click_on 'Iniciar sesión'
+      find('h2', text: 'Iniciar sesión')
       click_on '¿Ha olvidado su contraseña?'
       fill_in 'participant_email', with: ENV['Pt_210_Email']
       click_on 'Envíeme las instrucciones para resetear mi contraseña'
@@ -142,8 +142,8 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
     end
 
     it "uses 'Didn't receive confirmation instructions?'" do
-      click_on 'Iniciar sésion'
-      find('h2', text: 'Iniciar sésion')
+      click_on 'Iniciar sesión'
+      find('h2', text: 'Iniciar sesión')
       click_on '¿No ha recibido las instrucciones de confirmación?'
       find('h2', text: 'Reenviar instrucciones de confirmación')
       fill_in 'participant_email', with: ENV['Pt_8_Email']
@@ -154,30 +154,30 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
     end
 
     it 'is a registered participant who locks their account' do
-      click_on 'Iniciar sésion'
-      find('h2', text: 'Iniciar sésion')
+      click_on 'Iniciar sesión'
+      find('h2', text: 'Iniciar sesión')
       18.times do
         fill_in 'participant_email', with: ENV['Pt_205_Email']
         fill_in 'participant_password', with: 'whoops'
-        click_on 'Iniciar sésion'
+        click_on 'Iniciar sesión'
         expect(page).to have_content 'Email o contraseña no válidos.'
       end
 
       fill_in 'participant_email', with: ENV['Pt_205_Email']
       fill_in 'participant_password', with: 'whoops'
-      click_on 'Iniciar sésion'
+      click_on 'Iniciar sesión'
       expect(page).to have_content 'Tienes un intento más antes de que tu ' \
                                    'cuenta sea bloqueada.'
 
       fill_in 'participant_email', with: ENV['Pt_205_Email']
       fill_in 'participant_password', with: 'whoops'
-      click_on 'Iniciar sésion'
+      click_on 'Iniciar sesión'
       expect(page).to have_content 'Tu cuenta está bloqueada.'
     end
 
     it "uses 'Didn't receive unlock instructions?'" do
-      click_on 'Iniciar sésion'
-      find('h2', text: 'Iniciar sésion')
+      click_on 'Iniciar sesión'
+      find('h2', text: 'Iniciar sesión')
       click_on 'No ha recibido instrucciones para desbloquear?'
       find('h2', text: 'Reenviar instrucciones para desbloquear')
       fill_in 'participant_email', with: ENV['Pt_7_Email']
@@ -191,7 +191,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       sign_in_pt_es('211')
       find('.navbar-toggle').click
       click_on 'Finalizar la sesión'
-      expect(page).to have_css('a', text: 'Iniciar sésion')
+      expect(page).to have_css('a', text: 'Iniciar sesión')
     end
 
     it 'signs in, visits Google, returns to app, sees correct home page' do
@@ -209,6 +209,78 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       find('h2', text: 'Stop Smoking Guide')
       find('.navbar-brand').click
       expect(page).to have_content 'Set Your Quit Date (ES)'
+    end
+  end
+end
+
+describe 'A visitor to the site', type: :feature, metadata: :participant do
+  before do
+    visit ENV['Base_URL']
+  end
+
+  after do
+    page.driver.browser.manage.window.resize_to(360, 591)
+  end
+
+  context 'in English' do
+    it 'confirms phone' do
+      visit "#{ENV['Base_URL']}/confirm_phone?" \
+            "token=#{ENV['Pt_29_Confirmation']}"
+      expect(page).to have_content 'Thank you for confirming your phone number.'
+      click_on 'Sign in'
+      fill_in 'participant_email', with: ENV['Pt_29_Email']
+      fill_in 'participant_password', with: ENV['Pt_29_Password']
+      click_on 'Sign in'
+      find('a', text: 'Set Your Quit Date')
+      expect(page).to have_content 'Signed in successfully.'
+      navigate_to('Sign out')
+
+      page.driver.browser.manage.window.resize_to(1280, 743)
+      visit "#{ENV['Base_URL']}/admin"
+      fill_in 'user_email', with: ENV['User_1_Email']
+      fill_in 'user_password', with: ENV['User_1_Password']
+      click_on 'Sign in'
+      expect(page).to have_content 'Signed in successfully'
+
+      within('.nav.nav-pills.nav-stacked') do
+        click_on 'Participant phones'
+      end
+
+      within('.participant_phone_row', text: '3128404100') do
+        time = Time.now - 2 * 60 * 60
+        expect(page).to have_content "#{time.strftime('%B %d, %Y %H:%M')}"
+      end
+    end
+  end
+
+  context 'in Español' do
+    it 'confirms phone' do
+      visit "#{ENV['Base_URL']}/confirm_phone?" \
+            "token=#{ENV['Pt_30_Confirmation']}"
+      expect(page).to have_content 'Thank you for confirming your phone number.' # need to update with Spanish
+      click_on 'Sign in' # need to update with Spanish
+      fill_in 'participant_email', with: ENV['Pt_30_Email']
+      fill_in 'participant_password', with: ENV['Pt_30_Password']
+      click_on 'Sign in' # need to update with Spanish
+      find('a', text: 'Set Your Quit Date') # need to update with Spanish
+      expect(page).to have_content 'Signed in successfully' # need to update with Spanish
+      navigate_to('Sign out')
+
+      page.driver.browser.manage.window.resize_to(1280, 743)
+      visit "#{ENV['Base_URL']}/admin"
+      fill_in 'user_email', with: ENV['User_1_Email']
+      fill_in 'user_password', with: ENV['User_1_Password']
+      click_on 'Sign in'
+      expect(page).to have_content 'Signed in successfully'
+
+      within('.nav.nav-pills.nav-stacked') do
+        click_on 'Participant phones'
+      end
+
+      within('.participant_phone_row', text: '3128404101') do
+        time = Time.now - 2 * 60 * 60
+        expect(page).to have_content "#{time.strftime('%B %d, %Y %H:%M')}"
+      end
     end
   end
 end

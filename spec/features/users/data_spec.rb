@@ -10,9 +10,33 @@ describe 'A user signs in', type: :feature, metadata: :user do
     expect(page).to have_css('h1', text: 'Site Administration')
   end
 
-  it 'sees an ineligible participant flagged accordingly'
+  it 'sees an ineligible participant flagged accordingly' do
+    within('.nav.nav-pills.nav-stacked') do
+      click_on 'Eligibility statuses'
+    end
 
-  it 'sees an eligible participant flagged accordingly'
+    find('.header', text: 'Is eligible').click
+    within first('.eligibility_status_row') do
+      expect(page).to have_css '.label.label-danger'
+      find('a', text: 'Participant').click
+    end
+
+    expect(page).to have_content 'participant999@example.com'
+  end
+
+  it 'sees an eligible participant flagged accordingly' do
+    within('.nav.nav-pills.nav-stacked') do
+      click_on 'Eligibility statuses'
+    end
+
+    find('.header', text: 'Is eligible')
+    within first('.eligibility_status_row', text: '1070613425') do
+      expect(page).to have_css '.label.label-success'
+      find('a', text: 'Participant').click
+    end
+
+    expect(page).to have_content 'participant144@example.com'
+  end
 
   it 'sees a non-consented participant flagged accordingly' do
     within('.nav.nav-pills.nav-stacked') do

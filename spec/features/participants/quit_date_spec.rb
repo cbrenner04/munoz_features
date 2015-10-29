@@ -258,7 +258,7 @@ describe 'A registered and consented participant signs in',
       find('a', text: 'Next').click # need to update with Spanish
       next_month = Date.today + 32
       find('.ng-binding', text: "#{next_month.strftime('%b. %Y')}")
-      find('a', text: 'Today').click # need to update with Spanish
+      find('a', text: 'Hoy').click
       expect(page)
         .to have_css('.ng-binding', text: "#{Date.today.strftime('%b. %Y')}")
     end

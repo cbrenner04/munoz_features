@@ -1,10 +1,10 @@
-module EligibilityResponses
-  HEADER = ['Id', 'Value', 'Uuid', 'Responded at', 'Created at', 'Updated at',
-            'Code [Question]', 'Language [Question]', 'Answer type [Question]',
-            'Body [Question]', 'Position [Question]', 'Required [Question]',
-            'Help [Question]', 'Value [Answer]', 'Label [Answer]',
-            'Position [Answer]', 'Id [Participant]', 'Email [Participant]',
-            'Reset password sent at [Participant]',
+module ParticipantPhones
+  HEADER = ['Id', 'Phone number', 'Confirmation token', 'Confirmed at',
+            'Confirmation sent at', 'Uuid', 'Country code',
+            'Mobile network code', 'Carrier name', 'Phone number type',
+            'Phone number validation status', 'Phone number lookup errors',
+            'Created at', 'Updated at', 'Id [Participant]',
+            'Email [Participant]', 'Reset password sent at [Participant]',
             'Remember created at [Participant]', 'Sign in count [Participant]',
             'Current sign in at [Participant]', 'Last sign in at [Participant]',
             'Current sign in ip [Participant]', 'Last sign in ip [Participant]',
