@@ -31,23 +31,23 @@ For each of the participants listed above you will need
 `Pt_<participant_number>_Phone_Number`. For example, the data in the app for
 participant101 will correspond, in your `env_variables.rb` file, with:
 
-    Pt_101_Email
-    Pt_101_Password
-    Pt_101_Phone_Number
+    ENV['Pt_101_Email'] ||= "yourparticipantemail@example.com"
+    ENV['Pt_101_Password'] ||= "your super secret password"
+    ENV['Pt_101_Phone_Number'] ||= "555-555-5555"
 
 For each of the users listed above you will need
 `User_<user_number>_Email` and `User_<user_number>_Password`. For example,
 the data in the app for user1 will correspond with:
 
-    User_1_Email
-    User_1_Password
+    ENV['User_1_Email'] ||= "youruseremail@example.com"
+    ENV['User_1_Password'] ||= "your super secret password"
 
 You will also need the following environment variables:
 
-    Pt_3_Confirmation
-    Pt_4_Confirmation
-    Pt_29_Confirmation
-    Pt_30_Confirmation
+    ENV['Pt_3_Confirmation'] ||= "ConFirMATionTOKen"
+    ENV['Pt_4_Confirmation'] ||= "cONF1rmat10NtoKen"
+    ENV['Pt_29_Confirmation'] ||= "toKEN"
+    ENV['Pt_30_Confirmation'] ||= "T0k3N"
 
 Once you have the data seeded in the app and the `env_variables.rb` file
 configured, from the test suite directory on the command line you can simply
