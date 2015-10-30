@@ -22,7 +22,7 @@ for details about what data each of these participants and users will need.
 
 You will then need a file called `env_variables.rb`, which is required in the
 `.rspec` file, that houses the following environment variables. These
-correspond with the above participants and users seeded in the app.
+correspond with the data for the above participants and users seeded in the app.
 
 For each of the participants (numbers: 3 - 30, 101 - 152, 201 - 252) you will
 need `Pt_<participant_number>_Email`, `Pt_<participant_number>_Password`, and
@@ -42,6 +42,7 @@ the data in the app for user1 will correspond with:
 
 You will also need the following environment variables:
 
+    ENV['Base_URL'] ||= "localhost:3000"
     ENV['Pt_3_Confirmation'] ||= "ConFirMATionTOKen"
     ENV['Pt_4_Confirmation'] ||= "cONF1rmat10NtoKen"
     ENV['Pt_29_Confirmation'] ||= "toKEN"
