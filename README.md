@@ -15,8 +15,6 @@ Otherwise you will need to set up the following in the app:
 
 * Participants 3 - 8, 17 - 22, 25, 26, 29 - 30, 105 - 151, 205 - 251
 * Users 1 - 4
-* Participants 3 and 4 confirmation tokens for email
-* Participants 29 and 30 confirmation tokens for phone numbers
 
 See
 [Fixtures](https://github.com/NU-CBITS/munoz/tree/master/spec/selenium_fixtures)
