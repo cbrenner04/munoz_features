@@ -4,6 +4,7 @@ def sign_in_pt_en(id)
   visit ENV['Base_URL']
   unless page.has_css?('a', text: 'Sign in')
     find('.navbar-toggle').click
+    find('.dropdown-toggle').click
     if page.has_text?('Sign out')
       click_on 'Sign out'
     else
@@ -14,16 +15,14 @@ def sign_in_pt_en(id)
   fill_in 'participant_email', with: ENV["Pt_#{id}_Email"]
   fill_in 'participant_password', with: ENV["Pt_#{id}_Password"]
   click_on 'Sign in'
-  find('a', text: 'Set Your Quit Date')
-  within('.alert.alert-info.alert-dismissable') do
-    find('button[type = button]').click
-  end
+  find('a', text: 'Stop Smoking Guide')
 end
 
 def sign_in_pt_es(id)
   visit ENV['Base_URL']
   unless page.has_css?('a', text: 'Iniciar sesión')
     find('.navbar-toggle').click
+    find('.dropdown-toggle').click
     if page.has_text?('Finalizar la sesión')
       click_on 'Finalizar la sesión'
     else
@@ -34,13 +33,19 @@ def sign_in_pt_es(id)
   fill_in 'participant_email', with: ENV["Pt_#{id}_Email"]
   fill_in 'participant_password', with: ENV["Pt_#{id}_Password"]
   click_on 'Iniciar sesión'
-  find('a', text: 'Set Your Quit Date (ES)') # need to update with Spanish
-  within('.alert.alert-info.alert-dismissable') do
-    find('button[type = button]').click
-  end
+  find('a', text: 'Guía Para Dejar de Fumar')
 end
 
+# this will only work for Home, Stop Smoking Guide and Cigarette Counter
 def navigate_to(button)
   find('.navbar-toggle').click
+  find('.ng-binding', text: button).click
+end
+
+# this will work for switching languages, set quit date, review consent,
+# and sign out
+def go_to(button)
+  find('.navbar-toggle').click
+  find('.dropdown-toggle').click
   find('.ng-binding', text: button).click
 end

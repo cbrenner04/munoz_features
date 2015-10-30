@@ -20,7 +20,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
         choose 'Yes'
       end
 
-      navigate_to('Español')
+      go_to('Español')
       find('.ng-binding', text: '¿Cuántos años tiene?')
       first('input[value = true]').should be_checked
     end
@@ -391,6 +391,62 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       page.all('input[type = tel]')[2].set(ENV['Pt_25_Phone_Number'])
       find('input[type = submit]')[:disabled].should eq 'true'
     end
+
+    it 'enters a duplicate email, sees error message' do
+      visit "#{ENV['Base_URL']}/en/pages/application#/en/eligibility"
+      find('.ng-binding', text: 'How old are you?')
+      first('input[type = tel]').set('25')
+      q = ['Are you currently a smoker?',
+           'Are you thinking of quitting smoking within the next 30 days?']
+      a = ['Yes', 'Yes']
+
+      q.zip(a).each do |ques, answ|
+        within('.form-group', text: ques) do
+          choose answ
+        end
+      end
+
+      page.all('input[type = tel]')[1].set(ZipCodes::SF.sample)
+      within('.form-group',
+             text: 'Where do you get most of your medical care?') do
+        select 'Ocean Park Health Center'
+      end
+
+      find('input[type = email]').set(ENV['Pt_151_Email'])
+      page.all('input[type = tel]')[2].set(ENV['Pt_152_Phone_Number'])
+      find('input[type = password]').set(ENV['Pt_152_Password'])
+      find('input[type = submit]').click
+      expect(page).to have_content 'Sorry, there was a problem. ' \
+                                   'Please review your responses and try again.'
+    end
+
+    it 'enters a duplicate phone number, sees error message' do
+      visit "#{ENV['Base_URL']}/en/pages/application#/en/eligibility"
+      find('.ng-binding', text: 'How old are you?')
+      first('input[type = tel]').set('25')
+      q = ['Are you currently a smoker?',
+           'Are you thinking of quitting smoking within the next 30 days?']
+      a = ['Yes', 'Yes']
+
+      q.zip(a).each do |ques, answ|
+        within('.form-group', text: ques) do
+          choose answ
+        end
+      end
+
+      page.all('input[type = tel]')[1].set(ZipCodes::SF.sample)
+      within('.form-group',
+             text: 'Where do you get most of your medical care?') do
+        select 'Ocean Park Health Center'
+      end
+
+      find('input[type = email]').set(ENV['Pt_152_Email'])
+      page.all('input[type = tel]')[2].set(ENV['Pt_151_Phone_Number'])
+      find('input[type = password]').set(ENV['Pt_152_Password'])
+      find('input[type = submit]').click
+      expect(page).to have_content 'Sorry, there was a problem. ' \
+                                   'Please review your responses and try again.'
+    end
   end
 
   context 'in Español' do
@@ -412,7 +468,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
         choose 'Sí'
       end
 
-      navigate_to('English')
+      go_to('English')
       find('.ng-binding', text: 'How old are you?')
       first('input[value = true]').should be_checked
     end
@@ -782,6 +838,62 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       find('input[type = email]').set(ENV['Pt_26_Email'])
       page.all('input[type = tel]')[2].set(ENV['Pt_26_Phone_Number'])
       find('input[type = submit]')[:disabled].should eq 'true'
+    end
+
+    it 'enters duplicate email, sees error message' do
+      visit "#{ENV['Base_URL']}/es/pages/application#/es/eligibility"
+      find('.ng-binding', text: '¿Cuántos años tiene?')
+      first('input[type = tel]').set('25')
+      q = ['¿Fuma usted actualmente?',
+           '¿Está pensando en dejar de fumar dentro de los próximos 30 días?']
+      a = ['Sí', 'Sí']
+
+      q.zip(a).each do |ques, answ|
+        within('.form-group', text: ques) do
+          choose answ
+        end
+      end
+
+      page.all('input[type = tel]')[1].set(ZipCodes::SF.sample)
+      within('.form-group',
+             text: '¿Dónde recibe la mayor parte de su atención médica?') do
+        select 'Centro de Salud Ocean Park'
+      end
+
+      find('input[type = email]').set(ENV['Pt_251_Email'])
+      page.all('input[type = tel]')[2].set(ENV['Pt_252_Phone_Number'])
+      find('input[type = password]').set(ENV['Pt_252_Password'])
+      find('input[type = submit]').click
+      expect(page).to have_content 'Sorry, there was a problem. ' \
+                                   'Please review your responses and try again.'
+    end
+
+    it 'enters duplicate phone number, sees error message' do
+      visit "#{ENV['Base_URL']}/es/pages/application#/es/eligibility"
+      find('.ng-binding', text: '¿Cuántos años tiene?')
+      first('input[type = tel]').set('25')
+      q = ['¿Fuma usted actualmente?',
+           '¿Está pensando en dejar de fumar dentro de los próximos 30 días?']
+      a = ['Sí', 'Sí']
+
+      q.zip(a).each do |ques, answ|
+        within('.form-group', text: ques) do
+          choose answ
+        end
+      end
+
+      page.all('input[type = tel]')[1].set(ZipCodes::SF.sample)
+      within('.form-group',
+             text: '¿Dónde recibe la mayor parte de su atención médica?') do
+        select 'Centro de Salud Ocean Park'
+      end
+
+      find('input[type = email]').set(ENV['Pt_252_Email'])
+      page.all('input[type = tel]')[2].set(ENV['Pt_251_Phone_Number'])
+      find('input[type = password]').set(ENV['Pt_252_Password'])
+      find('input[type = submit]').click
+      expect(page).to have_content 'Sorry, there was a problem. ' \
+                                   'Please review your responses and try again.'
     end
   end
 end

@@ -13,7 +13,7 @@ describe 'A registered and consented participant signs in',
       sign_in_pt_en('134')
       visit "#{ENV['Base_URL']}/#/en/quit-date"
       find('.ng-binding.ng-scope', text: 'We')
-      navigate_to('Español')
+      go_to('Español')
       expect(page).to have_css('.ng-binding.ng-scope', text: 'Mi')
     end
 
@@ -69,7 +69,13 @@ describe 'A registered and consented participant signs in',
       visit "#{ENV['Base_URL']}/#/en/quit-date"
       find('.ng-binding', text: "#{Date.today.strftime('%b %Y')}")
       find('a', text: 'Next').click
-      next_month = Date.today + 32
+      d = Date.parse("#{Date.today}")
+      num = d.mday
+      if num.between?(30, 31)
+        next_month = Date.today + 27
+      else
+        next_month = Date.today + 32
+      end
       expect(page)
         .to have_css('.ng-binding', text: "#{next_month.strftime('%b %Y')}")
     end
@@ -79,7 +85,13 @@ describe 'A registered and consented participant signs in',
       visit "#{ENV['Base_URL']}/#/en/quit-date"
       find('.ng-binding', text: "#{Date.today.strftime('%b %Y')}")
       find('a', text: 'Next').click
-      next_month = Date.today + 32
+      d = Date.parse("#{Date.today}")
+      num = d.mday
+      if num.between?(30, 31)
+        next_month = Date.today + 27
+      else
+        next_month = Date.today + 32
+      end
       find('.ng-binding', text: "#{next_month.strftime('%b %Y')}")
       find('a', text: 'Today').click
       expect(page)
@@ -97,6 +109,35 @@ describe 'A registered and consented participant signs in',
       select_day("#{tomorrow}")
       expect(page).to have_css('.text-right.ng-binding.ng-scope.success',
                                text: "#{tomorrow.strftime('%-d')}")
+    end
+
+    it 'sets initial Quit Date, does not see link to quit date on main page' do
+      sign_in_pt_en('149')
+      find('.navbar-toggle').click
+      find('.dropdown-toggle').click
+      expect('.dropdown-menu')
+        .to_not have_css('.ng-binding', text: 'Set Your Quit Date')
+
+      find('a', text: 'Set Your Quit Date').click
+      tomorrow = Date.today + 1
+      unless page.has_css?('.ng-binding', text: "#{tomorrow.strftime('%b %Y')}")
+        find('a', text: 'Next').click
+      end
+
+      select_day("#{tomorrow}")
+      find('h3', text: "#{tomorrow.strftime('%B %-d, %Y')}")
+
+      visit ENV['Base_URL']
+      find('a', text: 'Cigarette Counter')
+      expect(page).to_not have_content 'Set Your Quit Date'
+    end
+
+    it 'has a Quit Date set, cannot access Quit Date except through navbar' do
+      sign_in_pt_en('150')
+      expect(page).to_not have_css('a', text: 'Set Your Quit Date')
+      go_to('Set Your Quit Date')
+      tomorrow = Date.today + 1
+      expect(page).to have_css('h3', text: "#{tomorrow.strftime('%B %-d, %Y')}")
     end
 
     it 'cannot set a Quit Date in the past', :date do
@@ -132,6 +173,18 @@ describe 'A registered and consented participant signs in',
 
       expect(page).to have_css('.text-right.ng-binding.ng-scope.success',
                                text: "#{tomorrow.strftime('%-d')}")
+    end
+
+    it 'sees Quit Date at the top of page' do
+      sign_in_pt_en('141')
+      visit "#{ENV['Base_URL']}/#/en/quit-date"
+      tomorrow = Date.today + 1
+      unless page.has_css?('.ng-binding', text: "#{tomorrow.strftime('%b %Y')}")
+        find('a', text: 'Next').click
+      end
+
+      expect(page)
+        .to have_css('h3', text: "Date: #{tomorrow.strftime('%B %-d')}")
     end
 
     it 'updates a Quit Date', :date do
@@ -182,7 +235,7 @@ describe 'A registered and consented participant signs in',
   context 'in Español' do
     it 'navigates to Your Quit Date' do
       sign_in_pt_es('233')
-      click_on 'Set Your Quit Date' # need to update with Spanish
+      click_on 'Elija la fecha en que dejará de fumar'
       expect(page).to have_css '.previous'
     end
 
@@ -190,7 +243,7 @@ describe 'A registered and consented participant signs in',
       sign_in_pt_es('234')
       visit "#{ENV['Base_URL']}/#/es/quit-date"
       find('.ng-binding.ng-scope', text: 'Mi')
-      navigate_to('English')
+      go_to('English')
       expect(page).to have_css('.ng-binding.ng-scope', text: 'We')
     end
 
@@ -198,7 +251,7 @@ describe 'A registered and consented participant signs in',
       sign_in_pt_es('234')
       visit "#{ENV['Base_URL']}/#/es/quit-date"
       find('.ng-binding.ng-scope', text: 'Mi')
-      navigate_to('Cigarette Counter (ES)') # need to update with Spanish
+      navigate_to('Contador de Cigarrillos')
       expect(page).to have_css('.pull-left.ng-scope', text: 'Ayer')
     end
 
@@ -235,7 +288,7 @@ describe 'A registered and consented participant signs in',
       sign_in_pt_es('236')
       visit "#{ENV['Base_URL']}/#/es/quit-date"
       find('.ng-binding', text: "#{Date.today.strftime('%b. %Y')}")
-      find('a', text: 'Prev.').click # need to update with Spanish
+      find('a', text: 'Ant.').click
       last_month = Date.today - 30
       expect(page)
         .to have_css('.ng-binding', text: "#{last_month.strftime('%b. %Y')}")
@@ -245,8 +298,14 @@ describe 'A registered and consented participant signs in',
       sign_in_pt_es('237')
       visit "#{ENV['Base_URL']}/#/es/quit-date"
       find('.ng-binding', text: "#{Date.today.strftime('%b. %Y')}")
-      find('a', text: 'Next').click # need to update with Spanish
-      next_month = Date.today + 32
+      find('a', text: 'Sig.').click
+      d = Date.parse("#{Date.today}")
+      num = d.mday
+      if num.between?(30, 31)
+        next_month = Date.today + 27
+      else
+        next_month = Date.today + 32
+      end
       expect(page)
         .to have_css('.ng-binding', text: "#{next_month.strftime('%b. %Y')}")
     end
@@ -255,8 +314,14 @@ describe 'A registered and consented participant signs in',
       sign_in_pt_es('237')
       visit "#{ENV['Base_URL']}/#/es/quit-date"
       find('.ng-binding', text: "#{Date.today.strftime('%b. %Y')}")
-      find('a', text: 'Next').click # need to update with Spanish
-      next_month = Date.today + 32
+      find('a', text: 'Sig.').click
+      d = Date.parse("#{Date.today}")
+      num = d.mday
+      if num.between?(30, 31)
+        next_month = Date.today + 27
+      else
+        next_month = Date.today + 32
+      end
       find('.ng-binding', text: "#{next_month.strftime('%b. %Y')}")
       find('a', text: 'Hoy').click
       expect(page)
@@ -268,22 +333,31 @@ describe 'A registered and consented participant signs in',
       visit "#{ENV['Base_URL']}/#/es/quit-date"
       tom = Date.today + 1
       unless page.has_css?('.ng-binding', text: "#{tom.strftime('%b. %Y')}")
-        find('a', text: 'Next').click # need to update with Spanish
+        find('a', text: 'Sig.').click
       end
 
       expect(page).to have_css('.text-right.ng-binding.ng-scope.success',
                                text: "#{tom.strftime('%-d')}")
     end
 
-    # below will have errors in the months of January, April, August,
-    # and December
+    it 'sees Quit Date at the top of page' do
+      sign_in_pt_es('241')
+      visit "#{ENV['Base_URL']}/#/es/quit-date"
+      tom = Date.today + 1
+      unless page.has_css?('.ng-binding', text: "#{tom.strftime('%b. %Y')}")
+        find('a', text: 'Sig.').click
+      end
+
+      expect(page)
+        .to have_css('h3', text: "Dejará de Fumar: #{tom.strftime('%-d')}")
+    end
 
     it 'sets a Quit Date' do
       sign_in_pt_es('239')
       visit "#{ENV['Base_URL']}/#/es/quit-date"
       tom = Date.today + 1
       unless page.has_css?('.ng-binding', text: "#{tom.strftime('%b. %Y')}")
-        find('a', text: 'Next').click # need to update with Spanish
+        find('a', text: 'Sig.').click
       end
 
       select_day("#{tom}")
@@ -291,12 +365,43 @@ describe 'A registered and consented participant signs in',
                                text: "#{tom.strftime('%-d')}")
     end
 
+    it 'sets initial Quit Date, does not see link to quit date on main page' do
+      sign_in_pt_es('249')
+      find('.navbar-toggle').click
+      find('.dropdown-toggle').click
+      expect('.dropdown-menu')
+        .to_not have_css('.ng-binding',
+                         text: 'Elija la fecha en que dejará de fumar')
+
+      find('a', text: 'Elija la fecha en que dejará de fumar').click
+      tomorrow = Date.today + 1
+      unless page.has_css?('.ng-binding', text: "#{tomorrow.strftime('%b %Y')}")
+        find('a', text: 'Next').click
+      end
+
+      select_day("#{tomorrow}")
+      find('h3', text: "#{tomorrow.strftime('%-d')}")
+
+      visit ENV['Base_URL']
+      find('a', text: 'Contador de Cigarrillos')
+      expect(page).to_not have_content 'Elija la fecha en que dejará de fumar'
+    end
+
+    it 'has a Quit Date set, cannot access Quit Date except through navbar' do
+      sign_in_pt_es('250')
+      expect(page)
+        .to_not have_css('a', text: 'Elija la fecha en que dejará de fumar')
+      go_to('Elija la fecha en que dejará de fumar')
+      tomorrow = Date.today + 1
+      expect(page).to have_css('h3', text: "#{tomorrow.strftime('%-d')}")
+    end
+
     it 'cannot set a Quit Date in the past' do
       sign_in_pt_es('234')
       visit "#{ENV['Base_URL']}/#/es/quit-date"
       yes = Date.today - 1
       unless page.has_css?('.ng-binding', text: "#{yes.strftime('%b. %Y')}")
-        find('a', text: 'Prev.').click # need to update with Spanish
+        find('a', text: 'Ant.').click
       end
 
       select_day("#{yes}")
@@ -305,7 +410,7 @@ describe 'A registered and consented participant signs in',
                                    text: "#{yes.strftime('%-d')}")
       tom = Date.today + 1
       unless page.has_css?('.ng-binding', text: "#{tom.strftime('%b. %Y')}")
-        find('a', text: 'Next').click # need to update with Spanish
+        find('a', text: 'Sig.').click
       end
       select_day("#{tom}")
       expect(page).to have_css('.text-right.ng-binding.ng-scope.success',
@@ -317,14 +422,14 @@ describe 'A registered and consented participant signs in',
       visit "#{ENV['Base_URL']}/#/es/quit-date"
       tom = Date.today + 1
       unless page.has_css?('.ng-binding', text: "#{tom.strftime('%b. %Y')}")
-        find('a', text: 'Next').click # need to update with Spanish
+        find('a', text: 'Sig.').click
       end
 
       find('.text-right.ng-binding.ng-scope.success',
            text: "#{tom.strftime('%-d')}")
       two_day = Date.today + 2
       unless page.has_css?('.ng-binding', text: "#{two_day.strftime('%b. %Y')}")
-        find('a', text: 'Next').click # need to update with Spanish
+        find('a', text: 'Sig.').click
       end
 
       select_day("#{two_day}")
@@ -338,7 +443,7 @@ describe 'A registered and consented participant signs in',
       beyond_four_wks = Date.today + 30
       unless page.has_css?('.ng-binding',
                            text: "#{beyond_four_wks.strftime('%b. %Y')}")
-        find('a', text: 'Next').click # need to update with Spanish
+        find('a', text: 'Sig.').click
       end
 
       select_day("#{beyond_four_wks}")

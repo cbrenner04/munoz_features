@@ -31,7 +31,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       click_on 'View the consent form'
       find('h3', text: 'PALO ALTO UNIVERSITY CONSENT')
       first('.ng-pristine.ng-untouched.ng-invalid.ng-invalid-required').click
-      navigate_to('Español')
+      go_to('Español')
 
       expect(page).to have_content 'UNIVERSIDAD DE PALO ALTO CONSENTIMIENTO'
       find('input[value = true]').should be_checked
@@ -89,7 +89,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
         end
       end
 
-      navigate_to('Español')
+      go_to('Español')
       find('.ng-binding', text: '¿Cuántos años tiene?')
       page.all('input[type = tel]')[1].set(ZipCodes::SF.sample)
       within('.form-group',
@@ -125,15 +125,15 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
 
     it 'reviews consent form' do
       sign_in_pt_en('109')
-      click_on 'Review Consent'
+      go_to('Review Consent')
       expect(page).to have_content 'PALO ALTO UNIVERSITY CONSENT'
     end
 
     it 'switches to Español when reviewing consent form' do
       sign_in_pt_en('131')
-      click_on 'Review Consent'
+      go_to('Review Consent')
       find('h2', text: 'PALO ALTO UNIVERSITY CONSENT')
-      navigate_to('Español')
+      go_to('Español')
       expect(page).to have_content 'UNIVERSIDAD DE PALO ALTO CONSENTIMIENTO'
     end
 
@@ -151,7 +151,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       expect(page).to have_content 'Yesterday'
 
       visit ENV['Base_URL']
-      click_on 'Review Consent'
+      go_to('Review Consent')
       expect(page).to have_content 'PALO ALTO UNIVERSITY CONSENT'
 
       navigate_to('Feedback')
@@ -187,7 +187,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       click_on 'View the consent form'
       find('h3', text: 'UNIVERSIDAD DE PALO ALTO CONSENTIMIENTO')
       first('.ng-pristine.ng-untouched.ng-invalid.ng-invalid-required').click
-      navigate_to('English')
+      go_to('English')
 
       expect(page).to have_content 'PALO ALTO UNIVERSITY CONSENT'
 
@@ -246,7 +246,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
         end
       end
 
-      navigate_to('English')
+      go_to('English')
       find('.ng-binding', text: 'How old are you?')
       page.all('input[type = tel]')[1].set(ZipCodes::SF.sample)
       within('.form-group',
@@ -282,36 +282,36 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
 
     it 'reviews consent form' do
       sign_in_pt_es('209')
-      click_on 'Review Consent' # need to update with Spanish
+      go_to('Revise el Consentimiento')
       expect(page).to have_content 'UNIVERSIDAD DE PALO ALTO CONSENTIMIENTO'
     end
 
     it 'switches to English when reviewing the consent form' do
       sign_in_pt_es('231')
-      click_on 'Review Consent' # need to update with Spanish
+      go_to('Revise el Consentimiento')
       find('h2', text: 'UNIVERSIDAD DE PALO ALTO CONSENTIMIENTO')
-      navigate_to('English')
+      go_to('English')
       expect(page).to have_content 'PALO ALTO UNIVERSITY CONSENT'
     end
 
     it 'is a participant who did not give consent, can still use app' do
       sign_in_pt_es('208')
-      click_on 'Set Your Quit Date' # need to update with Spanish
+      click_on 'Elija la fecha en que dejará de fumar'
       expect(page).to have_css('.ng-binding.ng-scope', text: 'Mi')
 
       visit "#{ENV['Base_URL']}"
-      click_on 'Stop Smoking Guide' # need to update with Spanish
+      click_on 'Guía Para Dejar de Fumar'
       expect(page).to have_css('a', text: '¿Por qué debo dejar de fumar?')
 
       visit "#{ENV['Base_URL']}"
-      click_on 'Cigarette Counter' # need to update with Spanish
+      click_on 'Contador de Cigarrillos'
       expect(page).to have_content 'Ayer'
 
       visit "#{ENV['Base_URL']}"
-      click_on 'Review Consent' # need to update with Spanish
+      go_to('Revise el Consentimiento')
       expect(page).to have_content 'UNIVERSIDAD DE PALO ALTO CONSENTIMIENTO'
 
-      navigate_to('Feedback (ES)') # need to update with Spanish
+      navigate_to('Comentarios')
       expect(page).to have_css('.glyphicon.glyphicon-star-empty', count: 5)
     end
   end

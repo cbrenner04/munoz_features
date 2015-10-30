@@ -14,7 +14,7 @@ describe 'A registered and consented participant signs in',
       sign_in_pt_en('132')
       click_on 'Cigarette Counter'
       find('.pull-left.ng-scope', text: 'Yesterday')
-      navigate_to('Español')
+      go_to('Español')
       expect(page).to have_content 'Ayer'
     end
 
@@ -22,7 +22,7 @@ describe 'A registered and consented participant signs in',
       sign_in_pt_en('132')
       click_on 'Cigarette Counter'
       find('.pull-left.ng-scope', text: 'Yesterday')
-      navigate_to('Set Your Quit Date')
+      go_to('Set Your Quit Date')
       expect(page).to have_css '.previous'
     end
 
@@ -144,24 +144,24 @@ describe 'A registered and consented participant signs in',
   context 'in Español' do
     it 'access the cigarette counter' do
       sign_in_pt_es('213')
-      click_on 'Cigarette Counter' # need to update with Spanish
+      click_on 'Contador de Cigarrillos'
       expect(page).to have_content 'Ayer'
       expect(page).to have_css '.btn-group-vertical'
     end
 
     it 'switches to English in cigarette counter' do
       sign_in_pt_es('213')
-      click_on 'Cigarette Counter' # need to update with Spanish
+      click_on 'Contador de Cigarrillos'
       find('.pull-left.ng-scope', text: 'Ayer')
-      navigate_to('English')
+      go_to('English')
       expect(page).to have_content 'Yesterday'
     end
 
     it 'navigates to Set Your Quit Date from cigarette counter' do
       sign_in_pt_es('213')
-      click_on 'Cigarette Counter' # need to update with Spanish
+      click_on 'Contador de Cigarrillos'
       find('.pull-left.ng-scope', text: 'Ayer')
-      navigate_to('Set Your Quit Date (ES)') # need to update with Spanish
+      go_to('Elija la fecha en que dejará de fumar')
       expect(page).to have_css '.previous'
     end
 

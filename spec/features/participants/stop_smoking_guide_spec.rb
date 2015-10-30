@@ -13,7 +13,7 @@ describe 'A registered and consented participant signs in',
       sign_in_pt_en('126')
       click_on 'Stop Smoking Guide'
       find('a', text: 'Why Should I Quit?')
-      navigate_to('Español')
+      go_to('Español')
       expect(page).to have_css('a', text: '¿Por qué debo dejar de fumar?')
     end
 
@@ -21,7 +21,7 @@ describe 'A registered and consented participant signs in',
       sign_in_pt_en('126')
       click_on 'Stop Smoking Guide'
       find('a', text: 'Why Should I Quit?')
-      navigate_to('Set Your Quit Date')
+      go_to('Set Your Quit Date')
       expect(page).to have_css '.previous'
     end
 
@@ -59,7 +59,7 @@ describe 'A registered and consented participant signs in',
       visit "#{ENV['Base_URL']}/#/en/stop-smoking-guide"
       click_on 'How Do I Help Someone Quit?'
       find('h2', text: 'How to help page 1 title')
-      navigate_to('Español')
+      go_to('Español')
       expect(page).to have_css('h2', text: 'Como ayudar página 1 título')
       expect(page).to have_content 'Como ayudar página 1 cuerpo'
     end
@@ -69,7 +69,7 @@ describe 'A registered and consented participant signs in',
       visit "#{ENV['Base_URL']}/#/en/stop-smoking-guide"
       click_on 'How Do I Help Someone Quit?'
       find('h2', text: 'How to help page 1 title')
-      navigate_to('Set Your Quit Date')
+      go_to('Set Your Quit Date')
       expect(page).to have_css '.previous'
     end
 
@@ -109,7 +109,7 @@ describe 'A registered and consented participant signs in',
       visit "#{ENV['Base_URL']}/#/en/stop-smoking-guide"
       click_on 'How Can I Quit?'
       find('h2', text: 'How to quit page 1 title')
-      navigate_to('Español')
+      go_to('Español')
       expect(page)
         .to have_css('h2', text: 'Cómo dejar de fumar página 1 título')
       expect(page).to have_content 'Cómo dejar de fumar página 1 cuerpo'
@@ -120,7 +120,7 @@ describe 'A registered and consented participant signs in',
       visit "#{ENV['Base_URL']}/#/en/stop-smoking-guide"
       click_on 'How Can I Quit?'
       find('h2', text: 'How to quit page 1 title')
-      navigate_to('Set Your Quit Date')
+      go_to('Set Your Quit Date')
       expect(page).to have_css '.previous'
     end
 
@@ -160,7 +160,7 @@ describe 'A registered and consented participant signs in',
       visit "#{ENV['Base_URL']}/#/en/stop-smoking-guide"
       click_on 'What if I Start Smoking Again'
       find('h2', text: 'What if? page 1 title')
-      navigate_to('Español')
+      go_to('Español')
       expect(page).to have_css('h2', text: '¿Y sí? página 1 título')
       expect(page).to have_content '¿Y sí? página 1 cuerpo'
     end
@@ -170,7 +170,7 @@ describe 'A registered and consented participant signs in',
       visit "#{ENV['Base_URL']}/#/en/stop-smoking-guide"
       click_on 'What if I Start Smoking Again'
       find('h2', text: 'What if? page 1 title')
-      navigate_to('Set Your Quit Date')
+      go_to('Set Your Quit Date')
       expect(page).to have_css '.previous'
     end
 
@@ -210,7 +210,7 @@ describe 'A registered and consented participant signs in',
       visit "#{ENV['Base_URL']}/#/en/stop-smoking-guide"
       click_on 'Why Should I Quit?'
       find('h2', text: 'Why Quit? page 1 title')
-      navigate_to('Español')
+      go_to('Español')
       expect(page)
         .to have_css('h2', text: '¿Por qué dejar de fumar? página 1 título')
       expect(page).to have_content '¿Por qué dejar de fumar? página 1 cuerpo'
@@ -221,7 +221,7 @@ describe 'A registered and consented participant signs in',
       visit "#{ENV['Base_URL']}/#/en/stop-smoking-guide"
       click_on 'Why Should I Quit?'
       find('h2', text: 'Why Quit? page 1 title')
-      navigate_to('Set Your Quit Date')
+      go_to('Set Your Quit Date')
       expect(page).to have_css '.previous'
     end
 
@@ -238,31 +238,31 @@ describe 'A registered and consented participant signs in',
   context 'in Español' do
     it 'navigates to the Stop Smoking Guide menu' do
       sign_in_pt_es('217')
-      click_on 'Stop Smoking Guide (ES)' # need to update with Spanish
+      click_on 'Guía Para Dejar de Fumar'
       expect(page).to have_css('a', text: '¿Por qué debo dejar de fumar?')
     end
 
     it 'switches to English in Stop Smoking Guide menu' do
       sign_in_pt_es('226')
-      click_on 'Stop Smoking Guide (ES)' # need to update with Spanish
+      click_on 'Guía Para Dejar de Fumar'
       expect(page).to have_css('a', text: '¿Por qué debo dejar de fumar?')
-      navigate_to('English')
+      go_to('English')
       expect(page).to have_css('a', text: 'Why Should I Quit?')
     end
 
     it 'navigates to Set Your Quit Date from Stop Smoking Guide Menu' do
       sign_in_pt_es('226')
-      click_on 'Stop Smoking Guide (ES)' # need to update with Spanish
+      click_on 'Guía Para Dejar de Fumar'
       expect(page).to have_css('a', text: '¿Por qué debo dejar de fumar?')
-      navigate_to('Set Your Quit Date (ES)') # need to update with Spanish
+      go_to('Elija la fecha en que dejará de fumar')
       expect(page).to have_css '.previous'
     end
 
     it 'navigates to Cigarette Counter from Stop Smoking Guide Menu' do
       sign_in_pt_es('226')
-      click_on 'Stop Smoking Guide (ES)' # need to update with Spanish
+      click_on 'Guía Para Dejar de Fumar'
       expect(page).to have_css('a', text: '¿Por qué debo dejar de fumar?')
-      navigate_to('Cigarette Counter (ES)') # need to update with Spanish
+      navigate_to('Contador de Cigarrillos')
       expect(page).to have_css('.pull-left.ng-scope', text: 'Ayer')
     end
 
@@ -292,7 +292,7 @@ describe 'A registered and consented participant signs in',
       visit "#{ENV['Base_URL']}/#/es/stop-smoking-guide"
       click_on '¿Cómo puedo ayudar a alguien dejar de fumar?'
       find('h2', text: 'Como ayudar página 1 título')
-      navigate_to('English')
+      go_to('English')
       expect(page).to have_css('h2', text: 'How to help page 1 title')
       expect(page).to have_content 'How to help page 1 body'
     end
@@ -302,7 +302,7 @@ describe 'A registered and consented participant signs in',
       visit "#{ENV['Base_URL']}/#/es/stop-smoking-guide"
       click_on '¿Cómo puedo ayudar a alguien dejar de fumar?'
       find('h2', text: 'Como ayudar página 1 título')
-      navigate_to('Set Your Quit Date (ES)') # need to update with Spanish
+      go_to('Elija la fecha en que dejará de fumar')
       expect(page).to have_css '.previous'
     end
 
@@ -311,7 +311,7 @@ describe 'A registered and consented participant signs in',
       visit "#{ENV['Base_URL']}/#/es/stop-smoking-guide"
       click_on '¿Cómo puedo ayudar a alguien dejar de fumar?'
       find('h2', text: 'Como ayudar página 1 título')
-      navigate_to('Cigarette Counter (ES)') # need to update with Spanish
+      navigate_to('Contador de Cigarrillos')
       expect(page).to have_css('.pull-left.ng-scope', text: 'Ayer')
     end
 
@@ -343,7 +343,7 @@ describe 'A registered and consented participant signs in',
       visit "#{ENV['Base_URL']}/#/es/stop-smoking-guide"
       click_on '¿Cómo puedo dejar de fumar?'
       find('h2', text: 'Cómo dejar de fumar página 1 título')
-      navigate_to('English')
+      go_to('English')
       expect(page).to have_css('h2', text: 'How to quit page 1 title')
       expect(page).to have_content 'How to quit page 1 body'
     end
@@ -353,7 +353,7 @@ describe 'A registered and consented participant signs in',
       visit "#{ENV['Base_URL']}/#/es/stop-smoking-guide"
       click_on '¿Cómo puedo dejar de fumar?'
       find('h2', text: 'Cómo dejar de fumar página 1 título')
-      navigate_to('Set Your Quit Date (ES)') # need to update with Spanish
+      go_to('Elija la fecha en que dejará de fumar')
       expect(page).to have_css '.previous'
     end
 
@@ -362,7 +362,7 @@ describe 'A registered and consented participant signs in',
       visit "#{ENV['Base_URL']}/#/es/stop-smoking-guide"
       click_on '¿Cómo puedo dejar de fumar?'
       find('h2', text: 'Cómo dejar de fumar página 1 título')
-      navigate_to('Cigarette Counter (ES)') # need to update with Spanish
+      navigate_to('Contador de Cigarrillos')
       expect(page).to have_css('.pull-left.ng-scope', text: 'Ayer')
     end
 
@@ -393,7 +393,7 @@ describe 'A registered and consented participant signs in',
       visit "#{ENV['Base_URL']}/#/es/stop-smoking-guide"
       click_on '¿Y si empiezo a fumar de nuevo?'
       find('h2', text: '¿Y sí? página 1 título')
-      navigate_to('English')
+      go_to('English')
       expect(page).to have_css('h2', text: 'What if? page 1 title')
       expect(page).to have_content 'What if? page 1 body'
     end
@@ -403,7 +403,7 @@ describe 'A registered and consented participant signs in',
       visit "#{ENV['Base_URL']}/#/es/stop-smoking-guide"
       click_on '¿Y si empiezo a fumar de nuevo?'
       find('h2', text: '¿Y sí? página 1 título')
-      navigate_to('Set Your Quit Date (ES)') # need to update with Spanish
+      go_to('Elija la fecha en que dejará de fumar')
       expect(page).to have_css '.previous'
     end
 
@@ -412,7 +412,7 @@ describe 'A registered and consented participant signs in',
       visit "#{ENV['Base_URL']}/#/es/stop-smoking-guide"
       click_on '¿Y si empiezo a fumar de nuevo?'
       find('h2', text: '¿Y sí? página 1 título')
-      navigate_to('Cigarette Counter') # need to update with Spanish
+      navigate_to('Contador de Cigarrillos')
       expect(page).to have_css('.pull-left.ng-scope', text: 'Ayer')
     end
 
@@ -444,7 +444,7 @@ describe 'A registered and consented participant signs in',
       visit "#{ENV['Base_URL']}/#/es/stop-smoking-guide"
       click_on '¿Por qué debo dejar de fumar?'
       find('h2', text: '¿Por qué dejar de fumar? página 1 título')
-      navigate_to('English')
+      go_to('English')
       expect(page).to have_css('h2', text: 'Why Quit? page 1 title')
       expect(page).to have_content 'Why Quit? page 1 body'
     end
@@ -454,7 +454,7 @@ describe 'A registered and consented participant signs in',
       visit "#{ENV['Base_URL']}/#/es/stop-smoking-guide"
       click_on '¿Por qué debo dejar de fumar?'
       find('h2', text: '¿Por qué dejar de fumar? página 1 título')
-      navigate_to('Set Your Quit Date') # need to update with Spanish
+      go_to('Elija la fecha en que dejará de fumar')
       expect(page).to have_css '.previous'
     end
 
@@ -463,7 +463,7 @@ describe 'A registered and consented participant signs in',
       visit "#{ENV['Base_URL']}/#/es/stop-smoking-guide"
       click_on '¿Por qué debo dejar de fumar?'
       find('h2', text: '¿Por qué dejar de fumar? página 1 título')
-      navigate_to('Cigarette Counter') # need to update with Spanish
+      navigate_to('Contador de Cigarrillos')
       expect(page).to have_css('.pull-left.ng-scope', text: 'Ayer')
     end
   end

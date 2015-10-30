@@ -6,7 +6,6 @@ describe 'A user signs in', type: :feature, metadata: :user do
     fill_in 'user_email', with: ENV['User_1_Email']
     fill_in 'user_password', with: ENV['User_1_Password']
     click_on 'Sign in'
-    expect(page).to have_content 'Signed in successfully'
     expect(page).to have_css('h1', text: 'Site Administration')
   end
 

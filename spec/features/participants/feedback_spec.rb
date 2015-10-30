@@ -27,7 +27,7 @@ describe 'An eligible participant', type: :feature, metadata: :participant do
   context 'in Español' do
     it 'signs in, navigates to the feedback page' do
       sign_in_pt_es('246')
-      navigate_to('Feedback')
+      navigate_to('Comentarios')
       expect(page).to have_css('.glyphicon.glyphicon-star-empty', count: 5)
     end
 
