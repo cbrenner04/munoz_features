@@ -49,3 +49,11 @@ def go_to(button)
   find('.dropdown-toggle').click
   find('.ng-binding', text: button).click
 end
+
+def translate_month(date)
+  date
+    .gsub('Jan', 'Ene')
+    .gsub('Apr', 'Abr')
+    .gsub('Aug', 'Ago')
+    .gsub('Dec', 'Dic')
+end

@@ -258,7 +258,8 @@ describe 'A registered and consented participant signs in',
     it "sees today's date highlighted" do
       sign_in_pt_es('235')
       visit "#{ENV['Base_URL']}/#/es/quit-date"
-      find('.ng-binding', text: "#{Date.today.strftime('%b. %Y')}")
+      find('.ng-binding',
+           text: translate_month("#{Date.today.strftime('%b. %Y')}"))
       d = Date.parse("#{Date.today}")
       today_num = d.mday
       if today_num.between?(1, 9) || today_num.between?(23, 31)
@@ -287,17 +288,20 @@ describe 'A registered and consented participant signs in',
     it 'navigates to previous month within Your Quit Date' do
       sign_in_pt_es('236')
       visit "#{ENV['Base_URL']}/#/es/quit-date"
-      find('.ng-binding', text: "#{Date.today.strftime('%b. %Y')}")
-      find('a', text: 'Ant.').click
+      find('.ng-binding',
+           text: translate_month("#{Date.today.strftime('%b. %Y')}"))
+      find('a', text: 'Volver').click
       last_month = Date.today - 30
       expect(page)
-        .to have_css('.ng-binding', text: "#{last_month.strftime('%b. %Y')}")
+        .to have_css('.ng-binding',
+                     text: translate_month("#{last_month.strftime('%b. %Y')}"))
     end
 
     it 'navigates to next month within Your Quit Date' do
       sign_in_pt_es('237')
       visit "#{ENV['Base_URL']}/#/es/quit-date"
-      find('.ng-binding', text: "#{Date.today.strftime('%b. %Y')}")
+      find('.ng-binding',
+           text: translate_month("#{Date.today.strftime('%b. %Y')}"))
       find('a', text: 'Sig.').click
       d = Date.parse("#{Date.today}")
       num = d.mday
@@ -306,14 +310,17 @@ describe 'A registered and consented participant signs in',
       else
         next_month = Date.today + 32
       end
+
       expect(page)
-        .to have_css('.ng-binding', text: "#{next_month.strftime('%b. %Y')}")
+        .to have_css('.ng-binding',
+                     text: translate_month("#{next_month.strftime('%b. %Y')}"))
     end
 
     it 'navigates back to Today from another month' do
       sign_in_pt_es('237')
       visit "#{ENV['Base_URL']}/#/es/quit-date"
-      find('.ng-binding', text: "#{Date.today.strftime('%b. %Y')}")
+      find('.ng-binding',
+           text: translate_month("#{Date.today.strftime('%b. %Y')}"))
       find('a', text: 'Sig.').click
       d = Date.parse("#{Date.today}")
       num = d.mday
@@ -322,17 +329,20 @@ describe 'A registered and consented participant signs in',
       else
         next_month = Date.today + 32
       end
-      find('.ng-binding', text: "#{next_month.strftime('%b. %Y')}")
+      find('.ng-binding',
+           text: translate_month("#{next_month.strftime('%b. %Y')}"))
       find('a', text: 'Hoy').click
       expect(page)
-        .to have_css('.ng-binding', text: "#{Date.today.strftime('%b. %Y')}")
+        .to have_css('.ng-binding',
+                     text: translate_month("#{Date.today.strftime('%b. %Y')}"))
     end
 
     it 'sees Quit Date highlighted' do
       sign_in_pt_es('241')
       visit "#{ENV['Base_URL']}/#/es/quit-date"
       tom = Date.today + 1
-      unless page.has_css?('.ng-binding', text: "#{tom.strftime('%b. %Y')}")
+      unless page.has_css?('.ng-binding',
+                           text: translate_month("#{tom.strftime('%b. %Y')}"))
         find('a', text: 'Sig.').click
       end
 
@@ -344,7 +354,8 @@ describe 'A registered and consented participant signs in',
       sign_in_pt_es('241')
       visit "#{ENV['Base_URL']}/#/es/quit-date"
       tom = Date.today + 1
-      unless page.has_css?('.ng-binding', text: "#{tom.strftime('%b. %Y')}")
+      unless page.has_css?('.ng-binding',
+                           text: translate_month("#{tom.strftime('%b. %Y')}"))
         find('a', text: 'Sig.').click
       end
 
@@ -356,7 +367,8 @@ describe 'A registered and consented participant signs in',
       sign_in_pt_es('239')
       visit "#{ENV['Base_URL']}/#/es/quit-date"
       tom = Date.today + 1
-      unless page.has_css?('.ng-binding', text: "#{tom.strftime('%b. %Y')}")
+      unless page.has_css?('.ng-binding',
+                           text: translate_month("#{tom.strftime('%b. %Y')}"))
         find('a', text: 'Sig.').click
       end
 
@@ -374,13 +386,14 @@ describe 'A registered and consented participant signs in',
                          text: 'Elija la fecha en que dejará de fumar')
 
       find('a', text: 'Elija la fecha en que dejará de fumar').click
-      tomorrow = Date.today + 1
-      unless page.has_css?('.ng-binding', text: "#{tomorrow.strftime('%b %Y')}")
-        find('a', text: 'Next').click
+      tom = Date.today + 1
+      unless page.has_css?('.ng-binding',
+                           text: translate_month("#{tom.strftime('%b. %Y')}"))
+        find('a', text: 'Sig.').click
       end
 
-      select_day("#{tomorrow}")
-      find('h3', text: "#{tomorrow.strftime('%-d')}")
+      select_day("#{tom}")
+      find('h3', text: "#{tom.strftime('%-d')}")
 
       visit ENV['Base_URL']
       find('a', text: 'Contador de Cigarrillos')
@@ -400,8 +413,9 @@ describe 'A registered and consented participant signs in',
       sign_in_pt_es('234')
       visit "#{ENV['Base_URL']}/#/es/quit-date"
       yes = Date.today - 1
-      unless page.has_css?('.ng-binding', text: "#{yes.strftime('%b. %Y')}")
-        find('a', text: 'Ant.').click
+      unless page.has_css?('.ng-binding',
+                           text: translate_month("#{yes.strftime('%b. %Y')}"))
+        find('a', text: 'Volver').click
       end
 
       select_day("#{yes}")
@@ -409,7 +423,8 @@ describe 'A registered and consented participant signs in',
       expect(page).to_not have_css('.text-right.ng-binding.ng-scope.success',
                                    text: "#{yes.strftime('%-d')}")
       tom = Date.today + 1
-      unless page.has_css?('.ng-binding', text: "#{tom.strftime('%b. %Y')}")
+      unless page.has_css?('.ng-binding',
+                           text: translate_month("#{tom.strftime('%b. %Y')}"))
         find('a', text: 'Sig.').click
       end
       select_day("#{tom}")
@@ -421,14 +436,17 @@ describe 'A registered and consented participant signs in',
       sign_in_pt_es('242')
       visit "#{ENV['Base_URL']}/#/es/quit-date"
       tom = Date.today + 1
-      unless page.has_css?('.ng-binding', text: "#{tom.strftime('%b. %Y')}")
+      unless page.has_css?('.ng-binding',
+                           text: translate_month("#{tom.strftime('%b. %Y')}"))
         find('a', text: 'Sig.').click
       end
 
       find('.text-right.ng-binding.ng-scope.success',
            text: "#{tom.strftime('%-d')}")
       two_day = Date.today + 2
-      unless page.has_css?('.ng-binding', text: "#{two_day.strftime('%b. %Y')}")
+      unless page
+             .has_css?('.ng-binding',
+                       text: translate_month("#{two_day.strftime('%b. %Y')}"))
         find('a', text: 'Sig.').click
       end
 
@@ -441,8 +459,9 @@ describe 'A registered and consented participant signs in',
       sign_in_pt_en('233')
       visit "#{ENV['Base_URL']}/#/es/quit-date"
       beyond_four_wks = Date.today + 30
-      unless page.has_css?('.ng-binding',
-                           text: "#{beyond_four_wks.strftime('%b. %Y')}")
+      unless page
+             .has_css?('.ng-binding',
+                       text: translate_month("#{beyond_four_wks.strftime('%b. %Y')}"))
         find('a', text: 'Sig.').click
       end
 
@@ -452,6 +471,11 @@ describe 'A registered and consented participant signs in',
                                    text: "#{beyond_four_wks.strftime('%-d')}")
 
       under_four_wks = Date.today + 25
+      unless page
+             .has_css?('.ng-binding',
+                       text: translate_month("#{under_four_wks.strftime('%b. %Y')}"))
+        find('a', text: 'Volver').click
+      end
       select_day("#{under_four_wks}")
       expect(page).to have_css('.text-right.ng-binding.ng-scope.success',
                                text: "#{under_four_wks.strftime('%-d')}")
@@ -491,7 +515,9 @@ end
 
 def unusual_day_3(num)
   wrong_date = first('.text-right.ng-binding.ng-scope', text: "#{num}").text
-  if wrong_date.to_i >= 30
+  if wrong_date.to_i == 3
+    first('.text-right.ng-binding.ng-scope', text: "#{num}").click
+  elsif wrong_date.to_i >= 30
     calendar_date(num, 2)
   elsif wrong_date.to_i == 23 && page.has_no_text?('30', count: 2)
     calendar_date(num, 1)

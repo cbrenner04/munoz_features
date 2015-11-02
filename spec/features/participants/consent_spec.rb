@@ -133,6 +133,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       sign_in_pt_en('131')
       go_to('Review Consent')
       find('h2', text: 'PALO ALTO UNIVERSITY CONSENT')
+      sleep(2)
       go_to('Español')
       expect(page).to have_content 'UNIVERSIDAD DE PALO ALTO CONSENTIMIENTO'
     end
@@ -290,6 +291,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       sign_in_pt_es('231')
       go_to('Revise el Consentimiento')
       find('h2', text: 'UNIVERSIDAD DE PALO ALTO CONSENTIMIENTO')
+      sleep(2)
       go_to('English')
       expect(page).to have_content 'PALO ALTO UNIVERSITY CONSENT'
     end

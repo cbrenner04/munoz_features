@@ -50,9 +50,8 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       find('input[type = password]').set(ENV['Pt_101_Password'])
       find('input[type = submit]').click
       expect(page).to have_content 'You are eligible to participate'
-      expect(page).to have_content 'You will receive an email with ' \
-                                   'instructions for how to confirm your ' \
-                                   'email address in a few minutes.'
+      expect(page).to have_content 'Thank you!  Please check your email to ' \
+                                   'verify your account and continue.'
     end
 
     it 'completes eligibility survey and is ineligible due to age' do
@@ -497,10 +496,11 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       page.all('input[type = tel]')[2].set(ENV['Pt_201_Phone_Number'])
       find('input[type = password]').set(ENV['Pt_201_Password'])
       find('input[type = submit]').click
-      expect(page).to have_content 'You are eligible to participate' # need to update with Spanish
-      expect(page).to have_content 'Vas a recibir un correo con instrucciones' \
-                                   ' sobre cómo confirmar tu cuenta en unos ' \
-                                   'minutos.'
+      expect(page).to have_content 'Usted es eligible para participar en ' \
+                                   'nuestro estudio'
+      expect(page).to have_content '¡Gracias! Por favor revise su correo ' \
+                                   'electrónico para verificar su cuenta y ' \
+                                   'continuar.'
     end
 
     it 'completes eligibility survey and is ineligible due to age' do
@@ -527,7 +527,13 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       page.all('input[type = tel]')[2].set(ENV['Pt_202_Phone_Number'])
       find('input[type = password]').set(ENV['Pt_202_Password'])
       find('input[type = submit]').click
-      expect(page).to have_content 'You are not eligible to participate' # need to update with Spanish
+      expect(page).to have_content 'Lo sentimos. Usted no es elegible para ' \
+                                   'participar en nuestro estudio. Le ' \
+                                   'recomendamos los siguientes 3 recursos ' \
+                                   'para dejar de fumar: espanol.smokefree.gov, ' \
+                                   '1-800-NO-BUTTS (662-8887), o ' \
+                                   'www.becomeanex.org. Gracias por ' \
+                                   'contestar nuestras preguntas'
     end
 
     it 'completes eligibility survey, is ineligible due to neg response Q2' do
@@ -554,7 +560,13 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       page.all('input[type = tel]')[2].set(ENV['Pt_203_Phone_Number'])
       find('input[type = password]').set(ENV['Pt_203_Password'])
       find('input[type = submit]').click
-      expect(page).to have_content 'You are not eligible to participate' # need to update with Spanish
+      expect(page).to have_content 'Lo sentimos. Usted no es elegible para ' \
+                                   'participar en nuestro estudio. Le ' \
+                                   'recomendamos los siguientes 3 recursos ' \
+                                   'para dejar de fumar: espanol.smokefree.gov, ' \
+                                   '1-800-NO-BUTTS (662-8887), o ' \
+                                   'www.becomeanex.org. Gracias por ' \
+                                   'contestar nuestras preguntas'
     end
 
     it 'completes eligibility survey, is ineligible due to neg response Q3' do
@@ -581,7 +593,13 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       page.all('input[type = tel]')[2].set(ENV['Pt_204_Phone_Number'])
       find('input[type = password]').set(ENV['Pt_204_Password'])
       find('input[type = submit]').click
-      expect(page).to have_content 'You are not eligible to participate' # need to update with Spanish
+      expect(page).to have_content 'Lo sentimos. Usted no es elegible para ' \
+                                   'participar en nuestro estudio. Le ' \
+                                   'recomendamos los siguientes 3 recursos ' \
+                                   'para dejar de fumar: espanol.smokefree.gov, ' \
+                                   '1-800-NO-BUTTS (662-8887), o ' \
+                                   'www.becomeanex.org. Gracias por ' \
+                                   'contestar nuestras preguntas'
     end
 
     it 'does not fill in age, cannot submit form' do
@@ -719,7 +737,8 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       page.all('input[type = tel]')[2].set(ENV['Pt_10_Phone_Number'])
       find('input[type = password]').set(ENV['Pt_10_Password'])
       find('input[type = submit]').click
-      expect(page).to have_content 'You are eligible to participate' # need to update with Spanish
+      expect(page).to have_content 'Usted es eligible para participar en ' \
+                                   'nuestro estudio'
     end
 
     it 'fills in a SF zip code, sees the drop down for selecting a clinic' do

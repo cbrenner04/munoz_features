@@ -279,11 +279,11 @@ describe 'A registered and consented participant signs in',
       visit "#{ENV['Base_URL']}/#/es/stop-smoking-guide"
       click_on '¿Cómo puedo ayudar a alguien dejar de fumar?'
       find('h2', text: 'Como ayudar página 1 título')
-      find('a', text: 'Next').click
+      find('a', text: 'Sig.').click
       find('h2', text: 'Como ayudar página 2 título')
-      find('a', text: 'Next').click
+      find('a', text: 'Sig.').click
       find('h2', text: 'Como ayudar página 3 título')
-      find('a', text: 'Next').click
+      find('a', text: 'Sig.').click
       expect(page).to have_content 'Stop Smoking Guide' # need to update with Spanish
     end
 
@@ -329,11 +329,11 @@ describe 'A registered and consented participant signs in',
       visit "#{ENV['Base_URL']}/#/es/stop-smoking-guide"
       click_on '¿Cómo puedo dejar de fumar?'
       find('h2', text: 'Cómo dejar de fumar página 1 título')
-      find('a', text: 'Next').click
+      find('a', text: 'Sig.').click
       find('h2', text: 'Cómo dejar de fumar página 2 título')
-      find('a', text: 'Next').click
+      find('a', text: 'Sig.').click
       find('h2', text: 'Cómo dejar de fumar página 3 título')
-      find('a', text: 'Next').click
+      find('a', text: 'Sig.').click
       page.execute_script('window.location.reload()')
       expect(page).to have_content '¿Y sí? página 1 título'
     end
@@ -379,11 +379,11 @@ describe 'A registered and consented participant signs in',
       visit "#{ENV['Base_URL']}/#/es/stop-smoking-guide"
       click_on '¿Y si empiezo a fumar de nuevo?'
       find('h2', text: '¿Y sí? página 1 título')
-      find('a', text: 'Next').click
+      find('a', text: 'Sig.').click
       find('h2', text: '¿Y sí? página 2 título')
-      find('a', text: 'Next').click
+      find('a', text: 'Sig.').click
       find('h2', text: '¿Y sí? página 3 título')
-      find('a', text: 'Next').click
+      find('a', text: 'Sig.').click
       page.execute_script('window.location.reload()')
       expect(page).to have_content 'Como ayudar página 1 título'
     end
@@ -430,11 +430,11 @@ describe 'A registered and consented participant signs in',
       visit "#{ENV['Base_URL']}/#/es/stop-smoking-guide"
       click_on '¿Por qué debo dejar de fumar?'
       find('h2', text: '¿Por qué dejar de fumar? página 1 título')
-      find('a', text: 'Next').click
+      find('a', text: 'Sig.').click
       find('h2', text: '¿Por qué dejar de fumar? página 2 título')
-      find('a', text: 'Next').click
+      find('a', text: 'Sig.').click
       find('h2', text: '¿Por qué dejar de fumar? página 3 título')
-      find('a', text: 'Next').click
+      find('a', text: 'Sig.').click
       page.execute_script('window.location.reload()')
       expect(page).to have_content 'Cómo dejar de fumar página 1 título'
     end
