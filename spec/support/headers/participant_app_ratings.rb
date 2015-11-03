@@ -1,6 +1,6 @@
 module ParticipantAppRatings
-  HEADER = ['Id', 'Value', 'Rated at', 'Created at', 'Updated at',
-            'Id [Participant]', 'Email [Participant]',
+  HEADER = ['Id', 'Helpful value', 'Rated at', 'Created at', 'Updated at',
+            'Recommend value', 'Id [Participant]', 'Email [Participant]',
             'Reset password sent at [Participant]',
             'Remember created at [Participant]',
             'Sign in count [Participant]', 'Current sign in at [Participant]',

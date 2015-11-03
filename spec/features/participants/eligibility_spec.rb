@@ -446,6 +446,52 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       expect(page).to have_content 'Sorry, there was a problem. ' \
                                    'Please review your responses and try again.'
     end
+
+    it 'fills out eligibility, is eligible, consents, ' \
+       'can still use app with unconfirmed email' do
+      visit "#{ENV['Base_URL']}/en/pages/application#/en/eligibility"
+      find('.ng-binding', text: 'How old are you?')
+      first('input[type = tel]').set('25')
+      q = ['Are you currently a smoker?',
+           'Are you thinking of quitting smoking within the next 30 days?']
+      a = ['Yes', 'Yes']
+
+      q.zip(a).each do |ques, answ|
+        within('.form-group', text: ques) do
+          choose answ
+        end
+      end
+
+      page.all('input[type = tel]')[1].set(ZipCodes::SF.sample)
+      within('.form-group',
+             text: 'Where do you get most of your medical care?') do
+        select 'Ocean Park Health Center'
+      end
+
+      find('input[type = email]').set(ENV['Pt_15_Email'])
+      page.all('input[type = tel]')[2].set(ENV['Pt_15_Phone_Number'])
+      find('input[type = password]').set(ENV['Pt_15_Password'])
+      find('input[type = submit]').click
+      click_on 'View the consent form'
+      find('h3', text: 'PALO ALTO UNIVERSITY CONSENT')
+      first('.ng-pristine.ng-untouched.ng-invalid.ng-invalid-required').click
+      click_on 'Submit'
+      expect(page).to have_css('iframe[class = ng-scope]')
+
+      navigate_to('Cigarette Counter')
+      expect(page).to have_content 'Yesterday'
+
+      unless page.has_css?('.ng-binding', text: 'Stop Smoking Guide')
+        find('.navbar-toggle').click
+      end
+      find('.ng-binding', text: 'Stop Smoking Guide').click
+      expect(page).to have_css('a', text: 'Why Should I Quit?')
+
+      sleep(2)
+      go_to('Review Consent')
+      expect(page).to have_content 'PALO ALTO UNIVERSITY CONSENT TO ' \
+                                   'PARTICIPATE IN A RESEARCH STUDY'
+    end
   end
 
   context 'in Español' do
@@ -913,6 +959,51 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       find('input[type = submit]').click
       expect(page).to have_content 'Sorry, there was a problem. ' \
                                    'Please review your responses and try again.'
+    end
+
+    it 'fills out eligibility, is eligible, consents,' \
+       'is able to use the app with unconfirmed email' do
+      visit "#{ENV['Base_URL']}/es/pages/application#/es/eligibility"
+      find('.ng-binding', text: '¿Cuántos años tiene?')
+      first('input[type = tel]').set('25')
+      q = ['¿Fuma usted actualmente?',
+           '¿Está pensando en dejar de fumar dentro de los próximos 30 días?']
+      a = ['Sí', 'Sí']
+
+      q.zip(a).each do |ques, answ|
+        within('.form-group', text: ques) do
+          choose answ
+        end
+      end
+
+      page.all('input[type = tel]')[1].set(ZipCodes::SF.sample)
+      within('.form-group',
+             text: '¿Dónde recibe la mayor parte de su atención médica?') do
+        select 'Centro de Salud Ocean Park'
+      end
+
+      find('input[type = email]').set(ENV['Pt_253_Email'])
+      page.all('input[type = tel]')[2].set(ENV['Pt_253_Phone_Number'])
+      find('input[type = password]').set(ENV['Pt_253_Password'])
+      find('input[type = submit]').click
+      click_on 'View the consent form'
+      find('h3', text: 'UNIVERSIDAD DE PALO ALTO CONSENTIMIENTO')
+      first('.ng-pristine.ng-untouched.ng-invalid.ng-invalid-required').click
+      click_on 'Submit'
+      expect(page).to have_css('iframe[class = ng-scope]')
+
+      navigate_to('Guía Para Dejar de Fumar')
+      expect(page).to have_css('a', text: '¿Por qué debo dejar de fumar?')
+
+      unless page.has_css?('.ng-binding', text: 'Contador de Cigarrillos')
+        find('.navbar-toggle').click
+      end
+      find('.ng-binding', text: 'Contador de Cigarrillos').click
+      expect(page).to have_content 'Ayer'
+
+      sleep(2)
+      go_to('Revise el Consentimiento')
+      expect(page).to have_content 'UNIVERSIDAD DE PALO ALTO CONSENTIMIENTO'
     end
   end
 end
