@@ -71,7 +71,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       find('h3', text: 'PALO ALTO UNIVERSITY CONSENT')
       first('.ng-pristine.ng-untouched.ng-invalid.ng-invalid-required').click
       click_on 'Submit'
-      expect(page).to have_css('a', text: 'Take the baseline survey')
+      expect(page).to have_css('iframe[class = ng-scope]')
     end
 
     it 'switches to Español while filling in eligibility, ' \
@@ -106,21 +106,27 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
     end
 
     it 'signs in and consents to participate' do
-      sign_in_pt_en('106')
-      visit "#{ENV['Base_URL']}/#/en/consent" # this should redirect automatically
+      visit ENV['Base_URL']
+      click_on 'Sign in'
+      fill_in 'participant_email', with: ENV['Pt_106_Email']
+      fill_in 'participant_password', with: ENV['Pt_106_Password']
+      click_on 'Sign in'
       find('h3', text: 'PALO ALTO UNIVERSITY CONSENT')
       first('.ng-pristine.ng-untouched.ng-invalid.ng-invalid-required').click
       find('.btn.btn-primary', text: 'Submit').click
-      expect(page).to have_css('a', text: 'Take the baseline survey')
+      expect(page).to have_css('iframe[class = ng-scope]')
     end
 
     it 'signs in and does not consent to participate' do
-      sign_in_pt_en('107')
-      visit "#{ENV['Base_URL']}/#/en/consent" # this should redirect automatically
+      visit ENV['Base_URL']
+      click_on 'Sign in'
+      fill_in 'participant_email', with: ENV['Pt_107_Email']
+      fill_in 'participant_password', with: ENV['Pt_107_Password']
+      click_on 'Sign in'
       find('h3', text: 'PALO ALTO UNIVERSITY CONSENT')
-      page.all('.ng-pristine.ng-untouched.ng-invalid.ng-invalid-required')[1].click
+      page.all('.ng-pristine.ng-untouched.ng-invalid')[1].click
       find('.btn.btn-primary', text: 'Submit').click
-      expect(page).to have_css('a', text: 'Take the baseline survey')
+      expect(page).to have_css('iframe[class = ng-scope]')
     end
 
     it 'reviews consent form' do
@@ -229,7 +235,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       find('h3', text: 'UNIVERSIDAD DE PALO ALTO CONSENTIMIENTO')
       first('.ng-pristine.ng-untouched.ng-invalid.ng-invalid-required').click
       click_on 'Submit'
-      expect(page).to have_css('a', text: 'Take the baseline survey')
+      expect(page).to have_css('iframe[class = ng-scope]')
     end
 
     it 'switches to English while filling in eligibility, ' \
@@ -264,21 +270,27 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
     end
 
     it 'signs in and consents to participate' do
-      sign_in_pt_es('206')
-      visit "#{ENV['Base_URL']}/#/es/consent" # this should redirect automatically
+      visit ENV['Base_URL']
+      click_on 'Iniciar sesión'
+      fill_in 'participant_email', with: ENV['Pt_206_Email']
+      fill_in 'participant_password', with: ENV['Pt_206_Password']
+      click_on 'Iniciar sesión'
       find('h3', text: 'UNIVERSIDAD DE PALO ALTO CONSENTIMIENTO')
       first('.ng-pristine.ng-untouched.ng-invalid.ng-invalid-required').click
       find('.btn.btn-primary', text: 'Submit').click
-      expect(page).to have_css('a', text: 'Take the baseline survey')
+      expect(page).to have_css('iframe[class = ng-scope]')
     end
 
     it 'signs in and does not consent to participate' do
-      sign_in_pt_es('207')
-      visit "#{ENV['Base_URL']}/#/es/consent" # this should redirect automatically
+      visit ENV['Base_URL']
+      click_on 'Iniciar sesión'
+      fill_in 'participant_email', with: ENV['Pt_207_Email']
+      fill_in 'participant_password', with: ENV['Pt_207_Password']
+      click_on 'Iniciar sesión'
       find('h3', text: 'UNIVERSIDAD DE PALO ALTO CONSENTIMIENTO')
-      page.all('.ng-pristine.ng-untouched.ng-invalid.ng-invalid-required')[1].click
+      page.all('.ng-pristine.ng-untouched.ng-invalid')[1].click
       find('.btn.btn-primary', text: 'Submit').click
-      expect(page).to have_css('a', text: 'Take the baseline survey')
+      expect(page).to have_css('iframe[class = ng-scope]')
     end
 
     it 'reviews consent form' do

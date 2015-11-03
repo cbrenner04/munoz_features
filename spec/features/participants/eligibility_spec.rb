@@ -530,10 +530,10 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       expect(page).to have_content 'Lo sentimos. Usted no es elegible para ' \
                                    'participar en nuestro estudio. Le ' \
                                    'recomendamos los siguientes 3 recursos ' \
-                                   'para dejar de fumar: espanol.smokefree.gov, ' \
-                                   '1-800-NO-BUTTS (662-8887), o ' \
-                                   'www.becomeanex.org. Gracias por ' \
-                                   'contestar nuestras preguntas'
+                                   'para dejar de fumar: ' \
+                                   'espanol.smokefree.gov, 1-800-NO-BUTTS ' \
+                                   '(662-8887) o es.becomeanex.org. Gracias ' \
+                                   'por contestar nuestras preguntas'
     end
 
     it 'completes eligibility survey, is ineligible due to neg response Q2' do
@@ -563,10 +563,10 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       expect(page).to have_content 'Lo sentimos. Usted no es elegible para ' \
                                    'participar en nuestro estudio. Le ' \
                                    'recomendamos los siguientes 3 recursos ' \
-                                   'para dejar de fumar: espanol.smokefree.gov, ' \
-                                   '1-800-NO-BUTTS (662-8887), o ' \
-                                   'www.becomeanex.org. Gracias por ' \
-                                   'contestar nuestras preguntas'
+                                   'para dejar de fumar: ' \
+                                   'espanol.smokefree.gov, 1-800-NO-BUTTS ' \
+                                   '(662-8887) o es.becomeanex.org. Gracias ' \
+                                   'por contestar nuestras preguntas'
     end
 
     it 'completes eligibility survey, is ineligible due to neg response Q3' do
@@ -596,10 +596,10 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       expect(page).to have_content 'Lo sentimos. Usted no es elegible para ' \
                                    'participar en nuestro estudio. Le ' \
                                    'recomendamos los siguientes 3 recursos ' \
-                                   'para dejar de fumar: espanol.smokefree.gov, ' \
-                                   '1-800-NO-BUTTS (662-8887), o ' \
-                                   'www.becomeanex.org. Gracias por ' \
-                                   'contestar nuestras preguntas'
+                                   'para dejar de fumar: ' \
+                                   'espanol.smokefree.gov, 1-800-NO-BUTTS ' \
+                                   '(662-8887) o es.becomeanex.org. Gracias ' \
+                                   'por contestar nuestras preguntas'
     end
 
     it 'does not fill in age, cannot submit form' do

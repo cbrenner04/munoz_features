@@ -29,7 +29,7 @@ describe 'A user signs in', type: :feature, metadata: :user do
     end
 
     find('.header', text: 'Is eligible')
-    within first('.eligibility_status_row', text: '1070613425') do
+    within('.eligibility_status_row', text: '992716000') do
       expect(page).to have_css '.label.label-success'
       find('a', text: 'Participant').click
     end

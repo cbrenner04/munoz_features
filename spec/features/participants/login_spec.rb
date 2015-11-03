@@ -6,16 +6,12 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
   end
 
   context 'is English speaking' do
-    after(:all) do
-      go_to('Sign out')
-    end
-
     it 'is a registered participant and signs in' do
       click_on 'Sign in'
       fill_in 'participant_email', with: ENV['Pt_112_Email']
       fill_in 'participant_password', with: ENV['Pt_112_Password']
       click_on 'Sign in'
-      expect(page).to have_css('a', text: 'Set Your Quit Date')
+      expect(page).to have_css('a', text: 'Stop Smoking Guide')
     end
 
     it 'is not a registered participant, cannot sign in' do
@@ -104,6 +100,8 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       find('.navbar-toggle').click
       click_on 'Home'
       expect(page).to have_content 'Stop Smoking Guide'
+      sleep(2)
+      go_to('Sign out')
     end
   end
 
@@ -113,7 +111,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       fill_in 'participant_email', with: ENV['Pt_212_Email']
       fill_in 'participant_password', with: ENV['Pt_212_Password']
       click_on 'Iniciar sesión'
-      find('a', text: 'Elija la fecha en que dejará de fumar')
+      find('a', text: 'Guía Para Dejar de Fumar')
     end
 
     it 'is not a registered participant, cannot sign in' do
@@ -191,19 +189,19 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
 
     it 'signs in, visits Google, returns to app, sees correct home page' do
       sign_in_pt_es('211')
-      find('a', text: 'Elija la fecha en que dejará de fumar')
+      find('a', text: 'Guía Para Dejar de Fumar')
       visit 'https://www.google.com'
       find('.content')
       visit ENV['Base_URL']
-      expect(page).to have_content 'Elija la fecha en que dejará de fumar'
+      expect(page).to have_content 'Guía Para Dejar de Fumar'
     end
 
     it 'signs in, navigates to another page, uses brand link, sees correct home' do
       sign_in_pt_es('211')
       click_on 'Guía Para Dejar de Fumar'
-      find('h2', text: 'Stop Smoking Guide')
+      find('h3', text: 'Guía Para Dejar de Fumar')
       find('.navbar-brand').click
-      expect(page).to have_content 'Elija la fecha en que dejará de fumar'
+      expect(page).to have_content 'Contador de Cigarrillos'
     end
 
     it 'signs in, goes to a tool, navigates home using brand link' do
@@ -234,14 +232,14 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
 
   context 'in English' do
     it 'confirms phone' do
-      visit "#{ENV['Base_URL']}/confirm_phone?" \
+      visit "#{ENV['Base_URL']}/confirm_phone?locale=en&" \
             "token=#{ENV['Pt_29_Confirmation']}"
       expect(page).to have_content 'Thank you for confirming your phone number.'
       click_on 'Sign in'
       fill_in 'participant_email', with: ENV['Pt_29_Email']
       fill_in 'participant_password', with: ENV['Pt_29_Password']
       click_on 'Sign in'
-      find('a', text: 'Set Your Quit Date')
+      find('a', text: 'Stop Smoking Guide')
       go_to('Sign out')
 
       page.driver.browser.manage.window.resize_to(1280, 743)
@@ -257,22 +255,22 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
 
       within('.participant_phone_row', text: '3128404100') do
         time = Time.now - 2 * 60 * 60
-        expect(page).to have_content "#{time.strftime('%B %d, %Y %H:%M')}"
+        expect(page).to have_content "#{time.strftime('%B %d, %Y %H')}"
       end
     end
   end
 
   context 'in Español' do
     it 'confirms phone' do
-      visit "#{ENV['Base_URL']}/confirm_phone?" \
+      visit "#{ENV['Base_URL']}/confirm_phone?locale=es&" \
             "token=#{ENV['Pt_30_Confirmation']}"
       expect(page).to have_content 'Thank you for confirming your phone number.' # need to update with Spanish
       click_on 'Sign in' # need to update with Spanish
       fill_in 'participant_email', with: ENV['Pt_30_Email']
       fill_in 'participant_password', with: ENV['Pt_30_Password']
-      click_on 'Sign in' # need to update with Spanish
-      find('a', text: 'Set Your Quit Date') # need to update with Spanish
-      go_to('Sign out')
+      click_on 'Iniciar sesión'
+      find('a', text: 'Guía Para Dejar de Fumar')
+      go_to('Finalizar la sesión')
 
       page.driver.browser.manage.window.resize_to(1280, 743)
       visit "#{ENV['Base_URL']}/admin"
@@ -287,7 +285,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
 
       within('.participant_phone_row', text: '3128404101') do
         time = Time.now - 2 * 60 * 60
-        expect(page).to have_content "#{time.strftime('%B %d, %Y %H:%M')}"
+        expect(page).to have_content "#{time.strftime('%B %d, %Y %H')}"
       end
     end
   end
@@ -303,7 +301,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       fill_in 'participant_email', with: ENV['Pt_3_Email']
       fill_in 'participant_password', with: ENV['Pt_3_Password']
       click_on 'Sign in'
-      expect(page).to have_css('a', text: 'Set Your Quit Date')
+      expect(page).to have_css('a', text: 'Stop Smoking Guide')
     end
   end
 
@@ -316,7 +314,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       fill_in 'participant_email', with: ENV['Pt_4_Email']
       fill_in 'participant_password', with: ENV['Pt_4_Password']
       click_on 'Iniciar sesión'
-      find('a', text: 'Elija la fecha en que dejará de fumar')
+      find('a', text: 'Guía Para Dejar de Fumar')
     end
   end
 end
