@@ -265,8 +265,8 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       visit "#{ENV['Base_URL']}/confirm_phone?locale=es&" \
             "token=#{ENV['Pt_30_Confirmation']}"
       expect(page)
-        .to have_content 'Thank you for confirming your phone number.' # need to update with Spanish
-      click_on 'Sign in' # need to update with Spanish
+        .to have_content 'Gracias por confirmar su número de teléfono.'
+      click_on 'Iniciar sesión'
       fill_in 'participant_email', with: ENV['Pt_30_Email']
       fill_in 'participant_password', with: ENV['Pt_30_Password']
       click_on 'Iniciar sesión'

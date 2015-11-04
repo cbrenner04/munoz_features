@@ -995,10 +995,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       navigate_to('Guía Para Dejar de Fumar')
       expect(page).to have_css('a', text: '¿Por qué debo dejar de fumar?')
 
-      unless page.has_css?('.ng-binding', text: 'Contador de Cigarrillos')
-        find('.navbar-toggle').click
-      end
-      find('.ng-binding', text: 'Contador de Cigarrillos').click
+      navigate_to('Contador de Cigarrillos')
       expect(page).to have_content 'Ayer'
 
       sleep(2)

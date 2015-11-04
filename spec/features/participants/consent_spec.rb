@@ -160,9 +160,6 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       visit ENV['Base_URL']
       go_to('Review Consent')
       expect(page).to have_content 'PALO ALTO UNIVERSITY CONSENT'
-
-      navigate_to('Feedback')
-      expect(page).to have_css('.glyphicon.glyphicon-star-empty', count: 5)
     end
   end
 
@@ -324,9 +321,6 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       visit "#{ENV['Base_URL']}"
       go_to('Revise el Consentimiento')
       expect(page).to have_content 'UNIVERSIDAD DE PALO ALTO CONSENTIMIENTO'
-
-      navigate_to('Comentarios')
-      expect(page).to have_css('.glyphicon.glyphicon-star-empty', count: 5)
     end
   end
 end

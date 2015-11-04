@@ -67,7 +67,7 @@ describe 'A registered and consented participant signs in',
     it "sees today's cigarette count" do
       sign_in_pt_en('114')
       visit "#{ENV['Base_URL']}/#/en/cigarette-count"
-      within('.pull-left.col-xs-offset-1.ng-scope', text: 'Today') do
+      within('.pull-left', text: 'Today') do
         find('input[type = tel]').value.should eq '15'
       end
       within('g', text: "#{Date.today.strftime('%b %-d')}") do
@@ -78,7 +78,7 @@ describe 'A registered and consented participant signs in',
     it "increments today's cigarette count" do
       sign_in_pt_en('115')
       visit "#{ENV['Base_URL']}/#/en/cigarette-count"
-      within('.pull-left.col-xs-offset-1.ng-scope', text: 'Today') do
+      within('.pull-left', text: 'Today') do
         find('.btn.btn-lg.btn-default', text: '+').click
         find('input[type = tel]').value.should eq '16'
       end
@@ -90,7 +90,7 @@ describe 'A registered and consented participant signs in',
     it "decrements today's cigarette count" do
       sign_in_pt_en('116')
       visit "#{ENV['Base_URL']}/#/en/cigarette-count"
-      within('.pull-left.col-xs-offset-1.ng-scope', text: 'Today') do
+      within('.pull-left', text: 'Today') do
         find('.btn.btn-lg.btn-default', text: '-').click
         find('input[type = tel]').value.should eq '14'
       end
@@ -132,7 +132,7 @@ describe 'A registered and consented participant signs in',
     it 'enters cigarette count for today' do
       sign_in_pt_en('145')
       visit "#{ENV['Base_URL']}/#/en/cigarette-count"
-      within('.pull-left.col-xs-offset-1.ng-scope', text: 'Today') do
+      within('.pull-left', text: 'Today') do
         find('input[type = tel]').set('5')
       end
       within('g', text: "#{Date.today.strftime('%b %-d')}") do
@@ -214,7 +214,7 @@ describe 'A registered and consented participant signs in',
     it "sees today's cigarette count" do
       sign_in_pt_es('214')
       visit "#{ENV['Base_URL']}/#/es/cigarette-count"
-      within('.pull-left.col-xs-offset-1.ng-scope', text: 'Hoy') do
+      within('.pull-left', text: 'Hoy') do
         find('input[type = tel]').value.should eq '15'
       end
       within('g', text: trans_mo("#{Date.today.strftime('%-d %b.')}")) do
@@ -225,7 +225,7 @@ describe 'A registered and consented participant signs in',
     it "increments today's cigarette count" do
       sign_in_pt_es('215')
       visit "#{ENV['Base_URL']}/#/es/cigarette-count"
-      within('.pull-left.col-xs-offset-1.ng-scope', text: 'Hoy') do
+      within('.pull-left', text: 'Hoy') do
         find('.btn.btn-lg.btn-default', text: '+').click
         find('input[type = tel]').value.should eq '16'
       end
@@ -237,7 +237,7 @@ describe 'A registered and consented participant signs in',
     it "decrements today's cigarette count" do
       sign_in_pt_es('216')
       visit "#{ENV['Base_URL']}/#/es/cigarette-count"
-      within('.pull-left.col-xs-offset-1.ng-scope', text: 'Hoy') do
+      within('.pull-left', text: 'Hoy') do
         find('.btn.btn-lg.btn-default', text: '-').click
         find('input[type = tel]').value.should eq '14'
       end
@@ -279,7 +279,7 @@ describe 'A registered and consented participant signs in',
     it 'enters cigarette count for today' do
       sign_in_pt_es('245')
       visit "#{ENV['Base_URL']}/#/es/cigarette-count"
-      within('.pull-left.col-xs-offset-1.ng-scope', text: 'Hoy') do
+      within('.pull-left', text: 'Hoy') do
         find('input[type = tel]').set('5')
       end
       within('g', text: trans_mo("#{Date.today.strftime('%-d %b.')}")) do
