@@ -13,7 +13,7 @@ describe 'A registered and consented participant signs in',
     it 'switches to Español in cigarette counter' do
       sign_in_pt_en('132')
       click_on 'Cigarette Counter'
-      find('.pull-left.ng-scope', text: 'Yesterday')
+      find('.pull-left', text: 'Yesterday')
       go_to('Español')
       expect(page).to have_content 'Ayer'
     end
@@ -21,7 +21,7 @@ describe 'A registered and consented participant signs in',
     it 'navigates to Set Your Quit Date from cigarette counter' do
       sign_in_pt_en('132')
       click_on 'Cigarette Counter'
-      find('.pull-left.ng-scope', text: 'Yesterday')
+      find('.pull-left', text: 'Yesterday')
       go_to('Set Your Quit Date')
       expect(page).to have_css '.previous'
     end
@@ -29,7 +29,7 @@ describe 'A registered and consented participant signs in',
     it "sees yesterday's cigarette count" do
       sign_in_pt_en('17')
       visit "#{ENV['Base_URL']}/#/en/cigarette-count"
-      within('.pull-left.ng-scope', text: 'Yesterday') do
+      within('.pull-left', text: 'Yesterday') do
         find('input[type = tel]').value.should eq '15'
       end
       yesterday = Date.today - 1
@@ -41,7 +41,7 @@ describe 'A registered and consented participant signs in',
     it "increments yesterday's cigarette count" do
       sign_in_pt_en('18')
       visit "#{ENV['Base_URL']}/#/en/cigarette-count"
-      within('.pull-left.ng-scope', text: 'Yesterday') do
+      within('.pull-left', text: 'Yesterday') do
         find('.btn.btn-lg.btn-default', text: '+').click
         find('input[type = tel]').value.should eq '16'
       end
@@ -54,7 +54,7 @@ describe 'A registered and consented participant signs in',
     it "decrements yesterday's cigarette count" do
       sign_in_pt_en('19')
       visit "#{ENV['Base_URL']}/#/en/cigarette-count"
-      within('.pull-left.ng-scope', text: 'Yesterday') do
+      within('.pull-left', text: 'Yesterday') do
         find('.btn.btn-lg.btn-default', text: '-').click
         find('input[type = tel]').value.should eq '14'
       end
@@ -120,7 +120,7 @@ describe 'A registered and consented participant signs in',
     it 'enters cigarette count for yesterday' do
       sign_in_pt_en('144')
       visit "#{ENV['Base_URL']}/#/en/cigarette-count"
-      within('.pull-left.ng-scope', text: 'Yesterday') do
+      within('.pull-left', text: 'Yesterday') do
         find('input[type = tel]').set('5')
       end
       yesterday = Date.today - 1
@@ -139,6 +139,14 @@ describe 'A registered and consented participant signs in',
         expect(page).to have_content '5'
       end
     end
+
+    it 'uses the Done button to navigate back to Home' do
+      sign_in_pt_en('155')
+      visit "#{ENV['Base_URL']}/#/en/cigarette-count"
+      find('.pull-left', text: 'Yesterday')
+      find('.btn.btn-default', text: 'Done').click
+      expect(page).to have_content 'Stop Smoking Guide'
+    end
   end
 
   context 'in Español' do
@@ -152,7 +160,7 @@ describe 'A registered and consented participant signs in',
     it 'switches to English in cigarette counter' do
       sign_in_pt_es('213')
       click_on 'Contador de Cigarrillos'
-      find('.pull-left.ng-scope', text: 'Ayer')
+      find('.pull-left', text: 'Ayer')
       go_to('English')
       expect(page).to have_content 'Yesterday'
     end
@@ -160,7 +168,7 @@ describe 'A registered and consented participant signs in',
     it 'navigates to Set Your Quit Date from cigarette counter' do
       sign_in_pt_es('213')
       click_on 'Contador de Cigarrillos'
-      find('.pull-left.ng-scope', text: 'Ayer')
+      find('.pull-left', text: 'Ayer')
       go_to('Elija la fecha en que dejará de fumar')
       expect(page).to have_css '.previous'
     end
@@ -168,11 +176,11 @@ describe 'A registered and consented participant signs in',
     it "sees yesterday's cigarette count" do
       sign_in_pt_es('20')
       visit "#{ENV['Base_URL']}/#/es/cigarette-count"
-      within('.pull-left.ng-scope', text: 'Ayer') do
+      within('.pull-left', text: 'Ayer') do
         find('input[type = tel]').value.should eq '15'
       end
       yesterday = Date.today - 1
-      within('g', text: translate_month("#{yesterday.strftime('%-d %b.')}")) do
+      within('g', text: trans_mo("#{yesterday.strftime('%-d %b.')}")) do
         expect(page).to have_content '15'
       end
     end
@@ -180,12 +188,12 @@ describe 'A registered and consented participant signs in',
     it "increments yesterday's cigarette count" do
       sign_in_pt_es('21')
       visit "#{ENV['Base_URL']}/#/es/cigarette-count"
-      within('.pull-left.ng-scope', text: 'Ayer') do
+      within('.pull-left', text: 'Ayer') do
         find('.btn.btn-lg.btn-default', text: '+').click
         find('input[type = tel]').value.should eq '16'
       end
       yesterday = Date.today - 1
-      within('g', text: translate_month("#{yesterday.strftime('%-d %b.')}")) do
+      within('g', text: trans_mo("#{yesterday.strftime('%-d %b.')}")) do
         expect(page).to have_content '16'
       end
     end
@@ -193,12 +201,12 @@ describe 'A registered and consented participant signs in',
     it "decrements yesterday's cigarette count" do
       sign_in_pt_es('22')
       visit "#{ENV['Base_URL']}/#/es/cigarette-count"
-      within('.pull-left.ng-scope', text: 'Ayer') do
+      within('.pull-left', text: 'Ayer') do
         find('.btn.btn-lg.btn-default', text: '-').click
         find('input[type = tel]').value.should eq '14'
       end
       yesterday = Date.today - 1
-      within('g', text: translate_month("#{yesterday.strftime('%-d %b.')}")) do
+      within('g', text: trans_mo("#{yesterday.strftime('%-d %b.')}")) do
         expect(page).to have_content '14'
       end
     end
@@ -209,7 +217,7 @@ describe 'A registered and consented participant signs in',
       within('.pull-left.col-xs-offset-1.ng-scope', text: 'Hoy') do
         find('input[type = tel]').value.should eq '15'
       end
-      within('g', text: translate_month("#{Date.today.strftime('%-d %b.')}")) do
+      within('g', text: trans_mo("#{Date.today.strftime('%-d %b.')}")) do
         expect(page).to have_content '15'
       end
     end
@@ -221,7 +229,7 @@ describe 'A registered and consented participant signs in',
         find('.btn.btn-lg.btn-default', text: '+').click
         find('input[type = tel]').value.should eq '16'
       end
-      within('g', text: translate_month("#{Date.today.strftime('%-d %b.')}")) do
+      within('g', text: trans_mo("#{Date.today.strftime('%-d %b.')}")) do
         expect(page).to have_content '16'
       end
     end
@@ -233,7 +241,7 @@ describe 'A registered and consented participant signs in',
         find('.btn.btn-lg.btn-default', text: '-').click
         find('input[type = tel]').value.should eq '14'
       end
-      within('g', text: translate_month("#{Date.today.strftime('%-d %b.')}")) do
+      within('g', text: trans_mo("#{Date.today.strftime('%-d %b.')}")) do
         expect(page).to have_content '14'
       end
     end
@@ -251,7 +259,7 @@ describe 'A registered and consented participant signs in',
       end
       find('#previous-week').click
       prev_day = Date.today - 9
-      within('g', text: translate_month("#{prev_day.strftime('%-d %b.')}")) do
+      within('g', text: trans_mo("#{prev_day.strftime('%-d %b.')}")) do
         expect(page).to have_content '15'
       end
     end
@@ -259,11 +267,11 @@ describe 'A registered and consented participant signs in',
     it 'enters cigarette count for yesterday' do
       sign_in_pt_es('244')
       visit "#{ENV['Base_URL']}/#/es/cigarette-count"
-      within('.pull-left.ng-scope', text: 'Ayer') do
+      within('.pull-left', text: 'Ayer') do
         find('input[type = tel]').set('5')
       end
       yesterday = Date.today - 1
-      within('g', text: translate_month("#{yesterday.strftime('%-d %b.')}")) do
+      within('g', text: trans_mo("#{yesterday.strftime('%-d %b.')}")) do
         expect(page).to have_content '5'
       end
     end
@@ -274,9 +282,17 @@ describe 'A registered and consented participant signs in',
       within('.pull-left.col-xs-offset-1.ng-scope', text: 'Hoy') do
         find('input[type = tel]').set('5')
       end
-      within('g', text: translate_month("#{Date.today.strftime('%-d %b.')}")) do
+      within('g', text: trans_mo("#{Date.today.strftime('%-d %b.')}")) do
         expect(page).to have_content '5'
       end
+    end
+
+    it 'uses the Done button to navigate back to Home' do
+      sign_in_pt_en('255')
+      visit "#{ENV['Base_URL']}/#/es/cigarette-count"
+      find('.pull-left', text: 'Ayer')
+      find('.btn.btn-default', text: 'Done').click # need to update with Spanish
+      expect(page).to have_content 'Guía Para Dejar de Fumar'
     end
   end
 end

@@ -30,7 +30,7 @@ describe 'A registered and consented participant signs in',
       click_on 'Stop Smoking Guide'
       find('a', text: 'Why Should I Quit?')
       navigate_to('Cigarette Counter')
-      expect(page).to have_css('.pull-left.ng-scope', text: 'Yesterday')
+      expect(page).to have_css('.pull-left', text: 'Yesterday')
     end
 
     it 'navigates to How to Help guide' do
@@ -82,7 +82,7 @@ describe 'A registered and consented participant signs in',
       click_on 'How Do I Help Someone Quit?'
       find('h4', text: 'How to help page 1 title')
       navigate_to('Cigarette Counter')
-      expect(page).to have_css('.pull-left.ng-scope', text: 'Yesterday')
+      expect(page).to have_css('.pull-left', text: 'Yesterday')
     end
 
     it 'navigates to How to Quit guide' do
@@ -135,7 +135,7 @@ describe 'A registered and consented participant signs in',
       click_on 'How Can I Quit?'
       find('h4', text: 'How to quit page 1 title')
       navigate_to('Cigarette Counter')
-      expect(page).to have_css('.pull-left.ng-scope', text: 'Yesterday')
+      expect(page).to have_css('.pull-left', text: 'Yesterday')
     end
 
     it 'navigates to What If guide' do
@@ -187,7 +187,7 @@ describe 'A registered and consented participant signs in',
       click_on 'What if I Start Smoking Again'
       find('h4', text: 'What if? page 1 title')
       navigate_to('Cigarette Counter')
-      expect(page).to have_css('.pull-left.ng-scope', text: 'Yesterday')
+      expect(page).to have_css('.pull-left', text: 'Yesterday')
     end
 
     it 'navigates to Why Quit guide' do
@@ -240,7 +240,7 @@ describe 'A registered and consented participant signs in',
       click_on 'Why Should I Quit?'
       find('h4', text: 'Why Quit? page 1 title')
       navigate_to('Cigarette Counter')
-      expect(page).to have_css('.pull-left.ng-scope', text: 'Yesterday')
+      expect(page).to have_css('.pull-left', text: 'Yesterday')
     end
   end
 
@@ -272,7 +272,7 @@ describe 'A registered and consented participant signs in',
       click_on 'Guía Para Dejar de Fumar'
       expect(page).to have_css('a', text: '¿Por qué debo dejar de fumar?')
       navigate_to('Contador de Cigarrillos')
-      expect(page).to have_css('.pull-left.ng-scope', text: 'Ayer')
+      expect(page).to have_css('.pull-left', text: 'Ayer')
     end
 
     it 'navigates to How to Help guide' do
@@ -324,7 +324,7 @@ describe 'A registered and consented participant signs in',
       click_on '¿Cómo puedo ayudar a alguien dejar de fumar?'
       find('h4', text: 'Como ayudar página 1 título')
       navigate_to('Contador de Cigarrillos')
-      expect(page).to have_css('.pull-left.ng-scope', text: 'Ayer')
+      expect(page).to have_css('.pull-left', text: 'Ayer')
     end
 
     it 'navigates to How to Quit guide' do
@@ -377,7 +377,7 @@ describe 'A registered and consented participant signs in',
       click_on '¿Cómo puedo dejar de fumar?'
       find('h4', text: 'Cómo dejar de fumar página 1 título')
       navigate_to('Contador de Cigarrillos')
-      expect(page).to have_css('.pull-left.ng-scope', text: 'Ayer')
+      expect(page).to have_css('.pull-left', text: 'Ayer')
     end
 
     it 'navigates to What If guide' do
@@ -429,7 +429,7 @@ describe 'A registered and consented participant signs in',
       click_on '¿Y si empiezo a fumar de nuevo?'
       find('h4', text: '¿Y sí? página 1 título')
       navigate_to('Contador de Cigarrillos')
-      expect(page).to have_css('.pull-left.ng-scope', text: 'Ayer')
+      expect(page).to have_css('.pull-left', text: 'Ayer')
     end
 
     it 'navigates to Why Quit guide' do
@@ -481,7 +481,7 @@ describe 'A registered and consented participant signs in',
       click_on '¿Por qué debo dejar de fumar?'
       find('h4', text: '¿Por qué dejar de fumar? página 1 título')
       navigate_to('Contador de Cigarrillos')
-      expect(page).to have_css('.pull-left.ng-scope', text: 'Ayer')
+      expect(page).to have_css('.pull-left', text: 'Ayer')
     end
   end
 end

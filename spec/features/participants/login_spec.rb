@@ -100,7 +100,6 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       find('.navbar-toggle').click
       click_on 'Home'
       expect(page).to have_content 'Stop Smoking Guide'
-      sleep(2)
       go_to('Sign out')
     end
   end
@@ -196,7 +195,8 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       expect(page).to have_content 'Guía Para Dejar de Fumar'
     end
 
-    it 'signs in, navigates to another page, uses brand link, sees correct home' do
+    it 'signs in, navigates to another page, uses brand link, ' \
+       'sees correct home' do
       sign_in_pt_es('211')
       click_on 'Guía Para Dejar de Fumar'
       find('h3', text: 'Guía Para Dejar de Fumar')
@@ -264,7 +264,8 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
     it 'confirms phone' do
       visit "#{ENV['Base_URL']}/confirm_phone?locale=es&" \
             "token=#{ENV['Pt_30_Confirmation']}"
-      expect(page).to have_content 'Thank you for confirming your phone number.' # need to update with Spanish
+      expect(page)
+        .to have_content 'Thank you for confirming your phone number.' # need to update with Spanish
       click_on 'Sign in' # need to update with Spanish
       fill_in 'participant_email', with: ENV['Pt_30_Email']
       fill_in 'participant_password', with: ENV['Pt_30_Password']

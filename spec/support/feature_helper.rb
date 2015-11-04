@@ -38,19 +38,25 @@ end
 
 # this will only work for Home, Stop Smoking Guide and Cigarette Counter
 def navigate_to(button)
-  find('.navbar-toggle').click
+  unless page.has_css?('.ng-binding', text: 'Stop Smoking Guide') ||
+         page.has_css?('.ng-binding', text: 'Guía Para Dejar de Fumar')
+    find('.navbar-toggle').click
+  end
   find('.ng-binding', text: button).click
 end
 
 # this will work for switching languages, set quit date, review consent,
 # and sign out
 def go_to(button)
-  find('.navbar-toggle').click
+  unless page.has_css?('.ng-binding', text: 'Stop Smoking Guide') ||
+         page.has_css?('.ng-binding', text: 'Guía Para Dejar de Fumar')
+    find('.navbar-toggle').click
+  end
   find('.dropdown-toggle').click
   find('.ng-binding', text: button).click
 end
 
-def translate_month(date)
+def trans_mo(date)
   date
     .gsub('Jan', 'Ene')
     .gsub('Apr', 'Abr')
