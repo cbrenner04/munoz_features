@@ -4,6 +4,7 @@ describe 'An eligible participant', type: :feature, metadata: :participant do
   context 'in English' do
     it 'signs in, navigates to the feedback page' do
       sign_in_pt_en('146')
+      find('a', text: 'Stop Smoking Guide')
       navigate_to('Feedback')
       expect(page).to have_content 'How helpful was this app?'
     end
@@ -31,18 +32,25 @@ describe 'An eligible participant', type: :feature, metadata: :participant do
       expect(page).to have_content 'Stop Smoking Guide'
     end
 
-    it 'cannot enter rating if one is already entered'
+    it 'cannot enter rating if one is already entered' do
+      sign_in_pt_en('148')
+      find('a', text: 'Stop Smoking Guide')
+      find('.navbar-toggle').click
+      find('.glyphicon.glyphicon-cog')
+      expect(page).to_not have_css('.ng-binging', text: 'Feedback')
+    end
   end
 
   context 'in Español' do
     it 'signs in, navigates to the feedback page' do
       sign_in_pt_es('246')
+      find('a', text: 'Guía Para Dejar de Fumar')
       navigate_to('Comentarios')
       expect(page).to have_content '¿Qué tan útil fue esta aplicación?'
     end
 
     it 'signs in, rates the application' do
-      sign_in_pt_en('247')
+      sign_in_pt_es('247')
       visit "#{ENV['Base_URL']}/#/es/feedback"
       expect(page)
         .to have_css('.btn.btn-default.ng-binding.ng-scope.active', count: 0)
@@ -64,6 +72,12 @@ describe 'An eligible participant', type: :feature, metadata: :participant do
       expect(page).to have_content 'Guía Para Dejar de Fumar'
     end
 
-    it 'checks already entered rating'
+    it 'cannot enter rating if one is already entered' do
+      sign_in_pt_es('248')
+      find('a', text: 'Guía Para Dejar de Fumar')
+      find('.navbar-toggle').click
+      find('.glyphicon.glyphicon-cog')
+      expect(page).to_not have_css('.ng-binging', text: 'Feedback')
+    end
   end
 end
