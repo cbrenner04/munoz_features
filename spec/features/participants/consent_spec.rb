@@ -101,7 +101,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       page.all('input[type = tel]')[2].set(ENV['Pt_23_Phone_Number'])
       find('input[type = password]').set(ENV['Pt_23_Password'])
       find('input[type = submit]').click
-      click_on 'View the consent form' # need to update with Spanish
+      click_on 'Ver el formulario de consentimiento'
       find('h3', text: 'UNIVERSIDAD DE PALO ALTO CONSENTIMIENTO')
     end
 
@@ -201,7 +201,8 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
     it 'cannot review consent immediately following ineligible decision' do
       visit "#{ENV['Base_URL']}" \
             '/es/pages/application#/es/eligibility-result?isEligible=false'
-      expect { click_on 'View the consent form' }.to raise_error # need to update with Spanish
+      expect(page)
+        .to_not have_css('a', text: 'Ver el formulario de consentimiento')
     end
 
     it 'completes eligibility, is eligible, is able to consent immediately' do
@@ -228,7 +229,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       page.all('input[type = tel]')[2].set(ENV['Pt_201_Phone_Number'])
       find('input[type = password]').set(ENV['Pt_201_Password'])
       find('input[type = submit]').click
-      click_on 'View the consent form' # need to update with Spanish
+      click_on 'Ver el formulario de consentimiento'
       find('h3', text: 'UNIVERSIDAD DE PALO ALTO CONSENTIMIENTO')
       first('.ng-pristine.ng-untouched.ng-invalid.ng-invalid-required').click
       click_on 'Enviar'

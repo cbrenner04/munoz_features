@@ -929,8 +929,8 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       page.all('input[type = tel]')[2].set(ENV['Pt_252_Phone_Number'])
       find('input[type = password]').set(ENV['Pt_252_Password'])
       find('input[type = submit]').click
-      expect(page).to have_content 'Sorry, there was a problem. ' \
-                                   'Please review your responses and try again.' # need to update with Spanish
+      expect(page).to have_content 'Lo sentimos, hubo un problema. Por favor' \
+                                   ' revise sus respuestas y vuelva a intentar.'
     end
 
     it 'enters duplicate phone number, sees error message' do
@@ -957,8 +957,8 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       page.all('input[type = tel]')[2].set(ENV['Pt_251_Phone_Number'])
       find('input[type = password]').set(ENV['Pt_252_Password'])
       find('input[type = submit]').click
-      expect(page).to have_content 'Sorry, there was a problem. ' \
-                                   'Please review your responses and try again.' # need to update with Spanish
+      expect(page).to have_content 'Lo sentimos, hubo un problema. Por favor' \
+                                   ' revise sus respuestas y vuelva a intentar.'
     end
 
     it 'fills out eligibility, is eligible, consents,' \

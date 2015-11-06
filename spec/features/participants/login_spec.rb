@@ -215,7 +215,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       sign_in_pt_en('211')
       visit "#{ENV['Base_URL']}/#/es/cigarette-count"
       find('.navbar-toggle').click
-      click_on 'Iniciar'
+      click_on 'Inicio'
       expect(page).to have_content 'Guía Para Dejar de Fumar'
     end
   end
