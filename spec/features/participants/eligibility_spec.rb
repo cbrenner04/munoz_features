@@ -986,7 +986,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       page.all('input[type = tel]')[2].set(ENV['Pt_253_Phone_Number'])
       find('input[type = password]').set(ENV['Pt_253_Password'])
       find('input[type = submit]').click
-      click_on 'View the consent form' # need to update with Spanish
+      click_on 'Ver el formulario de consentimiento'
       find('h3', text: 'UNIVERSIDAD DE PALO ALTO CONSENTIMIENTO')
       first('.ng-pristine.ng-untouched.ng-invalid.ng-invalid-required').click
       click_on 'Enviar'

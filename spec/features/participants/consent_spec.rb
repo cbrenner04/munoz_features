@@ -119,6 +119,12 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
 
     it 'signs in and does not consent to participate' do
       visit ENV['Base_URL']
+      unless page.has_css?('a', text: 'Sign in')
+        find('.navbar-toggle').click
+        find('.dropdown-toggle').click
+        page.has_text?('Sign out')
+        click_on 'Sign out'
+      end
       click_on 'Sign in'
       fill_in 'participant_email', with: ENV['Pt_107_Email']
       fill_in 'participant_password', with: ENV['Pt_107_Password']
@@ -188,7 +194,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       page.all('input[type = tel]')[2].set(ENV['Pt_28_Phone_Number'])
       find('input[type = password]').set(ENV['Pt_28_Password'])
       find('input[type = submit]').click
-      click_on 'View the consent form'
+      click_on 'Ver el formulario de consentimiento'
       find('h3', text: 'UNIVERSIDAD DE PALO ALTO CONSENTIMIENTO')
       first('.ng-pristine.ng-untouched.ng-invalid.ng-invalid-required').click
       go_to('English')
