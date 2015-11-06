@@ -6,8 +6,8 @@ This is a test suite meant for testing the
 ## Information for running this test suite
 
 You will need to set up participants and users in the app. If you are
-running the app locally you can seed this data by running from the test suite
-directory on the command line:
+running the app locally you can seed this data and start the application
+by running from the test suite directory on the command line:
 
     rake load_app_local
 
@@ -24,7 +24,7 @@ You will then need a file called `env_variables.rb`, which is required in the
 `.rspec` file, that houses the following environment variables. These
 correspond with the data for the above participants and users seeded in the app.
 
-For each of the participants (numbers: 3 - 30, 101 - 152, 201 - 252) you will
+For each of the participants (numbers: 3 - 30, 101 - 155, 201 - 255) you will
 need `Pt_<participant_number>_Email`, `Pt_<participant_number>_Password`, and
 `Pt_<participant_number>_Phone_Number`. For example, the data in the app for
 participant101 will correspond, in your `env_variables.rb` file, with:
@@ -48,8 +48,12 @@ You will also need the following environment variables:
     ENV['Pt_29_Confirmation'] ||= "toKEN"
     ENV['Pt_30_Confirmation'] ||= "T0k3N"
 
-Once you have the data seeded in the app and the `env_variables.rb` file
-configured, from the test suite directory on the command line you can simply
-run:
+If you are running this test suite against the app locally, you will need to
+run a redis server. For redis documentation go
+[here](http://redis.io/documentation).
+
+Once you have the data seeded in the app, the `env_variables.rb` file
+configured, and the redis server running, start the app and from the test suite
+directory on the command line you can simply run:
 
     rspec

@@ -215,7 +215,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       sign_in_pt_en('211')
       visit "#{ENV['Base_URL']}/#/es/cigarette-count"
       find('.navbar-toggle').click
-      click_on 'Home' # need to update to Spanish
+      click_on 'Iniciar'
       expect(page).to have_content 'Guía Para Dejar de Fumar'
     end
   end
@@ -234,6 +234,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
     it 'confirms phone' do
       visit "#{ENV['Base_URL']}/confirm_phone?locale=en&" \
             "token=#{ENV['Pt_29_Confirmation']}"
+      sleep(2)
       expect(page).to have_content 'Thank you for confirming your phone number.'
       click_on 'Sign in'
       fill_in 'participant_email', with: ENV['Pt_29_Email']
@@ -264,6 +265,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
     it 'confirms phone' do
       visit "#{ENV['Base_URL']}/confirm_phone?locale=es&" \
             "token=#{ENV['Pt_30_Confirmation']}"
+      sleep(2)
       expect(page)
         .to have_content 'Gracias por confirmar su número de teléfono.'
       click_on 'Iniciar sesión'

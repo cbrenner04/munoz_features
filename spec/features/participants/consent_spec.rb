@@ -1,6 +1,6 @@
 # filename: spec/features/participants/consent_spec.rb
 
-require_relative '../../support/zip_codes.rb'
+require_relative '../../../lib/zip_codes.rb'
 
 describe 'A visitor to the site', type: :feature, metadata: :participant do
   context 'in English' do
@@ -201,7 +201,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
     it 'cannot review consent immediately following ineligible decision' do
       visit "#{ENV['Base_URL']}" \
             '/es/pages/application#/es/eligibility-result?isEligible=false'
-      expect { click_on 'View the consent form' }.to raise_error
+      expect { click_on 'View the consent form' }.to raise_error # need to update with Spanish
     end
 
     it 'completes eligibility, is eligible, is able to consent immediately' do
@@ -228,10 +228,10 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       page.all('input[type = tel]')[2].set(ENV['Pt_201_Phone_Number'])
       find('input[type = password]').set(ENV['Pt_201_Password'])
       find('input[type = submit]').click
-      click_on 'View the consent form'
+      click_on 'View the consent form' # need to update with Spanish
       find('h3', text: 'UNIVERSIDAD DE PALO ALTO CONSENTIMIENTO')
       first('.ng-pristine.ng-untouched.ng-invalid.ng-invalid-required').click
-      click_on 'Submit'
+      click_on 'Enviar'
       expect(page).to have_css('iframe[class = ng-scope]')
     end
 
@@ -274,7 +274,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       click_on 'Iniciar sesión'
       find('h3', text: 'UNIVERSIDAD DE PALO ALTO CONSENTIMIENTO')
       first('.ng-pristine.ng-untouched.ng-invalid.ng-invalid-required').click
-      find('.btn.btn-primary', text: 'Submit').click
+      find('.btn.btn-primary', text: 'Enviar').click
       expect(page).to have_css('iframe[class = ng-scope]')
     end
 
@@ -286,7 +286,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       click_on 'Iniciar sesión'
       find('h3', text: 'UNIVERSIDAD DE PALO ALTO CONSENTIMIENTO')
       page.all('.ng-pristine.ng-untouched.ng-invalid')[1].click
-      find('.btn.btn-primary', text: 'Submit').click
+      find('.btn.btn-primary', text: 'Enviar').click
       expect(page).to have_css('iframe[class = ng-scope]')
     end
 

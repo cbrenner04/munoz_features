@@ -68,7 +68,7 @@ describe 'An eligible participant', type: :feature, metadata: :participant do
         expect(page).to have_content '6'
       end
 
-      find('.btn.btn-primary', text: 'Submit').click # need to update with Spanish
+      find('.btn.btn-primary', text: 'Enviar').click
       expect(page).to have_content 'Guía Para Dejar de Fumar'
     end
 
@@ -77,7 +77,7 @@ describe 'An eligible participant', type: :feature, metadata: :participant do
       find('a', text: 'Guía Para Dejar de Fumar')
       find('.navbar-toggle').click
       find('.glyphicon.glyphicon-cog')
-      expect(page).to_not have_css('.ng-binging', text: 'Feedback')
+      expect(page).to_not have_css('.ng-binging', text: 'Comentarios')
     end
   end
 end

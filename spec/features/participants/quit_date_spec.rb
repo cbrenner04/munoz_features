@@ -425,7 +425,7 @@ describe 'A registered and consented participant signs in',
       end
 
       select_day("#{tomorrow}")
-      find('.btn.btn-default', text: 'Done').click # need to update with Spanish
+      find('.btn.btn-default', text: 'Fijar').click
       expect(page).to have_content 'Guía Para Dejar de Fumar'
     end
 
@@ -549,13 +549,17 @@ def unusual_day_3(num)
     first('.text-right.ng-binding.ng-scope', text: "#{num}").click
   elsif wrong_date.to_i >= 30
     calendar_date(num, 2)
-  elsif wrong_date.to_i == 23 && page.has_no_text?('30', count: 2)
+  elsif wrong_date.to_i == 23
+    unusual_day_4(num)
+  end
+end
+
+def unusual_day_4(num)
+  if page.has_no_text?('30', count: 2)
     calendar_date(num, 1)
-  elsif wrong_date.to_i == 23 && page.has_text?('30', count: 2) &&
-        page.has_no_text?('31', count: 2)
+  elsif page.has_text?('30', count: 2) && page.has_no_text?('31', count: 2)
     calendar_date(num, 2)
-  elsif wrong_date.to_i == 23 && page.has_text?('30', count: 2) &&
-        page.has_text?('31', count: 2)
+  elsif page.has_text?('30', count: 2) && page.has_text?('31', count: 2)
     calendar_date(num, 3)
   end
 end

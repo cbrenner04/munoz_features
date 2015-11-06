@@ -501,14 +501,14 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       expect(page)
         .to have_content 'Por favor responda las siguientes preguntas para ' \
                          'determinar si es elegible para participar.'
-      click_on 'Continue' # need to update with Spanish
+      click_on 'Continuar'
       expect(page).to have_content '¿Cuántos años tiene?'
     end
 
     it 'switches to English when filling out eligibility' do
       visit "#{ENV['Base_URL']}"
       click_on 'Español'
-      click_on 'Continue' # need to update with Spanish
+      click_on 'Continuar'
       within('.form-group', text: '¿Fuma usted actualmente?') do
         choose 'Sí'
       end
@@ -930,7 +930,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       find('input[type = password]').set(ENV['Pt_252_Password'])
       find('input[type = submit]').click
       expect(page).to have_content 'Sorry, there was a problem. ' \
-                                   'Please review your responses and try again.'
+                                   'Please review your responses and try again.' # need to update with Spanish
     end
 
     it 'enters duplicate phone number, sees error message' do
@@ -958,7 +958,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       find('input[type = password]').set(ENV['Pt_252_Password'])
       find('input[type = submit]').click
       expect(page).to have_content 'Sorry, there was a problem. ' \
-                                   'Please review your responses and try again.'
+                                   'Please review your responses and try again.' # need to update with Spanish
     end
 
     it 'fills out eligibility, is eligible, consents,' \
@@ -986,10 +986,10 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       page.all('input[type = tel]')[2].set(ENV['Pt_253_Phone_Number'])
       find('input[type = password]').set(ENV['Pt_253_Password'])
       find('input[type = submit]').click
-      click_on 'View the consent form'
+      click_on 'View the consent form' # need to update with Spanish
       find('h3', text: 'UNIVERSIDAD DE PALO ALTO CONSENTIMIENTO')
       first('.ng-pristine.ng-untouched.ng-invalid.ng-invalid-required').click
-      click_on 'Submit'
+      click_on 'Enviar'
       expect(page).to have_css('iframe[class = ng-scope]')
 
       navigate_to('Guía Para Dejar de Fumar')

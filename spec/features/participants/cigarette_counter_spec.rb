@@ -291,7 +291,7 @@ describe 'A registered and consented participant signs in',
       sign_in_pt_en('255')
       visit "#{ENV['Base_URL']}/#/es/cigarette-count"
       find('.pull-left', text: 'Ayer')
-      find('.btn.btn-default', text: 'Done').click # need to update with Spanish
+      find('.btn.btn-default', text: 'Fijar').click
       expect(page).to have_content 'Guía Para Dejar de Fumar'
     end
   end
