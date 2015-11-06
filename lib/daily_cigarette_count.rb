@@ -1,3 +1,5 @@
+# Expected headers for daily_cigarette_count.csv compared to actual in
+# csv_spec.rb
 module DailyCigaretteCount
   HEADER = ['Id', 'Occurred on', 'Count', 'Uuid', 'Created at', 'Updated at',
             'Id [Participant]', 'Email [Participant]',

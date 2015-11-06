@@ -10,9 +10,9 @@ AbcSize:
 ClassLength:
   Enabled: false
 
-Documentation:
-  Exclude:
-    - spec/**/*
+# Documentation:
+#   Exclude:
+#     - spec/**/*
 
 DotPosition:
   Enabled: false

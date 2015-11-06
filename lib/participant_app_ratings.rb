@@ -1,3 +1,5 @@
+# Expected headers for participant_app_ratings.csv compared to actual in
+# csv_spec.rb.
 module ParticipantAppRatings
   HEADER = ['Id', 'Helpful value', 'Rated at', 'Created at', 'Updated at',
             'Recommend value', 'Id [Participant]', 'Email [Participant]',

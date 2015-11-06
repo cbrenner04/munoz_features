@@ -1,3 +1,4 @@
+# List of San Francisco and Chicago zip codes for use in eligibility_spec.rb.
 module ZipCodes
   SF = ['94002', '94005', '94010', '94011', '94014', '94015', '94016',
         '94017', '94019', '94020', '94021', '94022', '94023', '94024',

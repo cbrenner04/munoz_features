@@ -1,3 +1,5 @@
+# Expected headers for eligibility_statuses.csv. compared to actual in
+# csv_spec.rb
 module EligibilityStatuses
   HEADER = ['Id', 'Is eligible', 'Created at', 'Updated at',
             'Id [Participant]', 'Email [Participant]',

@@ -1,3 +1,4 @@
+# Expected headers for consent_responses.csv compared to actual in csv_spec.rb
 module ConsentResponses
   HEADER = ['Id', 'Responded at', 'Is consented', 'Uuid', 'Created at',
             'Updated at', 'Id [Participant]', 'Email [Participant]',

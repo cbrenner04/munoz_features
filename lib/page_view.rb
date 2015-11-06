@@ -1,3 +1,4 @@
+# Expected headers for page_view.csv compared to actual in csv_spec.rb.
 module PageView
   HEADER = ['Id', 'Occurred at', 'Viewport width', 'Viewport height',
             'User agent', 'Language', 'Url', 'Created at', 'Updated at',

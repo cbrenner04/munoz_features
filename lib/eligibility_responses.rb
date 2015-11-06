@@ -1,3 +1,5 @@
+# Expected headers for eligibility_responses.csv compared to actual in
+# csv_spec.rb.
 module EligibilityResponses
   HEADER = ['Id', 'Value', 'Uuid', 'Responded at', 'Created at', 'Updated at',
             'Code [Question]', 'Language [Question]', 'Answer type [Question]',

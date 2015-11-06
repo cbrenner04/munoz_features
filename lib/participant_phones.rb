@@ -1,3 +1,4 @@
+# Expected headers for participant_phones.csv compared to actual in csv_spec.rb
 module ParticipantPhones
   HEADER = ['Id', 'Phone number', 'Confirmation token', 'Confirmed at',
             'Confirmation sent at', 'Uuid', 'Country code',

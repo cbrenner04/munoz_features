@@ -243,13 +243,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       find('a', text: 'Stop Smoking Guide')
       go_to('Sign out')
 
-      page.driver.browser.manage.window.resize_to(1280, 743)
-      visit "#{ENV['Base_URL']}/admin"
-      fill_in 'user_email', with: ENV['User_1_Email']
-      fill_in 'user_password', with: ENV['User_1_Password']
-      click_on 'Sign in'
-      find('h1', text: 'Site Administration')
-
+      sign_in_user
       within('.nav.nav-pills.nav-stacked') do
         click_on 'Participant phones'
       end
@@ -275,13 +269,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       find('a', text: 'Guía Para Dejar de Fumar')
       go_to('Finalizar la sesión')
 
-      page.driver.browser.manage.window.resize_to(1280, 743)
-      visit "#{ENV['Base_URL']}/admin"
-      fill_in 'user_email', with: ENV['User_1_Email']
-      fill_in 'user_password', with: ENV['User_1_Password']
-      click_on 'Sign in'
-      find('h1', text: 'Site Administration')
-
+      sign_in_user
       within('.nav.nav-pills.nav-stacked') do
         click_on 'Participant phones'
       end
@@ -320,4 +308,77 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       find('a', text: 'Guía Para Dejar de Fumar')
     end
   end
+end
+
+describe 'A visitor to the site', type: :feature, metadata: :participant do
+  after do
+    page.driver.browser.manage.window.resize_to(360, 591)
+  end
+
+  context 'is English speaking' do
+    it 'gets notifications scheduled' do
+      sign_in_pt_en('156')
+      find('a', text: 'Stop Smoking Guide')
+      go_to('Sign out')
+
+      sign_in_user
+      visit "#{ENV['Base_URL']}/admin/notification_schedule"
+      within first('.notification_schedule_row') do
+        three = Date.today + 90
+        expect(page)
+          .to have_content "follow-up-3.en #{three.strftime('%B %d, %Y')}"
+      end
+
+      row = page.all('.notification_schedule_row')
+      within row[1] do
+        two = Date.today + 60
+        expect(page)
+          .to have_content "follow-up-2.en #{two.strftime('%B %d, %Y')}"
+      end
+
+      within row[2] do
+        one = Date.today + 30
+        expect(page)
+          .to have_content "follow-up-1.en #{one.strftime('%B %d, %Y')}"
+      end
+    end
+  end
+
+  context 'is Spanish speaking' do
+    it 'gets notifications scheduled' do
+      sign_in_pt_es('256')
+      find('a', text: 'Guía Para Dejar de Fumar')
+      go_to('Finalizar la sesión')
+
+      sign_in_user
+      visit "#{ENV['Base_URL']}/admin/notification_schedule"
+      within first('.notification_schedule_row') do
+        three = Date.today + 90
+        expect(page)
+          .to have_content "follow-up-3.es #{three.strftime('%B %d, %Y')}"
+      end
+
+      row = page.all('.notification_schedule_row')
+      within row[1] do
+        two = Date.today + 60
+        expect(page)
+          .to have_content "follow-up-2.es #{two.strftime('%B %d, %Y')}"
+      end
+
+      within row[2] do
+        one = Date.today + 30
+        expect(page)
+          .to have_content "follow-up-1.es #{one.strftime('%B %d, %Y')}"
+      end
+    end
+  end
+end
+
+def sign_in_user
+  page.driver.browser.manage.window.resize_to(1280, 743)
+  visit "#{ENV['Base_URL']}/admin"
+  fill_in 'user_email', with: ENV['User_1_Email']
+  fill_in 'user_password', with: ENV['User_1_Password']
+  click_on 'Sign in'
+  find('h1', text: 'Site Administration')
 end

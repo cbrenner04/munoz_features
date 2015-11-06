@@ -1,3 +1,4 @@
+# Expected headers language_choices.csv compared to actual in csv_spec.rb.
 module LanguageChoices
   HEADER = ['Id', 'Language', 'Chosen at', 'Uuid', 'Created at', 'Updated at',
             'Id [Participant]', 'Email [Participant]',

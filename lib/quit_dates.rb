@@ -1,3 +1,4 @@
+# Expected headers for quit_dates.csv compared to actual in csv_spec.rb.
 module QuitDates
   HEADER = ['Id', 'Date', 'Selected at', 'Uuid', 'Created at', 'Updated at',
             'Id [Participant]', 'Email [Participant]',
