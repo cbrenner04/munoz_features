@@ -24,7 +24,7 @@ You will then need a file called `env_variables.rb`, which is required in the
 `.rspec` file, that houses the following environment variables. These
 correspond with the data for the above participants and users seeded in the app.
 
-For each of the participants (numbers: 3 - 30, 101 - 155, 201 - 255) you will
+For each of the participants (numbers: 3 - 50, 101 - 156, 201 - 256) you will
 need `Pt_<participant_number>_Email`, `Pt_<participant_number>_Password`, and
 `Pt_<participant_number>_Phone_Number`. For example, the data in the app for
 participant101 will correspond, in your `env_variables.rb` file, with:
