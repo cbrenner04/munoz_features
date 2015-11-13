@@ -10,10 +10,6 @@ AbcSize:
 ClassLength:
   Enabled: false
 
-# Documentation:
-#   Exclude:
-#     - spec/**/*
-
 DotPosition:
   Enabled: false
 
@@ -22,10 +18,6 @@ HandleExceptions:
 
 IfUnlessModifier:
   Enabled: false
-
-# LineLength:
-#   Exclude:
-#     - spec/**/*
 
 MethodLength:
   Max: 25
@@ -43,4 +35,4 @@ Style/GuardClause:
   Enabled: false
 
 WordArray:
-  Enabled: false
+  Enabled: true

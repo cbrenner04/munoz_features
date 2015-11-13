@@ -10,9 +10,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       first('input[type = tel]').set('25')
       q = ['Are you currently a smoker?',
            'Are you thinking of quitting smoking within the next 30 days?']
-      a = ['Yes', 'Yes']
-
-      q.zip(a).each do |ques, answ|
+      q.zip(%w(Yes Yes)).each do |ques, answ|
         within('.form-group', text: ques) do
           choose answ
         end
@@ -24,9 +22,9 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
         select 'Ocean Park Health Center'
       end
 
-      find('input[type = email]').set(ENV['Pt_27_Email'])
-      page.all('input[type = tel]')[2].set(ENV['Pt_27_Phone_Number'])
-      find('input[type = password]').set(ENV['Pt_27_Password'])
+      find('input[type = email]').set(ENV['Pt_35_Email'])
+      page.all('input[type = tel]')[2].set(ENV['Pt_35_Phone_Number'])
+      find('input[type = password]').set(ENV['Pt_35_Password'])
       find('input[type = submit]').click
       click_on 'View the consent form'
       find('h3', text: 'PALO ALTO UNIVERSITY CONSENT')
@@ -49,9 +47,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       first('input[type = tel]').set('25')
       q = ['Are you currently a smoker?',
            'Are you thinking of quitting smoking within the next 30 days?']
-      a = ['Yes', 'Yes']
-
-      q.zip(a).each do |ques, answ|
+      q.zip(%w(Yes Yes)).each do |ques, answ|
         within('.form-group', text: ques) do
           choose answ
         end
@@ -63,9 +59,9 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
         select 'Ocean Park Health Center'
       end
 
-      find('input[type = email]').set(ENV['Pt_15_Email'])
-      page.all('input[type = tel]')[2].set(ENV['Pt_15_Phone_Number'])
-      find('input[type = password]').set(ENV['Pt_15_Password'])
+      find('input[type = email]').set(ENV['Pt_36_Email'])
+      page.all('input[type = tel]')[2].set(ENV['Pt_36_Phone_Number'])
+      find('input[type = password]').set(ENV['Pt_36_Password'])
       find('input[type = submit]').click
       click_on 'View the consent form'
       find('h3', text: 'PALO ALTO UNIVERSITY CONSENT')
@@ -81,9 +77,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       first('input[type = tel]').set('25')
       q = ['Are you currently a smoker?',
            'Are you thinking of quitting smoking within the next 30 days?']
-      a = ['Yes', 'Yes']
-
-      q.zip(a).each do |ques, answ|
+      q.zip(%w(Yes Yes)).each do |ques, answ|
         within('.form-group', text: ques) do
           choose answ
         end
@@ -97,9 +91,9 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
         select 'Centro de Salud Ocean Park'
       end
 
-      find('input[type = email]').set(ENV['Pt_23_Email'])
-      page.all('input[type = tel]')[2].set(ENV['Pt_23_Phone_Number'])
-      find('input[type = password]').set(ENV['Pt_23_Password'])
+      find('input[type = email]').set(ENV['Pt_37_Email'])
+      page.all('input[type = tel]')[2].set(ENV['Pt_37_Phone_Number'])
+      find('input[type = password]').set(ENV['Pt_37_Password'])
       find('input[type = submit]').click
       click_on 'Ver el formulario de consentimiento'
       find('h3', text: 'UNIVERSIDAD DE PALO ALTO CONSENTIMIENTO')
@@ -176,9 +170,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       first('input[type = tel]').set('25')
       q = ['¿Fuma usted actualmente?',
            '¿Está pensando en dejar de fumar dentro de los próximos 30 días?']
-      a = ['Sí', 'Sí']
-
-      q.zip(a).each do |ques, answ|
+      q.zip(%w(Sí Sí)).each do |ques, answ|
         within('.form-group', text: ques) do
           choose answ
         end
@@ -190,9 +182,9 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
         select 'Centro de Salud Ocean Park'
       end
 
-      find('input[type = email]').set(ENV['Pt_28_Email'])
-      page.all('input[type = tel]')[2].set(ENV['Pt_28_Phone_Number'])
-      find('input[type = password]').set(ENV['Pt_28_Password'])
+      find('input[type = email]').set(ENV['Pt_38_Email'])
+      page.all('input[type = tel]')[2].set(ENV['Pt_38_Phone_Number'])
+      find('input[type = password]').set(ENV['Pt_38_Password'])
       find('input[type = submit]').click
       click_on 'Ver el formulario de consentimiento'
       find('h3', text: 'UNIVERSIDAD DE PALO ALTO CONSENTIMIENTO')
@@ -217,9 +209,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       first('input[type = tel]').set('25')
       q = ['¿Fuma usted actualmente?',
            '¿Está pensando en dejar de fumar dentro de los próximos 30 días?']
-      a = ['Sí', 'Sí']
-
-      q.zip(a).each do |ques, answ|
+      q.zip(%w(Sí Sí)).each do |ques, answ|
         within('.form-group', text: ques) do
           choose answ
         end
@@ -231,9 +221,9 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
         select 'Centro de Salud Ocean Park'
       end
 
-      find('input[type = email]').set(ENV['Pt_201_Email'])
-      page.all('input[type = tel]')[2].set(ENV['Pt_201_Phone_Number'])
-      find('input[type = password]').set(ENV['Pt_201_Password'])
+      find('input[type = email]').set(ENV['Pt_39_Email'])
+      page.all('input[type = tel]')[2].set(ENV['Pt_39_Phone_Number'])
+      find('input[type = password]').set(ENV['Pt_39_Password'])
       find('input[type = submit]').click
       click_on 'Ver el formulario de consentimiento'
       find('h3', text: 'UNIVERSIDAD DE PALO ALTO CONSENTIMIENTO')
@@ -249,9 +239,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       first('input[type = tel]').set('25')
       q = ['¿Fuma usted actualmente?',
            '¿Está pensando en dejar de fumar dentro de los próximos 30 días?']
-      a = ['Sí', 'Sí']
-
-      q.zip(a).each do |ques, answ|
+      q.zip(%w(Sí Sí)).each do |ques, answ|
         within('.form-group', text: ques) do
           choose answ
         end
@@ -265,9 +253,9 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
         select 'Ocean Park Health Center'
       end
 
-      find('input[type = email]').set(ENV['Pt_24_Email'])
-      page.all('input[type = tel]')[2].set(ENV['Pt_24_Phone_Number'])
-      find('input[type = password]').set(ENV['Pt_24_Password'])
+      find('input[type = email]').set(ENV['Pt_40_Email'])
+      page.all('input[type = tel]')[2].set(ENV['Pt_40_Phone_Number'])
+      find('input[type = password]').set(ENV['Pt_40_Password'])
       find('input[type = submit]').click
       click_on 'View the consent form'
       find('h3', text: 'PALO ALTO UNIVERSITY CONSENT')

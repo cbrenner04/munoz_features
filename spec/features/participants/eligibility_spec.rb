@@ -31,9 +31,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       first('input[type = tel]').set('25')
       q = ['Are you currently a smoker?',
            'Are you thinking of quitting smoking within the next 30 days?']
-      a = ['Yes', 'Yes']
-
-      q.zip(a).each do |ques, answ|
+      q.zip(%w(Yes Yes)).each do |ques, answ|
         within('.form-group', text: ques) do
           choose answ
         end
@@ -60,9 +58,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       first('input[type = tel]').set('17')
       q = ['Are you currently a smoker?',
            'Are you thinking of quitting smoking within the next 30 days?']
-      a = ['Yes', 'Yes']
-
-      q.zip(a).each do |ques, answ|
+      q.zip(%w(Yes Yes)).each do |ques, answ|
         within('.form-group', text: ques) do
           choose answ
         end
@@ -87,9 +83,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       first('input[type = tel]').set('25')
       q = ['Are you currently a smoker?',
            'Are you thinking of quitting smoking within the next 30 days?']
-      a = ['No', 'Yes']
-
-      q.zip(a).each do |ques, answ|
+      q.zip(%w(No Yes)).each do |ques, answ|
         within('.form-group', text: ques) do
           choose answ
         end
@@ -114,9 +108,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       first('input[type = tel]').set('25')
       q = ['Are you currently a smoker?',
            'Are you thinking of quitting smoking within the next 30 days?']
-      a = ['Yes', 'No']
-
-      q.zip(a).each do |ques, answ|
+      q.zip(%w(Yes No)).each do |ques, answ|
         within('.form-group', text: ques) do
           choose answ
         end
@@ -140,9 +132,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       find('.ng-binding', text: 'How old are you?')
       q = ['Are you currently a smoker?',
            'Are you thinking of quitting smoking within the next 30 days?']
-      a = ['Yes', 'Yes']
-
-      q.zip(a).each do |ques, answ|
+      q.zip(%w(Yes Yes)).each do |ques, answ|
         within('.form-group', text: ques) do
           choose answ
         end
@@ -166,9 +156,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       first('input[type = tel]').set('0')
       q = ['Are you currently a smoker?',
            'Are you thinking of quitting smoking within the next 30 days?']
-      a = ['Yes', 'Yes']
-
-      q.zip(a).each do |ques, answ|
+      q.zip(%w(Yes Yes)).each do |ques, answ|
         within('.form-group', text: ques) do
           choose answ
         end
@@ -192,9 +180,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       first('input[type = tel]').set('121')
       q = ['Are you currently a smoker?',
            'Are you thinking of quitting smoking within the next 30 days?']
-      a = ['Yes', 'Yes']
-
-      q.zip(a).each do |ques, answ|
+      q.zip(%w(Yes Yes)).each do |ques, answ|
         within('.form-group', text: ques) do
           choose answ
         end
@@ -258,17 +244,15 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       first('input[type = tel]').set('25')
       q = ['Are you currently a smoker?',
            'Are you thinking of quitting smoking within the next 30 days?']
-      a = ['Yes', 'Yes']
-
-      q.zip(a).each do |ques, answ|
+      q.zip(%w(Yes Yes)).each do |ques, answ|
         within('.form-group', text: ques) do
           choose answ
         end
       end
 
-      find('input[type = email]').set(ENV['Pt_9_Email'])
-      page.all('input[type = tel]')[2].set(ENV['Pt_9_Phone_Number'])
-      find('input[type = password]').set(ENV['Pt_9_Password'])
+      find('input[type = email]').set(ENV['Pt_31_Email'])
+      page.all('input[type = tel]')[2].set(ENV['Pt_31_Phone_Number'])
+      find('input[type = password]').set(ENV['Pt_31_Password'])
       find('input[type = submit]').click
       expect(page).to have_content 'You are eligible to participate'
     end
@@ -279,9 +263,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       first('input[type = tel]').set('25')
       q = ['Are you currently a smoker?',
            'Are you thinking of quitting smoking within the next 30 days?']
-      a = ['Yes', 'Yes']
-
-      q.zip(a).each do |ques, answ|
+      q.zip(%w(Yes Yes)).each do |ques, answ|
         within('.form-group', text: ques) do
           choose answ
         end
@@ -301,9 +283,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       first('input[type = tel]').set('25')
       q = ['Are you currently a smoker?',
            'Are you thinking of quitting smoking within the next 30 days?']
-      a = ['Yes', 'Yes']
-
-      q.zip(a).each do |ques, answ|
+      q.zip(%w(Yes Yes)).each do |ques, answ|
         within('.form-group', text: ques) do
           choose answ
         end
@@ -322,9 +302,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       first('input[type = tel]').set('25')
       q = ['Are you currently a smoker?',
            'Are you thinking of quitting smoking within the next 30 days?']
-      a = ['Yes', 'Yes']
-
-      q.zip(a).each do |ques, answ|
+      q.zip(%w(Yes Yes)).each do |ques, answ|
         within('.form-group', text: ques) do
           choose answ
         end
@@ -347,9 +325,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       first('input[type = tel]').set('25')
       q = ['Are you currently a smoker?',
            'Are you thinking of quitting smoking within the next 30 days?']
-      a = ['Yes', 'Yes']
-
-      q.zip(a).each do |ques, answ|
+      q.zip(%w(Yes Yes)).each do |ques, answ|
         within('.form-group', text: ques) do
           choose answ
         end
@@ -372,9 +348,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       first('input[type = tel]').set('25')
       q = ['Are you currently a smoker?',
            'Are you thinking of quitting smoking within the next 30 days?']
-      a = ['Yes', 'Yes']
-
-      q.zip(a).each do |ques, answ|
+      q.zip(%w(Yes Yes)).each do |ques, answ|
         within('.form-group', text: ques) do
           choose answ
         end
@@ -397,9 +371,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       first('input[type = tel]').set('25')
       q = ['Are you currently a smoker?',
            'Are you thinking of quitting smoking within the next 30 days?']
-      a = ['Yes', 'Yes']
-
-      q.zip(a).each do |ques, answ|
+      q.zip(%w(Yes Yes)).each do |ques, answ|
         within('.form-group', text: ques) do
           choose answ
         end
@@ -425,9 +397,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       first('input[type = tel]').set('25')
       q = ['Are you currently a smoker?',
            'Are you thinking of quitting smoking within the next 30 days?']
-      a = ['Yes', 'Yes']
-
-      q.zip(a).each do |ques, answ|
+      q.zip(%w(Yes Yes)).each do |ques, answ|
         within('.form-group', text: ques) do
           choose answ
         end
@@ -454,9 +424,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       first('input[type = tel]').set('25')
       q = ['Are you currently a smoker?',
            'Are you thinking of quitting smoking within the next 30 days?']
-      a = ['Yes', 'Yes']
-
-      q.zip(a).each do |ques, answ|
+      q.zip(%w(Yes Yes)).each do |ques, answ|
         within('.form-group', text: ques) do
           choose answ
         end
@@ -468,9 +436,9 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
         select 'Ocean Park Health Center'
       end
 
-      find('input[type = email]').set(ENV['Pt_15_Email'])
-      page.all('input[type = tel]')[2].set(ENV['Pt_15_Phone_Number'])
-      find('input[type = password]').set(ENV['Pt_15_Password'])
+      find('input[type = email]').set(ENV['Pt_32_Email'])
+      page.all('input[type = tel]')[2].set(ENV['Pt_32_Phone_Number'])
+      find('input[type = password]').set(ENV['Pt_32_Password'])
       find('input[type = submit]').click
       click_on 'View the consent form'
       find('h3', text: 'PALO ALTO UNIVERSITY CONSENT')
@@ -524,9 +492,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       first('input[type = tel]').set('25')
       q = ['¿Fuma usted actualmente?',
            '¿Está pensando en dejar de fumar dentro de los próximos 30 días?']
-      a = ['Sí', 'Sí']
-
-      q.zip(a).each do |ques, answ|
+      q.zip(%w(Sí Sí)).each do |ques, answ|
         within('.form-group', text: ques) do
           choose answ
         end
@@ -555,9 +521,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       first('input[type = tel]').set('17')
       q = ['¿Fuma usted actualmente?',
            '¿Está pensando en dejar de fumar dentro de los próximos 30 días?']
-      a = ['Sí', 'Sí']
-
-      q.zip(a).each do |ques, answ|
+      q.zip(%w(Sí Sí)).each do |ques, answ|
         within('.form-group', text: ques) do
           choose answ
         end
@@ -588,9 +552,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       first('input[type = tel]').set('25')
       q = ['¿Fuma usted actualmente?',
            '¿Está pensando en dejar de fumar dentro de los próximos 30 días?']
-      a = ['No', 'Sí']
-
-      q.zip(a).each do |ques, answ|
+      q.zip(%w(No Sí)).each do |ques, answ|
         within('.form-group', text: ques) do
           choose answ
         end
@@ -621,9 +583,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       first('input[type = tel]').set('25')
       q = ['¿Fuma usted actualmente?',
            '¿Está pensando en dejar de fumar dentro de los próximos 30 días?']
-      a = ['Sí', 'No']
-
-      q.zip(a).each do |ques, answ|
+      q.zip(%w(Sí No)).each do |ques, answ|
         within('.form-group', text: ques) do
           choose answ
         end
@@ -653,9 +613,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       find('.ng-binding', text: '¿Cuántos años tiene?')
       q = ['¿Fuma usted actualmente?',
            '¿Está pensando en dejar de fumar dentro de los próximos 30 días?']
-      a = ['Sí', 'Sí']
-
-      q.zip(a).each do |ques, answ|
+      q.zip(%w(Sí Sí)).each do |ques, answ|
         within('.form-group', text: ques) do
           choose answ
         end
@@ -679,9 +637,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       first('input[type = tel]').set('0')
       q = ['¿Fuma usted actualmente?',
            '¿Está pensando en dejar de fumar dentro de los próximos 30 días?']
-      a = ['Sí', 'Sí']
-
-      q.zip(a).each do |ques, answ|
+      q.zip(%w(Sí Sí)).each do |ques, answ|
         within('.form-group', text: ques) do
           choose answ
         end
@@ -705,9 +661,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       first('input[type = tel]').set('121')
       q = ['¿Fuma usted actualmente?',
            '¿Está pensando en dejar de fumar dentro de los próximos 30 días?']
-      a = ['Sí', 'Sí']
-
-      q.zip(a).each do |ques, answ|
+      q.zip(%w(Sí Sí)).each do |ques, answ|
         within('.form-group', text: ques) do
           choose answ
         end
@@ -771,17 +725,15 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       first('input[type = tel]').set('25')
       q = ['¿Fuma usted actualmente?',
            '¿Está pensando en dejar de fumar dentro de los próximos 30 días?']
-      a = ['Sí', 'Sí']
-
-      q.zip(a).each do |ques, answ|
+      q.zip(%w(Sí Sí)).each do |ques, answ|
         within('.form-group', text: ques) do
           choose answ
         end
       end
 
-      find('input[type = email]').set(ENV['Pt_10_Email'])
-      page.all('input[type = tel]')[2].set(ENV['Pt_10_Phone_Number'])
-      find('input[type = password]').set(ENV['Pt_10_Password'])
+      find('input[type = email]').set(ENV['Pt_33_Email'])
+      page.all('input[type = tel]')[2].set(ENV['Pt_33_Phone_Number'])
+      find('input[type = password]').set(ENV['Pt_33_Password'])
       find('input[type = submit]').click
       expect(page).to have_content 'Usted es eligible para participar en ' \
                                    'nuestro estudio'
@@ -793,9 +745,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       first('input[type = tel]').set('25')
       q = ['¿Fuma usted actualmente?',
            '¿Está pensando en dejar de fumar dentro de los próximos 30 días?']
-      a = ['Sí', 'Sí']
-
-      q.zip(a).each do |ques, answ|
+      q.zip(%w(Sí Sí)).each do |ques, answ|
         within('.form-group', text: ques) do
           choose answ
         end
@@ -815,9 +765,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       first('input[type = tel]').set('25')
       q = ['¿Fuma usted actualmente?',
            '¿Está pensando en dejar de fumar dentro de los próximos 30 días?']
-      a = ['Sí', 'Sí']
-
-      q.zip(a).each do |ques, answ|
+      q.zip(%w(Sí Sí)).each do |ques, answ|
         within('.form-group', text: ques) do
           choose answ
         end
@@ -836,9 +784,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       first('input[type = tel]').set('25')
       q = ['¿Fuma usted actualmente?',
            '¿Está pensando en dejar de fumar dentro de los próximos 30 días?']
-      a = ['Sí', 'Sí']
-
-      q.zip(a).each do |ques, answ|
+      q.zip(%w(Sí Sí)).each do |ques, answ|
         within('.form-group', text: ques) do
           choose answ
         end
@@ -861,9 +807,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       first('input[type = tel]').set('25')
       q = ['¿Fuma usted actualmente?',
            '¿Está pensando en dejar de fumar dentro de los próximos 30 días?']
-      a = ['Sí', 'Sí']
-
-      q.zip(a).each do |ques, answ|
+      q.zip(%w(Sí Sí)).each do |ques, answ|
         within('.form-group', text: ques) do
           choose answ
         end
@@ -886,9 +830,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       first('input[type = tel]').set('25')
       q = ['¿Fuma usted actualmente?',
            '¿Está pensando en dejar de fumar dentro de los próximos 30 días?']
-      a = ['Sí', 'Sí']
-
-      q.zip(a).each do |ques, answ|
+      q.zip(%w(Sí Sí)).each do |ques, answ|
         within('.form-group', text: ques) do
           choose answ
         end
@@ -911,9 +853,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       first('input[type = tel]').set('25')
       q = ['¿Fuma usted actualmente?',
            '¿Está pensando en dejar de fumar dentro de los próximos 30 días?']
-      a = ['Sí', 'Sí']
-
-      q.zip(a).each do |ques, answ|
+      q.zip(%w(Sí Sí)).each do |ques, answ|
         within('.form-group', text: ques) do
           choose answ
         end
@@ -939,9 +879,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       first('input[type = tel]').set('25')
       q = ['¿Fuma usted actualmente?',
            '¿Está pensando en dejar de fumar dentro de los próximos 30 días?']
-      a = ['Sí', 'Sí']
-
-      q.zip(a).each do |ques, answ|
+      q.zip(%w(Sí Sí)).each do |ques, answ|
         within('.form-group', text: ques) do
           choose answ
         end
@@ -968,9 +906,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       first('input[type = tel]').set('25')
       q = ['¿Fuma usted actualmente?',
            '¿Está pensando en dejar de fumar dentro de los próximos 30 días?']
-      a = ['Sí', 'Sí']
-
-      q.zip(a).each do |ques, answ|
+      q.zip(%w(Sí Sí)).each do |ques, answ|
         within('.form-group', text: ques) do
           choose answ
         end
@@ -982,9 +918,9 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
         select 'Centro de Salud Ocean Park'
       end
 
-      find('input[type = email]').set(ENV['Pt_253_Email'])
-      page.all('input[type = tel]')[2].set(ENV['Pt_253_Phone_Number'])
-      find('input[type = password]').set(ENV['Pt_253_Password'])
+      find('input[type = email]').set(ENV['Pt_34_Email'])
+      page.all('input[type = tel]')[2].set(ENV['Pt_34_Phone_Number'])
+      find('input[type = password]').set(ENV['Pt_34_Password'])
       find('input[type = submit]').click
       click_on 'Ver el formulario de consentimiento'
       find('h3', text: 'UNIVERSIDAD DE PALO ALTO CONSENTIMIENTO')
