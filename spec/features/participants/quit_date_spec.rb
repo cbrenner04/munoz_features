@@ -567,14 +567,8 @@ end
 def february(num)
   wrong_date = first('.text-right.ng-binding.ng-scope', text: "#{num}").text
   if wrong_date.to_i.between?(23, 28)
-    wrong_date_replacements = {
-      23 => 6,
-      24 => 5,
-      25 => 4,
-      26 => 3,
-      27 => 2,
-      28 => 1
-    }
+    wrong_date_replacements = { 23 => 6, 24 => 5, 25 => 4, 26 => 3,
+                                27 => 2, 28 => 1 }
     calendar_date(num, wrong_date_replacements[wrong_date.to_i])
   else
     calendar_date(num, 0)
@@ -584,15 +578,8 @@ end
 def not_february(num)
   wrong_date = first('.text-right.ng-binding.ng-scope', text: "#{num}").text
   if wrong_date.to_i.between?(23, 29)
-    wrong_date_replacements = {
-      23 => 7,
-      24 => 6,
-      25 => 5,
-      26 => 4,
-      27 => 3,
-      28 => 2,
-      29 => 1
-    }
+    wrong_date_replacements = { 23 => 7, 24 => 6, 25 => 5, 26 => 4, 27 => 3,
+                                28 => 2, 29 => 1 }
     calendar_date(num, wrong_date_replacements[wrong_date.to_i])
   else
     calendar_date(num, 0)
