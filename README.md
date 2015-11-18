@@ -48,9 +48,15 @@ You will also need the following environment variables:
     ENV['Pt_29_Confirmation'] ||= "toKEN"
     ENV['Pt_30_Confirmation'] ||= "T0k3N"
 
-If you are running this test suite against the app locally, you will need to
-run a redis server. For redis documentation go
-[here](http://redis.io/documentation).
+*Important:* If you are running this test suite against the app locally, you
+will need to run a redis server. For redis documentation go
+[here](http://redis.io/documentation). Additionally, as of 11/18/2015, the host
+app communicates with a real Twilio account while in the `development`
+environment. Therefore, if you are running this suite locally, you will need to
+change `config.from_sms_number` in `./config/environments/development.rb` to a
+real Twilio number. You will also need to set the following environment
+variables that reference the Twilio account: `TWILIO_ACCOUNT_SID`,
+`TWILIO_PHONE_NUMBER`, and `TWILIO_AUTH_TOKEN`.
 
 Once you have the data seeded in the app, the `env_variables.rb` file
 configured, and the redis server running, start the app and from the test suite

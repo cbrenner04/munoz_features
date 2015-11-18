@@ -460,6 +460,55 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       expect(page).to have_content 'PALO ALTO UNIVERSITY CONSENT TO ' \
                                    'PARTICIPATE IN A RESEARCH STUDY'
     end
+
+    it 'sees invalid formatting in age field on eligibility form' do
+      visit "#{ENV['Base_URL']}/en/pages/application#/en/eligibility"
+      within('.form-group', text: 'How old are you?') do
+        expect(page).to_not have_css('.ng-invalid-pattern')
+        find('input[type = tel]').set('h')
+        expect(page).to have_css('.ng-invalid-pattern')
+      end
+    end
+
+    it 'sees invalid formatting in zip code field on eligibility form' do
+      visit "#{ENV['Base_URL']}/en/pages/application#/en/eligibility"
+      within('.form-group', text: 'What is your zip code?') do
+        expect(page).to_not have_css('.ng-invalid-minlength')
+        find('input[type = tel]').set('33')
+        expect(page).to have_css('.ng-invalid-minlength')
+        expect(page).to have_content 'Must be 5 digits to be valid.'
+      end
+    end
+
+    it 'sees invalid formatting in email field on eligibility form' do
+      visit "#{ENV['Base_URL']}/en/pages/application#/en/eligibility"
+      within('.form-group', text: 'Email') do
+        expect(page).to_not have_css('.ng-invalid-email')
+        find('input[type = email]').set('2')
+        expect(page).to have_css('.ng-invalid-email')
+        expect(page).to have_content 'Must be a valid email address.'
+      end
+    end
+
+    it 'sees invalid formatting in phone number field on eligibility form' do
+      visit "#{ENV['Base_URL']}/en/pages/application#/en/eligibility"
+      within('.form-group', text: 'Phone Number') do
+        expect(page).to_not have_css('.ng-invalid-pattern')
+        find('input[type = tel]').set('33')
+        expect(page).to have_css('.ng-invalid-pattern')
+        expect(page).to have_content 'Must be 10 digits to be valid.'
+      end
+    end
+
+    it 'sees invalid formatting in password field on eligibility form' do
+      visit "#{ENV['Base_URL']}/en/pages/application#/en/eligibility"
+      within('.form-group', text: 'Password') do
+        expect(page).to_not have_css('.ng-invalid-minlength')
+        find('input[type = password]').set('2')
+        expect(page).to have_css('.ng-invalid-minlength')
+        expect(page).to have_content 'minimum 8 characters'
+      end
+    end
   end
 
   context 'in Español' do
@@ -937,6 +986,55 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       sleep(2)
       go_to('Revise el Consentimiento')
       expect(page).to have_content 'UNIVERSIDAD DE PALO ALTO CONSENTIMIENTO'
+    end
+
+    it 'sees invalid formatting in age field on eligibility form' do
+      visit "#{ENV['Base_URL']}/es/pages/application#/es/eligibility"
+      within('.form-group', text: '¿Cuántos años tiene?') do
+        expect(page).to_not have_css('.ng-invalid-pattern')
+        find('input[type = tel]').set('h')
+        expect(page).to have_css('.ng-invalid-pattern')
+      end
+    end
+
+    it 'sees invalid formatting in zip code field on eligibility form' do
+      visit "#{ENV['Base_URL']}/es/pages/application#/es/eligibility"
+      within('.form-group', text: '¿Cuál es su código postal?') do
+        expect(page).to_not have_css('.ng-invalid-minlength')
+        find('input[type = tel]').set('33')
+        expect(page).to have_css('.ng-invalid-minlength')
+        expect(page).to have_content 'Must be 5 digits to be valid.' # need translations for Spanish
+      end
+    end
+
+    it 'sees invalid formatting in email field on eligibility form' do
+      visit "#{ENV['Base_URL']}/es/pages/application#/es/eligibility"
+      within('.form-group', text: 'Email') do
+        expect(page).to_not have_css('.ng-invalid-email')
+        find('input[type = email]').set('2')
+        expect(page).to have_css('.ng-invalid-email')
+        expect(page).to have_content 'Must be a valid email address.' # need translations for Spanish
+      end
+    end
+
+    it 'sees invalid formatting in phone number field on eligibility form' do
+      visit "#{ENV['Base_URL']}/es/pages/application#/es/eligibility"
+      within('.form-group', text: 'Teléfono') do
+        expect(page).to_not have_css('.ng-invalid-pattern')
+        find('input[type = tel]').set('33')
+        expect(page).to have_css('.ng-invalid-pattern')
+        expect(page).to have_content 'Must be 10 digits to be valid.' # need translations for Spanish
+      end
+    end
+
+    it 'sees invalid formatting in password field on eligibility form' do
+      visit "#{ENV['Base_URL']}/es/pages/application#/es/eligibility"
+      within('.form-group', text: 'Contraseña') do
+        expect(page).to_not have_css('.ng-invalid-minlength')
+        find('input[type = password]').set('2')
+        expect(page).to have_css('.ng-invalid-minlength')
+        expect(page).to have_content 'mínimo 8 caracteres'
+      end
     end
   end
 end
