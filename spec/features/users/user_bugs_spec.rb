@@ -26,11 +26,13 @@ describe 'A user signs in', type: :feature, metadata: :user do
     end
 
     find('h1', text: 'List of Eligibility responses')
+    first('.answer_field').click
     within first('.eligibility_response_row', text: eligibility_question) do
       find('.icon-info-sign').click
     end
 
-    find('.well', text: eligibility_question)
+    find('a', text: 'EligibilityAnswer').click
+    find('h1', text: 'Details for Eligibility answer')
     expect(page).to have_css('.well', text: 'Chinatown')
   end
 end
