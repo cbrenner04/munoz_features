@@ -1003,7 +1003,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
         expect(page).to_not have_css('.ng-invalid-minlength')
         find('input[type = tel]').set('33')
         expect(page).to have_css('.ng-invalid-minlength')
-        expect(page).to have_content 'Must be 5 digits to be valid.' # need translations for Spanish
+        expect(page).to have_content 'Debe introducir 5 dígitos para ser válido'
       end
     end
 
@@ -1013,7 +1013,8 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
         expect(page).to_not have_css('.ng-invalid-email')
         find('input[type = email]').set('2')
         expect(page).to have_css('.ng-invalid-email')
-        expect(page).to have_content 'Must be a valid email address.' # need translations for Spanish
+        expect(page)
+          .to have_content 'Debe introducir un correo electrónico válido'
       end
     end
 
@@ -1023,7 +1024,8 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
         expect(page).to_not have_css('.ng-invalid-pattern')
         find('input[type = tel]').set('33')
         expect(page).to have_css('.ng-invalid-pattern')
-        expect(page).to have_content 'Must be 10 digits to be valid.' # need translations for Spanish
+        expect(page)
+          .to have_content 'Debe introducir 10 dígitos para ser válido'
       end
     end
 
