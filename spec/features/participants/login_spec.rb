@@ -139,8 +139,8 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       find('h2', text: 'Reenviar instrucciones de confirmación')
       fill_in 'participant_email', with: ENV['Pt_8_Email']
       click_on 'Reenviar instrucciones de confirmación'
-      expect(page).to have_content 'Vas a recibir un correo con ' \
-                                   'instrucciones sobre cómo confirmar tu ' \
+      expect(page).to have_content 'Va a recibir un email con ' \
+                                   'instrucciones sobre cómo confirmar su ' \
                                    'cuenta en unos minutos.'
     end
 
@@ -157,13 +157,13 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       fill_in 'participant_email', with: ENV['Pt_205_Email']
       fill_in 'participant_password', with: 'whoops'
       click_on 'Iniciar sesión'
-      expect(page).to have_content 'Tienes un intento más antes de que tu ' \
+      expect(page).to have_content 'Tiene un intento más antes de que su ' \
                                    'cuenta sea bloqueada.'
 
       fill_in 'participant_email', with: ENV['Pt_205_Email']
       fill_in 'participant_password', with: 'whoops'
       click_on 'Iniciar sesión'
-      expect(page).to have_content 'Tu cuenta está bloqueada.'
+      expect(page).to have_content 'Su cuenta está bloqueada.'
     end
 
     it "uses 'Didn't receive unlock instructions?'" do

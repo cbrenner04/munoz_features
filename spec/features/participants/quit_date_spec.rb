@@ -30,26 +30,37 @@ describe 'A registered and consented participant signs in',
       visit "#{ENV['Base_URL']}/#/en/quit-date"
       find('.ng-binding', text: "#{Date.today.strftime('%b %Y')}")
       d = Date.parse("#{Date.today}")
-      today_num = d.mday
-      if today_num.between?(1, 9) || today_num.between?(23, 31)
-        wrong_date = first('.text-right.ng-binding.ng-scope',
-                           text: "#{today_num}").text
-        if today_num == 2 && wrong_date.to_i >= 20
-          puts 'NOT TESTED' # it gets way too convoluted here, isn't worth it
-        elsif today_num == 3 && wrong_date.to_i >= 30
-          calendar_today = page.all('.text-right.ng-binding.ng-scope',
-                                    text: "#{today_num}")[2]
-          calendar_today.native.style('font-weight').should eq('bold')
-        elsif wrong_date.to_i > 10
-          calendar_today = page.all('.text-right.ng-binding.ng-scope',
-                                    text: "#{today_num}")[1]
-          calendar_today.native.style('font-weight').should eq('bold')
-        else
-          first('.text-right.ng-binding.ng-scope', text: "#{today_num}")
+      num = d.mday
+      wrong_date = first('.text-right.ng-binding.ng-scope', text: "#{num}").text
+      if num.between?(1, 9) || num.between?(30, 31) ||
+         num >= 23 && page.has_text?("#{num}", count: 2)
+        if num == 2
+          if page.has_no_text?('29', count: 2)
+            feb(num)
+          else
+            not_feb(num)
+          end
+        elsif num == 3
+          if wrong_date.to_i == 3
+            first('.text-right.ng-binding.ng-scope', text: "#{num}")
+              .native.style('font-weight').should eq('bold')
+          elsif wrong_date.to_i >= 30
+            selection = page.all('.text-right.ng-binding.ng-scope',
+                                 text: "#{num}")[2]
+            selection.native.style('font-weight').should eq('bold')
+          elsif wrong_date.to_i == 23
+            odd_day(num)
+          end
+        elsif page.has_no_text?(num, count: 2)
+          first('.text-right.ng-binding.ng-scope', text: "#{num}")
             .native.style('font-weight').should eq('bold')
+        else
+          selection = page.all('.text-right.ng-binding.ng-scope',
+                               text: "#{num}")[1]
+          selection.native.style('font-weight').should eq('bold')
         end
       else
-        find('.text-right.ng-binding.ng-scope', text: "#{today_num}")
+        find('.text-right.ng-binding.ng-scope', text: "#{num}")
           .native.style('font-weight').should eq('bold')
       end
     end
@@ -275,26 +286,37 @@ describe 'A registered and consented participant signs in',
       find('.ng-binding',
            text: trans_mo("#{Date.today.strftime('%b. %Y')}"))
       d = Date.parse("#{Date.today}")
-      today_num = d.mday
-      if today_num.between?(1, 9) || today_num.between?(23, 31)
-        wrong_date = first('.text-right.ng-binding.ng-scope',
-                           text: "#{today_num}").text
-        if today_num == 2 && wrong_date.to_i >= 20
-          puts 'NOT TESTED' # it gets way too convoluted here, isn't worth it
-        elsif today_num == 3 && wrong_date.to_i >= 30
-          calendar_today = page.all('.text-right.ng-binding.ng-scope',
-                                    text: "#{today_num}")[2]
-          calendar_today.native.style('font-weight').should eq('bold')
-        elsif wrong_date.to_i > 10
-          calendar_today = page.all('.text-right.ng-binding.ng-scope',
-                                    text: "#{today_num}")[1]
-          calendar_today.native.style('font-weight').should eq('bold')
-        else
-          first('.text-right.ng-binding.ng-scope', text: "#{today_num}")
+      num = d.mday
+      wrong_date = first('.text-right.ng-binding.ng-scope', text: "#{num}").text
+      if num.between?(1, 9) || num.between?(30, 31) ||
+         num >= 23 && page.has_text?("#{num}", count: 2)
+        if num == 2
+          if page.has_no_text?('29', count: 2)
+            feb(num)
+          else
+            not_feb(num)
+          end
+        elsif num == 3
+          if wrong_date.to_i == 3
+            first('.text-right.ng-binding.ng-scope', text: "#{num}")
+              .native.style('font-weight').should eq('bold')
+          elsif wrong_date.to_i >= 30
+            selection = page.all('.text-right.ng-binding.ng-scope',
+                                 text: "#{num}")[2]
+            selection.native.style('font-weight').should eq('bold')
+          elsif wrong_date.to_i == 23
+            odd_day(num)
+          end
+        elsif page.has_no_text?(num, count: 2)
+          first('.text-right.ng-binding.ng-scope', text: "#{num}")
             .native.style('font-weight').should eq('bold')
+        else
+          selection = page.all('.text-right.ng-binding.ng-scope',
+                               text: "#{num}")[1]
+          selection.native.style('font-weight').should eq('bold')
         end
       else
-        find('.text-right.ng-binding.ng-scope', text: "#{today_num}")
+        find('.text-right.ng-binding.ng-scope', text: "#{num}")
           .native.style('font-weight').should eq('bold')
       end
     end
@@ -589,4 +611,50 @@ end
 def calendar_date(num, y)
   selection = page.all('.text-right.ng-binding.ng-scope', text: "#{num}")[y]
   selection.click
+end
+
+def feb(num)
+  wrong_date = first('.text-right.ng-binding.ng-scope', text: "#{num}").text
+  if wrong_date.to_i.between?(23, 28)
+    wrong_date_reps = { 23 => 6, 24 => 5, 25 => 4, 26 => 3, 27 => 2,
+                        28 => 1 }
+    sel = page.all('.text-right.ng-binding.ng-scope',
+                   text: "#{num}")[wrong_date_reps[wrong_date.to_i]]
+    sel.native.style('font-weight').should eq('bold')
+  else
+    selection = page.all('.text-right.ng-binding.ng-scope',
+                         text: "#{num}")[0]
+    selection.native.style('font-weight').should eq('bold')
+  end
+end
+
+def not_feb(num)
+  if wrong_date.to_i.between?(23, 29)
+    wrong_date_reps = { 23 => 7, 24 => 6, 25 => 5, 26 => 4, 27 => 3,
+                        28 => 2, 29 => 1 }
+    sel = page.all('.text-right.ng-binding.ng-scope',
+                   text: "#{num}")[wrong_date_reps[wrong_date.to_i]]
+    sel.native.style('font-weight').should eq('bold')
+  else
+    selection = page.all('.text-right.ng-binding.ng-scope',
+                         text: "#{num}")[0]
+    selection.native.style('font-weight').should eq('bold')
+  end
+end
+
+def odd_day(num)
+  if page.has_no_text?('30', count: 2)
+    selection = page.all('.text-right.ng-binding.ng-scope',
+                         text: "#{num}")[1]
+    selection.native.style('font-weight').should eq('bold')
+  elsif page.has_text?('30', count: 2) &&
+        page.has_no_text?('31', count: 2)
+    selection = page.all('.text-right.ng-binding.ng-scope',
+                         text: "#{num}")[2]
+    selection.native.style('font-weight').should eq('bold')
+  elsif page.has_text?('30', count: 2) && page.has_text?('31', count: 2)
+    selection = page.all('.text-right.ng-binding.ng-scope',
+                         text: "#{num}")[3]
+    selection.native.style('font-weight').should eq('bold')
+  end
 end
