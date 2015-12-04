@@ -126,9 +126,9 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       find('h2', text: 'Iniciar sesión')
       click_on '¿Ha olvidado su contraseña?'
       fill_in 'participant_email', with: ENV['Pt_210_Email']
-      click_on 'Envíeme las instrucciones para resetear mi contraseña'
-      expect(page).to have_content 'Recibirás un correo con instrucciones ' \
-                                   'sobre cómo resetear tu contraseña en ' \
+      click_on 'Envíeme las instrucciones para cambiar mi contraseña'
+      expect(page).to have_content 'Recibirá un correo con instrucciones ' \
+                                   'sobre cómo cambiar su contraseña en ' \
                                    'unos pocos minutos.'
     end
 

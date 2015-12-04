@@ -104,7 +104,7 @@ describe 'A registered and consented participant signs in',
       find('a', text: 'Next').click
       find('h4', text: 'How to quit page 3 title')
       find('a', text: 'Next').click
-      page.execute_script('window.location.reload()')
+      # page.execute_script('window.location.reload()')
       expect(page).to have_content 'What if? page 1 title'
     end
 
@@ -157,7 +157,7 @@ describe 'A registered and consented participant signs in',
       find('a', text: 'Next').click
       find('h4', text: 'What if? page 3 title')
       find('a', text: 'Next').click
-      page.execute_script('window.location.reload()')
+      # page.execute_script('window.location.reload()')
       expect(page).to have_content 'How to help page 1 title'
     end
 
@@ -209,7 +209,7 @@ describe 'A registered and consented participant signs in',
       find('a', text: 'Next').click
       find('h4', text: 'Why Quit? page 3 title')
       find('a', text: 'Next').click
-      page.execute_script('window.location.reload()')
+      # page.execute_script('window.location.reload()')
       expect(page).to have_content 'How to quit page 1 title'
     end
 
@@ -347,7 +347,7 @@ describe 'A registered and consented participant signs in',
       find('a', text: 'Sig.').click
       find('h4', text: 'Cómo dejar de fumar página 3 título')
       find('a', text: 'Sig.').click
-      page.execute_script('window.location.reload()')
+      # page.execute_script('window.location.reload()')
       expect(page).to have_content '¿Y sí? página 1 título'
     end
 
@@ -399,7 +399,7 @@ describe 'A registered and consented participant signs in',
       find('a', text: 'Sig.').click
       find('h4', text: '¿Y sí? página 3 título')
       find('a', text: 'Sig.').click
-      page.execute_script('window.location.reload()')
+      # page.execute_script('window.location.reload()')
       expect(page).to have_content 'Como ayudar página 1 título'
     end
 
@@ -452,7 +452,7 @@ describe 'A registered and consented participant signs in',
       find('a', text: 'Sig.').click
       find('h4', text: '¿Por qué dejar de fumar? página 3 título')
       find('a', text: 'Sig.').click
-      page.execute_script('window.location.reload()')
+      # page.execute_script('window.location.reload()')
       expect(page).to have_content 'Cómo dejar de fumar página 1 título'
     end
 
