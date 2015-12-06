@@ -470,12 +470,24 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       end
     end
 
-    it 'sees invalid formatting in zip code field on eligibility form' do
+    it 'sees invalid formatting in zip code field when entering less than 5 ' \
+       'digits on eligibility form' do
       visit "#{ENV['Base_URL']}/en/pages/application#/en/eligibility"
       within('.form-group', text: 'What is your zip code?') do
         expect(page).to_not have_css('.ng-invalid-minlength')
         find('input[type = tel]').set('33')
-        expect(page).to have_css('.ng-invalid-minlength')
+        expect(page).to have_css('.ng-invalid-pattern')
+        expect(page).to have_content 'Must be 5 digits to be valid.'
+      end
+    end
+
+    it 'sees invalid formatting in zip code field when entering more than 5 ' \
+       'digits on eligibility form' do
+      visit "#{ENV['Base_URL']}/en/pages/application#/en/eligibility"
+      within('.form-group', text: 'What is your zip code?') do
+        expect(page).to_not have_css('.ng-invalid-minlength')
+        find('input[type = tel]').set('333333333')
+        expect(page).to have_css('.ng-invalid-pattern')
         expect(page).to have_content 'Must be 5 digits to be valid.'
       end
     end
@@ -997,12 +1009,24 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       end
     end
 
-    it 'sees invalid formatting in zip code field on eligibility form' do
+    it 'sees invalid formatting in zip code field when entering less than 5 ' \
+       'digits on eligibility form' do
       visit "#{ENV['Base_URL']}/es/pages/application#/es/eligibility"
       within('.form-group', text: '¿Cuál es su código postal?') do
         expect(page).to_not have_css('.ng-invalid-minlength')
         find('input[type = tel]').set('33')
-        expect(page).to have_css('.ng-invalid-minlength')
+        expect(page).to have_css('.ng-invalid-pattern')
+        expect(page).to have_content 'Debe introducir 5 dígitos para ser válido'
+      end
+    end
+
+    it 'sees invalid formatting in zip code field when entering more than 5 ' \
+       'digits on eligibility form' do
+      visit "#{ENV['Base_URL']}/es/pages/application#/es/eligibility"
+      within('.form-group', text: '¿Cuál es su código postal?') do
+        expect(page).to_not have_css('.ng-invalid-minlength')
+        find('input[type = tel]').set('33333333')
+        expect(page).to have_css('.ng-invalid-pattern')
         expect(page).to have_content 'Debe introducir 5 dígitos para ser válido'
       end
     end
