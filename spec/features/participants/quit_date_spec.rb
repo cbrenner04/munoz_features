@@ -551,10 +551,11 @@ def unusual_day(num)
     unusual_day_2(num)
   elsif num == 3
     unusual_day_3(num)
-  elsif page.has_no_text?(num, count: 2)
-    first('.text-right.ng-binding.ng-scope', text: "#{num}").click
-  else
+  elsif first('.text-right.ng-binding.ng-scope', text: "#{num}")[:class]
+        .include?('text-muted')
     calendar_date(num, 1)
+  else
+    first('.text-right.ng-binding.ng-scope', text: "#{num}").click
   end
 end
 
