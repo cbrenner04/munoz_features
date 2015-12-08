@@ -325,21 +325,18 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       visit "#{ENV['Base_URL']}/admin/notification_schedule"
       within first('.notification_schedule_row') do
         three = Date.today + 90
-        expect(page)
-          .to have_content "follow-up-3.en #{three.strftime('%B %d, %Y')}"
+        expect(page).to have_content "#{three.strftime('%B %d, %Y')}"
       end
 
       row = page.all('.notification_schedule_row')
       within row[1] do
         two = Date.today + 60
-        expect(page)
-          .to have_content "follow-up-2.en #{two.strftime('%B %d, %Y')}"
+        expect(page).to have_content "#{two.strftime('%B %d, %Y')}"
       end
 
       within row[2] do
         one = Date.today + 30
-        expect(page)
-          .to have_content "follow-up-1.en #{one.strftime('%B %d, %Y')}"
+        expect(page).to have_content "#{one.strftime('%B %d, %Y')}"
       end
     end
   end
@@ -354,21 +351,18 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       visit "#{ENV['Base_URL']}/admin/notification_schedule"
       within first('.notification_schedule_row') do
         three = Date.today + 90
-        expect(page)
-          .to have_content "follow-up-3.es #{three.strftime('%B %d, %Y')}"
+        expect(page).to have_content "#{three.strftime('%B %d, %Y')}"
       end
 
       row = page.all('.notification_schedule_row')
       within row[1] do
         two = Date.today + 60
-        expect(page)
-          .to have_content "follow-up-2.es #{two.strftime('%B %d, %Y')}"
+        expect(page).to have_content "#{two.strftime('%B %d, %Y')}"
       end
 
       within row[2] do
         one = Date.today + 30
-        expect(page)
-          .to have_content "follow-up-1.es #{one.strftime('%B %d, %Y')}"
+        expect(page).to have_content "#{one.strftime('%B %d, %Y')}"
       end
     end
   end
