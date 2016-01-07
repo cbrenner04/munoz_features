@@ -1,5 +1,18 @@
 # filename: spec/features/participants/quit_date_spec.rb
 
+# require objects with datepicking and viewing methods
+require_relative '../../../lib/datepicker.rb'
+require_relative '../../../lib/dateviewer.rb'
+
+# initialize objects
+def datepicker
+  @datepicker ||= DatePicker.new
+end
+
+def dateviewer
+  @dateviewer ||= DateViewer.new
+end
+
 describe 'A registered and consented participant signs in',
          type: :feature, metadata: :participant do
   context 'in English' do
@@ -29,40 +42,7 @@ describe 'A registered and consented participant signs in',
       sign_in_pt_en('135')
       visit "#{ENV['Base_URL']}/#/en/quit-date"
       find('.ng-binding', text: "#{Date.today.strftime('%b %Y')}")
-      d = Date.parse("#{Date.today}")
-      num = d.mday
-      wrong_date = first('.text-right.ng-binding.ng-scope', text: "#{num}").text
-      if num.between?(1, 9) || num.between?(30, 31) ||
-         num >= 23 && page.has_text?("#{num}", count: 2)
-        if num == 2
-          if page.has_no_text?('29', count: 2)
-            feb(num)
-          else
-            not_feb(num)
-          end
-        elsif num == 3
-          if wrong_date.to_i == 3
-            first('.text-right.ng-binding.ng-scope', text: "#{num}")
-              .native.style('font-weight').should eq('bold')
-          elsif wrong_date.to_i >= 30
-            selection = page.all('.text-right.ng-binding.ng-scope',
-                                 text: "#{num}")[2]
-            selection.native.style('font-weight').should eq('bold')
-          elsif wrong_date.to_i == 23
-            odd_day(num)
-          end
-        elsif page.has_no_text?(num, count: 2)
-          first('.text-right.ng-binding.ng-scope', text: "#{num}")
-            .native.style('font-weight').should eq('bold')
-        else
-          selection = page.all('.text-right.ng-binding.ng-scope',
-                               text: "#{num}")[1]
-          selection.native.style('font-weight').should eq('bold')
-        end
-      else
-        find('.text-right.ng-binding.ng-scope', text: "#{num}")
-          .native.style('font-weight').should eq('bold')
-      end
+      dateviewer.view_day("#{Date.today}")
     end
 
     it 'navigates to previous month within Your Quit Date' do
@@ -117,7 +97,7 @@ describe 'A registered and consented participant signs in',
         find('a', text: 'Next').click
       end
 
-      select_day("#{tomorrow}")
+      datepicker.select_day("#{tomorrow}")
       expect(page).to have_css('.text-right.ng-binding.ng-scope.success',
                                text: "#{tomorrow.strftime('%-d')}")
     end
@@ -135,7 +115,7 @@ describe 'A registered and consented participant signs in',
         find('a', text: 'Next').click
       end
 
-      select_day("#{tomorrow}")
+      datepicker.select_day("#{tomorrow}")
       find('h3', text: "#{tomorrow.strftime('%B %-d, %Y')}")
 
       visit ENV['Base_URL']
@@ -152,7 +132,7 @@ describe 'A registered and consented participant signs in',
         find('a', text: 'Next').click
       end
 
-      select_day("#{tomorrow}")
+      datepicker.select_day("#{tomorrow}")
       find('.btn.btn-default', text: 'Done').click
       expect(page).to have_content 'Stop Smoking Guide'
     end
@@ -174,7 +154,7 @@ describe 'A registered and consented participant signs in',
         find('a', text: 'Prev.').click
       end
 
-      select_day("#{yesterday}")
+      datepicker.select_day("#{yesterday}")
       sleep(2)
       expect(page).to_not have_css('.text-right.ng-binding.ng-scope.success',
                                    text: "#{yesterday.strftime('%-d')}")
@@ -183,7 +163,7 @@ describe 'A registered and consented participant signs in',
                            text: "#{tomorrow.strftime('%b %Y')}")
         find('a', text: 'Next').click
       end
-      select_day("#{tomorrow}")
+      datepicker.select_day("#{tomorrow}")
       expect(page).to have_css('.text-right.ng-binding.ng-scope.success',
                                text: "#{tomorrow.strftime('%-d')}")
     end
@@ -227,7 +207,7 @@ describe 'A registered and consented participant signs in',
         find('a', text: 'Next').click
       end
 
-      select_day("#{two_days}")
+      datepicker.select_day("#{two_days}")
       expect(page).to have_css('.text-right.ng-binding.ng-scope.success',
                                text: "#{two_days.strftime('%-d')}")
     end
@@ -241,7 +221,7 @@ describe 'A registered and consented participant signs in',
         find('a', text: 'Next').click
       end
 
-      select_day("#{beyond_four_wks}")
+      datepicker.select_day("#{beyond_four_wks}")
       sleep(2)
       expect(page).to_not have_css('.text-right.ng-binding.ng-scope.success',
                                    text: "#{beyond_four_wks.strftime('%-d')}")
@@ -251,7 +231,7 @@ describe 'A registered and consented participant signs in',
                            text: "#{under_four_wks.strftime('%b %Y')}")
         find('a', text: 'Prev').click
       end
-      select_day("#{under_four_wks}")
+      datepicker.select_day("#{under_four_wks}")
       expect(page).to have_css('.text-right.ng-binding.ng-scope.success',
                                text: "#{under_four_wks.strftime('%-d')}")
     end
@@ -285,40 +265,7 @@ describe 'A registered and consented participant signs in',
       visit "#{ENV['Base_URL']}/#/es/quit-date"
       find('.ng-binding',
            text: trans_mo("#{Date.today.strftime('%b. %Y')}"))
-      d = Date.parse("#{Date.today}")
-      num = d.mday
-      wrong_date = first('.text-right.ng-binding.ng-scope', text: "#{num}").text
-      if num.between?(1, 9) || num.between?(30, 31) ||
-         num >= 23 && page.has_text?("#{num}", count: 2)
-        if num == 2
-          if page.has_no_text?('29', count: 2)
-            feb(num)
-          else
-            not_feb(num)
-          end
-        elsif num == 3
-          if wrong_date.to_i == 3
-            first('.text-right.ng-binding.ng-scope', text: "#{num}")
-              .native.style('font-weight').should eq('bold')
-          elsif wrong_date.to_i >= 30
-            selection = page.all('.text-right.ng-binding.ng-scope',
-                                 text: "#{num}")[2]
-            selection.native.style('font-weight').should eq('bold')
-          elsif wrong_date.to_i == 23
-            odd_day(num)
-          end
-        elsif page.has_no_text?(num, count: 2)
-          first('.text-right.ng-binding.ng-scope', text: "#{num}")
-            .native.style('font-weight').should eq('bold')
-        else
-          selection = page.all('.text-right.ng-binding.ng-scope',
-                               text: "#{num}")[1]
-          selection.native.style('font-weight').should eq('bold')
-        end
-      else
-        find('.text-right.ng-binding.ng-scope', text: "#{num}")
-          .native.style('font-weight').should eq('bold')
-      end
+      dateviewer.view_day("#{Date.today}")
     end
 
     it 'navigates to previous month within Your Quit Date' do
@@ -408,7 +355,7 @@ describe 'A registered and consented participant signs in',
         find('a', text: 'Sig.').click
       end
 
-      select_day("#{tom}")
+      datepicker.select_day("#{tom}")
       expect(page).to have_css('.text-right.ng-binding.ng-scope.success',
                                text: "#{tom.strftime('%-d')}")
     end
@@ -428,7 +375,7 @@ describe 'A registered and consented participant signs in',
         find('a', text: 'Sig.').click
       end
 
-      select_day("#{tom}")
+      datepicker.select_day("#{tom}")
       find('h3', text: "#{tom.strftime('%-d')}")
 
       visit ENV['Base_URL']
@@ -446,7 +393,7 @@ describe 'A registered and consented participant signs in',
         find('a', text: 'Sig.').click
       end
 
-      select_day("#{tomorrow}")
+      datepicker.select_day("#{tomorrow}")
       find('.btn.btn-default', text: 'Fijar').click
       expect(page).to have_content 'Guía Para Dejar de Fumar'
     end
@@ -469,7 +416,7 @@ describe 'A registered and consented participant signs in',
         find('a', text: 'Volver').click
       end
 
-      select_day("#{yes}")
+      datepicker.select_day("#{yes}")
       sleep(2)
       expect(page).to_not have_css('.text-right.ng-binding.ng-scope.success',
                                    text: "#{yes.strftime('%-d')}")
@@ -478,7 +425,7 @@ describe 'A registered and consented participant signs in',
                            text: trans_mo("#{tom.strftime('%b. %Y')}"))
         find('a', text: 'Sig.').click
       end
-      select_day("#{tom}")
+      datepicker.select_day("#{tom}")
       expect(page).to have_css('.text-right.ng-binding.ng-scope.success',
                                text: "#{tom.strftime('%-d')}")
     end
@@ -501,7 +448,7 @@ describe 'A registered and consented participant signs in',
         find('a', text: 'Sig.').click
       end
 
-      select_day("#{two_day}")
+      datepicker.select_day("#{two_day}")
       expect(page).to have_css('.text-right.ng-binding.ng-scope.success',
                                text: "#{two_day.strftime('%-d')}")
     end
@@ -516,7 +463,7 @@ describe 'A registered and consented participant signs in',
         find('a', text: 'Sig.').click
       end
 
-      select_day("#{beyond_four_wks}")
+      datepicker.select_day("#{beyond_four_wks}")
       sleep(2)
       expect(page).to_not have_css('.text-right.ng-binding.ng-scope.success',
                                    text: "#{beyond_four_wks.strftime('%-d')}")
@@ -527,209 +474,9 @@ describe 'A registered and consented participant signs in',
                        text: trans_mo("#{under_four_wks.strftime('%b. %Y')}"))
         find('a', text: 'Volver').click
       end
-      select_day("#{under_four_wks}")
+      datepicker.select_day("#{under_four_wks}")
       expect(page).to have_css('.text-right.ng-binding.ng-scope.success',
                                text: "#{under_four_wks.strftime('%-d')}")
     end
-  end
-end
-
-def select_day(date)
-  d = Date.parse(date)
-  num = d.mday
-  if num.between?(1, 9)
-    day_less_than_10(num)
-  elsif num.between?(30, 31) || num >= 23 && page.has_text?("#{num}", count: 2)
-    day_greater_than_23
-  else
-    find('.text-right.ng-binding.ng-scope', text: "#{num}").click
-  end
-end
-
-# Day is either 1 - 9
-def day_less_than_10(num)
-  if num == 1
-    unusual_day_1(num)
-  elsif num == 2
-    unusual_day_2(num)
-  elsif num == 3
-    unusual_day_3(num)
-  elsif num.between?(4, 9) && page.has_text?("2#{num}", count: 2)
-    calendar_date(num, 1)
-  else
-    first('.text-right.ng-binding.ng-scope', text: "#{num}").click
-  end
-end
-
-# Day is 23 or greater
-def day_greater_than_23(num)
-  if num >= 23 && page.has_text?("#{num}", count: 2)
-    calendar_date(num, 1)
-  else
-    first('.text-right.ng-binding.ng-scope', text: "#{num}").click
-  end
-end
-
-# Day is the 1st
-def unusual_day_1(num)
-  wrong_date = first('.text-right.ng-binding.ng-scope', text: "#{num}").text
-  if wrong_date.to_i == 1
-    first('.text-right.ng-binding.ng-scope', text: "#{num}").click
-  elsif wrong_date.to_i == 31
-    calendar_date(num, 1)
-  end
-end
-
-# Day is the 2nd
-def unusual_day_2(num)
-  if page.has_no_text?('29', count: 2)
-    february(num)
-  else
-    not_february(num)
-  end
-end
-
-# Day is the 3rd
-def unusual_day_3(num)
-  wrong_date = first('.text-right.ng-binding.ng-scope', text: "#{num}").text
-  if wrong_date.to_i == 3
-    first('.text-right.ng-binding.ng-scope', text: "#{num}").click
-  elsif wrong_date.to_i == 30
-    wrong_day_30(num)
-  elsif wrong_date.to_i == 31
-    calendar_date(num, 1)
-  elsif wrong_date.to_i == 23
-    unusual_day_4(num)
-  end
-end
-
-# Day is the 3rd and the first choice is the 30th
-def wrong_day_30(num)
-  if two_30_one_31_last(num)
-    calendar_date(num, 1)
-  elsif two_30_one_31_not_last(num) || two_30_two_31
-    calendar_date(num, 2)
-  end
-end
-
-# Day is the 3rd, and it's March
-def one_30_last(num)
-  last_date = page.all('.text-right.ng-binding.ng-scope', text: "#{num}").last
-  last_date_text = last_date.text
-  page.has_no_text?('30', count: 2) && last_date_text.to_i == 30
-end
-
-# Day is the 3rd, and it's January
-def one_30_not_last(num)
-  last_date = page.all('.text-right.ng-binding.ng-scope', text: "#{num}").last
-  last_date_text = last_date.text
-  page.has_no_text?('30', count: 2) && last_date_text.to_i != 30
-end
-
-# Day is the 3rd, first choice is the 30th, second choice is not the 31st
-def two_30_one_31_last(num)
-  last_date = page.all('.text-right.ng-binding.ng-scope', text: "#{num}").last
-  last_date_text = last_date.text
-  page.has_text?('30', count: 2) && page.has_text?('31', count: 1) &&
-    last_date_text.to_i == 31
-end
-
-# Day is the 3rd, first choice is the 30th, second choice is the 31st
-def two_30_one_31_not_last(num)
-  last_date = page.all('.text-right.ng-binding.ng-scope', text: "#{num}").last
-  last_date_text = last_date.text
-  page.has_text?('30', count: 2) && page.has_text?('31', count: 1) &&
-    last_date_text.to_i != 31
-end
-
-# Day is the 3rd, first choice is the 30th, second choice is the 31st
-def two_30_two_31
-  page.has_text?('30', count: 2) && page.has_text?('31', count: 2)
-end
-
-# Day is the 3rd, first choice is the 23rd
-def unusual_day_4(num)
-  if one_30_last(num)
-    calendar_date(num, 1)
-  elsif one_30_not_last(num) || two_30_one_31_last(num)
-    calendar_date(num, 2)
-  elsif two_30_one_31_not_last(num) || two_30_two_31
-    calendar_date(num, 3)
-  end
-end
-
-# Day is the 2nd, the previous month is February on a non-leap year
-def february(num)
-  wrong_date = first('.text-right.ng-binding.ng-scope', text: "#{num}").text
-  if wrong_date.to_i.between?(23, 28)
-    wrong_date_replacements = { 23 => 6, 24 => 5, 25 => 4, 26 => 3,
-                                27 => 2, 28 => 1 }
-    calendar_date(num, wrong_date_replacements[wrong_date.to_i])
-  else
-    first('.text-right.ng-binding.ng-scope', text: "#{num}").click
-  end
-end
-
-# Day is the 2nd, and the month and the previous month is not February
-# OR Day is the 2nd, and any month in a leap year
-def not_february(num)
-  wrong_date = first('.text-right.ng-binding.ng-scope', text: "#{num}").text
-  if wrong_date.to_i.between?(23, 29)
-    wrong_date_replacements = { 23 => 7, 24 => 6, 25 => 5, 26 => 4, 27 => 3,
-                                28 => 2, 29 => 1 }
-    calendar_date(num, wrong_date_replacements[wrong_date.to_i])
-  else
-    first('.text-right.ng-binding.ng-scope', text: "#{num}").click
-  end
-end
-
-def calendar_date(num, y)
-  selection = page.all('.text-right.ng-binding.ng-scope', text: "#{num}")[y]
-  selection.click
-end
-
-def feb(num)
-  wrong_date = first('.text-right.ng-binding.ng-scope', text: "#{num}").text
-  if wrong_date.to_i.between?(23, 28)
-    wrong_date_reps = { 23 => 6, 24 => 5, 25 => 4, 26 => 3, 27 => 2,
-                        28 => 1 }
-    sel = page.all('.text-right.ng-binding.ng-scope',
-                   text: "#{num}")[wrong_date_reps[wrong_date.to_i]]
-    sel.native.style('font-weight').should eq('bold')
-  else
-    selection = page.all('.text-right.ng-binding.ng-scope',
-                         text: "#{num}")[0]
-    selection.native.style('font-weight').should eq('bold')
-  end
-end
-
-def not_feb(num)
-  if wrong_date.to_i.between?(23, 29)
-    wrong_date_reps = { 23 => 7, 24 => 6, 25 => 5, 26 => 4, 27 => 3,
-                        28 => 2, 29 => 1 }
-    sel = page.all('.text-right.ng-binding.ng-scope',
-                   text: "#{num}")[wrong_date_reps[wrong_date.to_i]]
-    sel.native.style('font-weight').should eq('bold')
-  else
-    selection = page.all('.text-right.ng-binding.ng-scope',
-                         text: "#{num}")[0]
-    selection.native.style('font-weight').should eq('bold')
-  end
-end
-
-def odd_day(num)
-  if page.has_no_text?('30', count: 2)
-    selection = page.all('.text-right.ng-binding.ng-scope',
-                         text: "#{num}")[1]
-    selection.native.style('font-weight').should eq('bold')
-  elsif page.has_text?('30', count: 2) &&
-        page.has_no_text?('31', count: 2)
-    selection = page.all('.text-right.ng-binding.ng-scope',
-                         text: "#{num}")[2]
-    selection.native.style('font-weight').should eq('bold')
-  elsif page.has_text?('30', count: 2) && page.has_text?('31', count: 2)
-    selection = page.all('.text-right.ng-binding.ng-scope',
-                         text: "#{num}")[3]
-    selection.native.style('font-weight').should eq('bold')
   end
 end
