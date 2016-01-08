@@ -3,17 +3,7 @@
 require 'uuid'
 require 'fileutils'
 require 'csv'
-require_relative '../../../lib/consent_responses.rb'
-require_relative '../../../lib/daily_cigarette_count.rb'
-require_relative '../../../lib/eligibility_responses.rb'
-require_relative '../../../lib/language_choices.rb'
-require_relative '../../../lib/participants.rb'
-require_relative '../../../lib/quit_dates.rb'
-require_relative '../../../lib/eligibility_statuses.rb'
-require_relative '../../../lib/page_view.rb'
-require_relative '../../../lib/participant_app_ratings.rb'
-require_relative '../../../lib/participant_phones.rb'
-require_relative '../../../lib/sms_records.rb'
+Dir['./lib/csv/*.rb'].each { |file| require file }
 
 describe 'Admin signs in', type: :feature, metadata: :user do
   before(:all) do
