@@ -5,6 +5,12 @@ This is a test suite meant for testing the
 
 ## Information for running this test suite
 
+Due to dependency issues with versions of selenium-webdriver and Firefox, I
+have different versions of Firefox running on my machine. The version used for
+this suite is 33.0. I would suggest downloading this version of Firefox to the
+same directory specified in the `spec_helper`. You can download version 33.0
+[here](https://ftp.mozilla.org/pub/firefox/releases/33.0/mac/en-US/).
+
 You will need to set up participants and users in the app. If you are
 running the app locally you can seed this data and start the application
 by running from the test suite directory on the command line:
