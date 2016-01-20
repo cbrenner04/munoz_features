@@ -4,7 +4,7 @@
 require_relative '../../../lib/datepicker.rb'
 require_relative '../../../lib/dateviewer.rb'
 
-# initialize objects
+# instantiate objects
 def datepicker
   @datepicker ||= DatePicker.new
 end
