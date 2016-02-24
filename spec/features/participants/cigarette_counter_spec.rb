@@ -1,24 +1,27 @@
 # filename: spec/features/participants/cigarette_counter.rb
 
-describe 'A registered and consented participant signs in',
-         type: :feature, metadata: :participant do
+require './spec/support/participants_helper'
+require './spec/support/participants/cigarette_counter_helper'
+
+feature 'A registered and consented participant signs in',
+         metadata: :participant do
   context 'in English' do
-    it 'accesses the cigarette counter' do
-      sign_in_pt_en('113')
-      click_on 'Cigarette Counter'
-      expect(page).to have_content 'Yesterday'
-      expect(page).to have_css '.btn-group-vertical'
+    scenario 'accesses the cigarette counter' do
+      participant_113.sign_in_pt_en
+      cigarette_counter.open
+
+      expect(cigarette_counter).to be_visible
     end
 
-    it 'switches to Español in cigarette counter' do
-      sign_in_pt_en('132')
+    scenario 'switches to Español in cigarette counter' do
+      participant_132.sign_in_pt_en
       click_on 'Cigarette Counter'
-      find('.pull-left', text: 'Yesterday')
-      go_to('Español')
-      expect(page).to have_content 'Ayer'
+      has_text? 'How many cigarettes have you smoked?'
+      participant_132.go_to('Español')
+      expect(page).to have_content '¿Cuántos cigarros ha fumado?'
     end
 
-    it 'navigates to Set Your Quit Date from cigarette counter' do
+    scenario 'navigates to Set Your Quit Date from cigarette counter' do
       sign_in_pt_en('132')
       click_on 'Cigarette Counter'
       find('.pull-left', text: 'Yesterday')
@@ -26,7 +29,7 @@ describe 'A registered and consented participant signs in',
       expect(page).to have_css '.previous'
     end
 
-    it "sees yesterday's cigarette count" do
+    it 'sees yesterday\'s cigarette count' do
       sign_in_pt_en('17')
       visit "#{ENV['Base_URL']}/#/en/cigarette-count"
       within('.pull-left', text: 'Yesterday') do
@@ -99,7 +102,7 @@ describe 'A registered and consented participant signs in',
       end
     end
 
-    it 'sees cigarette count for more than a week ago', :date do
+    scenario 'sees cigarette count for more than a week ago', :date do
       sign_in_pt_en('143')
       visit "#{ENV['Base_URL']}/#/en/cigarette-count"
       today = Date.today.strftime('%d').to_i
@@ -117,7 +120,7 @@ describe 'A registered and consented participant signs in',
       end
     end
 
-    it 'enters cigarette count for yesterday' do
+    scenario 'enters cigarette count for yesterday' do
       sign_in_pt_en('144')
       visit "#{ENV['Base_URL']}/#/en/cigarette-count"
       within('.pull-left', text: 'Yesterday') do
@@ -129,7 +132,7 @@ describe 'A registered and consented participant signs in',
       end
     end
 
-    it 'enters cigarette count for today' do
+    scenario 'enters cigarette count for today' do
       sign_in_pt_en('145')
       visit "#{ENV['Base_URL']}/#/en/cigarette-count"
       within('.pull-left', text: 'Today') do
@@ -140,7 +143,7 @@ describe 'A registered and consented participant signs in',
       end
     end
 
-    it 'uses the Done button to navigate back to Home' do
+    scenario 'uses the Done button to navigate back to Home' do
       sign_in_pt_en('155')
       visit "#{ENV['Base_URL']}/#/en/cigarette-count"
       find('.pull-left', text: 'Yesterday')
@@ -150,14 +153,14 @@ describe 'A registered and consented participant signs in',
   end
 
   context 'in Español' do
-    it 'access the cigarette counter' do
+    scenario 'access the cigarette counter' do
       sign_in_pt_es('213')
       click_on 'Contador de Cigarrillos'
       expect(page).to have_content 'Ayer'
       expect(page).to have_css '.btn-group-vertical'
     end
 
-    it 'switches to English in cigarette counter' do
+    scenario 'switches to English in cigarette counter' do
       sign_in_pt_es('213')
       click_on 'Contador de Cigarrillos'
       find('.pull-left', text: 'Ayer')
@@ -165,7 +168,7 @@ describe 'A registered and consented participant signs in',
       expect(page).to have_content 'Yesterday'
     end
 
-    it 'navigates to Set Your Quit Date from cigarette counter' do
+    scenario 'navigates to Set Your Quit Date from cigarette counter' do
       sign_in_pt_es('213')
       click_on 'Contador de Cigarrillos'
       find('.pull-left', text: 'Ayer')
@@ -246,7 +249,7 @@ describe 'A registered and consented participant signs in',
       end
     end
 
-    it 'sees cigarette count for more than a week ago', :date do
+    scenario 'sees cigarette count for more than a week ago', :date do
       sign_in_pt_es('243')
       visit "#{ENV['Base_URL']}/#/es/cigarette-count"
       today = Date.today.strftime('%d').to_i
@@ -264,7 +267,7 @@ describe 'A registered and consented participant signs in',
       end
     end
 
-    it 'enters cigarette count for yesterday' do
+    scenario 'enters cigarette count for yesterday' do
       sign_in_pt_es('244')
       visit "#{ENV['Base_URL']}/#/es/cigarette-count"
       within('.pull-left', text: 'Ayer') do
@@ -276,7 +279,7 @@ describe 'A registered and consented participant signs in',
       end
     end
 
-    it 'enters cigarette count for today' do
+    scenario 'enters cigarette count for today' do
       sign_in_pt_es('245')
       visit "#{ENV['Base_URL']}/#/es/cigarette-count"
       within('.pull-left', text: 'Hoy') do
@@ -287,7 +290,7 @@ describe 'A registered and consented participant signs in',
       end
     end
 
-    it 'uses the Done button to navigate back to Home' do
+    scenario 'uses the Done button to navigate back to Home' do
       sign_in_pt_en('255')
       visit "#{ENV['Base_URL']}/#/es/cigarette-count"
       find('.pull-left', text: 'Ayer')
