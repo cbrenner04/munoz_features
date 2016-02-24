@@ -10,23 +10,29 @@ feature 'A registered and consented participant signs in',
       participant_113.sign_in_pt_en
       cigarette_counter.open
 
-      expect(cigarette_counter).to be_visible
+      expect(cigarette_counter).to be_visible_in_eng
     end
 
     scenario 'switches to Español in cigarette counter' do
       participant_132.sign_in_pt_en
-      click_on 'Cigarette Counter'
-      has_text? 'How many cigarettes have you smoked?'
+      cigarette_counter.open
+
+      expect(cigarette_counter).to be_visible_in_eng
+
       participant_132.go_to('Español')
-      expect(page).to have_content '¿Cuántos cigarros ha fumado?'
+
+      expect(cigarette_counter).to be_visible_in_esp
     end
 
     scenario 'navigates to Set Your Quit Date from cigarette counter' do
-      sign_in_pt_en('132')
-      click_on 'Cigarette Counter'
-      find('.pull-left', text: 'Yesterday')
-      go_to('Set Your Quit Date')
-      expect(page).to have_css '.previous'
+      participant_132.sign_in_pt_en
+      cigarette_counter.open
+
+      expect(cigarette_counter).to be_visible_in_eng
+
+      participant_132.go_to('Set Your Quit Date')
+      
+      expect(set_your_quit_date).to be_visible_in_eng
     end
 
     it 'sees yesterday\'s cigarette count' do
