@@ -45,8 +45,7 @@ Capybara.configure do |config|
   config.default_wait_time = 5
   config.default_driver = :selenium
   config.register_driver :selenium do |app|
-    Selenium::WebDriver::Firefox::Binary.path =
-      '/Applications/Firefox.app/Contents/MacOS/firefox-bin'
+    Selenium::WebDriver::Firefox::Binary.path = ENV['firefox_path']
     Capybara::Selenium::Driver.new(app, browser: browser)
   end
   config.save_and_open_page_path = 'screenshots/'
