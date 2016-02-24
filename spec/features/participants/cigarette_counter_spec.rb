@@ -35,8 +35,8 @@ feature 'A registered and consented participant signs in',
       expect(set_your_quit_date).to be_visible_in_eng
     end
 
-    it 'sees yesterday\'s cigarette count' do
-      sign_in_pt_en('17')
+    scenario 'sees yesterday\'s cigarette count' do
+      participant_17.sign_in_pt_en
       visit "#{ENV['Base_URL']}/#/en/cigarette-count"
       within('.pull-left', text: 'Yesterday') do
         find('input[type = tel]').value.should eq '15'
@@ -47,8 +47,8 @@ feature 'A registered and consented participant signs in',
       end
     end
 
-    it "increments yesterday's cigarette count" do
-      sign_in_pt_en('18')
+    scenario 'increments yesterday\'s cigarette count' do
+      participant_18.sign_in_pt_en
       visit "#{ENV['Base_URL']}/#/en/cigarette-count"
       within('.pull-left', text: 'Yesterday') do
         find('.btn.btn-lg.btn-default', text: '+').click
@@ -60,8 +60,8 @@ feature 'A registered and consented participant signs in',
       end
     end
 
-    it "decrements yesterday's cigarette count" do
-      sign_in_pt_en('19')
+    scenario 'decrements yesterday\'s cigarette count' do
+      participant_19.sign_in_pt_en
       visit "#{ENV['Base_URL']}/#/en/cigarette-count"
       within('.pull-left', text: 'Yesterday') do
         find('.btn.btn-lg.btn-default', text: '-').click
@@ -73,8 +73,8 @@ feature 'A registered and consented participant signs in',
       end
     end
 
-    it "sees today's cigarette count" do
-      sign_in_pt_en('114')
+    scenario 'sees today\'s cigarette count' do
+      participant_114.sign_in_pt_en
       visit "#{ENV['Base_URL']}/#/en/cigarette-count"
       within('.pull-left', text: 'Today') do
         find('input[type = tel]').value.should eq '15'
@@ -84,8 +84,8 @@ feature 'A registered and consented participant signs in',
       end
     end
 
-    it "increments today's cigarette count" do
-      sign_in_pt_en('115')
+    scenario 'increments today\'s cigarette count' do
+      participant_115.sign_in_pt_en
       visit "#{ENV['Base_URL']}/#/en/cigarette-count"
       within('.pull-left', text: 'Today') do
         find('.btn.btn-lg.btn-default', text: '+').click
@@ -96,8 +96,8 @@ feature 'A registered and consented participant signs in',
       end
     end
 
-    it "decrements today's cigarette count" do
-      sign_in_pt_en('116')
+    scenario 'decrements today\'s cigarette count' do
+      participant_116.sign_in_pt_en
       visit "#{ENV['Base_URL']}/#/en/cigarette-count"
       within('.pull-left', text: 'Today') do
         find('.btn.btn-lg.btn-default', text: '-').click
@@ -109,7 +109,7 @@ feature 'A registered and consented participant signs in',
     end
 
     scenario 'sees cigarette count for more than a week ago', :date do
-      sign_in_pt_en('143')
+      participant_143.sign_in_pt_en
       visit "#{ENV['Base_URL']}/#/en/cigarette-count"
       today = Date.today.strftime('%d').to_i
       if today.between?(1, 6) && page.has_text?('30')
@@ -127,7 +127,7 @@ feature 'A registered and consented participant signs in',
     end
 
     scenario 'enters cigarette count for yesterday' do
-      sign_in_pt_en('144')
+      participant_144.sign_in_pt_en
       visit "#{ENV['Base_URL']}/#/en/cigarette-count"
       within('.pull-left', text: 'Yesterday') do
         find('input[type = tel]').set('5')
@@ -139,7 +139,7 @@ feature 'A registered and consented participant signs in',
     end
 
     scenario 'enters cigarette count for today' do
-      sign_in_pt_en('145')
+      participant_145.sign_in_pt_en
       visit "#{ENV['Base_URL']}/#/en/cigarette-count"
       within('.pull-left', text: 'Today') do
         find('input[type = tel]').set('5')
@@ -150,7 +150,7 @@ feature 'A registered and consented participant signs in',
     end
 
     scenario 'uses the Done button to navigate back to Home' do
-      sign_in_pt_en('155')
+      participant_155.sign_in_pt_en
       visit "#{ENV['Base_URL']}/#/en/cigarette-count"
       find('.pull-left', text: 'Yesterday')
       find('.btn.btn-default', text: 'Done').click
@@ -160,14 +160,14 @@ feature 'A registered and consented participant signs in',
 
   context 'in Español' do
     scenario 'access the cigarette counter' do
-      sign_in_pt_es('213')
+      participant_213.sign_in_pt_en
       click_on 'Contador de Cigarrillos'
       expect(page).to have_content 'Ayer'
       expect(page).to have_css '.btn-group-vertical'
     end
 
     scenario 'switches to English in cigarette counter' do
-      sign_in_pt_es('213')
+      participant_213.sign_in_pt_en
       click_on 'Contador de Cigarrillos'
       find('.pull-left', text: 'Ayer')
       go_to('English')
@@ -175,15 +175,15 @@ feature 'A registered and consented participant signs in',
     end
 
     scenario 'navigates to Set Your Quit Date from cigarette counter' do
-      sign_in_pt_es('213')
+      participant_213.sign_in_pt_en
       click_on 'Contador de Cigarrillos'
       find('.pull-left', text: 'Ayer')
       go_to('Elija la fecha en que dejará de fumar')
       expect(page).to have_css '.previous'
     end
 
-    it "sees yesterday's cigarette count" do
-      sign_in_pt_es('20')
+    scenario 'sees yesterday\'s cigarette count' do
+      participant_20.sign_in_pt_en
       visit "#{ENV['Base_URL']}/#/es/cigarette-count"
       within('.pull-left', text: 'Ayer') do
         find('input[type = tel]').value.should eq '15'
@@ -194,8 +194,8 @@ feature 'A registered and consented participant signs in',
       end
     end
 
-    it "increments yesterday's cigarette count" do
-      sign_in_pt_es('21')
+    scenario 'increments yesterday\'s cigarette count' do
+      participant_21.sign_in_pt_en
       visit "#{ENV['Base_URL']}/#/es/cigarette-count"
       within('.pull-left', text: 'Ayer') do
         find('.btn.btn-lg.btn-default', text: '+').click
@@ -207,8 +207,8 @@ feature 'A registered and consented participant signs in',
       end
     end
 
-    it "decrements yesterday's cigarette count" do
-      sign_in_pt_es('22')
+    scenario 'decrements yesterday\'s cigarette count' do
+      participant_22.sign_in_pt_en
       visit "#{ENV['Base_URL']}/#/es/cigarette-count"
       within('.pull-left', text: 'Ayer') do
         find('.btn.btn-lg.btn-default', text: '-').click
@@ -220,8 +220,8 @@ feature 'A registered and consented participant signs in',
       end
     end
 
-    it "sees today's cigarette count" do
-      sign_in_pt_es('214')
+    scenario '"sees today\'s cigarette count' do
+      participant_214.sign_in_pt_en
       visit "#{ENV['Base_URL']}/#/es/cigarette-count"
       within('.pull-left', text: 'Hoy') do
         find('input[type = tel]').value.should eq '15'
@@ -231,8 +231,8 @@ feature 'A registered and consented participant signs in',
       end
     end
 
-    it "increments today's cigarette count" do
-      sign_in_pt_es('215')
+    scenario 'increments today\'s cigarette count' do
+      participant_215.sign_in_pt_en
       visit "#{ENV['Base_URL']}/#/es/cigarette-count"
       within('.pull-left', text: 'Hoy') do
         find('.btn.btn-lg.btn-default', text: '+').click
@@ -243,8 +243,8 @@ feature 'A registered and consented participant signs in',
       end
     end
 
-    it "decrements today's cigarette count" do
-      sign_in_pt_es('216')
+    scenario 'decrements today\'s cigarette count' do
+      participant_216.sign_in_pt_en
       visit "#{ENV['Base_URL']}/#/es/cigarette-count"
       within('.pull-left', text: 'Hoy') do
         find('.btn.btn-lg.btn-default', text: '-').click
@@ -256,7 +256,7 @@ feature 'A registered and consented participant signs in',
     end
 
     scenario 'sees cigarette count for more than a week ago', :date do
-      sign_in_pt_es('243')
+      participant_243.sign_in_pt_en
       visit "#{ENV['Base_URL']}/#/es/cigarette-count"
       today = Date.today.strftime('%d').to_i
       if today.between?(1, 6) && page.has_text?('30')
@@ -274,7 +274,7 @@ feature 'A registered and consented participant signs in',
     end
 
     scenario 'enters cigarette count for yesterday' do
-      sign_in_pt_es('244')
+      participant_244.sign_in_pt_en
       visit "#{ENV['Base_URL']}/#/es/cigarette-count"
       within('.pull-left', text: 'Ayer') do
         find('input[type = tel]').set('5')
@@ -286,7 +286,7 @@ feature 'A registered and consented participant signs in',
     end
 
     scenario 'enters cigarette count for today' do
-      sign_in_pt_es('245')
+      participant_245.sign_in_pt_en
       visit "#{ENV['Base_URL']}/#/es/cigarette-count"
       within('.pull-left', text: 'Hoy') do
         find('input[type = tel]').set('5')
@@ -297,7 +297,7 @@ feature 'A registered and consented participant signs in',
     end
 
     scenario 'uses the Done button to navigate back to Home' do
-      sign_in_pt_en('255')
+      participant_255.sign_in_pt_en
       visit "#{ENV['Base_URL']}/#/es/cigarette-count"
       find('.pull-left', text: 'Ayer')
       find('.btn.btn-default', text: 'Fijar').click
