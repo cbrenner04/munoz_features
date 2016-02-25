@@ -39,7 +39,9 @@ feature 'A registered and consented participant signs in',
 
     scenario 'sees yesterday\'s cigarette count' do
       participant_17.sign_in_pt_en
+      #not sure where this base url ENV is coming from?
       visit "#{ENV['Base_URL']}/#/en/cigarette-count"
+      #does this line make sense?
       within(cigarette_counter).to be_visible_in_eng do
         find('input[type = tel]').value.should eq '15'
       end
@@ -78,6 +80,7 @@ feature 'A registered and consented participant signs in',
     scenario 'sees today\'s cigarette count' do
       participant_114.sign_in_pt_en
       visit "#{ENV['Base_URL']}/#/en/cigarette-count"
+      #if the above within insertaion was correct, could this one also work?
       within('.pull-left', text: 'Today') do
         find('input[type = tel]').value.should eq '15'
       end
