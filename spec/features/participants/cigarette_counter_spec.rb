@@ -6,6 +6,7 @@ require './spec/support/participants/cigarette_counter_helper'
 feature 'A registered and consented participant signs in',
          metadata: :participant do
   context 'in English' do
+
     scenario 'accesses the cigarette counter' do
       participant_113.sign_in_pt_en
       cigarette_counter.open
@@ -34,11 +35,12 @@ feature 'A registered and consented participant signs in',
       
       expect(set_your_quit_date).to be_visible_in_eng
     end
+#code below this point needs POM revision.
 
     scenario 'sees yesterday\'s cigarette count' do
       participant_17.sign_in_pt_en
       visit "#{ENV['Base_URL']}/#/en/cigarette-count"
-      within('.pull-left', text: 'Yesterday') do
+      within(cigarette_counter).to be_visible_in_eng do
         find('input[type = tel]').value.should eq '15'
       end
       yesterday = Date.today - 1
@@ -50,7 +52,7 @@ feature 'A registered and consented participant signs in',
     scenario 'increments yesterday\'s cigarette count' do
       participant_18.sign_in_pt_en
       visit "#{ENV['Base_URL']}/#/en/cigarette-count"
-      within('.pull-left', text: 'Yesterday') do
+      within(cigarette_counter).to be_visible_in_eng do
         find('.btn.btn-lg.btn-default', text: '+').click
         find('input[type = tel]').value.should eq '16'
       end
@@ -63,7 +65,7 @@ feature 'A registered and consented participant signs in',
     scenario 'decrements yesterday\'s cigarette count' do
       participant_19.sign_in_pt_en
       visit "#{ENV['Base_URL']}/#/en/cigarette-count"
-      within('.pull-left', text: 'Yesterday') do
+      within(cigarette_counter).to be_visible_in_eng do
         find('.btn.btn-lg.btn-default', text: '-').click
         find('input[type = tel]').value.should eq '14'
       end
