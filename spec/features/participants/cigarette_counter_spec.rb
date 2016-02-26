@@ -3,11 +3,10 @@
 require './spec/support/participants_helper'
 require './spec/support/participants/cigarette_counter_helper'
 
-feature 'A registered and consented participant signs in',
-         metadata: :participant do
+feature 'Cigarette Counter', metadata: :participant do
   context 'in English' do
 
-    scenario 'accesses the cigarette counter' do
+    scenario 'Participant accesses the cigarette counter' do
       participant_113.sign_in_pt_en
       cigarette_counter.open
 
@@ -35,59 +34,46 @@ feature 'A registered and consented participant signs in',
       
       expect(set_your_quit_date).to be_visible_in_eng
     end
-#code below this point needs POM revision.
 
     scenario 'sees yesterday\'s cigarette count' do
       participant_17.sign_in_pt_en
-      #not sure where this base url ENV is coming from?
-      visit "#{ENV['Base_URL']}/#/en/cigarette-count"
-      #does this line make sense?
-      within(cigarette_counter).to be_visible_in_eng do
-        find('input[type = tel]').value.should eq '15'
-      end
-      yesterday = Date.today - 1
-      within('g', text: "#{yesterday.strftime('%b %-d')}") do
-        expect(page).to have_content '15'
-      end
+      visit pt_17_cig_counter.landing_page
+
+      expect(pt_17_cig_counter).to have_count
+
+      expect(pt_17_cig_counter).to have_count_in_graph
     end
 
     scenario 'increments yesterday\'s cigarette count' do
       participant_18.sign_in_pt_en
-      visit "#{ENV['Base_URL']}/#/en/cigarette-count"
-      within(cigarette_counter).to be_visible_in_eng do
-        find('.btn.btn-lg.btn-default', text: '+').click
-        find('input[type = tel]').value.should eq '16'
-      end
-      yesterday = Date.today - 1
-      within('g', text: "#{yesterday.strftime('%b %-d')}") do
-        expect(page).to have_content '16'
-      end
+      visit pt_18_cig_counter.landing_page
+      pt_18_cig_counter.increment_decrement_count
+
+      expect(pt_18_cig_counter).to have_count
+
+      expect(pt_18_cig_counter).to have_count_in_graph
     end
 
     scenario 'decrements yesterday\'s cigarette count' do
       participant_19.sign_in_pt_en
-      visit "#{ENV['Base_URL']}/#/en/cigarette-count"
-      within(cigarette_counter).to be_visible_in_eng do
-        find('.btn.btn-lg.btn-default', text: '-').click
-        find('input[type = tel]').value.should eq '14'
-      end
-      yesterday = Date.today - 1
-      within('g', text: "#{yesterday.strftime('%b %-d')}") do
-        expect(page).to have_content '14'
-      end
+      visit pt_19_cig_counter.landing_page
+      pt_19_cig_counter.increment_decrement_count
+
+      expect(pt_19_cig_counter).to have_count
+
+      expect(pt_19_cig_counter).to have_count_in_graph
     end
 
     scenario 'sees today\'s cigarette count' do
       participant_114.sign_in_pt_en
-      visit "#{ENV['Base_URL']}/#/en/cigarette-count"
-      #if the above within insertaion was correct, could this one also work?
-      within('.pull-left', text: 'Today') do
-        find('input[type = tel]').value.should eq '15'
-      end
-      within('g', text: "#{Date.today.strftime('%b %-d')}") do
-        expect(page).to have_content '15'
+      visit pt_114_cig_counter.landing_page
+
+      expect(pt_114_cig_counter).to have_count
+
+      expect(pt_114_cig_counter).to have_count_in_graph
       end
     end
+#code below this point needs POM revision.
 
     scenario 'increments today\'s cigarette count' do
       participant_115.sign_in_pt_en
