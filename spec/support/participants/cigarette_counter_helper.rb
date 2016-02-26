@@ -45,3 +45,19 @@ def pt_114_cig_counter
 		day: 'Today'
 	)
 end
+
+def pt_115_cig_counter
+	@pt_115_cig_counter ||= Participants::CigaretteCounter.new(
+		count: 16,
+		date: Date.today,
+		day: 'Today'
+	)
+end
+
+def pt_116_cig_counter
+	@pt_116_cig_counter ||= Participants::CigaretteCounter.new(
+		count: 14,
+		date: Date.today,
+		day: 'Today'
+	)
+end
