@@ -27,6 +27,7 @@ def pt_18_cig_counter
 		count: 16,
 		date: Date.today - 1,
 		day: 'Yesterday'
+		plus_minus_day: "+"
 	)
 end
 
@@ -35,6 +36,7 @@ def pt_19_cig_counter
 		count: 14,
 		date: Date.today - 1,
 		day: 'Yesterday'
+		plus_minus_day: "-"
 	)
 end
 
@@ -51,6 +53,7 @@ def pt_115_cig_counter
 		count: 16,
 		date: Date.today,
 		day: 'Today'
+		plus_minus_day: "+"
 	)
 end
 
@@ -59,5 +62,6 @@ def pt_116_cig_counter
 		count: 14,
 		date: Date.today,
 		day: 'Today'
+		plus_minus_day: "-"
 	)
 end

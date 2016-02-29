@@ -73,31 +73,28 @@ feature 'Cigarette Counter', metadata: :participant do
       expect(pt_114_cig_counter).to have_count_in_graph
       end
     end
-#code below this point needs POM revision.
 
     scenario 'increments today\'s cigarette count' do
       participant_115.sign_in_pt_en
       visit pt_115_cig_counter.landing_page
-      #how do I turn this into an expect statmenet?
-      within('.pull-left', text: 'Today') do
-        find('.btn.btn-lg.btn-default', text: '+').click
-        find('input[type = tel]').value.should eq '16'
-      end
+      pt_115_cig_counter.increment_decrement_count
+
+      expect(pt_115_cig_counter).to have_count
       
-      expect(pt_114_cig_counter).to have_count_in_graph
+      expect(pt_115_cig_counter).to have_count_in_graph
     end
 
     scenario 'decrements today\'s cigarette count' do
       participant_116.sign_in_pt_en
       visit pt_116_cig_counter.landing_page
-      #how do I turn this into an expect statmenet?
-      within('.pull-left', text: 'Today') do
-        find('.btn.btn-lg.btn-default', text: '-').click
-        find('input[type = tel]').value.should eq '14'
-      end
+      pt_116_cig_counter.increment_decrement_count
+
+      expect(pt_116_cig_counter).to have_count
       
-      expect(pt_114_cig_counter).to have_count_in_graph
+      expect(pt_116_cig_counter).to have_count_in_graph
     end
+
+    #code below this point needs POM revision.
 
     scenario 'sees cigarette count for more than a week ago', :date do
       participant_143.sign_in_pt_en
