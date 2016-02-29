@@ -99,7 +99,8 @@ feature 'Cigarette Counter', metadata: :participant do
     scenario 'sees cigarette count for more than a week ago', :date do
       participant_143.sign_in_pt_en
       visit pt_143_cig_counter.landing_page
-      
+
+#remember to switch have to has (content/text)
       today = Date.today.strftime('%d').to_i
       if today.between?(1, 6) && page.has_text?('30')
         expect(page).to have_content('0', count: 8)
@@ -149,6 +150,8 @@ feature 'Cigarette Counter', metadata: :participant do
       expect(page).to have_content 'Stop Smoking Guide'
     end
   end
+
+#Spanish version begins here -- got to another file
 
   context 'in Español' do
     scenario 'access the cigarette counter' do

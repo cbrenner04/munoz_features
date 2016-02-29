@@ -18,7 +18,8 @@ def pt_17_cig_counter
 	@pt_17_cig_counter ||= Participants::CigaretteCounter.new(
 		count: 15,
 		date: Date.today - 1,
-		day: 'Yesterday'
+		day: 'Yesterday', 
+		locale: english
 	)
 end
 
@@ -27,7 +28,8 @@ def pt_18_cig_counter
 		count: 16,
 		date: Date.today - 1,
 		day: 'Yesterday'
-		plus_minus_day: "+"
+		plus_minus_day: "+", 
+		locale: english
 	)
 end
 
@@ -36,7 +38,8 @@ def pt_19_cig_counter
 		count: 14,
 		date: Date.today - 1,
 		day: 'Yesterday'
-		plus_minus_day: "-"
+		plus_minus_day: "-", 
+		locale: english
 	)
 end
 
@@ -44,7 +47,8 @@ def pt_114_cig_counter
 	@pt_114_cig_counter ||= Participants::CigaretteCounter.new(
 		count: 15,
 		date: Date.today,
-		day: 'Today'
+		day: 'Today', 
+		locale: english
 	)
 end
 
@@ -53,7 +57,8 @@ def pt_115_cig_counter
 		count: 16,
 		date: Date.today,
 		day: 'Today'
-		plus_minus_day: "+"
+		plus_minus_day: "+", 
+		locale: english
 	)
 end
 
@@ -62,6 +67,7 @@ def pt_116_cig_counter
 		count: 14,
 		date: Date.today,
 		day: 'Today'
-		plus_minus_day: "-"
+		plus_minus_day: "-", 
+		locale: english
 	)
 end

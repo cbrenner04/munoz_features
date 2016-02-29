@@ -7,10 +7,15 @@ class Participants
 			@date ||= cigarette_counter[:date]
 			@day ||= cigarette_counter[:day]
 			@plus_minus_day ||= cigarette_counter[:plus_minus_day]
+			@locale ||= cigarette_counter[:locale]
 		end
 
 		def landing_page
-			"#{ENV['Base_URL']}/#/en/cigarette-count"
+			if @locale == english
+				"#{ENV['Base_URL']}/#/en/cigarette-count"
+			else
+			"#{ENV['Base_URL']}/#/es/cigarette-count"
+			end
 		end
 
 		def open
@@ -18,11 +23,11 @@ class Participants
 		end
 
 		def visible_in_eng?
-			has_text? 'How many cigarettes have you smoked?'
-		end
-
-		def visible_in_esp?
-			has_text? '¿Cuántos cigarros ha fumado?'
+			if @locale == english
+				has_text? 'How many cigarettes have you smoked?'
+			else
+				has_text? '¿Cuántos cigarros ha fumado?'
+			end
 		end
 
 		def has_count?
