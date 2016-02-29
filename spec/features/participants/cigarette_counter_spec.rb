@@ -98,7 +98,8 @@ feature 'Cigarette Counter', metadata: :participant do
 
     scenario 'sees cigarette count for more than a week ago', :date do
       participant_143.sign_in_pt_en
-      visit "#{ENV['Base_URL']}/#/en/cigarette-count"
+      visit pt_143_cig_counter.landing_page
+      
       today = Date.today.strftime('%d').to_i
       if today.between?(1, 6) && page.has_text?('30')
         expect(page).to have_content('0', count: 8)
@@ -116,7 +117,8 @@ feature 'Cigarette Counter', metadata: :participant do
 
     scenario 'enters cigarette count for yesterday' do
       participant_144.sign_in_pt_en
-      visit "#{ENV['Base_URL']}/#/en/cigarette-count"
+      visit pt_144_cig_counter.landing_page
+
       within('.pull-left', text: 'Yesterday') do
         find('input[type = tel]').set('5')
       end
@@ -128,7 +130,8 @@ feature 'Cigarette Counter', metadata: :participant do
 
     scenario 'enters cigarette count for today' do
       participant_145.sign_in_pt_en
-      visit "#{ENV['Base_URL']}/#/en/cigarette-count"
+      visit pt_145_cig_counter.landing_page
+
       within('.pull-left', text: 'Today') do
         find('input[type = tel]').set('5')
       end
@@ -139,7 +142,8 @@ feature 'Cigarette Counter', metadata: :participant do
 
     scenario 'uses the Done button to navigate back to Home' do
       participant_155.sign_in_pt_en
-      visit "#{ENV['Base_URL']}/#/en/cigarette-count"
+      visit pt_155_cig_counter.landing_page
+
       find('.pull-left', text: 'Yesterday')
       find('.btn.btn-default', text: 'Done').click
       expect(page).to have_content 'Stop Smoking Guide'
