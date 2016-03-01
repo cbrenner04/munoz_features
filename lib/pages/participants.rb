@@ -4,11 +4,13 @@ class Participants
 
   def initialize(participants_arry)
     @pt_id ||= participants_arry[:pt_id]
+    @locale ||= participants_arry[:locale]
   end
 
-  def sign_in_pt_en
+  def sign_in
     visit ENV['Base_URL']
-    unless has_css?('a', text: 'Sign in')
+    @locale == 'english' ? button = 'Sign in' : button = 'Iniciar sesión'
+    unless has_css?('a', text: button)
       find('.navbar-toggle').click
       find('.dropdown-toggle').click
       if has_text?('Sign out')
@@ -17,29 +19,15 @@ class Participants
         click_on 'Finalizar la sesión'
       end
     end
-    click_on 'Sign in'
+    click_on button
     fill_in 'participant_email', with: ENV["Pt_#{@pt_id}_Email"]
     fill_in 'participant_password', with: ENV["Pt_#{@pt_id}_Password"]
-    click_on 'Sign in'
-    find('a', text: 'Stop Smoking Guide')
-  end
-
-  def sign_in_pt_es
-    visit ENV['Base_URL']
-    unless has_css?('a', text: 'Iniciar sesión')
-      find('.navbar-toggle').click
-      find('.dropdown-toggle').click
-      if page.has_text?('Finalizar la sesión')
-        click_on 'Finalizar la sesión'
-      else
-        click_on 'Sign out'
-      end
+    click_on button
+    if locale == 'english'
+      find('a', text: 'Stop Smoking Guide')
+    else
+      find('a', text: 'Guía Para Dejar de Fumar')
     end
-    click_on 'Iniciar sesión'
-    fill_in 'participant_email', with: ENV["Pt_#{@id}_Email"]
-    fill_in 'participant_password', with: ENV["Pt_#{@id}_Password"]
-    click_on 'Iniciar sesión'
-    find('a', text: 'Guía Para Dejar de Fumar')
   end
 
   # this will only work for Home, Stop Smoking Guide and Cigarette Counter
