@@ -67,3 +67,31 @@ def pt_116_cig_counter
 		locale: english
 	)
 end
+
+#not so sure baout this one
+def pt_143_cig_counter
+	@pt_143_cig_counter ||= Participants::CigaretteCounter.new(
+		count: 15,
+		date: Date.today - 9,
+		day: '9 Days Ago'
+		locale: english
+	)
+end
+
+def pt_144_cig_counter
+	@pt_144_cig_counter ||= Participants::CigaretteCounter.new(
+		count: 5,
+		date: Date.today - 1,
+		day: 'Yesterday'
+		locale: english
+	)
+end
+
+def pt_145_cig_counter
+	@pt_155_cig_counter ||= Participants::CigaretteCounter.new(
+		count: 5,
+		date: Date.today,
+		day: 'Today'
+		locale: english
+	)
+end

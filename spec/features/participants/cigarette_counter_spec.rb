@@ -101,7 +101,9 @@ feature 'Cigarette Counter', metadata: :participant do
       visit pt_143_cig_counter.landing_page
 
 #remember to switch have to has (content/text)
+      #best way to def this?
       today = Date.today.strftime('%d').to_i
+      #just move this into its own method. should I include the above?
       if today.between?(1, 6) && page.has_text?('30')
         expect(page).to have_content('0', count: 8)
       elsif today.between?(10, 16) || today.between?(20, 26) || today >= 30
@@ -109,11 +111,11 @@ feature 'Cigarette Counter', metadata: :participant do
       else
         expect(page).to have_content('0', count: 7)
       end
+      #alittl lost on this one, seems it mught break the methods I already have.
       find('#previous-week').click
       prev_day = Date.today - 9
-      within('g', text: "#{prev_day.strftime('%b %-d')}") do
-        expect(page).to have_content '15'
-      end
+      
+      expect(pt_143_cig_counter).to have_count_in_graph
     end
 
     scenario 'enters cigarette count for yesterday' do
@@ -123,10 +125,8 @@ feature 'Cigarette Counter', metadata: :participant do
       within('.pull-left', text: 'Yesterday') do
         find('input[type = tel]').set('5')
       end
-      yesterday = Date.today - 1
-      within('g', text: "#{yesterday.strftime('%b %-d')}") do
-        expect(page).to have_content '5'
-      end
+
+      expect(pt_144_cig_counter).to have_count_in_graph
     end
 
     scenario 'enters cigarette count for today' do
@@ -136,9 +136,8 @@ feature 'Cigarette Counter', metadata: :participant do
       within('.pull-left', text: 'Today') do
         find('input[type = tel]').set('5')
       end
-      within('g', text: "#{Date.today.strftime('%b %-d')}") do
-        expect(page).to have_content '5'
-      end
+      
+      expect(pt_145_cig_counter).to have_count_in_graph
     end
 
     scenario 'uses the Done button to navigate back to Home' do
