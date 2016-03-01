@@ -47,7 +47,7 @@ feature 'Cigarette Counter', metadata: :participant do
     scenario 'increments yesterday\'s cigarette count' do
       participant_18.sign_in_pt_en
       visit pt_18_cig_counter.landing_page
-      pt_18_cig_counter.increment_decrement_count
+      pt_18_cig_counter.increment_count
 
       expect(pt_18_cig_counter).to have_count
 
@@ -57,7 +57,7 @@ feature 'Cigarette Counter', metadata: :participant do
     scenario 'decrements yesterday\'s cigarette count' do
       participant_19.sign_in_pt_en
       visit pt_19_cig_counter.landing_page
-      pt_19_cig_counter.increment_decrement_count
+      pt_19_cig_counter.decrement_count
 
       expect(pt_19_cig_counter).to have_count
 
@@ -77,7 +77,7 @@ feature 'Cigarette Counter', metadata: :participant do
     scenario 'increments today\'s cigarette count' do
       participant_115.sign_in_pt_en
       visit pt_115_cig_counter.landing_page
-      pt_115_cig_counter.increment_decrement_count
+      pt_115_cig_counter.increment_count
 
       expect(pt_115_cig_counter).to have_count
       
@@ -87,7 +87,7 @@ feature 'Cigarette Counter', metadata: :participant do
     scenario 'decrements today\'s cigarette count' do
       participant_116.sign_in_pt_en
       visit pt_116_cig_counter.landing_page
-      pt_116_cig_counter.increment_decrement_count
+      pt_116_cig_counter.decrement_count
 
       expect(pt_116_cig_counter).to have_count
       

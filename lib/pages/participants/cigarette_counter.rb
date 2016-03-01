@@ -6,17 +6,13 @@ class Participants
 			@count ||= cigarette_counter[:count]
 			@date ||= cigarette_counter[:date]
 			@day ||= cigarette_counter[:day]
-			@plus_minus_day ||= cigarette_counter[:plus_minus_day]
 			@locale ||= cigarette_counter[:locale]
 		end
 
 		def landing_page
-			if @locale == english
-				"#{ENV['Base_URL']}/#/en/cigarette-count"
-			else
-			"#{ENV['Base_URL']}/#/es/cigarette-count"
-			end
-		end
+      @locale == english ? var = 'en' : var = 'es'
+      "#{ENV['Base_URL']}/#/#{var}/cigarette-count"
+    end
 
 		def open
 			click_on 'Cigarette Counter'
@@ -40,14 +36,22 @@ class Participants
 				.has_text? @count.to_s
 		end
 
-		def increment_decrement_count
-			button_group.find('.btn.btn-lg.btn-default', text: @plus_minus_day).click
+		def increment_count
+ 	    increment_decrement('+')
+		end
+
+		def decrement_count
+		  increment_decrement('-')
 		end
 
 		private
 
 		def button_group
 			find('.pull-left', text: @day)
+		end
+
+		def increment_decrement(symbol)
+  		button_group.find('.btn-default', text: symbol).click
 		end
 	end
 end
