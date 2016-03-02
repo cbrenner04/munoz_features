@@ -16,7 +16,11 @@ class Participants
     end
 
     def open
-      click_on 'Cigarette Counter'
+      if @locale == 'english'
+        click_on 'Cigarette Counter'
+      else
+        click_on 'Contador de Cigarrillos'
+      end
     end
 
     def visible_in_eng?
@@ -66,11 +70,18 @@ class Participants
     end
 
     def done
-      find('.btn.btn-default', text: 'Done').click
+      if @locale == 'english'
+        find('.btn.btn-default', text: 'Done').click
+      else
+        find('.btn.btn-default', text: 'Fijar').click
     end
 
     def has_home_visible?
-      hes_text? 'Stop Smoking Guide'
+      if @locale == 'english'
+        hes_text? 'Stop Smoking Guide'
+      else
+        has_text? 'Guía Para Dejar de Fumar'
+      end
     end
 
     private

@@ -127,152 +127,128 @@ feature 'Cigarette Counter', metadata: :participant do
     end
   end
 
-  # Spanish version begins here -- got to another file
+  # Spanish version begins here
 
   context 'in Español' do
     scenario 'access the cigarette counter' do
       participant_213.sign_in
-      click_on 'Contador de Cigarrillos'
-      expect(page).to have_content 'Ayer'
-      expect(page).to have_css '.btn-group-vertical'
+      cigarette_counter.open
+
+      expect(cigarette_counter).to be_visible_in_esp
     end
 
     scenario 'switches to English in cigarette counter' do
       participant_213.sign_in
-      click_on 'Contador de Cigarrillos'
-      find('.pull-left', text: 'Ayer')
-      go_to('English')
-      expect(page).to have_content 'Yesterday'
+      cigarette_counter.open
+
+      expect(cigarette_counter).to be_visible_in_eng
+
+      participant_213.go_to('English')
+
+      expect(cigarette_counter).to be_visible_in_esp
     end
 
     scenario 'navigates to Set Your Quit Date from cigarette counter' do
       participant_213.sign_in
-      click_on 'Contador de Cigarrillos'
-      find('.pull-left', text: 'Ayer')
-      go_to('Elija la fecha en que dejará de fumar')
-      expect(page).to have_css '.previous'
+      cigarette_counter.open
+
+      expect(cigarette_counter).to be_visible_in_esp
+
+      participant_213.go_to('Elija la fecha en que dejará de fumar')
+
+      expect(set_your_quit_date).to be_visible_in_esp
     end
 
     scenario 'sees yesterday\'s cigarette count' do
       participant_20.sign_in
-      visit "#{ENV['Base_URL']}/#/es/cigarette-count"
-      within('.pull-left', text: 'Ayer') do
-        find('input[type = tel]').value.should eq '15'
-      end
-      yesterday = Date.today - 1
-      within('g', text: trans_mo("#{yesterday.strftime('%-d %b.')}")) do
-        expect(page).to have_content '15'
-      end
+      visit pt_20_cig_counter.landing_page
+
+      expect(pt_20_cig_counter).to have_count
+
+      expect(pt_20_cig_counter).to have_count_in_graph
     end
 
     scenario 'increments yesterday\'s cigarette count' do
       participant_21.sign_in
-      visit "#{ENV['Base_URL']}/#/es/cigarette-count"
-      within('.pull-left', text: 'Ayer') do
-        find('.btn.btn-lg.btn-default', text: '+').click
-        find('input[type = tel]').value.should eq '16'
-      end
-      yesterday = Date.today - 1
-      within('g', text: trans_mo("#{yesterday.strftime('%-d %b.')}")) do
-        expect(page).to have_content '16'
-      end
+      visit pt_21_cig_counter.landing_page
+      pt_21_cig_counter.increment_count
+
+      expect(pt_21_cig_counter).to have_count
+
+      expect(pt_21_cig_counter).to have_count_in_graph
     end
 
     scenario 'decrements yesterday\'s cigarette count' do
       participant_22.sign_in
-      visit "#{ENV['Base_URL']}/#/es/cigarette-count"
-      within('.pull-left', text: 'Ayer') do
-        find('.btn.btn-lg.btn-default', text: '-').click
-        find('input[type = tel]').value.should eq '14'
-      end
-      yesterday = Date.today - 1
-      within('g', text: trans_mo("#{yesterday.strftime('%-d %b.')}")) do
-        expect(page).to have_content '14'
-      end
+      visit pt_22_cig_counter.landing_page
+      pt_22_cig_counter.decrement_count
+
+      expect(pt_22_cig_counter).to have_count
+
+      expect(pt_22_cig_counter).to have_count_in_graph
     end
 
     scenario '"sees today\'s cigarette count' do
       participant_214.sign_in
-      visit "#{ENV['Base_URL']}/#/es/cigarette-count"
-      within('.pull-left', text: 'Hoy') do
-        find('input[type = tel]').value.should eq '15'
-      end
-      within('g', text: trans_mo("#{Date.today.strftime('%-d %b.')}")) do
-        expect(page).to have_content '15'
-      end
+      visit pt_214_cig_counter.landing_page
+
+      expect(pt_214_cig_counter).to have_count
+
+      expect(pt_214_cig_counter).to have_count_in_graph
     end
 
     scenario 'increments today\'s cigarette count' do
       participant_215.sign_in
-      visit "#{ENV['Base_URL']}/#/es/cigarette-count"
-      within('.pull-left', text: 'Hoy') do
-        find('.btn.btn-lg.btn-default', text: '+').click
-        find('input[type = tel]').value.should eq '16'
-      end
-      within('g', text: trans_mo("#{Date.today.strftime('%-d %b.')}")) do
-        expect(page).to have_content '16'
-      end
+      visit pt_215_cig_counter.landing_page
+      pt_215_cig_counter.increment_count
+
+      expect(pt_215_cig_counter).to have_count
+
+      expect(pt_215_cig_counter).to have_count_in_graph
     end
 
     scenario 'decrements today\'s cigarette count' do
       participant_216.sign_in
-      visit "#{ENV['Base_URL']}/#/es/cigarette-count"
-      within('.pull-left', text: 'Hoy') do
-        find('.btn.btn-lg.btn-default', text: '-').click
-        find('input[type = tel]').value.should eq '14'
-      end
-      within('g', text: trans_mo("#{Date.today.strftime('%-d %b.')}")) do
-        expect(page).to have_content '14'
-      end
+      visit pt_216_cig_counter.landing_page
+      pt_216_cig_counter.decrement_count
+
+      expect(pt_216_cig_counter).to have_count
+
+      expect(pt_216_cig_counter).to have_count_in_graph
     end
 
     scenario 'sees cigarette count for more than a week ago', :date do
       participant_243.sign_in
-      visit "#{ENV['Base_URL']}/#/es/cigarette-count"
-      today = Date.today.strftime('%d').to_i
-      if today.between?(1, 6) && page.has_text?('30')
-        expect(page).to have_content('0', count: 8)
-      elsif today.between?(10, 16) || today.between?(20, 26) || today >= 30
-        expect(page).to have_content('0', count: 8)
-      else
-        expect(page).to have_content('0', count: 7)
-      end
-      find('#previous-week').click
-      prev_day = Date.today - 9
-      within('g', text: trans_mo("#{prev_day.strftime('%-d %b.')}")) do
-        expect(page).to have_content '15'
-      end
+      visit pt_243_cig_counter.landing_page
+
+      expect(pt_243_cig_counter).to have_zero_count_in_graph
+
+      pt_243_cig_counter.previous_week
+
+      expect(pt_243_cig_counter).to have_count_in_graph
     end
 
     scenario 'enters cigarette count for yesterday' do
       participant_244.sign_in
-      visit "#{ENV['Base_URL']}/#/es/cigarette-count"
-      within('.pull-left', text: 'Ayer') do
-        find('input[type = tel]').set('5')
-      end
-      yesterday = Date.today - 1
-      within('g', text: trans_mo("#{yesterday.strftime('%-d %b.')}")) do
-        expect(page).to have_content '5'
-      end
+      visit pt_244_cig_counter.landing_page
+      pt_244_cig_counter.set_count
+
+      expect(pt_244_cig_counter).to have_count_in_graph
     end
 
     scenario 'enters cigarette count for today' do
       participant_245.sign_in
-      visit "#{ENV['Base_URL']}/#/es/cigarette-count"
-      within('.pull-left', text: 'Hoy') do
-        find('input[type = tel]').set('5')
-      end
-      within('g', text: trans_mo("#{Date.today.strftime('%-d %b.')}")) do
-        expect(page).to have_content '5'
-      end
+      visit pt_245_cig_counter.landing_page
+      pt_245_cig_counter.set_count
+
+      expect(pt_245_cig_counter).to have_count_in_graph
     end
 
     scenario 'uses the Done button to navigate back to Home' do
       participant_255.sign_in
-      visit "#{ENV['Base_URL']}/#/es/cigarette-count"
-      find('.pull-left', text: 'Ayer')
-      find('.btn.btn-default', text: 'Fijar').click
-      expect(page).to have_content 'Guía Para Dejar de Fumar'
+      visit pt_255_cig_counter.landing_page
+      pt_255_cig_counter.done
+      expect(pt_255_cig_counter).to have_home_visible
     end
   end
 end
