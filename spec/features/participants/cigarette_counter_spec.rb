@@ -248,7 +248,7 @@ feature 'Cigarette Counter', metadata: :participant do
       participant_255.sign_in
       visit pt_255_cig_counter.landing_page
       pt_255_cig_counter.done
-      
+
       expect(pt_255_cig_counter).to have_home_visible
     end
   end
