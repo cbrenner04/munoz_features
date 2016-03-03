@@ -141,11 +141,11 @@ feature 'Cigarette Counter', metadata: :participant do
       participant_213.sign_in
       cigarette_counter.open
 
-      expect(cigarette_counter).to be_visible_in_eng
+      expect(cigarette_counter).to be_visible_in_esp
 
       participant_213.go_to('English')
 
-      expect(cigarette_counter).to be_visible_in_esp
+      expect(cigarette_counter).to be_visible_in_eng
     end
 
     scenario 'navigates to Set Your Quit Date from cigarette counter' do
