@@ -70,10 +70,8 @@ class Participants
     end
 
     def done
-      if @locale == 'english'
-        find('.btn.btn-default', text: 'Done').click
-      else
-        find('.btn.btn-default', text: 'Fijar').click
+      @locale == 'english' ? btn_text = 'Done' : btn_text = 'Fijar'
+      find('.btn-default', text: btn_text).click
     end
 
     def has_home_visible?
