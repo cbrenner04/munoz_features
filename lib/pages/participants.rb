@@ -23,7 +23,7 @@ class Participants
     fill_in 'participant_email', with: ENV["Pt_#{@pt_id}_Email"]
     fill_in 'participant_password', with: ENV["Pt_#{@pt_id}_Password"]
     click_on button
-    if locale == 'english'
+    if @locale == 'english'
       find('a', text: 'Stop Smoking Guide')
     else
       find('a', text: 'Guía Para Dejar de Fumar')

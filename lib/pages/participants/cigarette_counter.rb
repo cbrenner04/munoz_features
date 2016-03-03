@@ -76,7 +76,7 @@ class Participants
 
     def has_home_visible?
       if @locale == 'english'
-        hes_text? 'Stop Smoking Guide'
+        has_text? 'Stop Smoking Guide'
       else
         has_text? 'Guía Para Dejar de Fumar'
       end

@@ -13,6 +13,18 @@ def set_your_quit_date
   @set_your_quit_date ||= Participants::SetYourQuitDate.new
 end
 
+def pt_113_cig_counter
+  @pt_113_cig_counter ||= Participants::CigaretteCounter.new(
+    locale: 'english'
+  )
+end
+
+def pt_132_cig_counter
+  @pt_132_cig_counter ||= Participants::CigaretteCounter.new(
+    locale: 'english'
+  )
+end
+
 def pt_17_cig_counter
   @pt_17_cig_counter ||= Participants::CigaretteCounter.new(
     count: 15,
@@ -183,8 +195,8 @@ def pt_244_cig_counter
   )
 end
 
-def pt_254_cig_counter
-  @pt_254_cig_counter ||= Participants::CigaretteCounter.new(
+def pt_245_cig_counter
+  @pt_245_cig_counter ||= Participants::CigaretteCounter.new(
     count: 5,
     date: Date.today,
     day: 'Today',

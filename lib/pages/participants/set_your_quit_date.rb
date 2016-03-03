@@ -6,5 +6,9 @@ class Participants
     def visible_in_eng?
       has_text? 'Your Quit Date:'
     end
+
+    def visible_in_esp?
+      has_text? 'La Fecha en que Dejará de Fumar'
+    end
   end
 end
