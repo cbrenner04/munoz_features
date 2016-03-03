@@ -24,11 +24,11 @@ class Participants
     end
 
     def visible_in_eng?
-      if @locale == 'english'
-        has_text? 'How many cigarettes have you smoked?'
-      else
-        has_text? '¿Cuántos cigarros ha fumado?'
-      end
+      has_text? 'How many cigarettes have you smoked?'
+    end
+
+    def visible_in_esp?
+      has_text? '¿Cuántos cigarros ha fumado?'
     end
 
     def has_count?
