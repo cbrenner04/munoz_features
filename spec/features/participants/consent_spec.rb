@@ -1,13 +1,17 @@
 # filename: spec/features/participants/consent_spec.rb
 
-require_relative '../../../lib/zip_codes.rb'
+require './lib/zip_codes.rb'
+require './spec/support/participants_helper'
 
 describe 'A visitor to the site', type: :feature, metadata: :participant do
   context 'in English' do
-    it 'switches to Español when consenting' do
-      visit "#{ENV['Base_URL']}/en/pages/application#/en/eligibility"
+    scenario'switches to Español when consenting' do
+      visit eligibility_page
+
       find('.ng-binding', text: 'How old are you?')
       first('input[type = tel]').set('25')
+
+      #not sure how i should methodize this. should both actions be included?
       q = ['Are you currently a smoker?',
            'Are you thinking of quitting smoking within the next 30 days?']
       q.zip(%w(Yes Yes)).each do |ques, answ|
@@ -16,33 +20,36 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
         end
       end
 
-      page.all('input[type = tel]')[1].set(ZipCodes::SF.sample)
+      all('input[type = tel]')[1].set(ZipCodes::SF.sample)
       within('.form-group',
              text: 'Where do you get most of your medical care?') do
         select 'Ocean Park Health Center'
       end
 
       find('input[type = email]').set(ENV['Pt_35_Email'])
-      page.all('input[type = tel]')[2].set(ENV['Pt_35_Phone_Number'])
+      all('input[type = tel]')[2].set(ENV['Pt_35_Phone_Number'])
       find('input[type = password]').set(ENV['Pt_35_Password'])
       find('input[type = submit]').click
       click_on 'View the consent form'
-      find('h3', text: 'PALO ALTO UNIVERSITY CONSENT')
-      first('.ng-pristine.ng-untouched.ng-invalid.ng-invalid-required').click
+
+      expect(consent).to be_visible_in_eng
+
+      first('.ng-invalid-required').click
       go_to('Español')
 
       expect(page).to have_content 'UNIVERSIDAD DE PALO ALTO CONSENTIMIENTO'
       find('input[value = true]').should be_checked
     end
 
-    it 'cannot review consent immediately following ineligible decision' do
+    scenario'cannot review consent immediately following ineligible decision' do
       visit "#{ENV['Base_URL']}" \
             '/en/pages/application#/en/eligibility-result?isEligible=false'
       expect { click_on 'View the consent form' }.to raise_error
     end
 
-    it 'completes eligibility, is eligible, is able to consent immediately' do
-      visit "#{ENV['Base_URL']}/en/pages/application#/en/eligibility"
+    scenario'completes eligibility, is eligible, is able to consent immediately' do
+      visit eligibility_page
+
       find('.ng-binding', text: 'How old are you?')
       first('input[type = tel]').set('25')
       q = ['Are you currently a smoker?',
@@ -53,26 +60,27 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
         end
       end
 
-      page.all('input[type = tel]')[1].set(ZipCodes::SF.sample)
+      all('input[type = tel]')[1].set(ZipCodes::SF.sample)
       within('.form-group',
              text: 'Where do you get most of your medical care?') do
         select 'Ocean Park Health Center'
       end
 
       find('input[type = email]').set(ENV['Pt_36_Email'])
-      page.all('input[type = tel]')[2].set(ENV['Pt_36_Phone_Number'])
+      all('input[type = tel]')[2].set(ENV['Pt_36_Phone_Number'])
       find('input[type = password]').set(ENV['Pt_36_Password'])
       find('input[type = submit]').click
       click_on 'View the consent form'
       find('h3', text: 'PALO ALTO UNIVERSITY CONSENT')
-      first('.ng-pristine.ng-untouched.ng-invalid.ng-invalid-required').click
+      first('.ng-invalid-required').click
       click_on 'Submit'
       expect(page).to have_css('iframe[class = ng-scope]')
     end
 
-    it 'switches to Español while filling in eligibility, ' \
+    scenario'switches to Español while filling in eligibility, ' \
        'is eligible, sees consent form in Español' do
-      visit "#{ENV['Base_URL']}/en/pages/application#/en/eligibility"
+      visit eligibility_page
+
       find('.ng-binding', text: 'How old are you?')
       first('input[type = tel]').set('25')
       q = ['Are you currently a smoker?',
@@ -85,38 +93,38 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
 
       go_to('Español')
       find('.ng-binding', text: '¿Cuántos años tiene?')
-      page.all('input[type = tel]')[1].set(ZipCodes::SF.sample)
+      all('input[type = tel]')[1].set(ZipCodes::SF.sample)
       within('.form-group',
              text: '¿Dónde recibe la mayor parte de su atención médica?') do
         select 'Centro de Salud Ocean Park'
       end
 
       find('input[type = email]').set(ENV['Pt_37_Email'])
-      page.all('input[type = tel]')[2].set(ENV['Pt_37_Phone_Number'])
+      all('input[type = tel]')[2].set(ENV['Pt_37_Phone_Number'])
       find('input[type = password]').set(ENV['Pt_37_Password'])
       find('input[type = submit]').click
       click_on 'Ver el formulario de consentimiento'
       find('h3', text: 'UNIVERSIDAD DE PALO ALTO CONSENTIMIENTO')
     end
 
-    it 'signs in and consents to participate' do
+    scenario'signs in and consents to participate' do
       visit ENV['Base_URL']
       click_on 'Sign in'
       fill_in 'participant_email', with: ENV['Pt_106_Email']
       fill_in 'participant_password', with: ENV['Pt_106_Password']
       click_on 'Sign in'
       find('h3', text: 'PALO ALTO UNIVERSITY CONSENT')
-      first('.ng-pristine.ng-untouched.ng-invalid.ng-invalid-required').click
+      first('.ng-invalid-required').click
       find('.btn.btn-primary', text: 'Submit').click
       expect(page).to have_css('iframe[class = ng-scope]')
     end
 
-    it 'signs in and does not consent to participate' do
+    scenario'signs in and does not consent to participate' do
       visit ENV['Base_URL']
-      unless page.has_css?('a', text: 'Sign in')
+      unless has_css?('a', text: 'Sign in')
         find('.navbar-toggle').click
         find('.dropdown-toggle').click
-        page.has_text?('Sign out')
+        has_text?('Sign out')
         click_on 'Sign out'
       end
       click_on 'Sign in'
@@ -124,18 +132,18 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       fill_in 'participant_password', with: ENV['Pt_107_Password']
       click_on 'Sign in'
       find('h3', text: 'PALO ALTO UNIVERSITY CONSENT')
-      page.all('.ng-pristine.ng-untouched.ng-invalid')[1].click
+      all('.ng-invalid')[1].click
       find('.btn.btn-primary', text: 'Submit').click
       expect(page).to have_css('iframe[class = ng-scope]')
     end
 
-    it 'reviews consent form' do
+    scenario'reviews consent form' do
       sign_in_pt_en('109')
       go_to('Review Consent')
       expect(page).to have_content 'PALO ALTO UNIVERSITY CONSENT'
     end
 
-    it 'switches to Español when reviewing consent form' do
+    scenario'switches to Español when reviewing consent form' do
       sign_in_pt_en('131')
       go_to('Review Consent')
       find('h2', text: 'PALO ALTO UNIVERSITY CONSENT')
@@ -144,7 +152,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       expect(page).to have_content 'UNIVERSIDAD DE PALO ALTO CONSENTIMIENTO'
     end
 
-    it 'is a participant who did not give consent, can still use app' do
+    scenario'is a participant who did not give consent, can still use app' do
       sign_in_pt_en('108')
       click_on 'Set Your Quit Date'
       expect(page).to have_css('.ng-binding.ng-scope', text: 'We')
@@ -164,8 +172,9 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
   end
 
   context 'in Español' do
-    it 'switches to English when consenting' do
-      visit "#{ENV['Base_URL']}/es/pages/application#/es/eligibility"
+    scenario'switches to English when consenting' do
+      visit eligibility_page
+
       find('.ng-binding', text: '¿Cuántos años tiene?')
       first('input[type = tel]').set('25')
       q = ['¿Fuma usted actualmente?',
@@ -176,19 +185,21 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
         end
       end
 
-      page.all('input[type = tel]')[1].set(ZipCodes::SF.sample)
+      all('input[type = tel]')[1].set(ZipCodes::SF.sample)
       within('.form-group',
              text: '¿Dónde recibe la mayor parte de su atención médica?') do
         select 'Centro de Salud Ocean Park'
       end
 
       find('input[type = email]').set(ENV['Pt_38_Email'])
-      page.all('input[type = tel]')[2].set(ENV['Pt_38_Phone_Number'])
+      all('input[type = tel]')[2].set(ENV['Pt_38_Phone_Number'])
       find('input[type = password]').set(ENV['Pt_38_Password'])
       find('input[type = submit]').click
       click_on 'Ver el formulario de consentimiento'
-      find('h3', text: 'UNIVERSIDAD DE PALO ALTO CONSENTIMIENTO')
-      first('.ng-pristine.ng-untouched.ng-invalid.ng-invalid-required').click
+
+      expect(consent).to be_visible_in_esp
+      
+      first('.ng-invalid-required').click
       go_to('English')
 
       expect(page).to have_content 'PALO ALTO UNIVERSITY CONSENT'
@@ -196,15 +207,16 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       find('input[value = true]').should be_checked
     end
 
-    it 'cannot review consent immediately following ineligible decision' do
+    scenario'cannot review consent immediately following ineligible decision' do
       visit "#{ENV['Base_URL']}" \
             '/es/pages/application#/es/eligibility-result?isEligible=false'
       expect(page)
         .to_not have_css('a', text: 'Ver el formulario de consentimiento')
     end
 
-    it 'completes eligibility, is eligible, is able to consent immediately' do
-      visit "#{ENV['Base_URL']}/es/pages/application#/es/eligibility"
+    scenario'completes eligibility, is eligible, is able to consent immediately' do
+      visit eligibility_page
+
       find('.ng-binding', text: '¿Cuántos años tiene?')
       first('input[type = tel]').set('25')
       q = ['¿Fuma usted actualmente?',
@@ -215,26 +227,27 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
         end
       end
 
-      page.all('input[type = tel]')[1].set(ZipCodes::SF.sample)
+      all('input[type = tel]')[1].set(ZipCodes::SF.sample)
       within('.form-group',
              text: '¿Dónde recibe la mayor parte de su atención médica?') do
         select 'Centro de Salud Ocean Park'
       end
 
       find('input[type = email]').set(ENV['Pt_39_Email'])
-      page.all('input[type = tel]')[2].set(ENV['Pt_39_Phone_Number'])
+      all('input[type = tel]')[2].set(ENV['Pt_39_Phone_Number'])
       find('input[type = password]').set(ENV['Pt_39_Password'])
       find('input[type = submit]').click
       click_on 'Ver el formulario de consentimiento'
       find('h3', text: 'UNIVERSIDAD DE PALO ALTO CONSENTIMIENTO')
-      first('.ng-pristine.ng-untouched.ng-invalid.ng-invalid-required').click
+      first('.ng-invalid-required').click
       click_on 'Enviar'
       expect(page).to have_css('iframe[class = ng-scope]')
     end
 
-    it 'switches to English while filling in eligibility, ' \
+    scenario'switches to English while filling in eligibility, ' \
        'is eligible, sees consent form in English' do
-      visit "#{ENV['Base_URL']}/es/pages/application#/es/eligibility"
+      visit eligibility_page
+
       find('.ng-binding', text: '¿Cuántos años tiene?')
       first('input[type = tel]').set('25')
       q = ['¿Fuma usted actualmente?',
@@ -247,51 +260,51 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
 
       go_to('English')
       find('.ng-binding', text: 'How old are you?')
-      page.all('input[type = tel]')[1].set(ZipCodes::SF.sample)
+      all('input[type = tel]')[1].set(ZipCodes::SF.sample)
       within('.form-group',
              text: 'Where do you get most of your medical care?') do
         select 'Ocean Park Health Center'
       end
 
       find('input[type = email]').set(ENV['Pt_40_Email'])
-      page.all('input[type = tel]')[2].set(ENV['Pt_40_Phone_Number'])
+      all('input[type = tel]')[2].set(ENV['Pt_40_Phone_Number'])
       find('input[type = password]').set(ENV['Pt_40_Password'])
       find('input[type = submit]').click
       click_on 'View the consent form'
       find('h3', text: 'PALO ALTO UNIVERSITY CONSENT')
     end
 
-    it 'signs in and consents to participate' do
+    scenario'signs in and consents to participate' do
       visit ENV['Base_URL']
       click_on 'Iniciar sesión'
       fill_in 'participant_email', with: ENV['Pt_206_Email']
       fill_in 'participant_password', with: ENV['Pt_206_Password']
       click_on 'Iniciar sesión'
       find('h3', text: 'UNIVERSIDAD DE PALO ALTO CONSENTIMIENTO')
-      first('.ng-pristine.ng-untouched.ng-invalid.ng-invalid-required').click
+      first('.ng-invalid-required').click
       find('.btn.btn-primary', text: 'Enviar').click
       expect(page).to have_css('iframe[class = ng-scope]')
     end
 
-    it 'signs in and does not consent to participate' do
+    scenario'signs in and does not consent to participate' do
       visit ENV['Base_URL']
       click_on 'Iniciar sesión'
       fill_in 'participant_email', with: ENV['Pt_207_Email']
       fill_in 'participant_password', with: ENV['Pt_207_Password']
       click_on 'Iniciar sesión'
       find('h3', text: 'UNIVERSIDAD DE PALO ALTO CONSENTIMIENTO')
-      page.all('.ng-pristine.ng-untouched.ng-invalid')[1].click
+      all('.ng-invalid')[1].click
       find('.btn.btn-primary', text: 'Enviar').click
       expect(page).to have_css('iframe[class = ng-scope]')
     end
 
-    it 'reviews consent form' do
+    scenario'reviews consent form' do
       sign_in_pt_es('209')
       go_to('Revise el Consentimiento')
       expect(page).to have_content 'UNIVERSIDAD DE PALO ALTO CONSENTIMIENTO'
     end
 
-    it 'switches to English when reviewing the consent form' do
+    scenario'switches to English when reviewing the consent form' do
       sign_in_pt_es('231')
       go_to('Revise el Consentimiento')
       find('h2', text: 'UNIVERSIDAD DE PALO ALTO CONSENTIMIENTO')
@@ -300,7 +313,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       expect(page).to have_content 'PALO ALTO UNIVERSITY CONSENT'
     end
 
-    it 'is a participant who did not give consent, can still use app' do
+    scenario'is a participant who did not give consent, can still use app' do
       sign_in_pt_es('208')
       click_on 'Elija la fecha en que dejará de fumar'
       expect(page).to have_css('.ng-binding.ng-scope', text: 'Mi')
