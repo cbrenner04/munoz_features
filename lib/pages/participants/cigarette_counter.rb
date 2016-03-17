@@ -70,7 +70,7 @@ class Participants
     end
 
     def done
-      @locale == 'english' ? btn_text = 'Done' : btn_text = 'Fijar'
+      btn_text = @locale == 'english' ? 'Done' : 'Fijar'
       find('.btn-default', text: btn_text).click
     end
 
