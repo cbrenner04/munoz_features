@@ -5,11 +5,9 @@ require './spec/support/participants_helper'
 
 describe 'A visitor to the site', type: :feature, metadata: :participant do
   context 'in English' do
-    scenario'switches to Español when consenting' do
+    scenario 'switches to Español when consenting' do
       visit eligibility_page
-
-      find('.ng-binding', text: 'How old are you?')
-      first('input[type = tel]').set('25')
+      consent.set_age
 
       #not sure how i should methodize this. should both actions be included?
       q = ['Are you currently a smoker?',
@@ -41,13 +39,13 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       find('input[value = true]').should be_checked
     end
 
-    scenario'cannot review consent immediately following ineligible decision' do
+    scenario 'cannot review consent immediately following ineligible decision' do
       visit "#{ENV['Base_URL']}" \
             '/en/pages/application#/en/eligibility-result?isEligible=false'
       expect { click_on 'View the consent form' }.to raise_error
     end
 
-    scenario'completes eligibility, is eligible, is able to consent immediately' do
+    scenario 'completes eligibility, is eligible, is able to consent immediately' do
       visit eligibility_page
 
       find('.ng-binding', text: 'How old are you?')
@@ -77,7 +75,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       expect(page).to have_css('iframe[class = ng-scope]')
     end
 
-    scenario'switches to Español while filling in eligibility, ' \
+    scenario 'switches to Español while filling in eligibility, ' \
        'is eligible, sees consent form in Español' do
       visit eligibility_page
 
@@ -107,7 +105,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       find('h3', text: 'UNIVERSIDAD DE PALO ALTO CONSENTIMIENTO')
     end
 
-    scenario'signs in and consents to participate' do
+    scenario 'signs in and consents to participate' do
       visit ENV['Base_URL']
       click_on 'Sign in'
       fill_in 'participant_email', with: ENV['Pt_106_Email']
@@ -119,7 +117,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       expect(page).to have_css('iframe[class = ng-scope]')
     end
 
-    scenario'signs in and does not consent to participate' do
+    scenario 'signs in and does not consent to participate' do
       visit ENV['Base_URL']
       unless has_css?('a', text: 'Sign in')
         find('.navbar-toggle').click
@@ -137,13 +135,13 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       expect(page).to have_css('iframe[class = ng-scope]')
     end
 
-    scenario'reviews consent form' do
+    scenario 'reviews consent form' do
       sign_in_pt_en('109')
       go_to('Review Consent')
       expect(page).to have_content 'PALO ALTO UNIVERSITY CONSENT'
     end
 
-    scenario'switches to Español when reviewing consent form' do
+    scenario 'switches to Español when reviewing consent form' do
       sign_in_pt_en('131')
       go_to('Review Consent')
       find('h2', text: 'PALO ALTO UNIVERSITY CONSENT')
@@ -152,7 +150,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       expect(page).to have_content 'UNIVERSIDAD DE PALO ALTO CONSENTIMIENTO'
     end
 
-    scenario'is a participant who did not give consent, can still use app' do
+    scenario 'is a participant who did not give consent, can still use app' do
       sign_in_pt_en('108')
       click_on 'Set Your Quit Date'
       expect(page).to have_css('.ng-binding.ng-scope', text: 'We')
@@ -172,7 +170,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
   end
 
   context 'in Español' do
-    scenario'switches to English when consenting' do
+    scenario 'switches to English when consenting' do
       visit eligibility_page
 
       find('.ng-binding', text: '¿Cuántos años tiene?')
@@ -207,14 +205,14 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       find('input[value = true]').should be_checked
     end
 
-    scenario'cannot review consent immediately following ineligible decision' do
+    scenario 'cannot review consent immediately following ineligible decision' do
       visit "#{ENV['Base_URL']}" \
             '/es/pages/application#/es/eligibility-result?isEligible=false'
       expect(page)
         .to_not have_css('a', text: 'Ver el formulario de consentimiento')
     end
 
-    scenario'completes eligibility, is eligible, is able to consent immediately' do
+    scenario 'completes eligibility, is eligible, is able to consent immediately' do
       visit eligibility_page
 
       find('.ng-binding', text: '¿Cuántos años tiene?')
@@ -244,7 +242,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       expect(page).to have_css('iframe[class = ng-scope]')
     end
 
-    scenario'switches to English while filling in eligibility, ' \
+    scenario 'switches to English while filling in eligibility, ' \
        'is eligible, sees consent form in English' do
       visit eligibility_page
 
@@ -274,7 +272,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       find('h3', text: 'PALO ALTO UNIVERSITY CONSENT')
     end
 
-    scenario'signs in and consents to participate' do
+    scenario 'signs in and consents to participate' do
       visit ENV['Base_URL']
       click_on 'Iniciar sesión'
       fill_in 'participant_email', with: ENV['Pt_206_Email']
@@ -286,7 +284,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       expect(page).to have_css('iframe[class = ng-scope]')
     end
 
-    scenario'signs in and does not consent to participate' do
+    scenario 'signs in and does not consent to participate' do
       visit ENV['Base_URL']
       click_on 'Iniciar sesión'
       fill_in 'participant_email', with: ENV['Pt_207_Email']
@@ -298,13 +296,13 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       expect(page).to have_css('iframe[class = ng-scope]')
     end
 
-    scenario'reviews consent form' do
+    scenario 'reviews consent form' do
       sign_in_pt_es('209')
       go_to('Revise el Consentimiento')
       expect(page).to have_content 'UNIVERSIDAD DE PALO ALTO CONSENTIMIENTO'
     end
 
-    scenario'switches to English when reviewing the consent form' do
+    scenario 'switches to English when reviewing the consent form' do
       sign_in_pt_es('231')
       go_to('Revise el Consentimiento')
       find('h2', text: 'UNIVERSIDAD DE PALO ALTO CONSENTIMIENTO')
@@ -313,7 +311,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       expect(page).to have_content 'PALO ALTO UNIVERSITY CONSENT'
     end
 
-    scenario'is a participant who did not give consent, can still use app' do
+    scenario 'is a participant who did not give consent, can still use app' do
       sign_in_pt_es('208')
       click_on 'Elija la fecha en que dejará de fumar'
       expect(page).to have_css('.ng-binding.ng-scope', text: 'Mi')

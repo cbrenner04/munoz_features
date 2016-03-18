@@ -11,7 +11,7 @@ class Participants
     end
 
     def landing_page
-      @locale == 'english' ? var = 'en' : var = 'es'
+      var = @locale == 'english' ? 'en' : 'es'
       "#{ENV['Base_URL']}/#/#{var}/cigarette-count"
     end
 
