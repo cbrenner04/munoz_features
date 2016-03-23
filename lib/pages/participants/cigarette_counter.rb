@@ -1,3 +1,5 @@
+require './lib/pages/participants'
+
 class Participants
   # Page object for Cigarette Counter page
   class CigaretteCounter
@@ -11,33 +13,24 @@ class Participants
     end
 
     def landing_page
-      var = @locale == 'english' ? 'en' : 'es'
+      var = participants.locale('en', 'es')
       "#{ENV['Base_URL']}/#/#{var}/cigarette-count"
     end
 
     def open
-      if @locale == 'english'
-        click_on 'Cigarette Counter'
-      else
-        click_on 'Contador de Cigarrillos'
-      end
+      var = participants.locale('Cigarette Counter', 
+                                'Contador de Cigarrillos')
+      click_on var
     end
 
-    def visible_in_eng?
-      has_text? 'How many cigarettes have you smoked?'
-    end
-
-    def visible_in_esp?
-      has_text? '¿Cuántos cigarros ha fumado?'
+    def visible?
+      var = participants.locale('How many cigarettes have you smoked?',
+                                '¿Cuántos cigarros ha fumado?')
+      has_text? var
     end
 
     def has_count?
-      button_group.find('input[type = tel]')
-        .has_text? @count.to_s
-    end
-
-    def has_count_in_graph?
-      find('g', text: @date.strftime('%b %-d'))
+      button_group.find('input[type = "tel"]')
         .has_text? @count.to_s
     end
 
@@ -47,6 +40,15 @@ class Participants
 
     def decrement_count
       increment_decrement('-')
+    end
+
+    def has_count_in_graph?
+      date_format = if @locale == 'english'
+                      @date.strftime('%b %-d')
+                    else
+                      participants.trans_mo("#{@date.strftime('%-d %b.')}")
+                    end
+      find('g', text: date_format).has_text? @count.to_s
     end
 
     def previous_week
@@ -70,16 +72,13 @@ class Participants
     end
 
     def done
-      btn_text = @locale == 'english' ? 'Done' : 'Fijar'
+      btn_text = participants.locale('Done', 'Fijar')
       find('.btn-default', text: btn_text).click
     end
 
     def has_home_visible?
-      if @locale == 'english'
-        has_text? 'Stop Smoking Guide'
-      else
-        has_text? 'Guía Para Dejar de Fumar'
-      end
+      var = participants.locale('Stop Smoking Guide', 'Guía Para Dejar de Fumar')
+      has_text? var
     end
 
     private
@@ -90,6 +89,10 @@ class Participants
 
     def increment_decrement(symbol)
       button_group.find('.btn-default', text: symbol).click
+    end
+
+    def participants
+      @participants ||= Participants.new(locale: @locale)
     end
   end
 end

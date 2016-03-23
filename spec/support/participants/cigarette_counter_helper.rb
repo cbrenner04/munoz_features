@@ -3,9 +3,15 @@
 require './lib/pages/participants/cigarette_counter'
 require './lib/pages/participants/set_your_quit_date'
 
-def cigarette_counter
-  @cigarette_counter ||= Participants::CigaretteCounter.new(
-    count: 'fake'
+def cigarette_counter_eng
+  @cigarette_counter_eng ||= Participants::CigaretteCounter.new(
+    locale: 'english'
+  )
+end
+
+def cigarette_counter_esp
+  @cigarette_counter_esp ||= Participants::CigaretteCounter.new(
+    locale: 'español'
   )
 end
 
@@ -145,7 +151,7 @@ end
 def pt_22_cig_counter
   @pt_22_cig_counter ||= Participants::CigaretteCounter.new(
     count: 14,
-    date: Date.today,
+    date: Date.today - 1,
     day: 'Ayer',
     locale: 'español'
   )
@@ -172,7 +178,7 @@ end
 def pt_216_cig_counter
   @pt_216_cig_counter ||= Participants::CigaretteCounter.new(
     count: 14,
-    date: Date.today - 1,
+    date: Date.today,
     day: 'Hoy',
     locale: 'español'
   )
@@ -190,7 +196,7 @@ def pt_244_cig_counter
   @pt_244_cig_counter ||= Participants::CigaretteCounter.new(
     count: 5,
     date: Date.today,
-    day: 'Today',
+    day: 'Hoy',
     locale: 'español'
   )
 end
@@ -199,7 +205,7 @@ def pt_245_cig_counter
   @pt_245_cig_counter ||= Participants::CigaretteCounter.new(
     count: 5,
     date: Date.today,
-    day: 'Today',
+    day: 'Hoy',
     locale: 'español'
   )
 end
@@ -207,7 +213,7 @@ end
 def pt_255_cig_counter
   @pt_255_cig_counter ||= Participants::CigaretteCounter.new(
     date: Date.today,
-    day: 'Today',
+    day: 'Hoy',
     locale: 'español'
   )
 end

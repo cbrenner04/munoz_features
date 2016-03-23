@@ -1,97 +1,70 @@
 # filename: spec/features/participants/consent_spec.rb
 
 require './lib/zip_codes.rb'
+require './spec/support/participants/consent_helper'
 require './spec/support/participants_helper'
 
-describe 'A visitor to the site', type: :feature, metadata: :participant do
+feature 'A visitor to the site', metadata: :participant do
   context 'in English' do
     scenario 'switches to Español when consenting' do
-      visit eligibility_page
-      consent.set_age
+      visit consent_eng.eligibility_page
+      ptp_35_consent.set_age
+      ptp_35_consent.answer_smoker
+      ptp_35_consent.enter_sf_zip
+      ptp_35_consent.answer_medical_care
+      ptp_35_consent.enter_email
+      ptp_35_consent.enter_phone
+      ptp_35_consent.enter_password
+      consent_eng.click_eligibility_submit
+      consent_eng.click_view_consent
 
-      #not sure how i should methodize this. should both actions be included?
-      q = ['Are you currently a smoker?',
-           'Are you thinking of quitting smoking within the next 30 days?']
-      q.zip(%w(Yes Yes)).each do |ques, answ|
-        within('.form-group', text: ques) do
-          choose answ
-        end
-      end
+      expect(consent_eng).to be_visible
 
-      all('input[type = tel]')[1].set(ZipCodes::SF.sample)
-      within('.form-group',
-             text: 'Where do you get most of your medical care?') do
-        select 'Ocean Park Health Center'
-      end
+      consent_eng.give_consent_check
+      consent_eng.switch_lang_btn
 
-      find('input[type = email]').set(ENV['Pt_35_Email'])
-      all('input[type = tel]')[2].set(ENV['Pt_35_Phone_Number'])
-      find('input[type = password]').set(ENV['Pt_35_Password'])
-      find('input[type = submit]').click
-      click_on 'View the consent form'
+      expect(consent_esp).to be_visible
 
-      expect(consent).to be_visible_in_eng
-
-      first('.ng-invalid-required').click
-      go_to('Español')
-
-      expect(page).to have_content 'UNIVERSIDAD DE PALO ALTO CONSENTIMIENTO'
-      find('input[value = true]').should be_checked
+      expect(consent_esp).to have_consent_response
     end
 
     scenario 'cannot review consent immediately following ineligible decision' do
-      visit "#{ENV['Base_URL']}" \
-            '/en/pages/application#/en/eligibility-result?isEligible=false'
-      expect { click_on 'View the consent form' }.to raise_error
+      visit consent_eng.ineligible_page
+
+      expect(consent_eng).to have_no_view_link
     end
 
     scenario 'completes eligibility, is eligible, is able to consent immediately' do
-      visit eligibility_page
+      visit consent_eng.eligibility_page
+      ptp_36_consent.set_age
+      ptp_36_consent.answer_smoker
+      ptp_36_consent.enter_sf_zip
+      ptp_36_consent.answer_medical_care
+      ptp_36_consent.enter_email
+      ptp_36_consent.enter_phone
+      ptp_36_consent.enter_password
+      consent_eng.click_eligibility_submit
+      consent_eng.click_view_consent
 
-      find('.ng-binding', text: 'How old are you?')
-      first('input[type = tel]').set('25')
-      q = ['Are you currently a smoker?',
-           'Are you thinking of quitting smoking within the next 30 days?']
-      q.zip(%w(Yes Yes)).each do |ques, answ|
-        within('.form-group', text: ques) do
-          choose answ
-        end
-      end
+      expect(consent_eng).to be_visible
 
-      all('input[type = tel]')[1].set(ZipCodes::SF.sample)
-      within('.form-group',
-             text: 'Where do you get most of your medical care?') do
-        select 'Ocean Park Health Center'
-      end
+      consent_eng.give_consent_check
+      consent_eng.click_submit_consent
 
-      find('input[type = email]').set(ENV['Pt_36_Email'])
-      all('input[type = tel]')[2].set(ENV['Pt_36_Phone_Number'])
-      find('input[type = password]').set(ENV['Pt_36_Password'])
-      find('input[type = submit]').click
-      click_on 'View the consent form'
-      find('h3', text: 'PALO ALTO UNIVERSITY CONSENT')
-      first('.ng-invalid-required').click
-      click_on 'Submit'
-      expect(page).to have_css('iframe[class = ng-scope]')
+      expect(consent_eng).to have_consent_submitted_page
     end
 
     scenario 'switches to Español while filling in eligibility, ' \
        'is eligible, sees consent form in Español' do
-      visit eligibility_page
-
-      find('.ng-binding', text: 'How old are you?')
-      first('input[type = tel]').set('25')
-      q = ['Are you currently a smoker?',
-           'Are you thinking of quitting smoking within the next 30 days?']
-      q.zip(%w(Yes Yes)).each do |ques, answ|
-        within('.form-group', text: ques) do
-          choose answ
-        end
-      end
-
-      go_to('Español')
+      visit consent_eng.eligibility_page
+      consent_eng.set_age
+      consent_eng.answer_smoker
+      consent_eng.switch_lang_btn
+      
       find('.ng-binding', text: '¿Cuántos años tiene?')
-      all('input[type = tel]')[1].set(ZipCodes::SF.sample)
+      
+      consent_eng.enter_sf_zip
+      
       within('.form-group',
              text: '¿Dónde recibe la mayor parte de su atención médica?') do
         select 'Centro de Salud Ocean Park'
@@ -169,9 +142,15 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
     end
   end
 
+
+
+  # Spanish
+
+
+
   context 'in Español' do
     scenario 'switches to English when consenting' do
-      visit eligibility_page
+      visit consent_eng.ineligible_page
 
       find('.ng-binding', text: '¿Cuántos años tiene?')
       first('input[type = tel]').set('25')
@@ -195,7 +174,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       find('input[type = submit]').click
       click_on 'Ver el formulario de consentimiento'
 
-      expect(consent).to be_visible_in_esp
+      expect(consent_esp).to be_visible
       
       first('.ng-invalid-required').click
       go_to('English')
@@ -213,7 +192,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
     end
 
     scenario 'completes eligibility, is eligible, is able to consent immediately' do
-      visit eligibility_page
+      visit consent_eng.ineligible_page
 
       find('.ng-binding', text: '¿Cuántos años tiene?')
       first('input[type = tel]').set('25')
@@ -244,7 +223,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
 
     scenario 'switches to English while filling in eligibility, ' \
        'is eligible, sees consent form in English' do
-      visit eligibility_page
+      visit consent_eng.ineligible_page
 
       find('.ng-binding', text: '¿Cuántos años tiene?')
       first('input[type = tel]').set('25')

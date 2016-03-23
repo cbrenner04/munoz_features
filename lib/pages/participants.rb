@@ -55,4 +55,8 @@ class Participants
       .gsub('Aug', 'Ago')
       .gsub('Dec', 'Dic')
   end
+
+  def locale(a, b)
+    @locale == 'english' ? a : b
+  end
 end
