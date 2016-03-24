@@ -182,7 +182,7 @@ end
 def participant_37
   @participant_37 ||= Participants.new(
     pt_id: 37,
-    locale: 'english'
+    locale: 'español'
   )
 end
 

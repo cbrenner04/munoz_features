@@ -34,18 +34,9 @@ class Participants
     end
 
     def answer_smoker
-      q = participants.locale(['Are you currently a smoker?',
-                               'Are you thinking of quitting 
-                                  smoking within the next 30 days?'],
-                              ['¿Fuma usted actualmente?',
-                               '¿Está pensando en dejar de fumar 
-                                  dentro de los próximos 30 días?'])
-      var = participants.locale(%w(Yes Yes), %w(Sí Sí))
-      q.zip(var).each do |ques, answ|
-        within('.form-group', text: ques) do
-          choose answ
-        end
-      end
+      ques = participants.locale(english_smoking_questions, spanish_smoking_questions)
+      answ = participants.locale(%w(Yes Yes), %w(Sí, Sí))
+      ques.zip(answ) { |q, a| within('.form-group', text: q) { choose a } }
     end
 
     def enter_sf_zip
@@ -53,10 +44,9 @@ class Participants
     end
 
     def answer_medical_care
-      x = participants.locale('Where do you get most of 
-                                 your medical care?',
-                              '¿Dónde recibe la mayor
-                                 parte de su atención médica?')
+      x = participants
+        .locale('Where do you get most of your medical care?',
+                '¿Dónde recibe la mayor parte de su atención médica?')
       y = participants.locale('Ocean Park Health Center', 
                               'Centro de Salud Ocean Park')
       within('.form-group', text: '#{x}') do
@@ -76,7 +66,7 @@ class Participants
       find('input[type = password]').set(password)
     end
 
-    def give_consent_check
+    def give_consent
       first('.ng-invalid-required').click
     end
 
@@ -101,21 +91,43 @@ class Participants
     def ineligible_page
       var = participants.locale('en', 'es')
       "#{ENV['Base_URL']}" \
-            '/#{var}/pages/application#/#{var}/eligibility-result?isEligible=false'
+        "/#{var}/pages/application#/#{var}/eligibility-result?isEligible=false"
     end
 
-    def has_no_view_link?
-      expect { click_on 'View the consent form' }.to raise_error(
-        Capybara::ElementNotFound)
+    def has_no_consent_link?
+      var = participants.locale('View the consent form', 
+                                'Ver el formulario de consentimiento')
+      expect { click_on var }
+        .to raise_error(Capybara::ElementNotFound)
     end
 
     def click_submit_consent
-      click_on 'Submit'
+      var = participants.locale('Submit', 'Enviar')
+      click_on var
     end
 
     def has_consent_submitted_page
       has_css? 'iframe[class = ng-scope]'
     end
 
+    private
+
+    def participants
+      @participants ||= Participants.new(locale: @locale)
+    end
+
+    def english_smoking_questions
+      @english_smoking_questions ||= [
+      'Are you currently a smoker?',
+      'Are you thinking of quitting smoking within the next 30 days?'
+      ]
+    end
+
+    def spanish_smoking_questions
+      @spanish_smoking_questions ||= [
+      '¿Fuma usted actualmente?',
+      '¿Está pensando en dejar de fumar  dentro de los próximos 30 días?'
+      ]
+    end
   end
 end
