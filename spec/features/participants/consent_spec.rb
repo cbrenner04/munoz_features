@@ -8,6 +8,7 @@ feature 'A visitor to the site', metadata: :participant do
   context 'in English' do
     scenario 'switches to Español when consenting' do
       visit consent_eng.eligibility_page
+      ptp_35_consent.find_age
       ptp_35_consent.set_age
       ptp_35_consent.answer_smoker
       ptp_35_consent.enter_sf_zip
@@ -36,6 +37,7 @@ feature 'A visitor to the site', metadata: :participant do
 
     scenario 'completes eligibility, is eligible, is able to consent immediately' do
       visit consent_eng.eligibility_page
+      ptp_36_consent.find_age
       ptp_36_consent.set_age
       ptp_36_consent.answer_smoker
       ptp_36_consent.enter_sf_zip
@@ -57,25 +59,20 @@ feature 'A visitor to the site', metadata: :participant do
     scenario 'switches to Español while filling in eligibility, ' \
        'is eligible, sees consent form in Español' do
       visit consent_eng.eligibility_page
+      consent_eng.find_age
       consent_eng.set_age
       consent_eng.answer_smoker
       consent_eng.switch_lang_btn
+      ptp_37_consent.find_age
+      ptp_37_consent.enter_sf_zip
+      ptp_37_consent.answer_medical_care
+      ptp_37_consent.enter_email
+      ptp_37_consent.enter_phone
+      ptp_37_consent.enter_password
+      consent_esp.click_eligibility_submit
+      consent_esp.click_view_consent
       
-      find('.ng-binding', text: '¿Cuántos años tiene?')
-      
-      consent_eng.enter_sf_zip
-      
-      within('.form-group',
-             text: '¿Dónde recibe la mayor parte de su atención médica?') do
-        select 'Centro de Salud Ocean Park'
-      end
-
-      find('input[type = email]').set(ENV['Pt_37_Email'])
-      all('input[type = tel]')[2].set(ENV['Pt_37_Phone_Number'])
-      find('input[type = password]').set(ENV['Pt_37_Password'])
-      find('input[type = submit]').click
-      click_on 'Ver el formulario de consentimiento'
-      find('h3', text: 'UNIVERSIDAD DE PALO ALTO CONSENTIMIENTO')
+      expect(consent_esp).to be_visible
     end
 
     scenario 'signs in and consents to participate' do
@@ -150,7 +147,7 @@ feature 'A visitor to the site', metadata: :participant do
 
   context 'in Español' do
     scenario 'switches to English when consenting' do
-      visit consent_eng.ineligible_page
+      visit consent_esp.eligibility_page
 
       find('.ng-binding', text: '¿Cuántos años tiene?')
       first('input[type = tel]').set('25')
@@ -192,7 +189,7 @@ feature 'A visitor to the site', metadata: :participant do
     end
 
     scenario 'completes eligibility, is eligible, is able to consent immediately' do
-      visit consent_eng.ineligible_page
+      visit consent_esp.eligibility_page
 
       find('.ng-binding', text: '¿Cuántos años tiene?')
       first('input[type = tel]').set('25')
@@ -223,7 +220,7 @@ feature 'A visitor to the site', metadata: :participant do
 
     scenario 'switches to English while filling in eligibility, ' \
        'is eligible, sees consent form in English' do
-      visit consent_eng.ineligible_page
+      vvisit consent_esp.eligibility_page
 
       find('.ng-binding', text: '¿Cuántos años tiene?')
       first('input[type = tel]').set('25')

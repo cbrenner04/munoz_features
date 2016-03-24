@@ -24,15 +24,24 @@ class Participants
       has_text? var
     end
 
+    def find_age
+      var = participants.locale('How old are you?', '¿Cuántos años tiene?')
+      find('.ng-binding', text: '#{var}')
+    end
+
     def set_age
-      find('.ng-binding', text: 'How old are you?')
       first('input[type = tel]').set('25')
     end
 
     def answer_smoker
-      q = ['Are you currently a smoker?',
-           'Are you thinking of quitting smoking within the next 30 days?']
-      q.zip(%w(Yes Yes)).each do |ques, answ|
+      q = participants.locale(['Are you currently a smoker?',
+                               'Are you thinking of quitting 
+                                  smoking within the next 30 days?'],
+                              ['¿Fuma usted actualmente?',
+                               '¿Está pensando en dejar de fumar 
+                                  dentro de los próximos 30 días?'])
+      var = participants.locale(%w(Yes Yes), %w(Sí Sí))
+      q.zip(var).each do |ques, answ|
         within('.form-group', text: ques) do
           choose answ
         end
@@ -44,9 +53,14 @@ class Participants
     end
 
     def answer_medical_care
-      within('.form-group',
-             text: 'Where do you get most of your medical care?') do
-        select 'Ocean Park Health Center'
+      x = participants.locale('Where do you get most of 
+                                 your medical care?',
+                              '¿Dónde recibe la mayor
+                                 parte de su atención médica?')
+      y = participants.locale('Ocean Park Health Center', 
+                              'Centro de Salud Ocean Park')
+      within('.form-group', text: '#{x}') do
+        select '#{y}'
       end
     end
 
@@ -75,7 +89,9 @@ class Participants
     end
 
     def click_view_consent
-      click_on 'View the consent form'
+      var = participants.locale('View the consent form',
+                                'Ver el formulario de consentimiento')
+      click_on var
     end
 
     def has_consent_response?
@@ -89,7 +105,8 @@ class Participants
     end
 
     def has_no_view_link?
-      expect { click_on 'View the consent form' }.to raise_error(Capybara::ElementNotFound)
+      expect { click_on 'View the consent form' }.to raise_error(
+        Capybara::ElementNotFound)
     end
 
     def click_submit_consent

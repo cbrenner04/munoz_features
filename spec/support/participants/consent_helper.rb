@@ -73,6 +73,16 @@ end
 
 # Spanish
 
+
+def ptp_37_consent
+  @ptp_37_consent ||= Participants::Consent.new(
+    locale: 'español',
+    email: ENV['Pt_37_Email'], 
+    phone: ENV['Pt_37_Phone_Number'],
+    password: ENV['Pt_37_Password']
+  )
+end
+
 def ptp_38_consent
   @ptp_38_consent ||= Participants::Consent.new(
     locale: 'español',
