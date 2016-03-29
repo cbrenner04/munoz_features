@@ -18,7 +18,7 @@ class Participants
     end
 
     def open
-      var = participants.locale('Cigarette Counter', 
+      var = participants.locale('Cigarette Counter',
                                 'Contador de Cigarrillos')
       click_on var
     end
@@ -77,7 +77,8 @@ class Participants
     end
 
     def has_home_visible?
-      var = participants.locale('Stop Smoking Guide', 'Guía Para Dejar de Fumar')
+      var = participants.locale('Stop Smoking Guide',
+                                'Guía Para Dejar de Fumar')
       has_text? var
     end
 

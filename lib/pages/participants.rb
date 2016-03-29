@@ -8,7 +8,7 @@ class Participants
   end
 
   def sign_in
-    visit ENV['Base_URL']
+    go_to_root
     @locale == 'english' ? button = 'Sign in' : button = 'Iniciar sesión'
     unless has_css?('a', text: button)
       find('.navbar-toggle').click
@@ -23,6 +23,11 @@ class Participants
     fill_in 'participant_email', with: ENV["Pt_#{@pt_id}_Email"]
     fill_in 'participant_password', with: ENV["Pt_#{@pt_id}_Password"]
     click_on button
+  end
+
+  # update to add this in to items.
+
+  def on_landing_page?
     if @locale == 'english'
       find('a', text: 'Stop Smoking Guide')
     else
@@ -38,7 +43,7 @@ class Participants
     find('.ng-binding', text: button).click
   end
 
-  # this will work for switching languages, set quit date, review consent,
+  # this will work for set quit date, review consent,
   # and sign out
   def go_to(button)
     unless page.has_css?('.glyphicon.glyphicon-cog')
@@ -46,6 +51,12 @@ class Participants
     end
     find('.dropdown-toggle').click
     find('.ng-binding', text: button).click
+  end
+
+  # This will only work for switching languages
+  def switch_language
+    language = @locale == 'english' ? 'Español' : 'English'
+    go_to language
   end
 
   def trans_mo(date)
@@ -58,5 +69,9 @@ class Participants
 
   def locale(a, b)
     @locale == 'english' ? a : b
+  end
+
+  def go_to_root
+    visit ENV['Base_URL']
   end
 end

@@ -276,4 +276,3 @@ def participant_231
     locale: 'español'
   )
 end
-

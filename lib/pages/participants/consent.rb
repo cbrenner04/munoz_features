@@ -7,10 +7,10 @@ class Participants
     include Capybara::DSL
 
     def initialize(consent)
-        @locale ||= consent[:locale]
-        @email ||= consent[:email]
-        @phone ||= consent[:phone]
-        @password ||= consent[:password]
+      @locale ||= consent[:locale]
+      @email ||= consent[:email]
+      @phone ||= consent[:phone]
+      @password ||= consent[:password]
     end
 
     def eligibility_page
@@ -26,7 +26,7 @@ class Participants
 
     def find_age
       var = participants.locale('How old are you?', '¿Cuántos años tiene?')
-      find('.ng-binding', text: '#{var}')
+      find('.ng-binding', text: var)
     end
 
     def set_age
@@ -34,8 +34,9 @@ class Participants
     end
 
     def answer_smoker
-      ques = participants.locale(english_smoking_questions, spanish_smoking_questions)
-      answ = participants.locale(%w(Yes Yes), %w(Sí, Sí))
+      ques = participants.locale(english_smoking_questions,
+                                 spanish_smoking_questions)
+      answ = participants.locale(%w(Yes Yes), %w(Sí Sí))
       ques.zip(answ) { |q, a| within('.form-group', text: q) { choose a } }
     end
 
@@ -44,13 +45,14 @@ class Participants
     end
 
     def answer_medical_care
-      x = participants
-        .locale('Where do you get most of your medical care?',
-                '¿Dónde recibe la mayor parte de su atención médica?')
-      y = participants.locale('Ocean Park Health Center', 
+      x = participants.locale(
+        'Where do you get most of your medical care?',
+        '¿Dónde recibe la mayor parte de su atención médica?'
+      )
+      y = participants.locale('Ocean Park Health Center',
                               'Centro de Salud Ocean Park')
-      within('.form-group', text: '#{x}') do
-        select '#{y}'
+      within('.form-group', text: x) do
+        select y
       end
     end
 
@@ -59,19 +61,19 @@ class Participants
     end
 
     def enter_phone_num
-      all('input[type = tel]')[2].set(phone)
+      all('input[type = tel]')[2].set(@phone)
     end
 
     def enter_password
-      find('input[type = password]').set(password)
+      find('input[type = password]').set(@password)
     end
 
     def give_consent
       first('.ng-invalid-required').click
     end
 
-    def switch_lang_btn
-      go_to('Español')
+    def decline_consent
+      all('.ng-invalid')[1].click
     end
 
     def click_eligibility_submit
@@ -95,7 +97,7 @@ class Participants
     end
 
     def has_no_consent_link?
-      var = participants.locale('View the consent form', 
+      var = participants.locale('View the consent form',
                                 'Ver el formulario de consentimiento')
       expect { click_on var }
         .to raise_error(Capybara::ElementNotFound)
@@ -110,6 +112,40 @@ class Participants
       has_css? 'iframe[class = ng-scope]'
     end
 
+    def click_set_quit_date
+      var = participants.locale('Set Your Quit Date',
+                                'Elija la fecha en que dejará de fumar')
+      click_on var
+    end
+
+    def has_quit_date_visible?
+      var = participants.locale('We', 'Mi')
+      has_css?('a', text: var)
+    end
+
+    def click_stop_smoke_guide
+      var = participants.locale('Stop Smoking Guide',
+                                'Guía Para Dejar de Fumar')
+      click_on var
+    end
+
+    def has_smoke_guide_visible?
+      var = participants.locale('Why Should I Quit?',
+                                '¿Por qué debo dejar de fumar?')
+      has_css?('a', text: var)
+    end
+
+    def click_cig_counter
+      var = participants.locale('Cigarette Counter',
+                                'Contador de Cigarrillos')
+      click_on var
+    end
+
+    def has_cig_counter_visible?
+      var = participants.locale('Yesterday', 'Ayer')
+      has_text? var
+    end
+
     private
 
     def participants
@@ -118,15 +154,15 @@ class Participants
 
     def english_smoking_questions
       @english_smoking_questions ||= [
-      'Are you currently a smoker?',
-      'Are you thinking of quitting smoking within the next 30 days?'
+        'Are you currently a smoker?',
+        'Are you thinking of quitting smoking within the next 30 days?'
       ]
     end
 
     def spanish_smoking_questions
       @spanish_smoking_questions ||= [
-      '¿Fuma usted actualmente?',
-      '¿Está pensando en dejar de fumar  dentro de los próximos 30 días?'
+        '¿Fuma usted actualmente?',
+        '¿Está pensando en dejar de fumar  dentro de los próximos 30 días?'
       ]
     end
   end
