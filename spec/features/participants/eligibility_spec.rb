@@ -1,10 +1,10 @@
 # filename: spec/features/participants/eligibility_spec.rb
 
-require_relative '../../../lib/zip_codes.rb'
+require './lib/zip_codes.rb'
 
-describe 'A visitor to the site', type: :feature, metadata: :participant do
+feature 'A visitor to the site', metadata: :participant do
   context 'in English' do
-    it 'navigates to the eligibility page' do
+    scenario 'navigates to the eligibility page' do
       visit "#{ENV['Base_URL']}"
       click_on 'English'
       expect(page).to have_content 'Please answer the following questions to'
@@ -12,7 +12,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       expect(page).to have_content 'How old are you?'
     end
 
-    it 'switches to Español when filling out eligibility' do
+    scenario 'switches to Español when filling out eligibility' do
       visit "#{ENV['Base_URL']}"
       click_on 'English'
       click_on 'Continue'
@@ -25,7 +25,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       first('input[value = true]').should be_checked
     end
 
-    it 'completes eligibility survey and is eligible' do
+    scenario 'completes eligibility survey and is eligible' do
       visit "#{ENV['Base_URL']}/en/pages/application#/en/eligibility"
       find('.ng-binding', text: 'How old are you?')
       first('input[type = tel]').set('25')
@@ -52,7 +52,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
                                    'verify your account and continue.'
     end
 
-    it 'completes eligibility survey and is ineligible due to age' do
+    scenario 'completes eligibility survey and is ineligible due to age' do
       visit "#{ENV['Base_URL']}/en/pages/application#/en/eligibility"
       find('.ng-binding', text: 'How old are you?')
       first('input[type = tel]').set('17')
@@ -77,7 +77,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       expect(page).to have_content 'You are not eligible to participate'
     end
 
-    it 'completes eligibility survey, is ineligible due to neg response Q2' do
+    scenario 'completes eligibility survey, is ineligible due to neg response Q2' do
       visit "#{ENV['Base_URL']}/en/pages/application#/en/eligibility"
       find('.ng-binding', text: 'How old are you?')
       first('input[type = tel]').set('25')
@@ -102,7 +102,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       expect(page).to have_content 'You are not eligible to participate'
     end
 
-    it 'completes eligibility survey, is ineligible due to neg response Q3' do
+    scenario 'completes eligibility survey, is ineligible due to neg response Q3' do
       visit "#{ENV['Base_URL']}/en/pages/application#/en/eligibility"
       find('.ng-binding', text: 'How old are you?')
       first('input[type = tel]').set('25')
@@ -127,7 +127,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       expect(page).to have_content 'You are not eligible to participate'
     end
 
-    it 'does not fill in age, cannot submit form' do
+    scenario 'does not fill in age, cannot submit form' do
       visit "#{ENV['Base_URL']}/en/pages/application#/en/eligibility"
       find('.ng-binding', text: 'How old are you?')
       q = ['Are you currently a smoker?',
@@ -150,7 +150,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       find('input[type = submit]')[:disabled].should eq 'true'
     end
 
-    it 'fills in an age below the lower bound, cannot submit form' do
+    scenario 'fills in an age below the lower bound, cannot submit form' do
       visit "#{ENV['Base_URL']}/en/pages/application#/en/eligibility"
       find('.ng-binding', text: 'How old are you?')
       first('input[type = tel]').set('0')
@@ -174,7 +174,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       find('input[type = submit]')[:disabled].should eq 'true'
     end
 
-    it 'fills in an age above the upper bound, cannot submit form' do
+    scenario 'fills in an age above the upper bound, cannot submit form' do
       visit "#{ENV['Base_URL']}/en/pages/application#/en/eligibility"
       find('.ng-binding', text: 'How old are you?')
       first('input[type = tel]').set('121')
@@ -198,7 +198,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       find('input[type = submit]')[:disabled].should eq 'true'
     end
 
-    it 'does not fill in Q2, cannot submit form' do
+    scenario 'does not fill in Q2, cannot submit form' do
       visit "#{ENV['Base_URL']}/en/pages/application#/en/eligibility"
       find('.ng-binding', text: 'How old are you?')
       first('input[type = tel]').set('25')
@@ -218,7 +218,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       find('input[type = submit]')[:disabled].should eq 'true'
     end
 
-    it 'does not fill in Q3, cannot submit form' do
+    scenario 'does not fill in Q3, cannot submit form' do
       visit "#{ENV['Base_URL']}/en/pages/application#/en/eligibility"
       find('.ng-binding', text: 'How old are you?')
       first('input[type = tel]').set('25')
@@ -238,7 +238,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       find('input[type = submit]')[:disabled].should eq 'true'
     end
 
-    it 'does not fill zip code, can submit form' do
+    scenario 'does not fill zip code, can submit form' do
       visit "#{ENV['Base_URL']}/en/pages/application#/en/eligibility"
       find('.ng-binding', text: 'How old are you?')
       first('input[type = tel]').set('25')
@@ -257,7 +257,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       expect(page).to have_content 'You are eligible to participate'
     end
 
-    it 'fills in a SF zip code, sees the drop down for selecting clinic' do
+    scenario 'fills in a SF zip code, sees the drop down for selecting clinic' do
       visit "#{ENV['Base_URL']}/en/pages/application#/en/eligibility"
       find('.ng-binding', text: 'How old are you?')
       first('input[type = tel]').set('25')
@@ -277,7 +277,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
                      text: 'Where do you get most of your medical care?')
     end
 
-    it 'fills in a zip other than SF, does not see the drop down for clinic' do
+    scenario 'fills in a zip other than SF, does not see the drop down for clinic' do
       visit "#{ENV['Base_URL']}/en/pages/application#/en/eligibility"
       find('.ng-binding', text: 'How old are you?')
       first('input[type = tel]').set('25')
@@ -296,7 +296,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
         .to_not have_content 'Where do you get most of your medical care?'
     end
 
-    it 'does not fill in email, cannot submit form' do
+    scenario 'does not fill in email, cannot submit form' do
       visit "#{ENV['Base_URL']}/en/pages/application#/en/eligibility"
       find('.ng-binding', text: 'How old are you?')
       first('input[type = tel]').set('25')
@@ -319,7 +319,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       find('input[type = submit]')[:disabled].should eq 'true'
     end
 
-    it 'does not fill in phone number, cannot submit form' do
+    scenario 'does not fill in phone number, cannot submit form' do
       visit "#{ENV['Base_URL']}/en/pages/application#/en/eligibility"
       find('.ng-binding', text: 'How old are you?')
       first('input[type = tel]').set('25')
@@ -342,7 +342,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       find('input[type = submit]')[:disabled].should eq 'true'
     end
 
-    it 'does not fill in password, cannot submit form' do
+    scenario 'does not fill in password, cannot submit form' do
       visit "#{ENV['Base_URL']}/en/pages/application#/en/eligibility"
       find('.ng-binding', text: 'How old are you?')
       first('input[type = tel]').set('25')
@@ -365,7 +365,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       find('input[type = submit]')[:disabled].should eq 'true'
     end
 
-    it 'enters a duplicate email, sees error message' do
+    scenario 'enters a duplicate email, sees error message' do
       visit "#{ENV['Base_URL']}/en/pages/application#/en/eligibility"
       find('.ng-binding', text: 'How old are you?')
       first('input[type = tel]').set('25')
@@ -391,7 +391,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
                                    'Please review your responses and try again.'
     end
 
-    it 'enters a duplicate phone number, sees error message' do
+    scenario 'enters a duplicate phone number, sees error message' do
       visit "#{ENV['Base_URL']}/en/pages/application#/en/eligibility"
       find('.ng-binding', text: 'How old are you?')
       first('input[type = tel]').set('25')
@@ -417,7 +417,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
                                    'Please review your responses and try again.'
     end
 
-    it 'fills out eligibility, is eligible, consents, ' \
+    scenario 'fills out eligibility, is eligible, consents, ' \
        'can still use app with unconfirmed email' do
       visit "#{ENV['Base_URL']}/en/pages/application#/en/eligibility"
       find('.ng-binding', text: 'How old are you?')
@@ -461,7 +461,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
                                    'PARTICIPATE IN A RESEARCH STUDY'
     end
 
-    it 'sees invalid formatting in age field on eligibility form' do
+    scenario 'sees invalid formatting in age field on eligibility form' do
       visit "#{ENV['Base_URL']}/en/pages/application#/en/eligibility"
       within('.form-group', text: 'How old are you?') do
         expect(page).to_not have_css('.ng-invalid-pattern')
@@ -470,7 +470,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       end
     end
 
-    it 'sees invalid formatting in zip code field when entering less than 5 ' \
+    scenario 'sees invalid formatting in zip code field when entering less than 5 ' \
        'digits on eligibility form' do
       visit "#{ENV['Base_URL']}/en/pages/application#/en/eligibility"
       within('.form-group', text: 'What is your zip code?') do
@@ -481,7 +481,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       end
     end
 
-    it 'sees invalid formatting in zip code field when entering more than 5 ' \
+    scenario 'sees invalid formatting in zip code field when entering more than 5 ' \
        'digits on eligibility form' do
       visit "#{ENV['Base_URL']}/en/pages/application#/en/eligibility"
       within('.form-group', text: 'What is your zip code?') do
@@ -492,7 +492,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       end
     end
 
-    it 'sees invalid formatting in email field on eligibility form' do
+    scenario 'sees invalid formatting in email field on eligibility form' do
       visit "#{ENV['Base_URL']}/en/pages/application#/en/eligibility"
       within('.form-group', text: 'Email') do
         expect(page).to_not have_css('.ng-invalid-email')
@@ -502,7 +502,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       end
     end
 
-    it 'sees invalid formatting in phone number field on eligibility form' do
+    scenario 'sees invalid formatting in phone number field on eligibility form' do
       visit "#{ENV['Base_URL']}/en/pages/application#/en/eligibility"
       within('.form-group', text: 'Phone Number') do
         expect(page).to_not have_css('.ng-invalid-pattern')
@@ -512,7 +512,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       end
     end
 
-    it 'sees invalid formatting in password field on eligibility form' do
+    scenario 'sees invalid formatting in password field on eligibility form' do
       visit "#{ENV['Base_URL']}/en/pages/application#/en/eligibility"
       within('.form-group', text: 'Password') do
         expect(page).to_not have_css('.ng-invalid-minlength')
@@ -524,7 +524,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
   end
 
   context 'in Español' do
-    it 'navigates to the eligibilty page' do
+    scenario 'navigates to the eligibilty page' do
       visit "#{ENV['Base_URL']}"
       click_on 'Español'
       expect(page)
@@ -534,7 +534,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       expect(page).to have_content '¿Cuántos años tiene?'
     end
 
-    it 'switches to English when filling out eligibility' do
+    scenario 'switches to English when filling out eligibility' do
       visit "#{ENV['Base_URL']}"
       click_on 'Español'
       click_on 'Continuar'
@@ -547,7 +547,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       first('input[value = true]').should be_checked
     end
 
-    it 'completes eligibility survey and is eligible' do
+    scenario 'completes eligibility survey and is eligible' do
       visit "#{ENV['Base_URL']}/es/pages/application#/es/eligibility"
       find('.ng-binding', text: '¿Cuántos años tiene?')
       first('input[type = tel]').set('25')
@@ -576,7 +576,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
                                    'continuar.'
     end
 
-    it 'completes eligibility survey and is ineligible due to age' do
+    scenario 'completes eligibility survey and is ineligible due to age' do
       visit "#{ENV['Base_URL']}/es/pages/application#/es/eligibility"
       find('.ng-binding', text: '¿Cuántos años tiene?')
       first('input[type = tel]').set('17')
@@ -607,7 +607,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
                                    'por contestar nuestras preguntas'
     end
 
-    it 'completes eligibility survey, is ineligible due to neg response Q2' do
+    scenario 'completes eligibility survey, is ineligible due to neg response Q2' do
       visit "#{ENV['Base_URL']}/es/pages/application#/es/eligibility"
       find('.ng-binding', text: '¿Cuántos años tiene?')
       first('input[type = tel]').set('25')
@@ -638,7 +638,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
                                    'por contestar nuestras preguntas'
     end
 
-    it 'completes eligibility survey, is ineligible due to neg response Q3' do
+    scenario 'completes eligibility survey, is ineligible due to neg response Q3' do
       visit "#{ENV['Base_URL']}/es/pages/application#/es/eligibility"
       find('.ng-binding', text: '¿Cuántos años tiene?')
       first('input[type = tel]').set('25')
@@ -669,7 +669,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
                                    'por contestar nuestras preguntas'
     end
 
-    it 'does not fill in age, cannot submit form' do
+    scenario 'does not fill in age, cannot submit form' do
       visit "#{ENV['Base_URL']}/es/pages/application#/es/eligibility"
       find('.ng-binding', text: '¿Cuántos años tiene?')
       q = ['¿Fuma usted actualmente?',
@@ -692,7 +692,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       find('input[type = submit]')[:disabled].should eq 'true'
     end
 
-    it 'fills in an age below the lower bound, cannot submit form' do
+    scenario 'fills in an age below the lower bound, cannot submit form' do
       visit "#{ENV['Base_URL']}/es/pages/application#/es/eligibility"
       find('.ng-binding', text: '¿Cuántos años tiene?')
       first('input[type = tel]').set('0')
@@ -716,7 +716,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       find('input[type = submit]')[:disabled].should eq 'true'
     end
 
-    it 'fills in an age above the upper bound, cannot submit form' do
+    scenario 'fills in an age above the upper bound, cannot submit form' do
       visit "#{ENV['Base_URL']}/es/pages/application#/es/eligibility"
       find('.ng-binding', text: '¿Cuántos años tiene?')
       first('input[type = tel]').set('121')
@@ -740,7 +740,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       find('input[type = submit]')[:disabled].should eq 'true'
     end
 
-    it 'does not fill in Q2, cannot submit form' do
+    scenario 'does not fill in Q2, cannot submit form' do
       visit "#{ENV['Base_URL']}/es/pages/application#/es/eligibility"
       find('.ng-binding', text: '¿Cuántos años tiene?')
       first('input[type = tel]').set('25')
@@ -760,7 +760,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       find('input[type = submit]')[:disabled].should eq 'true'
     end
 
-    it 'does not fill in Q3, cannot submit form' do
+    scenario 'does not fill in Q3, cannot submit form' do
       visit "#{ENV['Base_URL']}/es/pages/application#/es/eligibility"
       find('.ng-binding', text: '¿Cuántos años tiene?')
       first('input[type = tel]').set('25')
@@ -780,7 +780,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       find('input[type = submit]')[:disabled].should eq 'true'
     end
 
-    it 'does not fill in zip code, can submit form' do
+    scenario 'does not fill in zip code, can submit form' do
       visit "#{ENV['Base_URL']}/es/pages/application#/es/eligibility"
       find('.ng-binding', text: '¿Cuántos años tiene?')
       first('input[type = tel]').set('25')
@@ -800,7 +800,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
                                    'nuestro estudio'
     end
 
-    it 'fills in a SF zip code, sees the drop down for selecting a clinic' do
+    scenario 'fills in a SF zip code, sees the drop down for selecting a clinic' do
       visit "#{ENV['Base_URL']}/es/pages/application#/es/eligibility"
       find('.ng-binding', text: '¿Cuántos años tiene?')
       first('input[type = tel]').set('25')
@@ -820,7 +820,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
                      text: '¿Dónde recibe la mayor parte de su atención médica')
     end
 
-    it 'fills in a zip code other than SF, does not see drop down for clinic' do
+    scenario 'fills in a zip code other than SF, does not see drop down for clinic' do
       visit "#{ENV['Base_URL']}/es/pages/application#/es/eligibility"
       find('.ng-binding', text: '¿Cuántos años tiene?')
       first('input[type = tel]').set('25')
@@ -839,7 +839,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
         .to_not have_content '¿Dónde recibe la mayor parte de su atención médic'
     end
 
-    it 'does not fill in email, cannot submit form' do
+    scenario 'does not fill in email, cannot submit form' do
       visit "#{ENV['Base_URL']}/es/pages/application#/es/eligibility"
       find('.ng-binding', text: '¿Cuántos años tiene?')
       first('input[type = tel]').set('25')
@@ -862,7 +862,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       find('input[type = submit]')[:disabled].should eq 'true'
     end
 
-    it 'does not fill in phone number, cannot submit form' do
+    scenario 'does not fill in phone number, cannot submit form' do
       visit "#{ENV['Base_URL']}/es/pages/application#/es/eligibility"
       find('.ng-binding', text: '¿Cuántos años tiene?')
       first('input[type = tel]').set('25')
@@ -885,7 +885,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       find('input[type = submit]')[:disabled].should eq 'true'
     end
 
-    it 'does not fill in password, cannot submit form' do
+    scenario 'does not fill in password, cannot submit form' do
       visit "#{ENV['Base_URL']}/es/pages/application#/es/eligibility"
       find('.ng-binding', text: '¿Cuántos años tiene?')
       first('input[type = tel]').set('25')
@@ -908,7 +908,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       find('input[type = submit]')[:disabled].should eq 'true'
     end
 
-    it 'enters duplicate email, sees error message' do
+    scenario 'enters duplicate email, sees error message' do
       visit "#{ENV['Base_URL']}/es/pages/application#/es/eligibility"
       find('.ng-binding', text: '¿Cuántos años tiene?')
       first('input[type = tel]').set('25')
@@ -934,7 +934,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
                                    ' revise sus respuestas y vuelva a intentar.'
     end
 
-    it 'enters duplicate phone number, sees error message' do
+    scenario 'enters duplicate phone number, sees error message' do
       visit "#{ENV['Base_URL']}/es/pages/application#/es/eligibility"
       find('.ng-binding', text: '¿Cuántos años tiene?')
       first('input[type = tel]').set('25')
@@ -960,7 +960,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
                                    ' revise sus respuestas y vuelva a intentar.'
     end
 
-    it 'fills out eligibility, is eligible, consents,' \
+    scenario 'fills out eligibility, is eligible, consents,' \
        'is able to use the app with unconfirmed email' do
       visit "#{ENV['Base_URL']}/es/pages/application#/es/eligibility"
       find('.ng-binding', text: '¿Cuántos años tiene?')
@@ -1000,7 +1000,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       expect(page).to have_content 'UNIVERSIDAD DE PALO ALTO CONSENTIMIENTO'
     end
 
-    it 'sees invalid formatting in age field on eligibility form' do
+    scenario 'sees invalid formatting in age field on eligibility form' do
       visit "#{ENV['Base_URL']}/es/pages/application#/es/eligibility"
       within('.form-group', text: '¿Cuántos años tiene?') do
         expect(page).to_not have_css('.ng-invalid-pattern')
@@ -1009,7 +1009,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       end
     end
 
-    it 'sees invalid formatting in zip code field when entering less than 5 ' \
+    scenario 'sees invalid formatting in zip code field when entering less than 5 ' \
        'digits on eligibility form' do
       visit "#{ENV['Base_URL']}/es/pages/application#/es/eligibility"
       within('.form-group', text: '¿Cuál es su código postal?') do
@@ -1020,7 +1020,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       end
     end
 
-    it 'sees invalid formatting in zip code field when entering more than 5 ' \
+    scenario 'sees invalid formatting in zip code field when entering more than 5 ' \
        'digits on eligibility form' do
       visit "#{ENV['Base_URL']}/es/pages/application#/es/eligibility"
       within('.form-group', text: '¿Cuál es su código postal?') do
@@ -1031,7 +1031,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       end
     end
 
-    it 'sees invalid formatting in email field on eligibility form' do
+    scenario 'sees invalid formatting in email field on eligibility form' do
       visit "#{ENV['Base_URL']}/es/pages/application#/es/eligibility"
       within('.form-group', text: 'Email') do
         expect(page).to_not have_css('.ng-invalid-email')
@@ -1042,7 +1042,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       end
     end
 
-    it 'sees invalid formatting in phone number field on eligibility form' do
+    scenario 'sees invalid formatting in phone number field on eligibility form' do
       visit "#{ENV['Base_URL']}/es/pages/application#/es/eligibility"
       within('.form-group', text: 'Teléfono') do
         expect(page).to_not have_css('.ng-invalid-pattern')
@@ -1053,7 +1053,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       end
     end
 
-    it 'sees invalid formatting in password field on eligibility form' do
+    scenario 'sees invalid formatting in password field on eligibility form' do
       visit "#{ENV['Base_URL']}/es/pages/application#/es/eligibility"
       within('.form-group', text: 'Contraseña') do
         expect(page).to_not have_css('.ng-invalid-minlength')

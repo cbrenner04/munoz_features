@@ -102,7 +102,7 @@ end
 
 def ptp_40_consent
   @ptp_40_consent ||= Participants::Consent.new(
-    locale: 'español',
+    locale: 'english',
     email: ENV['Pt_40_Email'],
     phone: ENV['Pt_40_Phone_Number'],
     password: ENV['Pt_40_Password']

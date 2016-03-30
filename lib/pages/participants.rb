@@ -25,7 +25,7 @@ class Participants
     click_on button
   end
 
-  # update to add this in to items.
+  # update to add this in to items. This doesn't work
 
   def on_landing_page?
     if @locale == 'english'

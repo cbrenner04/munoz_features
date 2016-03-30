@@ -51,9 +51,7 @@ class Participants
       )
       y = participants.locale('Ocean Park Health Center',
                               'Centro de Salud Ocean Park')
-      within('.form-group', text: x) do
-        select y
-      end
+      within('.form-group', text: x) { select y }
     end
 
     def enter_email
@@ -69,11 +67,11 @@ class Participants
     end
 
     def give_consent
-      first('.ng-invalid-required').click
+      find('#consent-yes').click
     end
 
     def decline_consent
-      all('.ng-invalid')[1].click
+      find('#consent-no').click
     end
 
     def click_eligibility_submit
@@ -108,7 +106,7 @@ class Participants
       click_on var
     end
 
-    def has_consent_submitted_page
+    def has_consent_submitted_page?
       has_css? 'iframe[class = ng-scope]'
     end
 
@@ -162,7 +160,7 @@ class Participants
     def spanish_smoking_questions
       @spanish_smoking_questions ||= [
         '¿Fuma usted actualmente?',
-        '¿Está pensando en dejar de fumar  dentro de los próximos 30 días?'
+        '¿Está pensando en dejar de fumar dentro de los próximos 30 días?'
       ]
     end
   end

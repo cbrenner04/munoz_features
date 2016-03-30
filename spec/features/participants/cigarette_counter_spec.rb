@@ -8,7 +8,7 @@ feature 'Cigarette Counter', metadata: :participant do
     scenario 'Participant accesses the cigarette counter' do
       participant_113.sign_in
 
-      expect(cigarette_counter_eng).to be_on_landing_page
+      expect(participant_113).to be_on_landing_page
 
       cigarette_counter_eng.open
 
@@ -18,7 +18,7 @@ feature 'Cigarette Counter', metadata: :participant do
     scenario 'switches to Español in cigarette counter' do
       participant_132.sign_in
 
-      expect(cigarette_counter_eng).to be_on_landing_page
+      expect(participant_132).to be_on_landing_page
 
       cigarette_counter_eng.open
 
@@ -32,7 +32,7 @@ feature 'Cigarette Counter', metadata: :participant do
     scenario 'navigates to Set Your Quit Date from cigarette counter' do
       participant_132.sign_in
 
-      expect(cigarette_counter_eng).to be_on_landing_page
+      expect(participant_132).to be_on_landing_page
 
       cigarette_counter_eng.open
 
@@ -46,7 +46,7 @@ feature 'Cigarette Counter', metadata: :participant do
     scenario 'sees yesterday\'s cigarette count' do
       participant_17.sign_in
 
-      expect(cigarette_counter_eng).to be_on_landing_page
+      expect(participant_17).to be_on_landing_page
 
       visit pt_17_cig_counter.landing_page
 
@@ -59,7 +59,7 @@ feature 'Cigarette Counter', metadata: :participant do
     scenario 'increments yesterday\'s cigarette count' do
       participant_18.sign_in
 
-      expect(cigarette_counter_eng).to be_on_landing_page
+      expect(participant_18).to be_on_landing_page
 
       visit pt_18_cig_counter.landing_page
       pt_18_cig_counter.increment_count
@@ -73,7 +73,7 @@ feature 'Cigarette Counter', metadata: :participant do
     scenario 'decrements yesterday\'s cigarette count' do
       participant_19.sign_in
 
-      expect(cigarette_counter_eng).to be_on_landing_page
+      expect(participant_19).to be_on_landing_page
 
       visit pt_19_cig_counter.landing_page
       pt_19_cig_counter.decrement_count
@@ -87,7 +87,7 @@ feature 'Cigarette Counter', metadata: :participant do
     scenario 'sees today\'s cigarette count' do
       participant_114.sign_in
 
-      expect(cigarette_counter_eng).to be_on_landing_page
+      expect(participant_114).to be_on_landing_page
 
       visit pt_114_cig_counter.landing_page
 
@@ -100,7 +100,7 @@ feature 'Cigarette Counter', metadata: :participant do
     scenario 'increments today\'s cigarette count' do
       participant_115.sign_in
 
-      expect(cigarette_counter_eng).to be_on_landing_page
+      expect(participant_115).to be_on_landing_page
 
       visit pt_115_cig_counter.landing_page
       pt_115_cig_counter.increment_count
@@ -114,7 +114,7 @@ feature 'Cigarette Counter', metadata: :participant do
     scenario 'decrements today\'s cigarette count' do
       participant_116.sign_in
 
-      expect(cigarette_counter_eng).to be_on_landing_page
+      expect(participant_116).to be_on_landing_page
 
       visit pt_116_cig_counter.landing_page
       pt_116_cig_counter.decrement_count
@@ -128,7 +128,7 @@ feature 'Cigarette Counter', metadata: :participant do
     scenario 'sees cigarette count for more than a week ago', :date do
       participant_143.sign_in
 
-      expect(cigarette_counter_eng).to be_on_landing_page
+      expect(participant_143).to be_on_landing_page
 
       visit pt_143_cig_counter.landing_page
 
@@ -142,7 +142,7 @@ feature 'Cigarette Counter', metadata: :participant do
     scenario 'enters cigarette count for yesterday' do
       participant_144.sign_in
 
-      expect(cigarette_counter_eng).to be_on_landing_page
+      expect(participant_144).to be_on_landing_page
 
       visit pt_144_cig_counter.landing_page
       pt_144_cig_counter.set_count
@@ -153,7 +153,7 @@ feature 'Cigarette Counter', metadata: :participant do
     scenario 'enters cigarette count for today' do
       participant_145.sign_in
 
-      expect(cigarette_counter_eng).to be_on_landing_page
+      expect(participant_145).to be_on_landing_page
 
       visit pt_145_cig_counter.landing_page
       pt_145_cig_counter.set_count
@@ -164,7 +164,7 @@ feature 'Cigarette Counter', metadata: :participant do
     scenario 'uses the Done button to navigate back to Home' do
       participant_155.sign_in
 
-      expect(cigarette_counter_eng).to be_on_landing_page
+      expect(participant_155).to be_on_landing_page
 
       visit pt_155_cig_counter.landing_page
       pt_155_cig_counter.done
@@ -178,7 +178,7 @@ feature 'Cigarette Counter', metadata: :participant do
     scenario 'access the cigarette counter' do
       participant_213.sign_in
 
-      expect(cigarette_counter_esp).to be_on_landing_page
+      expect(participant_213).to be_on_landing_page
 
       cigarette_counter_esp.open
 
@@ -188,7 +188,7 @@ feature 'Cigarette Counter', metadata: :participant do
     scenario 'switches to English in cigarette counter' do
       participant_213.sign_in
 
-      expect(cigarette_counter_esp).to be_on_landing_page
+      expect(participant_213).to be_on_landing_page
 
       cigarette_counter_esp.open
 
@@ -196,13 +196,13 @@ feature 'Cigarette Counter', metadata: :participant do
 
       participant_213.switch_language
 
-      expect(cigarette_counter_esp).to be_visible
+      expect(cigarette_counter_eng).to be_visible
     end
 
     scenario 'navigates to Set Your Quit Date from cigarette counter' do
       participant_213.sign_in
 
-      expect(cigarette_counter_esp).to be_on_landing_page
+      expect(participant_213).to be_on_landing_page
 
       cigarette_counter_esp.open
 
@@ -216,7 +216,7 @@ feature 'Cigarette Counter', metadata: :participant do
     scenario 'sees yesterday\'s cigarette count' do
       participant_20.sign_in
 
-      expect(cigarette_counter_esp).to be_on_landing_page
+      expect(participant_20).to be_on_landing_page
 
       visit pt_20_cig_counter.landing_page
 
@@ -229,7 +229,7 @@ feature 'Cigarette Counter', metadata: :participant do
     scenario 'increments yesterday\'s cigarette count' do
       participant_21.sign_in
 
-      expect(cigarette_counter_esp).to be_on_landing_page
+      expect(participant_21).to be_on_landing_page
 
       visit pt_21_cig_counter.landing_page
       pt_21_cig_counter.increment_count
@@ -240,16 +240,19 @@ feature 'Cigarette Counter', metadata: :participant do
       expect(pt_21_cig_counter).to have_count_in_graph
     end
 
+    # Fails during full run.
+
     scenario 'decrements yesterday\'s cigarette count' do
       participant_22.sign_in
 
-      expect(cigarette_counter_esp).to be_on_landing_page
+      expect(participant_22).to be_on_landing_page
 
       visit pt_22_cig_counter.landing_page
       pt_22_cig_counter.decrement_count
 
       # failing due to hidden text
       # expect(pt_22_cig_counter).to have_count
+      sleep(1)
 
       expect(pt_22_cig_counter).to have_count_in_graph
     end
@@ -257,7 +260,7 @@ feature 'Cigarette Counter', metadata: :participant do
     scenario '"sees today\'s cigarette count' do
       participant_214.sign_in
 
-      expect(cigarette_counter_esp).to be_on_landing_page
+      expect(participant_214).to be_on_landing_page
 
       visit pt_214_cig_counter.landing_page
 
@@ -270,7 +273,7 @@ feature 'Cigarette Counter', metadata: :participant do
     scenario 'increments today\'s cigarette count' do
       participant_215.sign_in
 
-      expect(cigarette_counter_esp).to be_on_landing_page
+      expect(participant_215).to be_on_landing_page
 
       visit pt_215_cig_counter.landing_page
       pt_215_cig_counter.increment_count
@@ -284,7 +287,7 @@ feature 'Cigarette Counter', metadata: :participant do
     scenario 'decrements today\'s cigarette count' do
       participant_216.sign_in
 
-      expect(cigarette_counter_esp).to be_on_landing_page
+      expect(participant_216).to be_on_landing_page
 
       visit pt_216_cig_counter.landing_page
       pt_216_cig_counter.decrement_count
@@ -298,7 +301,7 @@ feature 'Cigarette Counter', metadata: :participant do
     scenario 'sees cigarette count for more than a week ago', :date do
       participant_243.sign_in
 
-      expect(cigarette_counter_esp).to be_on_landing_page
+      expect(participant_243).to be_on_landing_page
 
       visit pt_243_cig_counter.landing_page
 
@@ -312,7 +315,7 @@ feature 'Cigarette Counter', metadata: :participant do
     scenario 'enters cigarette count for yesterday' do
       participant_244.sign_in
 
-      expect(cigarette_counter_esp).to be_on_landing_page
+      expect(participant_244).to be_on_landing_page
 
       visit pt_244_cig_counter.landing_page
       pt_244_cig_counter.set_count
@@ -323,7 +326,7 @@ feature 'Cigarette Counter', metadata: :participant do
     scenario 'enters cigarette count for today' do
       participant_245.sign_in
 
-      expect(cigarette_counter_esp).to be_on_landing_page
+      expect(participant_245).to be_on_landing_page
 
       visit pt_245_cig_counter.landing_page
       pt_245_cig_counter.set_count
@@ -334,7 +337,7 @@ feature 'Cigarette Counter', metadata: :participant do
     scenario 'uses the Done button to navigate back to Home' do
       participant_255.sign_in
 
-      expect(cigarette_counter_esp).to be_on_landing_page
+      expect(participant_255).to be_on_landing_page
 
       visit pt_255_cig_counter.landing_page
       pt_255_cig_counter.done

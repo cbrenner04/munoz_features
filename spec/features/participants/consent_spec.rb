@@ -22,7 +22,7 @@ feature 'A visitor to the site', metadata: :participant do
       expect(consent_eng).to be_visible
 
       consent_eng.give_consent
-      consent_eng.switch_language
+      participant_35.switch_language
 
       expect(consent_esp).to be_visible
 
@@ -64,7 +64,7 @@ feature 'A visitor to the site', metadata: :participant do
       consent_eng.find_age
       consent_eng.set_age
       consent_eng.answer_smoker
-      consent_eng.switch_language
+      participant_37.switch_language
       ptp_37_consent.find_age
       ptp_37_consent.enter_sf_zip
       ptp_37_consent.answer_medical_care
@@ -80,8 +80,6 @@ feature 'A visitor to the site', metadata: :participant do
     scenario 'signs in and consents to participate' do
       participant_106.sign_in
 
-      expect(consent_eng).to be_on_landing_page?
-
       expect(consent_eng).to be_visible
 
       consent_eng.give_consent
@@ -92,8 +90,6 @@ feature 'A visitor to the site', metadata: :participant do
 
     scenario 'signs in and does not consent to participate' do
       participant_107.sign_in
-
-      expect(consent_eng).to be_on_landing_page?
 
       expect(consent_eng).to be_visible
 
@@ -106,7 +102,7 @@ feature 'A visitor to the site', metadata: :participant do
     scenario 'reviews consent form' do
       participant_109.sign_in
 
-      expect(consent_eng).to be_on_landing_page?
+      expect(participant_109).to be_on_landing_page
 
       participant_109.go_to('Review Consent')
 
@@ -116,34 +112,37 @@ feature 'A visitor to the site', metadata: :participant do
     scenario 'switches to Español when reviewing consent form' do
       participant_131.sign_in
 
-      expect(consent_eng).to be_on_landing_page?
+      expect(participant_131).to be_on_landing_page
       participant_131.go_to('Review Consent')
 
       expect(consent_eng).to be_visible
 
       sleep(2)
-      consent_eng.switch_language
+      participant_131.switch_language
 
       expect(consent_esp).to be_visible
     end
 
+    # Will return once objects for other parts of the app are complete.
+
     scenario 'is a participant who did not give consent, can still use app' do
       participant_108.sign_in
 
-      expect(consent_eng).to be_on_landing_page?
-      participant_108.click_set_quit_date
+      expect(participant_108).to be_on_landing_page
 
-      expect(participant_108).to have_quit_date_visible
+      ptp_108_consent.click_set_quit_date
 
-      participant_108.go_to_root
-      participant_108.click_stop_smoke_guide
-
-      expect(participant_108).to have_smoke_guide_visible
+      expect(ptp_108_consent).to have_quit_date_visible
 
       participant_108.go_to_root
-      participant_108.click_cig_counter
+      ptp_108_consent.click_stop_smoke_guide
 
-      expect(participant_108).to have_cig_counter_visible
+      expect(ptp_108_consent).to have_smoke_guide_visible
+
+      participant_108.go_to_root
+      ptp_108_consent.click_cig_counter
+
+      expect(ptp_108_consent).to have_cig_counter_visible
 
       participant_108.go_to_root
       participant_108.go_to('Review Consent')
@@ -171,7 +170,7 @@ feature 'A visitor to the site', metadata: :participant do
       expect(consent_esp).to be_visible
 
       consent_esp.give_consent
-      consent_esp.switch_language
+      participant_38.switch_language
 
       expect(consent_eng).to be_visible
 
@@ -213,7 +212,7 @@ feature 'A visitor to the site', metadata: :participant do
       consent_esp.find_age
       consent_esp.set_age
       consent_esp.answer_smoker
-      consent_esp.switch_language
+      participant_40.switch_language
       ptp_40_consent.find_age
       ptp_40_consent.enter_sf_zip
       ptp_40_consent.answer_medical_care
@@ -229,8 +228,6 @@ feature 'A visitor to the site', metadata: :participant do
     scenario 'signs in and consents to participate' do
       participant_206.sign_in
 
-      expect(consent_esp).to be_on_landing_page?
-
       expect(consent_esp).to be_visible
 
       consent_esp.give_consent
@@ -241,8 +238,6 @@ feature 'A visitor to the site', metadata: :participant do
 
     scenario 'signs in and does not consent to participate' do
       participant_207.sign_in
-
-      expect(consent_esp).to be_on_landing_page?
 
       expect(consent_esp).to be_visible
 
@@ -255,7 +250,7 @@ feature 'A visitor to the site', metadata: :participant do
     scenario 'reviews consent form' do
       participant_209.sign_in
 
-      expect(consent_esp).to be_on_landing_page?
+      expect(participant_209).to be_on_landing_page
 
       participant_209.go_to('Revise el Consentimiento')
 
@@ -265,36 +260,38 @@ feature 'A visitor to the site', metadata: :participant do
     scenario 'switches to Español when reviewing consent form' do
       participant_231.sign_in
 
-      expect(consent_esp).to be_on_landing_page?
+      expect(participant_231).to be_on_landing_page
 
       participant_231.go_to('Revise el Consentimiento')
 
       expect(consent_esp).to be_visible
 
       sleep(2)
-      consent_esp.switch_language
+      participant_231.switch_language
 
-      expect(consent_esp).to be_visible
+      expect(consent_eng).to be_visible
     end
+
+    # Will return once objects for other parts of the app are complete.
 
     scenario 'is a participant who did not give consent, can still use app' do
       participant_208.sign_in
 
-      expect(consent_esp).to be_on_landing_page?
+      expect(participant_208).to be_on_landing_page
 
-      participant_208.click_set_quit_date
+      ptp_208_consent.click_set_quit_date
 
-      expect(participant_208).to have_quit_date_visible
-
-      participant_208.go_to_root
-      participant_208.click_stop_smoke_guide
-
-      expect(participant_208).to have_smoke_guide_visible
+      expect(ptp_208_consent).to have_quit_date_visible
 
       participant_208.go_to_root
-      participant_208.click_cig_counter
+      ptp_208_consent.click_stop_smoke_guide
 
-      expect(participant_208).to have_cig_counter_visible
+      expect(ptp_208_consent).to have_smoke_guide_visible
+
+      participant_208.go_to_root
+      ptp_208_consent.click_cig_counter
+
+      expect(ptp_208_consent).to have_cig_counter_visible
 
       participant_208.go_to_root
       participant_208.go_to('Revise el Consentimiento')
