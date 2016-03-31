@@ -30,14 +30,14 @@ feature 'A visitor to the site', metadata: :participant do
       expect(consent_esp).to have_consent_response
     end
 
-    scenario 'cannot review consent immediately' \
+    scenario 'cannot review consent immediately ' \
                 'following ineligible decision' do
       visit consent_eng.ineligible_page
 
       expect(consent_eng).to have_no_consent_link
     end
 
-    scenario 'completes eligibility, is eligible,' \
+    scenario 'completes eligibility, is eligible, ' \
              'is able to consent immediately' do
       visit eligibility_eng.eligibility_page
       ptp_36_eligibility.find_age

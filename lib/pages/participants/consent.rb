@@ -10,6 +10,13 @@ class Participants
       @locale ||= consent[:locale]
     end
 
+    def ineligible_page
+      var = participants.locale('en', 'es')
+      @ineligible_page ||= 
+        "#{ENV['Base_URL']}" \
+        "/#{var}/pages/application#/#{var}/eligibility-result?isEligible=false"
+    end
+
     def visible?
       var = participants.locale('PALO ALTO UNIVERSITY CONSENT',
                                 'UNIVERSIDAD DE PALO ALTO CONSENTIMIENTO')

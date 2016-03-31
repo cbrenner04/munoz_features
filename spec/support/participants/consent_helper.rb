@@ -1,4 +1,5 @@
 require './lib/pages/participants/consent'
+require './lib/pages/participants/eligibility'
 
 def consent_eng
   @consent_eng ||= Participants::Consent.new(locale: 'english')
