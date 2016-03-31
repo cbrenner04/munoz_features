@@ -1,23 +1,24 @@
 # filename: spec/features/participants/consent_spec.rb
 
 require './lib/zip_codes.rb'
-require './spec/support/participants/consent_helper'
-require './spec/support/participants_helper'
+require './spec/support/participants/consent_helper.rb'
+require './spec/support/participants/eligibility_helper.rb'
+require './spec/support/participants_helper.rb'
 
 feature 'A visitor to the site', metadata: :participant do
   context 'in English' do
     scenario 'switches to Español when consenting' do
-      visit consent_eng.eligibility_page
-      ptp_35_consent.find_age
-      ptp_35_consent.set_age
-      ptp_35_consent.answer_smoker
-      ptp_35_consent.enter_sf_zip
-      ptp_35_consent.answer_medical_care
-      ptp_35_consent.enter_email
-      ptp_35_consent.enter_phone_num
-      ptp_35_consent.enter_password
-      consent_eng.click_eligibility_submit
-      consent_eng.click_view_consent
+      visit eligibility_eng.eligibility_page
+      ptp_35_eligibility.find_age
+      ptp_35_eligibility.set_age
+      ptp_35_eligibility.answer_smoker
+      ptp_35_eligibility.enter_sf_zip
+      ptp_35_eligibility.answer_medical_care
+      ptp_35_eligibility.enter_email
+      ptp_35_eligibility.enter_phone_num
+      ptp_35_eligibility.enter_password
+      eligibility_eng.click_submit
+      eligibility_eng.click_view_consent
 
       expect(consent_eng).to be_visible
 
@@ -38,41 +39,41 @@ feature 'A visitor to the site', metadata: :participant do
 
     scenario 'completes eligibility, is eligible,' \
              'is able to consent immediately' do
-      visit consent_eng.eligibility_page
-      ptp_36_consent.find_age
-      ptp_36_consent.set_age
-      ptp_36_consent.answer_smoker
-      ptp_36_consent.enter_sf_zip
-      ptp_36_consent.answer_medical_care
-      ptp_36_consent.enter_email
-      ptp_36_consent.enter_phone_num
-      ptp_36_consent.enter_password
-      consent_eng.click_eligibility_submit
-      consent_eng.click_view_consent
+      visit eligibility_eng.eligibility_page
+      ptp_36_eligibility.find_age
+      ptp_36_eligibility.set_age
+      ptp_36_eligibility.answer_smoker
+      ptp_36_eligibility.enter_sf_zip
+      ptp_36_eligibility.answer_medical_care
+      ptp_36_eligibility.enter_email
+      ptp_36_eligibility.enter_phone_num
+      ptp_36_eligibility.enter_password
+      eligibility_eng.click_submit
+      eligibility_eng.click_view_consent
 
       expect(consent_eng).to be_visible
 
       consent_eng.give_consent
-      consent_eng.click_submit_consent
+      consent_eng.click_submit
 
-      expect(consent_eng).to have_consent_submitted_page
+      expect(consent_eng).to have_submitted_page
     end
 
     scenario 'switches to Español while filling in eligibility, ' \
        'is eligible, sees consent form in Español' do
-      visit consent_eng.eligibility_page
-      consent_eng.find_age
-      consent_eng.set_age
-      consent_eng.answer_smoker
+      visit eligibility_eng.eligibility_page
+      ptp_37_eligibility.find_age
+      ptp_37_eligibility.set_age
+      ptp_37_eligibility.answer_smoker
       participant_37.switch_language
-      ptp_37_consent.find_age
-      ptp_37_consent.enter_sf_zip
-      ptp_37_consent.answer_medical_care
-      ptp_37_consent.enter_email
-      ptp_37_consent.enter_phone_num
-      ptp_37_consent.enter_password
-      consent_esp.click_eligibility_submit
-      consent_esp.click_view_consent
+      ptp_37_eligibility.find_age
+      ptp_37_eligibility.enter_sf_zip
+      ptp_37_eligibility.answer_medical_care
+      ptp_37_eligibility.enter_email
+      ptp_37_eligibility.enter_phone_num
+      ptp_37_eligibility.enter_password
+      eligibility_esp.click_submit
+      eligibility_esp.click_view_consent
 
       expect(consent_esp).to be_visible
     end
@@ -83,9 +84,9 @@ feature 'A visitor to the site', metadata: :participant do
       expect(consent_eng).to be_visible
 
       consent_eng.give_consent
-      consent_eng.click_submit_consent
+      consent_eng.click_submit
 
-      expect(consent_eng).to have_consent_submitted_page
+      expect(consent_eng).to have_submitted_page
     end
 
     scenario 'signs in and does not consent to participate' do
@@ -94,9 +95,9 @@ feature 'A visitor to the site', metadata: :participant do
       expect(consent_eng).to be_visible
 
       consent_eng.decline_consent
-      consent_eng.click_submit_consent
+      consent_eng.click_submit
 
-      expect(consent_eng).to have_consent_submitted_page
+      expect(consent_eng).to have_submitted_page
     end
 
     scenario 'reviews consent form' do
@@ -155,17 +156,17 @@ feature 'A visitor to the site', metadata: :participant do
 
   context 'in Español' do
     scenario 'switches to English when consenting' do
-      visit consent_esp.eligibility_page
-      ptp_38_consent.find_age
-      ptp_38_consent.set_age
-      ptp_38_consent.answer_smoker
-      ptp_38_consent.enter_sf_zip
-      ptp_38_consent.answer_medical_care
-      ptp_38_consent.enter_email
-      ptp_38_consent.enter_phone_num
-      ptp_38_consent.enter_password
-      consent_esp.click_eligibility_submit
-      consent_esp.click_view_consent
+      visit eligibility_esp.eligibility_page
+      ptp_38_eligibility.find_age
+      ptp_38_eligibility.set_age
+      ptp_38_eligibility.answer_smoker
+      ptp_38_eligibility.enter_sf_zip
+      ptp_38_eligibility.answer_medical_care
+      ptp_38_eligibility.enter_email
+      ptp_38_eligibility.enter_phone_num
+      ptp_38_eligibility.enter_password
+      eligibility_esp.click_submit
+      eligibility_esp.click_view_consent
 
       expect(consent_esp).to be_visible
 
@@ -186,41 +187,41 @@ feature 'A visitor to the site', metadata: :participant do
 
     scenario 'completes eligibility, is eligible,' \
         'is able to consent immediately' do
-      visit consent_esp.eligibility_page
-      ptp_39_consent.find_age
-      ptp_39_consent.set_age
-      ptp_39_consent.answer_smoker
-      ptp_39_consent.enter_sf_zip
-      ptp_39_consent.answer_medical_care
-      ptp_39_consent.enter_email
-      ptp_39_consent.enter_phone_num
-      ptp_39_consent.enter_password
-      consent_esp.click_eligibility_submit
-      consent_esp.click_view_consent
+      visit eligibility_esp.eligibility_page
+      ptp_39_eligibility.find_age
+      ptp_39_eligibility.set_age
+      ptp_39_eligibility.answer_smoker
+      ptp_39_eligibility.enter_sf_zip
+      ptp_39_eligibility.answer_medical_care
+      ptp_39_eligibility.enter_email
+      ptp_39_eligibility.enter_phone_num
+      ptp_39_eligibility.enter_password
+      eligibility_esp.click_submit
+      eligibility_esp.click_view_consent
 
       expect(consent_esp).to be_visible
 
       consent_esp.give_consent
-      consent_esp.click_submit_consent
+      consent_esp.click_submit
 
-      expect(consent_esp).to have_consent_submitted_page
+      expect(consent_esp).to have_submitted_page
     end
 
     scenario 'switches to English while filling in eligibility, ' \
        'is eligible, sees consent form in English' do
-      visit consent_esp.eligibility_page
-      consent_esp.find_age
-      consent_esp.set_age
-      consent_esp.answer_smoker
+      visit eligibility_esp.eligibility_page
+      ptp_40_eligibility.find_age
+      ptp_40_eligibility.set_age
+      ptp_40_eligibility.answer_smoker
       participant_40.switch_language
-      ptp_40_consent.find_age
-      ptp_40_consent.enter_sf_zip
-      ptp_40_consent.answer_medical_care
-      ptp_40_consent.enter_email
-      ptp_40_consent.enter_phone_num
-      ptp_40_consent.enter_password
-      consent_eng.click_eligibility_submit
-      consent_eng.click_view_consent
+      ptp_40_eligibility.find_age
+      ptp_40_eligibility.enter_sf_zip
+      ptp_40_eligibility.answer_medical_care
+      ptp_40_eligibility.enter_email
+      ptp_40_eligibility.enter_phone_num
+      ptp_40_eligibility.enter_password
+      eligibility_eng.click_submit
+      eligibility_eng.click_view_consent
 
       expect(consent_eng).to be_visible
     end
@@ -231,9 +232,9 @@ feature 'A visitor to the site', metadata: :participant do
       expect(consent_esp).to be_visible
 
       consent_esp.give_consent
-      consent_esp.click_submit_consent
+      consent_esp.click_submit
 
-      expect(consent_esp).to have_consent_submitted_page
+      expect(consent_esp).to have_submitted_page
     end
 
     scenario 'signs in and does not consent to participate' do
@@ -242,9 +243,9 @@ feature 'A visitor to the site', metadata: :participant do
       expect(consent_esp).to be_visible
 
       consent_esp.decline_consent
-      consent_esp.click_submit_consent
+      consent_esp.click_submit
 
-      expect(consent_esp).to have_consent_submitted_page
+      expect(consent_esp).to have_submitted_page
     end
 
     scenario 'reviews consent form' do
