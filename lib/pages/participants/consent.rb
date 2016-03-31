@@ -40,7 +40,7 @@ class Participants
       click_on var
     end
 
-    def has_submitted?
+    def submitted?
       has_css? 'iframe[class = ng-scope]'
     end
 

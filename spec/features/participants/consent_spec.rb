@@ -56,15 +56,15 @@ feature 'A visitor to the site', metadata: :participant do
       consent_eng.give_consent
       consent_eng.click_submit
 
-      expect(consent_eng).to have_submitted
+      expect(consent_eng).to be_submitted
     end
 
     scenario 'switches to Español while filling in eligibility, ' \
        'is eligible, sees consent form in Español' do
       visit eligibility_eng.eligibility_page
-      ptp_37_eligibility.find_age
-      ptp_37_eligibility.set_age
-      ptp_37_eligibility.answer_smoker
+      eligibility_eng.find_age
+      eligibility_eng.set_age
+      eligibility_eng.answer_smoker
       participant_37.switch_language
       ptp_37_eligibility.find_age
       ptp_37_eligibility.enter_sf_zip
@@ -86,7 +86,7 @@ feature 'A visitor to the site', metadata: :participant do
       consent_eng.give_consent
       consent_eng.click_submit
 
-      expect(consent_eng).to have_submitted
+      expect(consent_eng).to be_submitted
     end
 
     scenario 'signs in and does not consent to participate' do
@@ -97,7 +97,7 @@ feature 'A visitor to the site', metadata: :participant do
       consent_eng.decline_consent
       consent_eng.click_submit
 
-      expect(consent_eng).to have_submitted
+      expect(consent_eng).to be_submitted
     end
 
     scenario 'reviews consent form' do
@@ -204,15 +204,15 @@ feature 'A visitor to the site', metadata: :participant do
       consent_esp.give_consent
       consent_esp.click_submit
 
-      expect(consent_esp).to have_submitted
+      expect(consent_esp).to be_submitted
     end
 
     scenario 'switches to English while filling in eligibility, ' \
        'is eligible, sees consent form in English' do
       visit eligibility_esp.eligibility_page
-      ptp_40_eligibility.find_age
-      ptp_40_eligibility.set_age
-      ptp_40_eligibility.answer_smoker
+      eligibility_esp.find_age
+      eligibility_esp.set_age
+      eligibility_esp.answer_smoker
       participant_40.switch_language
       ptp_40_eligibility.find_age
       ptp_40_eligibility.enter_sf_zip
@@ -234,7 +234,7 @@ feature 'A visitor to the site', metadata: :participant do
       consent_esp.give_consent
       consent_esp.click_submit
 
-      expect(consent_esp).to have_submitted
+      expect(consent_esp).to be_submitted
     end
 
     scenario 'signs in and does not consent to participate' do
@@ -245,7 +245,7 @@ feature 'A visitor to the site', metadata: :participant do
       consent_esp.decline_consent
       consent_esp.click_submit
 
-      expect(consent_esp).to have_submitted
+      expect(consent_esp).to be_submitted
     end
 
     scenario 'reviews consent form' do
