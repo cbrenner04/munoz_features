@@ -1,9 +1,9 @@
 # filename: spec/features/participants/consent_spec.rb
 
-require './lib/zip_codes.rb'
-require './spec/support/participants/consent_helper.rb'
-require './spec/support/participants/eligibility_helper.rb'
-require './spec/support/participants_helper.rb'
+require './lib/zip_codes'
+require './spec/support/participants/consent_helper'
+require './spec/support/participants/eligibility_helper'
+require './spec/support/participants_helper'
 
 feature 'A visitor to the site', metadata: :participant do
   context 'in English' do
@@ -56,7 +56,7 @@ feature 'A visitor to the site', metadata: :participant do
       consent_eng.give_consent
       consent_eng.click_submit
 
-      expect(consent_eng).to have_submitted_page
+      expect(consent_eng).to have_submitted
     end
 
     scenario 'switches to Español while filling in eligibility, ' \
@@ -86,7 +86,7 @@ feature 'A visitor to the site', metadata: :participant do
       consent_eng.give_consent
       consent_eng.click_submit
 
-      expect(consent_eng).to have_submitted_page
+      expect(consent_eng).to have_submitted
     end
 
     scenario 'signs in and does not consent to participate' do
@@ -97,7 +97,7 @@ feature 'A visitor to the site', metadata: :participant do
       consent_eng.decline_consent
       consent_eng.click_submit
 
-      expect(consent_eng).to have_submitted_page
+      expect(consent_eng).to have_submitted
     end
 
     scenario 'reviews consent form' do
@@ -204,7 +204,7 @@ feature 'A visitor to the site', metadata: :participant do
       consent_esp.give_consent
       consent_esp.click_submit
 
-      expect(consent_esp).to have_submitted_page
+      expect(consent_esp).to have_submitted
     end
 
     scenario 'switches to English while filling in eligibility, ' \
@@ -234,7 +234,7 @@ feature 'A visitor to the site', metadata: :participant do
       consent_esp.give_consent
       consent_esp.click_submit
 
-      expect(consent_esp).to have_submitted_page
+      expect(consent_esp).to have_submitted
     end
 
     scenario 'signs in and does not consent to participate' do
@@ -245,7 +245,7 @@ feature 'A visitor to the site', metadata: :participant do
       consent_esp.decline_consent
       consent_esp.click_submit
 
-      expect(consent_esp).to have_submitted_page
+      expect(consent_esp).to have_submitted
     end
 
     scenario 'reviews consent form' do

@@ -1,4 +1,4 @@
-require './lib/pages/participants/consent.rb'
+require './lib/pages/participants/consent'
 
 def consent_eng
   @consent_eng ||= Participants::Consent.new(locale: 'english')

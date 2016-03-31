@@ -1,4 +1,4 @@
-require './lib/pages/participants/eligibility.rb'
+require './lib/pages/participants/eligibility'
 
 def eligibility_eng
   @eligibility_eng ||= Participants::Eligibility.new(locale: 'english')
