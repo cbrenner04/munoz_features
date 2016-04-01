@@ -276,3 +276,145 @@ def participant_231
     locale: 'español'
   )
 end
+
+# Below are participants used for Eligibility
+
+def participant_101
+  @participant_101 ||= Participants.new(
+    pt_id: 101,
+    locale: 'english'
+  )
+end
+
+def participant_102
+  @participant_102 ||= Participants.new(
+    pt_id: 102,
+    locale: 'english'
+  )
+end
+
+def participant_103
+  @participant_103 ||= Participants.new(
+    pt_id: 103,
+    locale: 'english'
+  )
+end
+
+def participant_104
+  @participant_104 ||= Participants.new(
+    pt_id: 104,
+    locale: 'english'
+  )
+end
+
+def participant_9
+  @participant_9 ||= Participants.new(
+    pt_id: 9,
+    locale: 'english'
+  )
+end
+
+def participant_31
+  @participant_31 ||= Participants.new(
+    pt_id: 31,
+    locale: 'english'
+  )
+end
+
+def participant_25
+  @participant_25 ||= Participants.new(
+    pt_id: 25,
+    locale: 'english'
+  )
+end
+
+def participant_151
+  @participant_151 ||= Participants.new(
+    pt_id: 151,
+    locale: 'english'
+  )
+end
+
+def participant_152
+  @participant_152 ||= Participants.new(
+    pt_id: 152,
+    locale: 'english'
+  )
+end
+
+def participant_32
+  @participant_32 ||= Participants.new(
+    pt_id: 32,
+    locale: 'english'
+  )
+end
+
+def participant_201
+  @participant_201 ||= Participants.new(
+    pt_id: 201,
+    locale: 'español'
+  )
+end
+
+def participant_202
+  @participant_202 ||= Participants.new(
+    pt_id: 202,
+    locale: 'español'
+  )
+end
+
+def participant_203
+  @participant_203 ||= Participants.new(
+    pt_id: 203,
+    locale: 'español'
+  )
+end
+
+def participant_204
+  @participant_204 ||= Participants.new(
+    pt_id: 204,
+    locale: 'español'
+  )
+end
+
+def participant_10
+  @participant_10 ||= Participants.new(
+    pt_id: 10,
+    locale: 'español'
+  )
+end
+
+def participant_33
+  @participant_33 ||= Participants.new(
+    pt_id: 33,
+    locale: 'español'
+  )
+end
+
+def participant_26
+  @participant_26 ||= Participants.new(
+    pt_id: 26,
+    locale: 'español'
+  )
+end
+
+def participant_251
+  @participant_251 ||= Participants.new(
+    pt_id: 251,
+    locale: 'español'
+  )
+end
+
+def participant_252
+  @participant_252 ||= Participants.new(
+    pt_id: 252,
+    locale: 'español'
+  )
+end
+
+def participant_34
+  @participant_34 ||= Participants.new(
+    pt_id: 34,
+    locale: 'español'
+  )
+end

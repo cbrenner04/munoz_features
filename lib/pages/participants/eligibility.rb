@@ -23,7 +23,7 @@ class Participants
       find('.ng-binding', text: var)
     end
 
-    def set_age
+    def set_age_25
       first('input[type = tel]').set('25')
     end
 
@@ -74,6 +74,18 @@ class Participants
       var = participants.locale('en', 'es')
       "#{ENV['Base_URL']}" \
         "/#{var}/pages/application#/#{var}/eligibility-result?isEligible=false"
+    end
+
+    def click_eng
+      click_on 'English'
+    end
+
+    def click_esp
+      click_on 'Español'
+    end
+
+    def click_con
+      click_on 'Continue'
     end
 
     private
