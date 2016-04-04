@@ -6,11 +6,13 @@ class Participants
     include RSpec::Matchers
     include Capybara::DSL
 
-    def initialize(consent)
-      @locale ||= consent[:locale]
-      @email ||= consent[:email]
-      @phone ||= consent[:phone]
-      @password ||= consent[:password]
+    def initialize(eligibility)
+      @locale ||= eligibility[:locale]
+      @email ||= eligibility[:email]
+      @phone ||= eligibility[:phone]
+      @password ||= eligibility[:password]
+      @smoke ||= eligibility[:smoke]
+      @age ||= eligibility[:age]
     end
 
     def eligibility_page
@@ -24,7 +26,7 @@ class Participants
     end
 
     def set_age_25
-      first('input[type = tel]').set('25')
+      first('input[type = tel]').set(@age)
     end
 
     def answer_smoker
@@ -86,6 +88,37 @@ class Participants
 
     def click_con
       click_on 'Continue'
+    end
+
+    def eligible?
+      var = participants.locale('You are eligible to participate',
+                                'Usted es eligible para participar en ' \
+                                  'nuestro estudio')
+      has_text? var
+    end
+
+    def ineligible?
+      var = participants.locale('You are not eligible to participate'
+                                'Lo sentimos. Usted no es elegible para ' \
+                                  'participar en nuestro estudio. Le ' \
+                                  'recomendamos los siguientes 3 recursos ' \
+                                  'para dejar de fumar: ' \
+                                  'espanol.smokefree.gov, 1-800-NO-BUTTS ' \
+                                  '(662-8887) o es.becomeanex.org. Gracias ' \
+                                  'por contestar nuestras preguntas')
+      has_text? var
+    end
+
+    def submit_disabled
+      find('input[type = submit]')[:disabled].should eq 'true'
+    end
+
+    def has_error_message?
+      var = participants.locale('Sorry, there was a problem. ' \
+                                  'Please review your responses and try again.',
+                                'Lo sentimos, hubo un problema. Por favor' \
+                                  ' revise sus respuestas y vuelva a intentar.')
+      has text? var
     end
 
     private

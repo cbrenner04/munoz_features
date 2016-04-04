@@ -1,12 +1,12 @@
 # filename: spec/features/participants/login_spec.rb
 
-describe 'A visitor to the site', type: :feature, metadata: :participant do
+scenario 'A visitor to the site', metadata: :participant do
   before do
     visit ENV['Base_URL']
   end
 
   context 'is English speaking' do
-    it 'is a registered participant and signs in' do
+    scenario 'is a registered participant and signs in' do
       click_on 'Sign in'
       fill_in 'participant_email', with: ENV['Pt_112_Email']
       fill_in 'participant_password', with: ENV['Pt_112_Password']
@@ -14,7 +14,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       expect(page).to have_css('a', text: 'Stop Smoking Guide')
     end
 
-    it 'is not a registered participant, cannot sign in' do
+    scenario 'is not a registered participant, cannot sign in' do
       click_on 'Sign in'
       fill_in 'participant_email', with: 'fake@example.com'
       fill_in 'participant_password', with: 'fake password'
@@ -22,7 +22,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       expect(page).to have_content 'Invalid email or password'
     end
 
-    it 'is a registered participant and request password reset' do
+    scenario 'is a registered participant and request password reset' do
       click_on 'Sign in'
       find('h2', text: 'Sign in')
       click_on 'Forgot your password?'
@@ -33,7 +33,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
                                    'password in a few minutes.'
     end
 
-    it "uses 'Didn't receive confirmation instructions?'" do
+    scenario "uses 'Didn't receive confirmation instructions?'" do
       click_on 'Sign in'
       find('h2', text: 'Sign in')
       click_on "Didn't receive confirmation instructions?"
@@ -45,7 +45,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
                                    'email address in a few minutes.'
     end
 
-    it 'is a registered participant who locks their account' do
+    scenario 'is a registered participant who locks their account' do
       click_on 'Sign in'
       find('h2', text: 'Sign in')
       18.times do
@@ -67,7 +67,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       expect(page).to have_content 'Your account is locked.'
     end
 
-    it "uses 'Didn't receive unlock instructions?'" do
+    scenario "uses 'Didn't receive unlock instructions?'" do
       click_on 'Sign in'
       find('h2', text: 'Sign in')
       click_on "Didn't receive unlock instructions?"
@@ -79,7 +79,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
                                    'account in a few minutes.'
     end
 
-    it 'signs in, signs out' do
+    scenario 'signs in, signs out' do
       sign_in_pt_en('111')
       find('.navbar-toggle').click
       find('.dropdown-toggle').click
@@ -87,14 +87,14 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       expect(page).to have_css('a', text: 'Sign in')
     end
 
-    it 'signs in, goes to a tool, navigates home using brand link' do
+    scenario 'signs in, goes to a tool, navigates home using brand link' do
       sign_in_pt_en('111')
       visit "#{ENV['Base_URL']}/#/en/cigarette-count"
       find('.navbar-brand.ng-binding').click
       expect(page).to have_content 'Stop Smoking Guide'
     end
 
-    it 'signs in, goes to a tool, navigates home using Home link' do
+    scenario 'signs in, goes to a tool, navigates home using Home link' do
       sign_in_pt_en('111')
       visit "#{ENV['Base_URL']}/#/en/cigarette-count"
       find('.navbar-toggle').click
@@ -105,7 +105,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
   end
 
   context 'is Spanish speaking' do
-    it 'is a registered participant and signs in in Español' do
+    scenario 'is a registered participant and signs in in Español' do
       click_on 'Iniciar sesión'
       fill_in 'participant_email', with: ENV['Pt_212_Email']
       fill_in 'participant_password', with: ENV['Pt_212_Password']
@@ -113,7 +113,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       find('a', text: 'Guía Para Dejar de Fumar')
     end
 
-    it 'is not a registered participant, cannot sign in' do
+    scenario 'is not a registered participant, cannot sign in' do
       click_on 'Iniciar sesión'
       fill_in 'participant_email', with: 'fake@example.com'
       fill_in 'participant_password', with: 'fake password'
@@ -121,7 +121,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       expect(page).to have_content 'Email o contraseña no válidos.'
     end
 
-    it 'is a registered participant and requests password reset' do
+    scenario 'is a registered participant and requests password reset' do
       click_on 'Iniciar sesión'
       find('h2', text: 'Iniciar sesión')
       click_on '¿Ha olvidado su contraseña?'
@@ -132,7 +132,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
                                    'unos pocos minutos.'
     end
 
-    it "uses 'Didn't receive confirmation instructions?'" do
+    scenario "uses 'Didn't receive confirmation instructions?'" do
       click_on 'Iniciar sesión'
       find('h2', text: 'Iniciar sesión')
       click_on '¿No ha recibido las instrucciones de confirmación?'
@@ -144,7 +144,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
                                    'cuenta en unos minutos.'
     end
 
-    it 'is a registered participant who locks their account' do
+    scenario 'is a registered participant who locks their account' do
       click_on 'Iniciar sesión'
       find('h2', text: 'Iniciar sesión')
       18.times do
@@ -166,7 +166,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       expect(page).to have_content 'Su cuenta está bloqueada.'
     end
 
-    it "uses 'Didn't receive unlock instructions?'" do
+    scenario "uses 'Didn't receive unlock instructions?'" do
       click_on 'Iniciar sesión'
       find('h2', text: 'Iniciar sesión')
       click_on 'No ha recibido instrucciones para desbloquear?'
@@ -178,7 +178,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
                                    'minutos.'
     end
 
-    it 'signs in, signs out' do
+    scenario 'signs in, signs out' do
       sign_in_pt_es('211')
       find('.navbar-toggle').click
       find('.dropdown-toggle').click
@@ -186,7 +186,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       expect(page).to have_css('a', text: 'Iniciar sesión')
     end
 
-    it 'signs in, visits Google, returns to app, sees correct home page' do
+    scenario 'signs in, visits Google, returns to app, sees correct home page' do
       sign_in_pt_es('211')
       find('a', text: 'Guía Para Dejar de Fumar')
       visit 'https://www.google.com'
@@ -195,7 +195,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       expect(page).to have_content 'Guía Para Dejar de Fumar'
     end
 
-    it 'signs in, navigates to another page, uses brand link, ' \
+    scenario 'signs in, navigates to another page, uses brand link, ' \
        'sees correct home' do
       sign_in_pt_es('211')
       click_on 'Guía Para Dejar de Fumar'
@@ -204,14 +204,14 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       expect(page).to have_content 'Contador de Cigarrillos'
     end
 
-    it 'signs in, goes to a tool, navigates home using brand link' do
+    scenario 'signs in, goes to a tool, navigates home using brand link' do
       sign_in_pt_en('211')
       visit "#{ENV['Base_URL']}/#/es/cigarette-count"
       find('.navbar-brand.ng-binding').click
       expect(page).to have_content 'Guía Para Dejar de Fumar'
     end
 
-    it 'signs in, goes to a tool, navigates home using Home link' do
+    scenario 'signs in, goes to a tool, navigates home using Home link' do
       sign_in_pt_en('211')
       visit "#{ENV['Base_URL']}/#/es/cigarette-count"
       find('.navbar-toggle').click
@@ -221,7 +221,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
   end
 end
 
-describe 'A visitor to the site', type: :feature, metadata: :participant do
+feature 'A visitor to the site', metadata: :participant do
   before do
     visit ENV['Base_URL']
   end
@@ -231,7 +231,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
   end
 
   context 'in English' do
-    it 'confirms phone' do
+    scenario 'confirms phone' do
       visit "#{ENV['Base_URL']}/confirm_phone?locale=en&" \
             "token=#{ENV['Pt_29_Confirmation']}"
       sleep(2)
@@ -256,7 +256,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
   end
 
   context 'in Español' do
-    it 'confirms phone' do
+    scenario 'confirms phone' do
       visit "#{ENV['Base_URL']}/confirm_phone?locale=es&" \
             "token=#{ENV['Pt_30_Confirmation']}"
       sleep(2)
@@ -282,9 +282,9 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
   end
 end
 
-describe 'A visitor to the site', type: :feature, metadata: :participant do
+feature 'A visitor to the site', metadata: :participant do
   context 'is English speaking' do
-    it 'confirms email' do
+    scenario 'confirms email' do
       visit "#{ENV['Base_URL']}/en/participants/confirmation?" \
             "confirmation_token=#{ENV['Pt_3_Confirmation']}"
       expect(page)
@@ -297,7 +297,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
   end
 
   context 'is Spanish speaking' do
-    it 'confirms email' do
+    scenario 'confirms email' do
       visit "#{ENV['Base_URL']}/es/participants/confirmation?" \
             "confirmation_token=#{ENV['Pt_4_Confirmation']}"
       expect(page)
@@ -310,13 +310,13 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
   end
 end
 
-describe 'A visitor to the site', type: :feature, metadata: :participant do
+feature 'A visitor to the site', metadata: :participant do
   after do
     page.driver.browser.manage.window.resize_to(360, 591)
   end
 
   context 'is English speaking' do
-    it 'gets notifications scheduled' do
+    scenario 'gets notifications scheduled' do
       sign_in_pt_en('156')
       find('a', text: 'Stop Smoking Guide')
       go_to('Sign out')
@@ -326,9 +326,9 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
       within first('.notification_schedule_row') do
         three = Date.today + 90
         expect(page).to have_content "#{three.strftime('%B %d, %Y')}"
-      end
+      end`
 
-      row = page.all('.notification_schedule_row')
+      row = all('.notification_schedule_row')
       within row[1] do
         two = Date.today + 60
         expect(page).to have_content "#{two.strftime('%B %d, %Y')}"
@@ -342,7 +342,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
   end
 
   context 'is Spanish speaking' do
-    it 'gets notifications scheduled' do
+    scenario 'gets notifications scheduled' do
       sign_in_pt_es('256')
       find('a', text: 'Guía Para Dejar de Fumar')
       go_to('Finalizar la sesión')
@@ -354,7 +354,7 @@ describe 'A visitor to the site', type: :feature, metadata: :participant do
         expect(page).to have_content "#{three.strftime('%B %d, %Y')}"
       end
 
-      row = page.all('.notification_schedule_row')
+      row = all('.notification_schedule_row')
       within row[1] do
         two = Date.today + 60
         expect(page).to have_content "#{two.strftime('%B %d, %Y')}"

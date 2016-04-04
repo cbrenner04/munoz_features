@@ -13,16 +13,16 @@ def dateviewer
   @dateviewer ||= DateViewer.new
 end
 
-describe 'A registered and consented participant signs in',
-         type: :feature, metadata: :participant do
+feature 'A registered and consented participant signs in',
+         metadata: :participant do
   context 'in English' do
-    it 'navigates to Your Quit Date' do
+    scenario 'navigates to Your Quit Date' do
       sign_in_pt_en('133')
       click_on 'Set Your Quit Date'
       expect(page).to have_css '.previous'
     end
 
-    it 'switches to Español while in Your Quit Date' do
+    scenario 'switches to Español while in Your Quit Date' do
       sign_in_pt_en('134')
       visit "#{ENV['Base_URL']}/#/en/quit-date"
       find('.ng-binding.ng-scope', text: 'We')
@@ -30,7 +30,7 @@ describe 'A registered and consented participant signs in',
       expect(page).to have_css('.ng-binding.ng-scope', text: 'Mi')
     end
 
-    it 'navigates to Cigarette Counter from Set Your Quit Date' do
+    scenario 'navigates to Cigarette Counter from Set Your Quit Date' do
       sign_in_pt_en('134')
       visit "#{ENV['Base_URL']}/#/en/quit-date"
       find('.ng-binding.ng-scope', text: 'We')
@@ -38,14 +38,14 @@ describe 'A registered and consented participant signs in',
       expect(page).to have_css('.pull-left', text: 'Yesterday')
     end
 
-    it "sees today's date highlighted", :date do
+    scenario "sees today's date highlighted", :date do
       sign_in_pt_en('135')
       visit "#{ENV['Base_URL']}/#/en/quit-date"
       find('.ng-binding', text: "#{Date.today.strftime('%b %Y')}")
       dateviewer.view_day("#{Date.today}")
     end
 
-    it 'navigates to previous month within Your Quit Date' do
+    scenario 'navigates to previous month within Your Quit Date' do
       sign_in_pt_en('136')
       visit "#{ENV['Base_URL']}/#/en/quit-date"
       find('.ng-binding', text: "#{Date.today.strftime('%b %Y')}")
@@ -55,7 +55,7 @@ describe 'A registered and consented participant signs in',
         .to have_css('.ng-binding', text: "#{last_month.strftime('%b %Y')}")
     end
 
-    it 'navigates to next month within Your Quit Date' do
+    scenario 'navigates to next month within Your Quit Date' do
       sign_in_pt_en('137')
       visit "#{ENV['Base_URL']}/#/en/quit-date"
       find('.ng-binding', text: "#{Date.today.strftime('%b %Y')}")
@@ -71,7 +71,7 @@ describe 'A registered and consented participant signs in',
         .to have_css('.ng-binding', text: "#{next_month.strftime('%b %Y')}")
     end
 
-    it 'navigates back to Today from another month' do
+    scenario 'navigates back to Today from another month' do
       sign_in_pt_en('137')
       visit "#{ENV['Base_URL']}/#/en/quit-date"
       find('.ng-binding', text: "#{Date.today.strftime('%b %Y')}")
@@ -89,7 +89,7 @@ describe 'A registered and consented participant signs in',
         .to have_css('.ng-binding', text: "#{Date.today.strftime('%b %Y')}")
     end
 
-    it 'sets a Quit Date', :date do
+    scenario 'sets a Quit Date', :date do
       sign_in_pt_en('139')
       visit "#{ENV['Base_URL']}/#/en/quit-date"
       tomorrow = Date.today + 1
@@ -102,7 +102,7 @@ describe 'A registered and consented participant signs in',
                                text: "#{tomorrow.strftime('%-d')}")
     end
 
-    it 'sets initial Quit Date, does not see link to quit date on main page' do
+    scenario 'sets initial Quit Date, does not see link to quit date on main page' do
       sign_in_pt_en('149')
       find('.navbar-toggle').click
       find('.dropdown-toggle').click
@@ -123,7 +123,7 @@ describe 'A registered and consented participant signs in',
       expect(page).to_not have_content 'Set Your Quit Date'
     end
 
-    it 'sets a Quit Date, chooses Done to return to home page' do
+    scenario 'sets a Quit Date, chooses Done to return to home page' do
       sign_in_pt_en('154')
       visit "#{ENV['Base_URL']}/#/en/quit-date"
       expect(page).to_not have_css('.btn.btn-default', text: 'Done')
@@ -137,7 +137,7 @@ describe 'A registered and consented participant signs in',
       expect(page).to have_content 'Stop Smoking Guide'
     end
 
-    it 'has a Quit Date set, cannot access Quit Date except through navbar' do
+    scenario 'has a Quit Date set, cannot access Quit Date except through navbar' do
       sign_in_pt_en('150')
       expect(page).to_not have_css('a', text: 'Set Your Quit Date')
       go_to('Set Your Quit Date')
@@ -145,7 +145,7 @@ describe 'A registered and consented participant signs in',
       expect(page).to have_css('h3', text: "#{tomorrow.strftime('%B %-d, %Y')}")
     end
 
-    it 'cannot set a Quit Date in the past', :date do
+    scenario 'cannot set a Quit Date in the past', :date do
       sign_in_pt_en('134')
       visit "#{ENV['Base_URL']}/#/en/quit-date"
       yesterday = Date.today - 1
@@ -168,7 +168,7 @@ describe 'A registered and consented participant signs in',
                                text: "#{tomorrow.strftime('%-d')}")
     end
 
-    it 'sees Quit Date highlighted' do
+    scenario 'sees Quit Date highlighted' do
       sign_in_pt_en('141')
       visit "#{ENV['Base_URL']}/#/en/quit-date"
       tomorrow = Date.today + 1
@@ -180,7 +180,7 @@ describe 'A registered and consented participant signs in',
                                text: "#{tomorrow.strftime('%-d')}")
     end
 
-    it 'sees Quit Date at the top of page' do
+    scenario 'sees Quit Date at the top of page' do
       sign_in_pt_en('141')
       visit "#{ENV['Base_URL']}/#/en/quit-date"
       tomorrow = Date.today + 1
@@ -192,7 +192,7 @@ describe 'A registered and consented participant signs in',
         .to have_css('h3', text: "Date: #{tomorrow.strftime('%B %-d')}")
     end
 
-    it 'updates a Quit Date', :date do
+    scenario 'updates a Quit Date', :date do
       sign_in_pt_en('142')
       visit "#{ENV['Base_URL']}/#/en/quit-date"
       tomorrow = Date.today + 1
@@ -212,7 +212,7 @@ describe 'A registered and consented participant signs in',
                                text: "#{two_days.strftime('%-d')}")
     end
 
-    it 'cannot set a quit date more than 4 weeks from today', :date do
+    scenario 'cannot set a quit date more than 4 weeks from today', :date do
       sign_in_pt_en('133')
       visit "#{ENV['Base_URL']}/#/en/quit-date"
       beyond_four_wks = Date.today + 30
@@ -238,13 +238,13 @@ describe 'A registered and consented participant signs in',
   end
 
   context 'in Español' do
-    it 'navigates to Your Quit Date' do
+    scenario 'navigates to Your Quit Date' do
       sign_in_pt_es('233')
       click_on 'Elija la fecha en que dejará de fumar'
       expect(page).to have_css '.previous'
     end
 
-    it 'switches to English while in Your Quit Date' do
+    scenario 'switches to English while in Your Quit Date' do
       sign_in_pt_es('234')
       visit "#{ENV['Base_URL']}/#/es/quit-date"
       find('.ng-binding.ng-scope', text: 'Mi')
@@ -252,7 +252,7 @@ describe 'A registered and consented participant signs in',
       expect(page).to have_css('.ng-binding.ng-scope', text: 'We')
     end
 
-    it 'navigates to Cigarette Counter from Set Your Quit Date' do
+    scenario 'navigates to Cigarette Counter from Set Your Quit Date' do
       sign_in_pt_es('234')
       visit "#{ENV['Base_URL']}/#/es/quit-date"
       find('.ng-binding.ng-scope', text: 'Mi')
@@ -260,7 +260,7 @@ describe 'A registered and consented participant signs in',
       expect(page).to have_css('.pull-left', text: 'Ayer')
     end
 
-    it "sees today's date highlighted" do
+    scenario "sees today's date highlighted" do
       sign_in_pt_es('235')
       visit "#{ENV['Base_URL']}/#/es/quit-date"
       find('.ng-binding',
@@ -268,7 +268,7 @@ describe 'A registered and consented participant signs in',
       dateviewer.view_day("#{Date.today}")
     end
 
-    it 'navigates to previous month within Your Quit Date' do
+    scenario 'navigates to previous month within Your Quit Date' do
       sign_in_pt_es('236')
       visit "#{ENV['Base_URL']}/#/es/quit-date"
       find('.ng-binding',
@@ -280,7 +280,7 @@ describe 'A registered and consented participant signs in',
                      text: trans_mo("#{last_month.strftime('%b. %Y')}"))
     end
 
-    it 'navigates to next month within Your Quit Date' do
+    scenario 'navigates to next month within Your Quit Date' do
       sign_in_pt_es('237')
       visit "#{ENV['Base_URL']}/#/es/quit-date"
       find('.ng-binding',
@@ -299,7 +299,7 @@ describe 'A registered and consented participant signs in',
                      text: trans_mo("#{next_month.strftime('%b. %Y')}"))
     end
 
-    it 'navigates back to Today from another month' do
+    scenario 'navigates back to Today from another month' do
       sign_in_pt_es('237')
       visit "#{ENV['Base_URL']}/#/es/quit-date"
       find('.ng-binding',
@@ -320,7 +320,7 @@ describe 'A registered and consented participant signs in',
                      text: trans_mo("#{Date.today.strftime('%b. %Y')}"))
     end
 
-    it 'sees Quit Date highlighted' do
+    scenario 'sees Quit Date highlighted' do
       sign_in_pt_es('241')
       visit "#{ENV['Base_URL']}/#/es/quit-date"
       tom = Date.today + 1
@@ -333,7 +333,7 @@ describe 'A registered and consented participant signs in',
                                text: "#{tom.strftime('%-d')}")
     end
 
-    it 'sees Quit Date at the top of page' do
+    scenario 'sees Quit Date at the top of page' do
       sign_in_pt_es('241')
       visit "#{ENV['Base_URL']}/#/es/quit-date"
       tom = Date.today + 1
@@ -346,7 +346,7 @@ describe 'A registered and consented participant signs in',
         .to have_css('h3', text: "Dejará de Fumar: #{tom.strftime('%-d')}")
     end
 
-    it 'sets a Quit Date' do
+    scenario 'sets a Quit Date' do
       sign_in_pt_es('239')
       visit "#{ENV['Base_URL']}/#/es/quit-date"
       tom = Date.today + 1
@@ -360,7 +360,7 @@ describe 'A registered and consented participant signs in',
                                text: "#{tom.strftime('%-d')}")
     end
 
-    it 'sets initial Quit Date, does not see link to quit date on main page' do
+    scenario 'sets initial Quit Date, does not see link to quit date on main page' do
       sign_in_pt_es('249')
       find('.navbar-toggle').click
       find('.dropdown-toggle').click
@@ -383,7 +383,7 @@ describe 'A registered and consented participant signs in',
       expect(page).to_not have_content 'Elija la fecha en que dejará de fumar'
     end
 
-    it 'sets a Quit Date, chooses Done to return to home page' do
+    scenario 'sets a Quit Date, chooses Done to return to home page' do
       sign_in_pt_en('254')
       visit "#{ENV['Base_URL']}/#/es/quit-date"
       expect(page).to_not have_css('.btn.btn-default', text: 'Done')
@@ -398,7 +398,7 @@ describe 'A registered and consented participant signs in',
       expect(page).to have_content 'Guía Para Dejar de Fumar'
     end
 
-    it 'has a Quit Date set, cannot access Quit Date except through navbar' do
+    scenario 'has a Quit Date set, cannot access Quit Date except through navbar' do
       sign_in_pt_es('250')
       expect(page)
         .to_not have_css('a', text: 'Elija la fecha en que dejará de fumar')
@@ -407,7 +407,7 @@ describe 'A registered and consented participant signs in',
       expect(page).to have_css('h3', text: "#{tomorrow.strftime('%-d')}")
     end
 
-    it 'cannot set a Quit Date in the past' do
+    scenario 'cannot set a Quit Date in the past' do
       sign_in_pt_es('234')
       visit "#{ENV['Base_URL']}/#/es/quit-date"
       yes = Date.today - 1
@@ -430,7 +430,7 @@ describe 'A registered and consented participant signs in',
                                text: "#{tom.strftime('%-d')}")
     end
 
-    it 'updates a Quit Date' do
+    scenario 'updates a Quit Date' do
       sign_in_pt_es('242')
       visit "#{ENV['Base_URL']}/#/es/quit-date"
       tom = Date.today + 1
@@ -453,7 +453,7 @@ describe 'A registered and consented participant signs in',
                                text: "#{two_day.strftime('%-d')}")
     end
 
-    it 'cannot set a quit date more than 4 weeks from today' do
+    scenario 'cannot set a quit date more than 4 weeks from today' do
       sign_in_pt_en('233')
       visit "#{ENV['Base_URL']}/#/es/quit-date"
       beyond_four_wks = Date.today + 30

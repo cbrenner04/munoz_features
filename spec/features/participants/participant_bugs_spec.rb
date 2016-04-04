@@ -1,9 +1,9 @@
 # filename: spec/features/participants/participant_bugs_spec.rb
 
-describe 'A registered and consented participant signs in',
-         type: :feature, metadata: :participant do
+feature 'A registered and consented participant signs in',
+         metadata: :participant do
   context 'in English' do
-    it 'switches language at the end of a stop smoking guide, navigates to ' \
+    scenario 'switches language at the end of a stop smoking guide, navigates to ' \
        'the next guide, sees the correct text' do
       sign_in_pt_en('121')
       visit "#{ENV['Base_URL']}/#/en/stop-smoking-guide"
@@ -24,7 +24,7 @@ describe 'A registered and consented participant signs in',
   end
 
   context 'in Español' do
-    it 'switches language at the end of a stop smoking guide, navigates to ' \
+    scenario 'switches language at the end of a stop smoking guide, navigates to ' \
        'the next guide, sees the correct text' do
       sign_in_pt_es('225')
       visit "#{ENV['Base_URL']}/#/es/stop-smoking-guide"

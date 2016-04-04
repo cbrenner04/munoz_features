@@ -17,7 +17,6 @@ feature 'A visitor to the site', metadata: :participant do
       eligibility_eng.click_eng
       eligibility_eng.click_con
       eligibility_eng.answer_smoker
-
       go_to('Español')
       eligibility_eng.find_age
       first('input[value = true]').should be_checked
@@ -35,7 +34,8 @@ feature 'A visitor to the site', metadata: :participant do
       ptp_101_eligibility.enter_password
       eligibility_eng.click_submit
 
-      expect(page).to have_content 'You are eligible to participate'
+      expect(eligibility_eng).to be_eligible
+
       expect(page).to have_content 'Thank you!  Please check your email to ' \
                                    'verify your account and continue.'
     end
@@ -54,7 +54,7 @@ feature 'A visitor to the site', metadata: :participant do
       ptp_102_eligibility.enter_password
       eligibility_eng.click_submit
 
-      expect(page).to have_content 'You are not eligible to participate'
+      expect(eligibility_eng).to be_ineligible
     end
 
     scenario 'completes eligibility survey, is ineligible due to neg response Q2' do
@@ -77,13 +77,14 @@ feature 'A visitor to the site', metadata: :participant do
       ptp_103_eligibility.enter_password
       eligibility_eng.click_submit
 
-      expect(page).to have_content 'You are not eligible to participate'
+      expect(eligibility_eng).to be_ineligible
     end
 
     scenario 'completes eligibility survey, is ineligible due to neg response Q3' do
       eligibility_eng.eligibility_page
       eligibility_eng.find_age
       eligibility_eng.set_age_25
+
       q = ['Are you currently a smoker?',
            'Are you thinking of quitting smoking within the next 30 days?']
       q.zip(%w(Yes No)).each do |ques, answ|
@@ -94,103 +95,102 @@ feature 'A visitor to the site', metadata: :participant do
 
       ptp_104_eligibility.enter_sf_zip
       ptp_104_eligibility.answer_medical_care
-
       ptp_104_eligibility.enter_email
       ptp_104_eligibility.enter_phone_num
       ptp_104_eligibility.enter_password
       eligibility_eng.click_submit
-      expect(page).to have_content 'You are not eligible to participate'
+
+      expect(eligibility_eng).to be_ineligible
     end
 
     scenario 'does not fill in age, cannot submit form' do
       eligibility_eng.eligibility_page
       eligibility_eng.find_age
       eligibility_eng.answer_smoker
-
       ptp_9_eligibility.enter_sf_zip
       ptp_9_eligibility.answer_medical_care
-
       ptp_9_eligibility.enter_email
       ptp_9_eligibility.enter_phone_num
       ptp_9_eligibility.enter_password
-      find('input[type = submit]')[:disabled].should eq 'true'
+      eligibility_eng.submit_disabled
     end
 
     scenario 'fills in an age below the lower bound, cannot submit form' do
       eligibility_eng.eligibility_page
       eligibility_eng.find_age
-      first('input[type = tel]').set('0')
-      eligibility_eng.answer_smoker
 
+      first('input[type = tel]').set('0')
+
+      eligibility_eng.answer_smoker
       ptp_9_eligibility.enter_sf_zip
       ptp_9_eligibility.answer_medical_care
-
       ptp_9_eligibility.enter_email
       ptp_9_eligibility.enter_phone_num
       ptp_9_eligibility.enter_password
-      find('input[type = submit]')[:disabled].should eq 'true'
+      eligibility_eng.submit_disabled
     end
 
     scenario 'fills in an age above the upper bound, cannot submit form' do
       eligibility_eng.eligibility_page
       eligibility_eng.find_age
-      first('input[type = tel]').set('121')
-      eligibility_eng.answer_smoker
 
+      first('input[type = tel]').set('121')
+
+      eligibility_eng.answer_smoker
       ptp_9_eligibility.enter_sf_zip
       ptp_9_eligibility.answer_medical_care
-
       ptp_9_eligibility.enter_email
       ptp_9_eligibility.enter_phone_num
       ptp_9_eligibility.enter_password
-      find('input[type = submit]')[:disabled].should eq 'true'
+      eligibility_eng.submit_disabled
     end
 
     scenario 'does not fill in Q2, cannot submit form' do
       eligibility_eng.eligibility_page
       eligibility_eng.find_age
       eligibility_eng.set_age_25
+
       within('.form-group', text: 'Are you thinking of quitting') do
         choose 'Yes'
       end
 
       ptp_9_eligibility.enter_sf_zip
       ptp_9_eligibility.answer_medical_care
-
       ptp_9_eligibility.enter_email
       ptp_9_eligibility.enter_phone_num
       ptp_9_eligibility.enter_password
-      find('input[type = submit]')[:disabled].should eq 'true'
+      eligibility_eng.submit_disabled
     end
 
     scenario 'does not fill in Q3, cannot submit form' do
       eligibility_eng.eligibility_page
       eligibility_eng.find_age
       eligibility_eng.set_age_25
+
       within('.form-group', text: 'Are you currently a smoker?') do
         choose 'Yes'
       end
 
       ptp_9_eligibility.enter_sf_zip
       ptp_9_eligibility.answer_medical_care
-
       ptp_9_eligibility.enter_email
       ptp_9_eligibility.enter_phone_num
       ptp_9_eligibility.enter_password
-      find('input[type = submit]')[:disabled].should eq 'true'
+      eligibility_eng.submit_disabled
     end
 
+    # Not sure which participant profile to use
     scenario 'does not fill zip code, can submit form' do
       eligibility_eng.eligibility_page
       eligibility_eng.find_age
       eligibility_eng.set_age_25
       eligibility_eng.answer_smoker
-
       eligibility_eng.enter_email
       eligibility_eng.enter_phone_num
       eligibility_eng.enter_password
       eligibility_eng.click_submit
-      expect(page).to have_content 'You are eligible to participate'
+
+      expect(eligibility_eng).to be_eligible
     end
 
     scenario 'fills in a SF zip code, sees the drop down for selecting clinic' do
@@ -201,7 +201,9 @@ feature 'A visitor to the site', metadata: :participant do
 
       expect(page)
         .to_not have_content 'Where do you get most of your medical care?'
+
       eligibility_eng.enter_sf_zip
+
       expect(page)
         .to have_css('.form-group',
                      text: 'Where do you get most of your medical care?')
@@ -215,7 +217,7 @@ feature 'A visitor to the site', metadata: :participant do
 
       expect(page)
         .to_not have_content 'Where do you get most of your medical care?'
-      page.all('input[type = tel]')[1].set(ZipCodes::CHI.sample)
+      all('input[type = tel]')[1].set(ZipCodes::CHI.sample)
       expect(page)
         .to_not have_content 'Where do you get most of your medical care?'
     end
@@ -231,7 +233,7 @@ feature 'A visitor to the site', metadata: :participant do
 
       ptp_25_eligibility.enter_phone_num
       ptp_25_eligibility.enter_password
-      find('input[type = submit]')[:disabled].should eq 'true'
+      eligibility_eng.submit_disabled
     end
 
     scenario 'does not fill in phone number, cannot submit form' do
@@ -245,7 +247,7 @@ feature 'A visitor to the site', metadata: :participant do
 
       ptp_9_eligibility.enter_email
       ptp_9_eligibility.enter_password
-      find('input[type = submit]')[:disabled].should eq 'true'
+      eligibility_eng.submit_disabled
     end
 
     scenario 'does not fill in password, cannot submit form' do
@@ -253,13 +255,11 @@ feature 'A visitor to the site', metadata: :participant do
       eligibility_eng.find_age
       eligibility_eng.set_age_25
       eligibility_eng.answer_smoker
-
       ptp_25_eligibility.enter_sf_zip
       ptp_25_eligibility.answer_medical_care
-
       ptp_25_eligibility.enter_email
       ptp_25_eligibility.enter_password
-      find('input[type = submit]')[:disabled].should eq 'true'
+      eligibility_eng.submit_disabled
     end
 
     scenario 'enters a duplicate email, sees error message' do
@@ -267,16 +267,14 @@ feature 'A visitor to the site', metadata: :participant do
       eligibility_eng.find_age
       eligibility_eng.set_age_25
       eligibility_eng.answer_smoker
-
       ptp_152_eligibility.enter_sf_zip
       ptp_152_eligibility.answer_medical_care
-
       ptp_151_eligibility.enter_email
       ptp_152_eligibility.enter_phone_num
       ptp_152_eligibility.enter_password
       eligibility_eng.click_submit
-      expect(page).to have_content 'Sorry, there was a problem. ' \
-                                   'Please review your responses and try again.'
+
+      expect(eligibility_eng).to have_error_message
     end
 
     scenario 'enters a duplicate phone number, sees error message' do
@@ -284,16 +282,14 @@ feature 'A visitor to the site', metadata: :participant do
       eligibility_eng.find_age
       eligibility_eng.set_age_25
       eligibility_eng.answer_smoker
-
       ptp_152_eligibility.enter_sf_zip
       ptp_152_eligibility.answer_medical_care
-
       ptp_152_eligibility.enter_email
       ptp_151_eligibility.enter_phone_num
       ptp_152_eligibility.enter_password
       eligibility_eng.click_submit
-      expect(page).to have_content 'Sorry, there was a problem. ' \
-                                   'Please review your responses and try again.'
+
+      expect(eligibility_eng).to have_error_message
     end
 
     scenario 'fills out eligibility, is eligible, consents, ' \
@@ -302,10 +298,8 @@ feature 'A visitor to the site', metadata: :participant do
       eligibility_eng.find_age
       eligibility_eng.set_age_25
       eligibility_eng.answer_smoker
-
       ptp_32_eligibility.enter_sf_zip
       ptp_32_eligibility.answer_medical_care
-
       ptp_32_eligibility.enter_email
       ptp_32_eligibility.enter_phone_num
       ptp_32_eligibility.enter_password
@@ -319,7 +313,7 @@ feature 'A visitor to the site', metadata: :participant do
       navigate_to('Cigarette Counter')
       expect(page).to have_content 'Yesterday'
 
-      unless page.has_css?('.ng-binding', text: 'Stop Smoking Guide')
+      unless has_css?('.ng-binding', text: 'Stop Smoking Guide')
         find('.navbar-toggle').click
       end
       find('.ng-binding', text: 'Stop Smoking Guide').click
@@ -421,7 +415,7 @@ feature 'A visitor to the site', metadata: :participant do
 
     scenario 'completes eligibility survey and is eligible' do
       eligibility_esp.eligibility_page
-      find('.ng-binding', text: '¿Cuántos años tiene?')
+      eligibility_esp.find_age
       eligibility_esp.set_age_25
       eligibility_esp.answer_smoker
 
@@ -432,8 +426,9 @@ feature 'A visitor to the site', metadata: :participant do
       ptp_201_eligibility.enter_phone_num
       ptp_201_eligibility.enter_password
       eligibility_esp.click_submit
-      expect(page).to have_content 'Usted es eligible para participar en ' \
-                                   'nuestro estudio'
+
+      expect(eligibility_esp).to be_eligible
+
       expect(page).to have_content '¡Gracias! Por favor revise su correo ' \
                                    'electrónico para verificar su cuenta y ' \
                                    'continuar.'
@@ -441,7 +436,7 @@ feature 'A visitor to the site', metadata: :participant do
 
     scenario 'completes eligibility survey and is ineligible due to age' do
       eligibility_esp.eligibility_page
-      find('.ng-binding', text: '¿Cuántos años tiene?')
+      eligibility_esp.find_age
       first('input[type = tel]').set('17')
       eligibility_esp.answer_smoker
 
@@ -452,18 +447,13 @@ feature 'A visitor to the site', metadata: :participant do
       ptp_202_eligibility.enter_phone_num
       ptp_202_eligibility.enter_password
       eligibility_esp.click_submit
-      expect(page).to have_content 'Lo sentimos. Usted no es elegible para ' \
-                                   'participar en nuestro estudio. Le ' \
-                                   'recomendamos los siguientes 3 recursos ' \
-                                   'para dejar de fumar: ' \
-                                   'espanol.smokefree.gov, 1-800-NO-BUTTS ' \
-                                   '(662-8887) o es.becomeanex.org. Gracias ' \
-                                   'por contestar nuestras preguntas'
+
+      expect(eligibility_esp).to be_ineligible
     end
 
     scenario 'completes eligibility survey, is ineligible due to neg response Q2' do
       eligibility_esp.eligibility_page
-      find('.ng-binding', text: '¿Cuántos años tiene?')
+      eligibility_esp.find_age
       eligibility_esp.set_age_25
       q = ['¿Fuma usted actualmente?',
            '¿Está pensando en dejar de fumar dentro de los próximos 30 días?']
@@ -480,18 +470,13 @@ feature 'A visitor to the site', metadata: :participant do
       ptp_203_eligibility.enter_phone_num
       ptp_203_eligibility.enter_password
       eligibility_esp.click_submit
-      expect(page).to have_content 'Lo sentimos. Usted no es elegible para ' \
-                                   'participar en nuestro estudio. Le ' \
-                                   'recomendamos los siguientes 3 recursos ' \
-                                   'para dejar de fumar: ' \
-                                   'espanol.smokefree.gov, 1-800-NO-BUTTS ' \
-                                   '(662-8887) o es.becomeanex.org. Gracias ' \
-                                   'por contestar nuestras preguntas'
+
+      expect(eligibility_esp).to be_ineligible
     end
 
     scenario 'completes eligibility survey, is ineligible due to neg response Q3' do
       eligibility_esp.eligibility_page
-      find('.ng-binding', text: '¿Cuántos años tiene?')
+      eligibility_esp.find_age
       eligibility_esp.set_age_25
       q = ['¿Fuma usted actualmente?',
            '¿Está pensando en dejar de fumar dentro de los próximos 30 días?']
@@ -508,18 +493,13 @@ feature 'A visitor to the site', metadata: :participant do
       ptp_204_eligibility.enter_phone_num
       ptp_204_eligibility.enter_password
       eligibility_esp.click_submit
-      expect(page).to have_content 'Lo sentimos. Usted no es elegible para ' \
-                                   'participar en nuestro estudio. Le ' \
-                                   'recomendamos los siguientes 3 recursos ' \
-                                   'para dejar de fumar: ' \
-                                   'espanol.smokefree.gov, 1-800-NO-BUTTS ' \
-                                   '(662-8887) o es.becomeanex.org. Gracias ' \
-                                   'por contestar nuestras preguntas'
+
+      expect(eligibility_esp).to be_ineligible
     end
 
     scenario 'does not fill in age, cannot submit form' do
       eligibility_esp.eligibility_page
-      find('.ng-binding', text: '¿Cuántos años tiene?')
+      eligibility_esp.find_age
       eligibility_esp.answer_smoker
 
       ptp_10_eligibility.enter_sf_zip
@@ -528,12 +508,12 @@ feature 'A visitor to the site', metadata: :participant do
       ptp_10_eligibility.enter_email
       ptp_10_eligibility.enter_phone_num
       ptp_10_eligibility.enter_password
-      find('input[type = submit]')[:disabled].should eq 'true'
+      eligibility_esp.submit_disabled
     end
 
     scenario 'fills in an age below the lower bound, cannot submit form' do
       eligibility_esp.eligibility_page
-      find('.ng-binding', text: '¿Cuántos años tiene?')
+      eligibility_esp.find_age
       first('input[type = tel]').set('0')
       eligibility_esp.answer_smoker
 
@@ -543,12 +523,12 @@ feature 'A visitor to the site', metadata: :participant do
       ptp_10_eligibility.enter_email
       ptp_10_eligibility.enter_phone_num
       ptp_10_eligibility.enter_password
-      find('input[type = submit]')[:disabled].should eq 'true'
+      eligibility_esp.submit_disabled
     end
 
     scenario 'fills in an age above the upper bound, cannot submit form' do
       eligibility_esp.eligibility_page
-      find('.ng-binding', text: '¿Cuántos años tiene?')
+      eligibility_esp.find_age
       first('input[type = tel]').set('121')
       eligibility_esp.answer_smoker
 
@@ -558,12 +538,12 @@ feature 'A visitor to the site', metadata: :participant do
       ptp_10_eligibility.enter_email
       ptp_10_eligibility.enter_phone_num
       ptp_10_eligibility.enter_password
-      find('input[type = submit]')[:disabled].should eq 'true'
+      eligibility_esp.submit_disabled
     end
 
     scenario 'does not fill in Q2, cannot submit form' do
       eligibility_esp.eligibility_page
-      find('.ng-binding', text: '¿Cuántos años tiene?')
+      eligibility_esp.find_age
       eligibility_esp.set_age_25
       within('.form-group', text: '¿Está pensando en dejar de fumar dentro') do
         choose 'Sí'
@@ -575,12 +555,12 @@ feature 'A visitor to the site', metadata: :participant do
       ptp_10_eligibility.enter_email
       ptp_10_eligibility.enter_phone_num
       ptp_10_eligibility.enter_password
-      find('input[type = submit]')[:disabled].should eq 'true'
+      eligibility_esp.submit_disabled
     end
 
     scenario 'does not fill in Q3, cannot submit form' do
       eligibility_esp.eligibility_page
-      find('.ng-binding', text: '¿Cuántos años tiene?')
+      eligibility_esp.find_age
       eligibility_esp.set_age_25
       within('.form-group', text: '¿Fuma usted actualmente?') do
         choose 'Sí'
@@ -592,12 +572,12 @@ feature 'A visitor to the site', metadata: :participant do
       ptp_10_eligibility.enter_email
       ptp_10_eligibility.enter_phone_num
       ptp_10_eligibility.enter_password
-      find('input[type = submit]')[:disabled].should eq 'true'
+      eligibility_esp.submit_disabled
     end
 
     scenario 'does not fill in zip code, can submit form' do
       eligibility_esp.eligibility_page
-      find('.ng-binding', text: '¿Cuántos años tiene?')
+      eligibility_esp.find_age
       eligibility_esp.set_age_25
       eligibility_esp.answer_smoker
 
@@ -611,7 +591,7 @@ feature 'A visitor to the site', metadata: :participant do
 
     scenario 'fills in a SF zip code, sees the drop down for selecting a clinic' do
       eligibility_esp.eligibility_page
-      find('.ng-binding', text: '¿Cuántos años tiene?')
+      eligibility_esp.find_age
       eligibility_esp.set_age_25
       eligibility_esp.answer_smoker
 
@@ -625,20 +605,20 @@ feature 'A visitor to the site', metadata: :participant do
 
     scenario 'fills in a zip code other than SF, does not see drop down for clinic' do
       eligibility_esp.eligibility_page
-      find('.ng-binding', text: '¿Cuántos años tiene?')
+      eligibility_esp.find_age
       eligibility_esp.set_age_25
       eligibility_esp.answer_smoker
 
       expect(page)
         .to_not have_content '¿Dónde recibe la mayor parte de su atención médic'
-      page.all('input[type = tel]')[1].set(ZipCodes::CHI.sample)
+      all('input[type = tel]')[1].set(ZipCodes::CHI.sample)
       expect(page)
         .to_not have_content '¿Dónde recibe la mayor parte de su atención médic'
     end
 
     scenario 'does not fill in email, cannot submit form' do
       eligibility_esp.eligibility_page
-      find('.ng-binding', text: '¿Cuántos años tiene?')
+      eligibility_esp.find_age
       eligibility_esp.set_age_25
       eligibility_esp.answer_smoker
 
@@ -647,12 +627,12 @@ feature 'A visitor to the site', metadata: :participant do
 
       ptp_26_eligibility.enter_phone_num
       ptp_26_eligibility.enter_password
-      find('input[type = submit]')[:disabled].should eq 'true'
+      eligibility_esp.submit_disabled
     end
 
     scenario 'does not fill in phone number, cannot submit form' do
       eligibility_esp.eligibility_page
-      find('.ng-binding', text: '¿Cuántos años tiene?')
+      eligibility_esp.find_age
       eligibility_esp.set_age_25
       eligibility_esp.answer_smoker
 
@@ -661,12 +641,12 @@ feature 'A visitor to the site', metadata: :participant do
 
       ptp_26_eligibility.enter_email
       ptp_26_eligibility.enter_password
-      find('input[type = submit]')[:disabled].should eq 'true'
+      eligibility_esp.submit_disabled
     end
 
     scenario 'does not fill in password, cannot submit form' do
       eligibility_esp.eligibility_page
-      find('.ng-binding', text: '¿Cuántos años tiene?')
+      eligibility_esp.find_age
       eligibility_esp.set_age_25
       eligibility_esp.answer_smoker
 
@@ -675,12 +655,12 @@ feature 'A visitor to the site', metadata: :participant do
 
       ptp_26_eligibility.enter_email
       ptp_26_eligibility.enter_password
-      find('input[type = submit]')[:disabled].should eq 'true'
+      eligibility_esp.submit_disabled
     end
 
     scenario 'enters duplicate email, sees error message' do
       eligibility_esp.eligibility_page
-      find('.ng-binding', text: '¿Cuántos años tiene?')
+      eligibility_esp.find_age
       eligibility_esp.set_age_25
       eligibility_esp.answer_smoker
 
@@ -691,13 +671,12 @@ feature 'A visitor to the site', metadata: :participant do
       ptp_252_eligibility.enter_phone_num
       ptp_252_eligibility.enter_password
       eligibility_esp.click_submit
-      expect(page).to have_content 'Lo sentimos, hubo un problema. Por favor' \
-                                   ' revise sus respuestas y vuelva a intentar.'
+      expect(eligibility_esp).to have_error_message
     end
 
     scenario 'enters duplicate phone number, sees error message' do
       eligibility_esp.eligibility_page
-      find('.ng-binding', text: '¿Cuántos años tiene?')
+      eligibility_esp.find_age
       eligibility_esp.set_age_25
       eligibility_esp.answer_smoker
 
@@ -708,14 +687,13 @@ feature 'A visitor to the site', metadata: :participant do
       ptp_251_eligibility.enter_phone_num
       ptp_252_eligibility.enter_password
       eligibility_esp.click_submit
-      expect(page).to have_content 'Lo sentimos, hubo un problema. Por favor' \
-                                   ' revise sus respuestas y vuelva a intentar.'
+      expect(eligibility_esp).to have_error_message
     end
 
     scenario 'fills out eligibility, is eligible, consents,' \
        'is able to use the app with unconfirmed email' do
       eligibility_esp.eligibility_page
-      find('.ng-binding', text: '¿Cuántos años tiene?')
+      eligibility_esp.find_age
       eligibility_esp.set_age_25
       eligibility_esp.answer_smoker
 
