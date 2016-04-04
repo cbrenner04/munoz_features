@@ -25,8 +25,21 @@ class Participants
       find('.ng-binding', text: var)
     end
 
+    def has_age?
+      var = participants.locale('How old are you?', '¿Cuántos años tiene?')
+      has_text? var
+    end
+
     def set_age_25
       first('input[type = tel]').set(@age)
+    end
+
+    def has_questions?
+      var = participants.locale('Please answer the following questions to',
+                                'Por favor responda las siguientes ' \
+                                  'preguntas para determinar si es ' \
+                                  'elegible para participar.')
+      has_text? var
     end
 
     def answer_smoker
@@ -119,6 +132,15 @@ class Participants
                                 'Lo sentimos, hubo un problema. Por favor' \
                                   ' revise sus respuestas y vuelva a intentar.')
       has text? var
+    end
+
+    def has_account_verify?
+      var = participants.locale('Thank you!  Please check your email to ' \
+                                  'verify your account and continue.',
+                                '¡Gracias! Por favor revise su correo ' \
+                                  'electrónico para verificar su cuenta y ' \
+                                  'continuar.' )
+      has_text? var
     end
 
     private

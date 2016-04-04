@@ -7,9 +7,12 @@ feature 'A visitor to the site', metadata: :participant do
     scenario 'navigates to the eligibility page' do
       eligibility_eng.go_to_root
       eligibility_eng.click_eng
-      expect(page).to have_content 'Please answer the following questions to'
+
+      expect(eligibility_eng).to have_questions
+
       eligibility_eng.click_con
-      expect(page).to have_content 'How old are you?'
+
+      expect(eligibility_eng).to have_age
     end
 
     scenario 'switches to Español when filling out eligibility' do
@@ -19,6 +22,7 @@ feature 'A visitor to the site', metadata: :participant do
       eligibility_eng.answer_smoker
       go_to('Español')
       eligibility_eng.find_age
+      # huh?
       first('input[value = true]').should be_checked
     end
 
@@ -36,8 +40,7 @@ feature 'A visitor to the site', metadata: :participant do
 
       expect(eligibility_eng).to be_eligible
 
-      expect(page).to have_content 'Thank you!  Please check your email to ' \
-                                   'verify your account and continue.'
+      expect(eligibility_eng).to have_account_verify
     end
 
     scenario 'completes eligibility survey and is ineligible due to age' do
@@ -199,6 +202,7 @@ feature 'A visitor to the site', metadata: :participant do
       eligibility_eng.set_age_25
       eligibility_eng.answer_smoker
 
+      # What's the difference here? what up with not having content?
       expect(page)
         .to_not have_content 'Where do you get most of your medical care?'
 
@@ -217,7 +221,9 @@ feature 'A visitor to the site', metadata: :participant do
 
       expect(page)
         .to_not have_content 'Where do you get most of your medical care?'
+
       all('input[type = tel]')[1].set(ZipCodes::CHI.sample)
+
       expect(page)
         .to_not have_content 'Where do you get most of your medical care?'
     end
@@ -227,10 +233,8 @@ feature 'A visitor to the site', metadata: :participant do
       eligibility_eng.find_age
       eligibility_eng.set_age_25
       eligibility_eng.answer_smoker
-
       ptp_25_eligibility.enter_sf_zip
       ptp_25_eligibility.answer_medical_care
-
       ptp_25_eligibility.enter_phone_num
       ptp_25_eligibility.enter_password
       eligibility_eng.submit_disabled
@@ -241,10 +245,8 @@ feature 'A visitor to the site', metadata: :participant do
       eligibility_eng.find_age
       eligibility_eng.set_age_25
       eligibility_eng.answer_smoker
-
       ptp_9_eligibility.enter_sf_zip
       ptp_9_eligibility.answer_medical_care
-
       ptp_9_eligibility.enter_email
       ptp_9_eligibility.enter_password
       eligibility_eng.submit_disabled
@@ -304,13 +306,16 @@ feature 'A visitor to the site', metadata: :participant do
       ptp_32_eligibility.enter_phone_num
       ptp_32_eligibility.enter_password
       eligibility_eng.click_submit
+
       click_on 'View the consent form'
       find('h3', text: 'PALO ALTO UNIVERSITY CONSENT')
       first('.ng-pristine.ng-untouched.ng-invalid.ng-invalid-required').click
       click_on 'Submit'
+
       expect(page).to have_css('iframe[class = ng-scope]')
 
       navigate_to('Cigarette Counter')
+
       expect(page).to have_content 'Yesterday'
 
       unless has_css?('.ng-binding', text: 'Stop Smoking Guide')
@@ -327,6 +332,7 @@ feature 'A visitor to the site', metadata: :participant do
 
     scenario 'sees invalid formatting in age field on eligibility form' do
       eligibility_eng.eligibility_page
+
       within('.form-group', text: 'How old are you?') do
         expect(page).to_not have_css('.ng-invalid-pattern')
         find('input[type = tel]').set('h')
@@ -337,6 +343,7 @@ feature 'A visitor to the site', metadata: :participant do
     scenario 'sees invalid formatting in zip code field when entering less than 5 ' \
        'digits on eligibility form' do
       eligibility_eng.eligibility_page
+
       within('.form-group', text: 'What is your zip code?') do
         expect(page).to_not have_css('.ng-invalid-minlength')
         find('input[type = tel]').set('33')
@@ -348,6 +355,7 @@ feature 'A visitor to the site', metadata: :participant do
     scenario 'sees invalid formatting in zip code field when entering more than 5 ' \
        'digits on eligibility form' do
       eligibility_eng.eligibility_page
+
       within('.form-group', text: 'What is your zip code?') do
         expect(page).to_not have_css('.ng-invalid-minlength')
         find('input[type = tel]').set('333333333')
@@ -358,6 +366,7 @@ feature 'A visitor to the site', metadata: :participant do
 
     scenario 'sees invalid formatting in email field on eligibility form' do
       eligibility_eng.eligibility_page
+
       within('.form-group', text: 'Email') do
         expect(page).to_not have_css('.ng-invalid-email')
         find('input[type = email]').set('2')
@@ -368,6 +377,7 @@ feature 'A visitor to the site', metadata: :participant do
 
     scenario 'sees invalid formatting in phone number field on eligibility form' do
       eligibility_eng.eligibility_page
+
       within('.form-group', text: 'Phone Number') do
         expect(page).to_not have_css('.ng-invalid-pattern')
         find('input[type = tel]').set('33')
@@ -378,6 +388,7 @@ feature 'A visitor to the site', metadata: :participant do
 
     scenario 'sees invalid formatting in password field on eligibility form' do
       eligibility_eng.eligibility_page
+
       within('.form-group', text: 'Password') do
         expect(page).to_not have_css('.ng-invalid-minlength')
         find('input[type = password]').set('2')
@@ -392,18 +403,19 @@ feature 'A visitor to the site', metadata: :participant do
   context 'in Español' do
     scenario 'navigates to the eligibilty page' do
       eligibility_esp.go_to_root
-      click_on 'Español'
-      expect(page)
-        .to have_content 'Por favor responda las siguientes preguntas para ' \
-                         'determinar si es elegible para participar.'
-      click_on 'Continuar'
+      eligibility_esp.click_esp
+
+      expect(eligibility_esp).to have_questions
+
+      eligibility_esp.click_con
       expect(page).to have_content '¿Cuántos años tiene?'
     end
 
     scenario 'switches to English when filling out eligibility' do
       eligibility_esp.go_to_root
-      click_on 'Español'
-      click_on 'Continuar'
+      eligibility_esp.click_esp
+      eligibility_esp.click_con
+
       within('.form-group', text: '¿Fuma usted actualmente?') do
         choose 'Sí'
       end
@@ -418,10 +430,8 @@ feature 'A visitor to the site', metadata: :participant do
       eligibility_esp.find_age
       eligibility_esp.set_age_25
       eligibility_esp.answer_smoker
-
       ptp_201_eligibility.enter_sf_zip
       ptp_201_eligibility.answer_medical_care
-
       ptp_201_eligibility.enter_email
       ptp_201_eligibility.enter_phone_num
       ptp_201_eligibility.enter_password
@@ -429,9 +439,7 @@ feature 'A visitor to the site', metadata: :participant do
 
       expect(eligibility_esp).to be_eligible
 
-      expect(page).to have_content '¡Gracias! Por favor revise su correo ' \
-                                   'electrónico para verificar su cuenta y ' \
-                                   'continuar.'
+      expect(eligibility_esp).to have_account_verify
     end
 
     scenario 'completes eligibility survey and is ineligible due to age' do
