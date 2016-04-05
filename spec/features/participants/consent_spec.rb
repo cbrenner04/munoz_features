@@ -10,8 +10,9 @@ feature 'A visitor to the site', metadata: :participant do
     scenario 'switches to Español when consenting' do
       visit eligibility_eng.eligibility_page
       ptp_35_eligibility.find_age
-      ptp_35_eligibility.set_age_25
-      ptp_35_eligibility.answer_smoker
+      ptp_35_eligibility.set_age
+      ptp_35_eligibility.answer_current_smoker
+      ptp_35_eligibility.thinking_of_quitting
       ptp_35_eligibility.enter_sf_zip
       ptp_35_eligibility.answer_medical_care
       ptp_35_eligibility.enter_email
@@ -41,8 +42,9 @@ feature 'A visitor to the site', metadata: :participant do
              'is able to consent immediately' do
       visit eligibility_eng.eligibility_page
       ptp_36_eligibility.find_age
-      ptp_36_eligibility.set_age_25
-      ptp_36_eligibility.answer_smoker
+      ptp_36_eligibility.set_age
+      ptp_36_eligibility.answer_current_smoker
+      ptp_36_eligibility.thinking_of_quitting
       ptp_36_eligibility.enter_sf_zip
       ptp_36_eligibility.answer_medical_care
       ptp_36_eligibility.enter_email
@@ -63,8 +65,9 @@ feature 'A visitor to the site', metadata: :participant do
        'is eligible, sees consent form in Español' do
       visit eligibility_eng.eligibility_page
       eligibility_eng.find_age
-      eligibility_eng.set_age_25
-      eligibility_eng.answer_smoker
+      eligibility_eng.set_age
+      eligibility_eng.answer_current_smoker
+      eligibility_eng.thinking_of_quitting
       participant_37.switch_language
       ptp_37_eligibility.find_age
       ptp_37_eligibility.enter_sf_zip
@@ -158,8 +161,9 @@ feature 'A visitor to the site', metadata: :participant do
     scenario 'switches to English when consenting' do
       visit eligibility_esp.eligibility_page
       ptp_38_eligibility.find_age
-      ptp_38_eligibility.set_age_25
-      ptp_38_eligibility.answer_smoker
+      ptp_38_eligibility.set_age
+      ptp_38_eligibility.answer_current_smoker
+      ptp_38_eligibility.thinking_of_quitting
       ptp_38_eligibility.enter_sf_zip
       ptp_38_eligibility.answer_medical_care
       ptp_38_eligibility.enter_email
@@ -189,8 +193,9 @@ feature 'A visitor to the site', metadata: :participant do
         'is able to consent immediately' do
       visit eligibility_esp.eligibility_page
       ptp_39_eligibility.find_age
-      ptp_39_eligibility.set_age_25
-      ptp_39_eligibility.answer_smoker
+      ptp_39_eligibility.set_age
+      ptp_39_eligibility.answer_current_smoker
+      ptp_39_eligibility.thinking_of_quitting
       ptp_39_eligibility.enter_sf_zip
       ptp_39_eligibility.answer_medical_care
       ptp_39_eligibility.enter_email
@@ -211,8 +216,9 @@ feature 'A visitor to the site', metadata: :participant do
        'is eligible, sees consent form in English' do
       visit eligibility_esp.eligibility_page
       eligibility_esp.find_age
-      eligibility_esp.set_age_25
-      eligibility_esp.answer_smoker
+      eligibility_esp.set_age
+      eligibility_esp.answer_current_smoker
+      eligibility_esp.thinking_of_quitting
       participant_40.switch_language
       ptp_40_eligibility.find_age
       ptp_40_eligibility.enter_sf_zip

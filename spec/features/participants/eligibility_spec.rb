@@ -19,18 +19,21 @@ feature 'A visitor to the site', metadata: :participant do
       eligibility_eng.go_to_root
       eligibility_eng.click_eng
       eligibility_eng.click_con
-      eligibility_eng.answer_smoker
-      go_to('Español')
+      eligibility_eng.answer_current_smoker
+      eligibility_eng.thinking_of_quitting
+      eligibility_eng.eligibility_esp.go_to('Español')
       eligibility_eng.find_age
-      # huh?
+  
+     # huh?
       first('input[value = true]').should be_checked
     end
 
     scenario 'completes eligibility survey and is eligible' do
       eligibility_eng.eligibility_page
       eligibility_eng.find_age
-      eligibility_eng.set_age_25
-      eligibility_eng.answer_smoker
+      eligibility_eng.set_age
+      eligibility_eng.answer_current_smoker
+      eligibility_eng.thinking_of_quitting
       ptp_101_eligibility.enter_sf_zip
       ptp_101_eligibility.answer_medical_care
       ptp_101_eligibility.enter_email
@@ -46,10 +49,9 @@ feature 'A visitor to the site', metadata: :participant do
     scenario 'completes eligibility survey and is ineligible due to age' do
       eligibility_eng.eligibility_page
       eligibility_eng.find_age
-
-      first('input[type = tel]').set('17')
-
-      eligibility_eng.answer_smoker
+      ptp_102_elg_age_17.set_age
+      eligibility_eng.answer_current_smoker
+      eligibility_eng.thinking_of_quitting
       ptp_102_eligibility.enter_sf_zip
       ptp_102_eligibility.answer_medical_care
       ptp_102_eligibility.enter_email
@@ -63,16 +65,9 @@ feature 'A visitor to the site', metadata: :participant do
     scenario 'completes eligibility survey, is ineligible due to neg response Q2' do
       eligibility_eng.eligibility_page
       eligibility_eng.find_age
-      eligibility_eng.set_age_25
-
-      q = ['Are you currently a smoker?',
-           'Are you thinking of quitting smoking within the next 30 days?']
-      q.zip(%w(No Yes)).each do |ques, answ|
-        within('.form-group', text: ques) do
-          choose answ
-        end
-      end
-
+      eligibility_eng.set_age
+      eligibility_eng.answer_current_smoker
+      eligibility_eng.thinking_of_quitting
       ptp_103_eligibility.enter_sf_zip
       ptp_103_eligibility.answer_medical_care
       ptp_103_eligibility.enter_email
@@ -86,16 +81,9 @@ feature 'A visitor to the site', metadata: :participant do
     scenario 'completes eligibility survey, is ineligible due to neg response Q3' do
       eligibility_eng.eligibility_page
       eligibility_eng.find_age
-      eligibility_eng.set_age_25
-
-      q = ['Are you currently a smoker?',
-           'Are you thinking of quitting smoking within the next 30 days?']
-      q.zip(%w(Yes No)).each do |ques, answ|
-        within('.form-group', text: ques) do
-          choose answ
-        end
-      end
-
+      eligibility_eng.set_age
+      eligibility_eng.answer_current_smoker
+      eligibility_eng.thinking_of_quitting
       ptp_104_eligibility.enter_sf_zip
       ptp_104_eligibility.answer_medical_care
       ptp_104_eligibility.enter_email
@@ -109,7 +97,8 @@ feature 'A visitor to the site', metadata: :participant do
     scenario 'does not fill in age, cannot submit form' do
       eligibility_eng.eligibility_page
       eligibility_eng.find_age
-      eligibility_eng.answer_smoker
+      eligibility_eng.answer_current_smoker
+      eligibility_eng.thinking_of_quitting
       ptp_9_eligibility.enter_sf_zip
       ptp_9_eligibility.answer_medical_care
       ptp_9_eligibility.enter_email
@@ -121,10 +110,9 @@ feature 'A visitor to the site', metadata: :participant do
     scenario 'fills in an age below the lower bound, cannot submit form' do
       eligibility_eng.eligibility_page
       eligibility_eng.find_age
-
-      first('input[type = tel]').set('0')
-
-      eligibility_eng.answer_smoker
+      ptp_9_elg_age_0.set_age
+      eligibility_eng.answer_current_smoker
+      eligibility_eng.thinking_of_quitting
       ptp_9_eligibility.enter_sf_zip
       ptp_9_eligibility.answer_medical_care
       ptp_9_eligibility.enter_email
@@ -136,10 +124,9 @@ feature 'A visitor to the site', metadata: :participant do
     scenario 'fills in an age above the upper bound, cannot submit form' do
       eligibility_eng.eligibility_page
       eligibility_eng.find_age
-
-      first('input[type = tel]').set('121')
-
-      eligibility_eng.answer_smoker
+      ptp_9_elg_age_121.set_age
+      eligibility_eng.answer_current_smoker
+      eligibility_eng.thinking_of_quitting
       ptp_9_eligibility.enter_sf_zip
       ptp_9_eligibility.answer_medical_care
       ptp_9_eligibility.enter_email
@@ -151,7 +138,7 @@ feature 'A visitor to the site', metadata: :participant do
     scenario 'does not fill in Q2, cannot submit form' do
       eligibility_eng.eligibility_page
       eligibility_eng.find_age
-      eligibility_eng.set_age_25
+      eligibility_eng.set_age
 
       within('.form-group', text: 'Are you thinking of quitting') do
         choose 'Yes'
@@ -168,7 +155,7 @@ feature 'A visitor to the site', metadata: :participant do
     scenario 'does not fill in Q3, cannot submit form' do
       eligibility_eng.eligibility_page
       eligibility_eng.find_age
-      eligibility_eng.set_age_25
+      eligibility_eng.set_age
 
       within('.form-group', text: 'Are you currently a smoker?') do
         choose 'Yes'
@@ -181,13 +168,14 @@ feature 'A visitor to the site', metadata: :participant do
       ptp_9_eligibility.enter_password
       eligibility_eng.submit_disabled
     end
-
-    # Not sure which participant profile to use
+  
+    # Update to ptp 31
     scenario 'does not fill zip code, can submit form' do
       eligibility_eng.eligibility_page
       eligibility_eng.find_age
-      eligibility_eng.set_age_25
-      eligibility_eng.answer_smoker
+      eligibility_eng.set_age
+      eligibility_eng.answer_current_smoker
+      eligibility_eng.thinking_of_quitting
       eligibility_eng.enter_email
       eligibility_eng.enter_phone_num
       eligibility_eng.enter_password
@@ -199,10 +187,13 @@ feature 'A visitor to the site', metadata: :participant do
     scenario 'fills in a SF zip code, sees the drop down for selecting clinic' do
       eligibility_eng.eligibility_page
       eligibility_eng.find_age
-      eligibility_eng.set_age_25
-      eligibility_eng.answer_smoker
-
+      eligibility_eng.set_age
+      eligibility_eng.answer_current_smoker
+      eligibility_eng.thinking_of_quitting
+  
       # What's the difference here? what up with not having content?
+      #create typical has method, just use "not" in comment
+      #or use "no" 
       expect(page)
         .to_not have_content 'Where do you get most of your medical care?'
 
@@ -216,13 +207,14 @@ feature 'A visitor to the site', metadata: :participant do
     scenario 'fills in a zip other than SF, does not see the drop down for clinic' do
       eligibility_eng.eligibility_page
       eligibility_eng.find_age
-      eligibility_eng.set_age_25
-      eligibility_eng.answer_smoker
+      eligibility_eng.set_age
+      eligibility_eng.answer_current_smoker
+      eligibility_eng.thinking_of_quitting
 
       expect(page)
         .to_not have_content 'Where do you get most of your medical care?'
 
-      all('input[type = tel]')[1].set(ZipCodes::CHI.sample)
+      eligibility_eng.enter_chi_zip
 
       expect(page)
         .to_not have_content 'Where do you get most of your medical care?'
@@ -231,8 +223,9 @@ feature 'A visitor to the site', metadata: :participant do
     scenario 'does not fill in email, cannot submit form' do
       eligibility_eng.eligibility_page
       eligibility_eng.find_age
-      eligibility_eng.set_age_25
-      eligibility_eng.answer_smoker
+      eligibility_eng.set_age
+      eligibility_eng.answer_current_smoker
+      eligibility_eng.thinking_of_quitting
       ptp_25_eligibility.enter_sf_zip
       ptp_25_eligibility.answer_medical_care
       ptp_25_eligibility.enter_phone_num
@@ -243,8 +236,9 @@ feature 'A visitor to the site', metadata: :participant do
     scenario 'does not fill in phone number, cannot submit form' do
       eligibility_eng.eligibility_page
       eligibility_eng.find_age
-      eligibility_eng.set_age_25
-      eligibility_eng.answer_smoker
+      eligibility_eng.set_age
+      eligibility_eng.answer_current_smoker
+      eligibility_eng.thinking_of_quitting
       ptp_9_eligibility.enter_sf_zip
       ptp_9_eligibility.answer_medical_care
       ptp_9_eligibility.enter_email
@@ -255,8 +249,9 @@ feature 'A visitor to the site', metadata: :participant do
     scenario 'does not fill in password, cannot submit form' do
       eligibility_eng.eligibility_page
       eligibility_eng.find_age
-      eligibility_eng.set_age_25
-      eligibility_eng.answer_smoker
+      eligibility_eng.set_age
+      eligibility_eng.answer_current_smoker
+      eligibility_eng.thinking_of_quitting
       ptp_25_eligibility.enter_sf_zip
       ptp_25_eligibility.answer_medical_care
       ptp_25_eligibility.enter_email
@@ -267,8 +262,9 @@ feature 'A visitor to the site', metadata: :participant do
     scenario 'enters a duplicate email, sees error message' do
       eligibility_eng.eligibility_page
       eligibility_eng.find_age
-      eligibility_eng.set_age_25
-      eligibility_eng.answer_smoker
+      eligibility_eng.set_age
+      eligibility_eng.answer_current_smoker
+      eligibility_eng.thinking_of_quitting
       ptp_152_eligibility.enter_sf_zip
       ptp_152_eligibility.answer_medical_care
       ptp_151_eligibility.enter_email
@@ -282,8 +278,9 @@ feature 'A visitor to the site', metadata: :participant do
     scenario 'enters a duplicate phone number, sees error message' do
       eligibility_eng.eligibility_page
       eligibility_eng.find_age
-      eligibility_eng.set_age_25
-      eligibility_eng.answer_smoker
+      eligibility_eng.set_age
+      eligibility_eng.answer_current_smoker
+      eligibility_eng.thinking_of_quitting
       ptp_152_eligibility.enter_sf_zip
       ptp_152_eligibility.answer_medical_care
       ptp_152_eligibility.enter_email
@@ -298,8 +295,9 @@ feature 'A visitor to the site', metadata: :participant do
        'can still use app with unconfirmed email' do
       eligibility_eng.eligibility_page
       eligibility_eng.find_age
-      eligibility_eng.set_age_25
-      eligibility_eng.answer_smoker
+      eligibility_eng.set_age
+      eligibility_eng.answer_current_smoker
+      eligibility_eng.thinking_of_quitting
       ptp_32_eligibility.enter_sf_zip
       ptp_32_eligibility.answer_medical_care
       ptp_32_eligibility.enter_email
@@ -325,7 +323,7 @@ feature 'A visitor to the site', metadata: :participant do
       expect(page).to have_css('a', text: 'Why Should I Quit?')
 
       sleep(2)
-      go_to('Review Consent')
+      eligibility_esp.go_to('Review Consent')
       expect(page).to have_content 'PALO ALTO UNIVERSITY CONSENT TO ' \
                                    'PARTICIPATE IN A RESEARCH STUDY'
     end
@@ -420,7 +418,7 @@ feature 'A visitor to the site', metadata: :participant do
         choose 'Sí'
       end
 
-      go_to('English')
+      eligibility_esp.go_to('English')
       eligibility_eng.find_age
       first('input[value = true]').should be_checked
     end
@@ -428,8 +426,9 @@ feature 'A visitor to the site', metadata: :participant do
     scenario 'completes eligibility survey and is eligible' do
       eligibility_esp.eligibility_page
       eligibility_esp.find_age
-      eligibility_esp.set_age_25
-      eligibility_esp.answer_smoker
+      eligibility_esp.set_age
+      eligibility_esp.answer_current_smoker
+      eligibility_esp.thinking_of_quitting
       ptp_201_eligibility.enter_sf_zip
       ptp_201_eligibility.answer_medical_care
       ptp_201_eligibility.enter_email
@@ -445,12 +444,11 @@ feature 'A visitor to the site', metadata: :participant do
     scenario 'completes eligibility survey and is ineligible due to age' do
       eligibility_esp.eligibility_page
       eligibility_esp.find_age
-      first('input[type = tel]').set('17')
-      eligibility_esp.answer_smoker
-
+      ptp_202_elg_age_17.set_age
+      eligibility_esp.answer_current_smoker
+      eligibility_esp.thinking_of_quitting
       ptp_202_eligibility.enter_sf_zip
       ptp_202_eligibility.answer_medical_care
-
       ptp_202_eligibility.enter_email
       ptp_202_eligibility.enter_phone_num
       ptp_202_eligibility.enter_password
@@ -462,18 +460,11 @@ feature 'A visitor to the site', metadata: :participant do
     scenario 'completes eligibility survey, is ineligible due to neg response Q2' do
       eligibility_esp.eligibility_page
       eligibility_esp.find_age
-      eligibility_esp.set_age_25
-      q = ['¿Fuma usted actualmente?',
-           '¿Está pensando en dejar de fumar dentro de los próximos 30 días?']
-      q.zip(%w(No Sí)).each do |ques, answ|
-        within('.form-group', text: ques) do
-          choose answ
-        end
-      end
-
+      eligibility_esp.set_age
+      eligibility_esp.answer_current_smoker
+      eligibility_esp.thinking_of_quitting
       ptp_203_eligibility.enter_sf_zip
       ptp_203_eligibility.answer_medical_care
-
       ptp_203_eligibility.enter_email
       ptp_203_eligibility.enter_phone_num
       ptp_203_eligibility.enter_password
@@ -485,18 +476,11 @@ feature 'A visitor to the site', metadata: :participant do
     scenario 'completes eligibility survey, is ineligible due to neg response Q3' do
       eligibility_esp.eligibility_page
       eligibility_esp.find_age
-      eligibility_esp.set_age_25
-      q = ['¿Fuma usted actualmente?',
-           '¿Está pensando en dejar de fumar dentro de los próximos 30 días?']
-      q.zip(%w(Sí No)).each do |ques, answ|
-        within('.form-group', text: ques) do
-          choose answ
-        end
-      end
-
+      eligibility_esp.set_age
+      eligibility_esp.answer_current_smoker
+      eligibility_esp.thinking_of_quitting
       ptp_204_eligibility.enter_sf_zip
       ptp_204_eligibility.answer_medical_care
-
       ptp_204_eligibility.enter_email
       ptp_204_eligibility.enter_phone_num
       ptp_204_eligibility.enter_password
@@ -508,7 +492,8 @@ feature 'A visitor to the site', metadata: :participant do
     scenario 'does not fill in age, cannot submit form' do
       eligibility_esp.eligibility_page
       eligibility_esp.find_age
-      eligibility_esp.answer_smoker
+      eligibility_esp.answer_current_smoker
+      eligibility_esp.thinking_of_quitting
 
       ptp_10_eligibility.enter_sf_zip
       ptp_10_eligibility.answer_medical_care
@@ -522,12 +507,11 @@ feature 'A visitor to the site', metadata: :participant do
     scenario 'fills in an age below the lower bound, cannot submit form' do
       eligibility_esp.eligibility_page
       eligibility_esp.find_age
-      first('input[type = tel]').set('0')
-      eligibility_esp.answer_smoker
-
+      ptp_10_elg_age_0.set_age
+      eligibility_esp.answer_current_smoker
+      eligibility_esp.thinking_of_quitting
       ptp_10_eligibility.enter_sf_zip
       ptp_10_eligibility.answer_medical_care
-
       ptp_10_eligibility.enter_email
       ptp_10_eligibility.enter_phone_num
       ptp_10_eligibility.enter_password
@@ -537,12 +521,11 @@ feature 'A visitor to the site', metadata: :participant do
     scenario 'fills in an age above the upper bound, cannot submit form' do
       eligibility_esp.eligibility_page
       eligibility_esp.find_age
-      first('input[type = tel]').set('121')
-      eligibility_esp.answer_smoker
-
+      ptp_10_elg_age_121.set_age
+      eligibility_esp.answer_current_smoker
+      eligibility_esp.thinking_of_quitting
       ptp_10_eligibility.enter_sf_zip
       ptp_10_eligibility.answer_medical_care
-
       ptp_10_eligibility.enter_email
       ptp_10_eligibility.enter_phone_num
       ptp_10_eligibility.enter_password
@@ -552,14 +535,13 @@ feature 'A visitor to the site', metadata: :participant do
     scenario 'does not fill in Q2, cannot submit form' do
       eligibility_esp.eligibility_page
       eligibility_esp.find_age
-      eligibility_esp.set_age_25
+      eligibility_esp.set_age
       within('.form-group', text: '¿Está pensando en dejar de fumar dentro') do
         choose 'Sí'
       end
 
       ptp_10_eligibility.enter_sf_zip
       ptp_10_eligibility.answer_medical_care
-
       ptp_10_eligibility.enter_email
       ptp_10_eligibility.enter_phone_num
       ptp_10_eligibility.enter_password
@@ -569,14 +551,13 @@ feature 'A visitor to the site', metadata: :participant do
     scenario 'does not fill in Q3, cannot submit form' do
       eligibility_esp.eligibility_page
       eligibility_esp.find_age
-      eligibility_esp.set_age_25
+      eligibility_esp.set_age
       within('.form-group', text: '¿Fuma usted actualmente?') do
         choose 'Sí'
       end
 
       ptp_10_eligibility.enter_sf_zip
       ptp_10_eligibility.answer_medical_care
-
       ptp_10_eligibility.enter_email
       ptp_10_eligibility.enter_phone_num
       ptp_10_eligibility.enter_password
@@ -586,9 +567,9 @@ feature 'A visitor to the site', metadata: :participant do
     scenario 'does not fill in zip code, can submit form' do
       eligibility_esp.eligibility_page
       eligibility_esp.find_age
-      eligibility_esp.set_age_25
-      eligibility_esp.answer_smoker
-
+      eligibility_esp.set_age
+      eligibility_esp.answer_current_smoker
+      eligibility_esp.thinking_of_quitting
       eligibility_esp.enter_email
       eligibility_esp.enter_phone_num
       eligibility_esp.enter_password
@@ -600,8 +581,9 @@ feature 'A visitor to the site', metadata: :participant do
     scenario 'fills in a SF zip code, sees the drop down for selecting a clinic' do
       eligibility_esp.eligibility_page
       eligibility_esp.find_age
-      eligibility_esp.set_age_25
-      eligibility_esp.answer_smoker
+      eligibility_esp.set_age
+      eligibility_esp.answer_current_smoker
+      eligibility_esp.thinking_of_quitting
 
       expect(page)
         .to_not have_content '¿Dónde recibe la mayor parte de su atención médic'
@@ -614,12 +596,15 @@ feature 'A visitor to the site', metadata: :participant do
     scenario 'fills in a zip code other than SF, does not see drop down for clinic' do
       eligibility_esp.eligibility_page
       eligibility_esp.find_age
-      eligibility_esp.set_age_25
-      eligibility_esp.answer_smoker
+      eligibility_esp.set_age
+      eligibility_esp.answer_current_smoker
+      eligibility_esp.thinking_of_quitting
 
       expect(page)
         .to_not have_content '¿Dónde recibe la mayor parte de su atención médic'
-      all('input[type = tel]')[1].set(ZipCodes::CHI.sample)
+      
+      eligibility_esp.enter_chi_zip
+      
       expect(page)
         .to_not have_content '¿Dónde recibe la mayor parte de su atención médic'
     end
@@ -627,12 +612,11 @@ feature 'A visitor to the site', metadata: :participant do
     scenario 'does not fill in email, cannot submit form' do
       eligibility_esp.eligibility_page
       eligibility_esp.find_age
-      eligibility_esp.set_age_25
-      eligibility_esp.answer_smoker
-
+      eligibility_esp.set_age
+      eligibility_esp.answer_current_smoker
+      eligibility_esp.thinking_of_quitting
       ptp_26_eligibility.enter_sf_zip
       ptp_26_eligibility.answer_medical_care
-
       ptp_26_eligibility.enter_phone_num
       ptp_26_eligibility.enter_password
       eligibility_esp.submit_disabled
@@ -641,12 +625,11 @@ feature 'A visitor to the site', metadata: :participant do
     scenario 'does not fill in phone number, cannot submit form' do
       eligibility_esp.eligibility_page
       eligibility_esp.find_age
-      eligibility_esp.set_age_25
-      eligibility_esp.answer_smoker
-
+      eligibility_esp.set_age
+      eligibility_esp.answer_current_smoker
+      eligibility_esp.thinking_of_quitting
       ptp_26_eligibility.enter_sf_zip
       ptp_26_eligibility.answer_medical_care
-
       ptp_26_eligibility.enter_email
       ptp_26_eligibility.enter_password
       eligibility_esp.submit_disabled
@@ -655,12 +638,11 @@ feature 'A visitor to the site', metadata: :participant do
     scenario 'does not fill in password, cannot submit form' do
       eligibility_esp.eligibility_page
       eligibility_esp.find_age
-      eligibility_esp.set_age_25
-      eligibility_esp.answer_smoker
-
+      eligibility_esp.set_age
+      eligibility_esp.answer_current_smoker
+      eligibility_esp.thinking_of_quitting
       ptp_26_eligibility.enter_sf_zip
       ptp_26_eligibility.answer_medical_care
-
       ptp_26_eligibility.enter_email
       ptp_26_eligibility.enter_password
       eligibility_esp.submit_disabled
@@ -669,12 +651,11 @@ feature 'A visitor to the site', metadata: :participant do
     scenario 'enters duplicate email, sees error message' do
       eligibility_esp.eligibility_page
       eligibility_esp.find_age
-      eligibility_esp.set_age_25
-      eligibility_esp.answer_smoker
-
+      eligibility_esp.set_age
+      eligibility_esp.answer_current_smoker
+      eligibility_esp.thinking_of_quitting
       ptp_252_eligibility.enter_sf_zip
       ptp_252_eligibility.answer_medical_care
-
       ptp_251_eligibility.enter_email
       ptp_252_eligibility.enter_phone_num
       ptp_252_eligibility.enter_password
@@ -685,12 +666,11 @@ feature 'A visitor to the site', metadata: :participant do
     scenario 'enters duplicate phone number, sees error message' do
       eligibility_esp.eligibility_page
       eligibility_esp.find_age
-      eligibility_esp.set_age_25
-      eligibility_esp.answer_smoker
-
+      eligibility_esp.set_age
+      eligibility_esp.answer_current_smoker
+      eligibility_esp.thinking_of_quitting
       ptp_252_eligibility.enter_sf_zip
       ptp_252_eligibility.answer_medical_care
-
       ptp_252_eligibility.enter_email
       ptp_251_eligibility.enter_phone_num
       ptp_252_eligibility.enter_password
@@ -702,12 +682,11 @@ feature 'A visitor to the site', metadata: :participant do
        'is able to use the app with unconfirmed email' do
       eligibility_esp.eligibility_page
       eligibility_esp.find_age
-      eligibility_esp.set_age_25
-      eligibility_esp.answer_smoker
-
+      eligibility_esp.set_age
+      eligibility_esp.answer_current_smoker
+      eligibility_esp.thinking_of_quitting
       ptp_34_eligibility.enter_sf_zip
       ptp_34_eligibility.answer_medical_care
-
       ptp_34_eligibility.enter_email
       ptp_34_eligibility.enter_phone_num
       ptp_34_eligibility.enter_password

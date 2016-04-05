@@ -26,12 +26,17 @@ def ptp_102_eligibility
   )
 end
 
+def ptp_202_elg_age_17
+  ptp_202_elg_age_17: '17'
+end
+
 def ptp_103_eligibility
   @ptp_103_eligibility ||= Participants::Eligibility.new(
     locale: 'english',
     email: ENV['Pt_103_Email'],
     phone: ENV['Pt_103_Phone_Number'],
-    password: ENV['Pt_103_Password']
+    password: ENV['Pt_103_Password'],
+    current_smoker: "No"
   )
 end
 
@@ -40,7 +45,8 @@ def ptp_104_eligibility
     locale: 'english',
     email: ENV['Pt_104_Email'],
     phone: ENV['Pt_104_Phone_Number'],
-    password: ENV['Pt_104_Password']
+    password: ENV['Pt_104_Password'],
+    thinking_of_quitting: "No"
   )
 end
 
@@ -51,6 +57,14 @@ def ptp_9_eligibility
     phone: ENV['Pt_9_Phone_Number'],
     password: ENV['Pt_9_Password']
   )
+end
+
+def ptp_9_elg_age_0
+  ptp_9_elg_age_0: '0'
+end
+
+def ptp_9_elg_age_121
+  ptp_9_elg_age_121: '121'
 end
 
 def ptp_31_eligibility
@@ -118,12 +132,17 @@ def ptp_202_eligibility
   )
 end
 
+def ptp_202_elg_age_17
+  ptp_202_elg_age_17: '17'
+end
+
 def ptp_203_eligibility
   @ptp_203_eligibility ||= Participants::Eligibility.new(
     locale: 'español',
     email: ENV['Pt_203_Email'],
     phone: ENV['Pt_203_Phone_Number'],
-    password: ENV['Pt_203_Password']
+    password: ENV['Pt_203_Password'],
+    current_smoker: "No"
   )
 end
 
@@ -132,7 +151,8 @@ def ptp_204_eligibility
     locale: 'español',
     email: ENV['Pt_204_Email'],
     phone: ENV['Pt_204_Phone_Number'],
-    password: ENV['Pt_204_Password']
+    password: ENV['Pt_204_Password'],
+    thinking_of_quitting: "Sí"
   )
 end
 
@@ -143,6 +163,14 @@ def ptp_10_eligibility
     phone: ENV['Pt_10_Phone_Number'],
     password: ENV['Pt_10_Password']
   )
+end
+
+def ptp_10_elg_age_0
+  ptp_10_elg_age_0: '0'
+end
+
+def ptp_10_elg_age_121
+  ptp_10_elg_age_121: '121'
 end
 
 def ptp_33_eligibility

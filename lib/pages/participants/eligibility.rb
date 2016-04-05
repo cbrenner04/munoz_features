@@ -11,7 +11,8 @@ class Participants
       @email ||= eligibility[:email]
       @phone ||= eligibility[:phone]
       @password ||= eligibility[:password]
-      @smoke ||= eligibility[:smoke]
+      @current_smoker ||= eligibility[:current_smoker]
+      @thinking_of_quitting ||= eligibility[:thinking_of_quitting]
       @age ||= eligibility[:age]
     end
 
@@ -25,14 +26,15 @@ class Participants
       find('.ng-binding', text: var)
     end
 
-    def has_age?
-      var = participants.locale('How old are you?', '¿Cuántos años tiene?')
-      has_text? var
+    # update to have expect statement
+    def visible?
+      has_text? participants.locale('How old are you?', '¿Cuántos años tiene?')
     end
 
-    def set_age_25
-      first('input[type = tel]').set(@age)
+    def set_age
+      input_age(@age)
     end
+
 
     def has_questions?
       var = participants.locale('Please answer the following questions to',
@@ -42,25 +44,39 @@ class Participants
       has_text? var
     end
 
-    def answer_smoker
-      ques = participants.locale(english_smoking_questions,
-                                 spanish_smoking_questions)
-      answ = participants.locale(%w(Yes Yes), %w(Sí Sí))
-      ques.zip(answ) { |q, a| within('.form-group', text: q) { choose a } }
+    def answer_current_smoker
+      within form_item(current_smoker_question) do
+        choose_response(@current_smoker)
+      end
+    end
+
+    def answer_thinking_of_quitting
+      within form_item(thinking_of_quitting_question) do
+        choose_response(@thinking_of_quitting)
+      end
     end
 
     def enter_sf_zip
       all('input[type = tel]')[1].set(ZipCodes::SF.sample)
     end
 
+    def enter_chi_zip
+      all('input[type = tel]')[1].set(ZipCodes::CHI.sample)
+    end
+
     def answer_medical_care
-      x = participants.locale(
-        'Where do you get most of your medical care?',
-        '¿Dónde recibe la mayor parte de su atención médica?'
-      )
+      # x = participants.locale(
+      #   #use private method
+      #   'Where do you get most of your medical care?',
+      #   '¿Dónde recibe la mayor parte de su atención médica?'
+      # )
       y = participants.locale('Ocean Park Health Center',
                               'Centro de Salud Ocean Park')
-      within('.form-group', text: x) { select y }
+      within('.form-group', text: medical_question) { select y }
+    end
+
+    def has_medical_question?
+      has_css?('.form-group', text: medical_question)
     end
 
     def enter_email
@@ -128,9 +144,11 @@ class Participants
 
     def has_error_message?
       var = participants.locale('Sorry, there was a problem. ' \
-                                  'Please review your responses and try again.',
+                                  'Please review your ' \
+                                  'responses and try again.',
                                 'Lo sentimos, hubo un problema. Por favor' \
-                                  ' revise sus respuestas y vuelva a intentar.')
+                                  ' revise sus respuestas ' \
+                                  'y vuelva a intentar.')
       has text? var
     end
 
@@ -145,22 +163,40 @@ class Participants
 
     private
 
+    def form_item(item)
+      find('.form_group', text: item)
+    end
+
+    def choose_response(response = 'Yes')
+      choose response
+    end
+
+    def current_smoker_question
+      participants.locale('Are you currently a smoker?',
+                          '¿Fuma usted actualmente?')
+    end
+
+    def thinking_of_quitting_question
+      participants
+        .locale('Are you thinking of quitting smoking ' \
+                  'within the next 30 days?',
+                '¿Está pensando en dejar de fumar ' \
+                  'dentro de los próximos 30 días?')
+    end
+
+    def input_age(age = 25)
+      first('input[value = tel]').set(age)
+    end
+
     def participants
       @participants ||= Participants.new(locale: @locale)
     end
 
-    def english_smoking_questions
-      @english_smoking_questions ||= [
-        'Are you currently a smoker?',
-        'Are you thinking of quitting smoking within the next 30 days?'
-      ]
-    end
-
-    def spanish_smoking_questions
-      @spanish_smoking_questions ||= [
-        '¿Fuma usted actualmente?',
-        '¿Está pensando en dejar de fumar dentro de los próximos 30 días?'
-      ]
+    def medical_question
+      @medical_question ||=
+        participants
+          .locale('Where do you get most of your medical care?',
+                  '¿Dónde recibe la mayor parte de su atención médica?')
     end
   end
 end
