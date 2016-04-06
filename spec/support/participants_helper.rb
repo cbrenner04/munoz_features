@@ -279,6 +279,14 @@ end
 
 # Below are participants used for Eligibility
 
+def participant_gen_eng
+  @participant_gen_eng ||= Participants.new(locale: 'english')
+end
+
+def participant_gen_esp
+  @participant_gen_esp ||= Participants.new(locale: 'español')
+end
+
 def participant_101
   @participant_101 ||= Participants.new(
     pt_id: 101,

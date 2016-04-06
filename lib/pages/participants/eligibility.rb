@@ -131,7 +131,7 @@ class Participants
     end
 
     def ineligible?
-      var = participants.locale('You are not eligible to participate'
+      var = participants.locale('You are not eligible to participate',
                                 'Lo sentimos. Usted no es elegible para ' \
                                   'participar en nuestro estudio. Le ' \
                                   'recomendamos los siguientes 3 recursos ' \
@@ -161,7 +161,7 @@ class Participants
                                   'verify your account and continue.',
                                 '¡Gracias! Por favor revise su correo ' \
                                   'electrónico para verificar su cuenta y ' \
-                                  'continuar.' )
+                                  'continuar.')
       has_text? var
     end
 
@@ -181,11 +181,10 @@ class Participants
     end
 
     def thinking_of_quitting_question
-      participants
-        .locale('Are you thinking of quitting smoking ' \
-                  'within the next 30 days?',
-                '¿Está pensando en dejar de fumar ' \
-                  'dentro de los próximos 30 días?')
+      participants.locale('Are you thinking of quitting smoking ' \
+                            'within the next 30 days?',
+                         '¿Está pensando en dejar de fumar ' \
+                         'dentro de los próximos 30 días?')
     end
 
     def input_age(age = 25)

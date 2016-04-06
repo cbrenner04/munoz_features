@@ -1,34 +1,37 @@
 # filename: spec/features/participants/eligibility_spec.rb
 
 require './lib/zip_codes.rb'
+require './spec/support/participants/consent_helper'
+require './spec/support/participants/eligibility_helper'
+require './spec/support/participants_helper'
 
 feature 'A visitor to the site', metadata: :participant do
   context 'in English' do
     scenario 'navigates to the eligibility page' do
-      eligibility_eng.go_to_root
+      participant_gen_eng.go_to_root
       eligibility_eng.click_eng
 
       expect(eligibility_eng).to have_questions
 
       eligibility_eng.click_con
 
-      expect(eligibility_eng).to have_age
+      expect(eligibility_eng).to be_visible
     end
 
     scenario 'switches to Español when filling out eligibility' do
-      eligibility_eng.go_to_root
+      participant_gen_eng.go_to_root
       eligibility_eng.click_eng
       eligibility_eng.click_con
       eligibility_eng.answer_current_smoker
       eligibility_eng.thinking_of_quitting
-      eligibility_eng.eligibility_esp.go_to('Español')
+      participant_gen_eng.go_to('Español')
       eligibility_eng.find_age
 
       expect(eligibility_eng).to have_checked_still
     end
 
     scenario 'completes eligibility survey and is eligible' do
-      eligibility_eng.eligibility_page
+      visit eligibility_eng.eligibility_page
       eligibility_eng.find_age
       eligibility_eng.set_age
       eligibility_eng.answer_current_smoker
@@ -46,7 +49,7 @@ feature 'A visitor to the site', metadata: :participant do
     end
 
     scenario 'completes eligibility survey and is ineligible due to age' do
-      eligibility_eng.eligibility_page
+      visit eligibility_eng.eligibility_page
       eligibility_eng.find_age
       ptp_102_elg_age_17.set_age
       eligibility_eng.answer_current_smoker
@@ -62,10 +65,10 @@ feature 'A visitor to the site', metadata: :participant do
     end
 
     scenario 'completes eligibility survey, is ineligible due to neg response Q2' do
-      eligibility_eng.eligibility_page
+      visit eligibility_eng.eligibility_page
       eligibility_eng.find_age
       eligibility_eng.set_age
-      eligibility_eng.answer_current_smoker
+      ptp_103_eligibility.answer_current_smoker
       eligibility_eng.thinking_of_quitting
       ptp_103_eligibility.enter_sf_zip
       ptp_103_eligibility.answer_medical_care
@@ -78,11 +81,11 @@ feature 'A visitor to the site', metadata: :participant do
     end
 
     scenario 'completes eligibility survey, is ineligible due to neg response Q3' do
-      eligibility_eng.eligibility_page
+      visit eligibility_eng.eligibility_page
       eligibility_eng.find_age
       eligibility_eng.set_age
       eligibility_eng.answer_current_smoker
-      eligibility_eng.thinking_of_quitting
+      ptp_104_eligibility.thinking_of_quitting
       ptp_104_eligibility.enter_sf_zip
       ptp_104_eligibility.answer_medical_care
       ptp_104_eligibility.enter_email
@@ -94,7 +97,7 @@ feature 'A visitor to the site', metadata: :participant do
     end
 
     scenario 'does not fill in age, cannot submit form' do
-      eligibility_eng.eligibility_page
+      visit eligibility_eng.eligibility_page
       eligibility_eng.find_age
       eligibility_eng.answer_current_smoker
       eligibility_eng.thinking_of_quitting
@@ -107,7 +110,7 @@ feature 'A visitor to the site', metadata: :participant do
     end
 
     scenario 'fills in an age below the lower bound, cannot submit form' do
-      eligibility_eng.eligibility_page
+      visit eligibility_eng.eligibility_page
       eligibility_eng.find_age
       ptp_9_elg_age_0.set_age
       eligibility_eng.answer_current_smoker
@@ -121,7 +124,7 @@ feature 'A visitor to the site', metadata: :participant do
     end
 
     scenario 'fills in an age above the upper bound, cannot submit form' do
-      eligibility_eng.eligibility_page
+      visit eligibility_eng.eligibility_page
       eligibility_eng.find_age
       ptp_9_elg_age_121.set_age
       eligibility_eng.answer_current_smoker
@@ -135,7 +138,7 @@ feature 'A visitor to the site', metadata: :participant do
     end
 
     scenario 'does not fill in Q2, cannot submit form' do
-      eligibility_eng.eligibility_page
+      visit eligibility_eng.eligibility_page
       eligibility_eng.find_age
       eligibility_eng.set_age
 
@@ -152,7 +155,7 @@ feature 'A visitor to the site', metadata: :participant do
     end
 
     scenario 'does not fill in Q3, cannot submit form' do
-      eligibility_eng.eligibility_page
+      visit eligibility_eng.eligibility_page
       eligibility_eng.find_age
       eligibility_eng.set_age
 
@@ -169,7 +172,7 @@ feature 'A visitor to the site', metadata: :participant do
     end
 
     scenario 'does not fill zip code, can submit form' do
-      eligibility_eng.eligibility_page
+      visit eligibility_eng.eligibility_page
       eligibility_eng.find_age
       eligibility_eng.set_age
       eligibility_eng.answer_current_smoker
@@ -183,7 +186,7 @@ feature 'A visitor to the site', metadata: :participant do
     end
 
     scenario 'fills in a SF zip code, sees the drop down for selecting clinic' do
-      eligibility_eng.eligibility_page
+      visit eligibility_eng.eligibility_page
       eligibility_eng.find_age
       eligibility_eng.set_age
       eligibility_eng.answer_current_smoker
@@ -203,7 +206,7 @@ feature 'A visitor to the site', metadata: :participant do
     end
 
     scenario 'fills in a zip other than SF, does not see the drop down for clinic' do
-      eligibility_eng.eligibility_page
+      visit eligibility_eng.eligibility_page
       eligibility_eng.find_age
       eligibility_eng.set_age
       eligibility_eng.answer_current_smoker
@@ -219,7 +222,7 @@ feature 'A visitor to the site', metadata: :participant do
     end
 
     scenario 'does not fill in email, cannot submit form' do
-      eligibility_eng.eligibility_page
+      visit eligibility_eng.eligibility_page
       eligibility_eng.find_age
       eligibility_eng.set_age
       eligibility_eng.answer_current_smoker
@@ -232,7 +235,7 @@ feature 'A visitor to the site', metadata: :participant do
     end
 
     scenario 'does not fill in phone number, cannot submit form' do
-      eligibility_eng.eligibility_page
+      visit eligibility_eng.eligibility_page
       eligibility_eng.find_age
       eligibility_eng.set_age
       eligibility_eng.answer_current_smoker
@@ -245,7 +248,7 @@ feature 'A visitor to the site', metadata: :participant do
     end
 
     scenario 'does not fill in password, cannot submit form' do
-      eligibility_eng.eligibility_page
+      visit eligibility_eng.eligibility_page
       eligibility_eng.find_age
       eligibility_eng.set_age
       eligibility_eng.answer_current_smoker
@@ -258,7 +261,7 @@ feature 'A visitor to the site', metadata: :participant do
     end
 
     scenario 'enters a duplicate email, sees error message' do
-      eligibility_eng.eligibility_page
+      visit eligibility_eng.eligibility_page
       eligibility_eng.find_age
       eligibility_eng.set_age
       eligibility_eng.answer_current_smoker
@@ -274,7 +277,7 @@ feature 'A visitor to the site', metadata: :participant do
     end
 
     scenario 'enters a duplicate phone number, sees error message' do
-      eligibility_eng.eligibility_page
+      visit eligibility_eng.eligibility_page
       eligibility_eng.find_age
       eligibility_eng.set_age
       eligibility_eng.answer_current_smoker
@@ -291,7 +294,7 @@ feature 'A visitor to the site', metadata: :participant do
 
     scenario 'fills out eligibility, is eligible, consents, ' \
        'can still use app with unconfirmed email' do
-      eligibility_eng.eligibility_page
+      visit eligibility_eng.eligibility_page
       eligibility_eng.find_age
       eligibility_eng.set_age
       eligibility_eng.answer_current_smoker
@@ -327,7 +330,7 @@ feature 'A visitor to the site', metadata: :participant do
     end
 
     scenario 'sees invalid formatting in age field on eligibility form' do
-      eligibility_eng.eligibility_page
+      visit eligibility_eng.eligibility_page
 
       within('.form-group', text: 'How old are you?') do
         expect(page).to_not have_css('.ng-invalid-pattern')
@@ -338,7 +341,7 @@ feature 'A visitor to the site', metadata: :participant do
 
     scenario 'sees invalid formatting in zip code field when entering less than 5 ' \
        'digits on eligibility form' do
-      eligibility_eng.eligibility_page
+      visit eligibility_eng.eligibility_page
 
       within('.form-group', text: 'What is your zip code?') do
         expect(page).to_not have_css('.ng-invalid-minlength')
@@ -350,7 +353,7 @@ feature 'A visitor to the site', metadata: :participant do
 
     scenario 'sees invalid formatting in zip code field when entering more than 5 ' \
        'digits on eligibility form' do
-      eligibility_eng.eligibility_page
+      visit eligibility_eng.eligibility_page
 
       within('.form-group', text: 'What is your zip code?') do
         expect(page).to_not have_css('.ng-invalid-minlength')
@@ -361,7 +364,7 @@ feature 'A visitor to the site', metadata: :participant do
     end
 
     scenario 'sees invalid formatting in email field on eligibility form' do
-      eligibility_eng.eligibility_page
+      visit eligibility_eng.eligibility_page
 
       within('.form-group', text: 'Email') do
         expect(page).to_not have_css('.ng-invalid-email')
@@ -372,7 +375,7 @@ feature 'A visitor to the site', metadata: :participant do
     end
 
     scenario 'sees invalid formatting in phone number field on eligibility form' do
-      eligibility_eng.eligibility_page
+      visit eligibility_eng.eligibility_page
 
       within('.form-group', text: 'Phone Number') do
         expect(page).to_not have_css('.ng-invalid-pattern')
@@ -383,7 +386,7 @@ feature 'A visitor to the site', metadata: :participant do
     end
 
     scenario 'sees invalid formatting in password field on eligibility form' do
-      eligibility_eng.eligibility_page
+      visit eligibility_eng.eligibility_page
 
       within('.form-group', text: 'Password') do
         expect(page).to_not have_css('.ng-invalid-minlength')
@@ -398,17 +401,17 @@ feature 'A visitor to the site', metadata: :participant do
 
   context 'in Español' do
     scenario 'navigates to the eligibilty page' do
-      eligibility_esp.go_to_root
+      participant_gen_esp.go_to_root
       eligibility_esp.click_esp
 
       expect(eligibility_esp).to have_questions
 
       eligibility_esp.click_con
-      expect(page).to have_content '¿Cuántos años tiene?'
+      expect(eligibility_esp).to be_visible
     end
 
     scenario 'switches to English when filling out eligibility' do
-      eligibility_esp.go_to_root
+      participant_gen_esp.go_to_root
       eligibility_esp.click_esp
       eligibility_esp.click_con
 
@@ -416,14 +419,14 @@ feature 'A visitor to the site', metadata: :participant do
         choose 'Sí'
       end
 
-      eligibility_esp.go_to('English')
+      participant_gen_esp.go_to('English')
       eligibility_eng.find_age
 
       expect(eligibility_esp).to have_checked_still
     end
 
     scenario 'completes eligibility survey and is eligible' do
-      eligibility_esp.eligibility_page
+      visit eligibility_esp.eligibility_page
       eligibility_esp.find_age
       eligibility_esp.set_age
       eligibility_esp.answer_current_smoker
@@ -441,7 +444,7 @@ feature 'A visitor to the site', metadata: :participant do
     end
 
     scenario 'completes eligibility survey and is ineligible due to age' do
-      eligibility_esp.eligibility_page
+      visit eligibility_esp.eligibility_page
       eligibility_esp.find_age
       ptp_202_elg_age_17.set_age
       eligibility_esp.answer_current_smoker
@@ -457,10 +460,10 @@ feature 'A visitor to the site', metadata: :participant do
     end
 
     scenario 'completes eligibility survey, is ineligible due to neg response Q2' do
-      eligibility_esp.eligibility_page
+      visit eligibility_esp.eligibility_page
       eligibility_esp.find_age
       eligibility_esp.set_age
-      eligibility_esp.answer_current_smoker
+      ptp_203_eligibility.answer_current_smoker
       eligibility_esp.thinking_of_quitting
       ptp_203_eligibility.enter_sf_zip
       ptp_203_eligibility.answer_medical_care
@@ -473,11 +476,11 @@ feature 'A visitor to the site', metadata: :participant do
     end
 
     scenario 'completes eligibility survey, is ineligible due to neg response Q3' do
-      eligibility_esp.eligibility_page
+      visit eligibility_esp.eligibility_page
       eligibility_esp.find_age
       eligibility_esp.set_age
       eligibility_esp.answer_current_smoker
-      eligibility_esp.thinking_of_quitting
+      ptp_204_eligibility.thinking_of_quitting
       ptp_204_eligibility.enter_sf_zip
       ptp_204_eligibility.answer_medical_care
       ptp_204_eligibility.enter_email
@@ -489,7 +492,7 @@ feature 'A visitor to the site', metadata: :participant do
     end
 
     scenario 'does not fill in age, cannot submit form' do
-      eligibility_esp.eligibility_page
+      visit eligibility_esp.eligibility_page
       eligibility_esp.find_age
       eligibility_esp.answer_current_smoker
       eligibility_esp.thinking_of_quitting
@@ -504,7 +507,7 @@ feature 'A visitor to the site', metadata: :participant do
     end
 
     scenario 'fills in an age below the lower bound, cannot submit form' do
-      eligibility_esp.eligibility_page
+      visit eligibility_esp.eligibility_page
       eligibility_esp.find_age
       ptp_10_elg_age_0.set_age
       eligibility_esp.answer_current_smoker
@@ -518,7 +521,7 @@ feature 'A visitor to the site', metadata: :participant do
     end
 
     scenario 'fills in an age above the upper bound, cannot submit form' do
-      eligibility_esp.eligibility_page
+      visit eligibility_esp.eligibility_page
       eligibility_esp.find_age
       ptp_10_elg_age_121.set_age
       eligibility_esp.answer_current_smoker
@@ -532,7 +535,7 @@ feature 'A visitor to the site', metadata: :participant do
     end
 
     scenario 'does not fill in Q2, cannot submit form' do
-      eligibility_esp.eligibility_page
+      visit eligibility_esp.eligibility_page
       eligibility_esp.find_age
       eligibility_esp.set_age
       within('.form-group', text: '¿Está pensando en dejar de fumar dentro') do
@@ -548,7 +551,7 @@ feature 'A visitor to the site', metadata: :participant do
     end
 
     scenario 'does not fill in Q3, cannot submit form' do
-      eligibility_esp.eligibility_page
+      visit eligibility_esp.eligibility_page
       eligibility_esp.find_age
       eligibility_esp.set_age
       within('.form-group', text: '¿Fuma usted actualmente?') do
@@ -564,7 +567,7 @@ feature 'A visitor to the site', metadata: :participant do
     end
 
     scenario 'does not fill in zip code, can submit form' do
-      eligibility_esp.eligibility_page
+      visit eligibility_esp.eligibility_page
       eligibility_esp.find_age
       eligibility_esp.set_age
       eligibility_esp.answer_current_smoker
@@ -578,7 +581,7 @@ feature 'A visitor to the site', metadata: :participant do
     end
 
     scenario 'fills in a SF zip code, sees the drop down for selecting a clinic' do
-      eligibility_esp.eligibility_page
+      visit eligibility_esp.eligibility_page
       eligibility_esp.find_age
       eligibility_esp.set_age
       eligibility_esp.answer_current_smoker
@@ -593,7 +596,7 @@ feature 'A visitor to the site', metadata: :participant do
     end
 
     scenario 'fills in a zip code other than SF, does not see drop down for clinic' do
-      eligibility_esp.eligibility_page
+      visit eligibility_esp.eligibility_page
       eligibility_esp.find_age
       eligibility_esp.set_age
       eligibility_esp.answer_current_smoker
@@ -609,7 +612,7 @@ feature 'A visitor to the site', metadata: :participant do
     end
 
     scenario 'does not fill in email, cannot submit form' do
-      eligibility_esp.eligibility_page
+      visit eligibility_esp.eligibility_page
       eligibility_esp.find_age
       eligibility_esp.set_age
       eligibility_esp.answer_current_smoker
@@ -622,7 +625,7 @@ feature 'A visitor to the site', metadata: :participant do
     end
 
     scenario 'does not fill in phone number, cannot submit form' do
-      eligibility_esp.eligibility_page
+      visit eligibility_esp.eligibility_page
       eligibility_esp.find_age
       eligibility_esp.set_age
       eligibility_esp.answer_current_smoker
@@ -635,7 +638,7 @@ feature 'A visitor to the site', metadata: :participant do
     end
 
     scenario 'does not fill in password, cannot submit form' do
-      eligibility_esp.eligibility_page
+      visit eligibility_esp.eligibility_page
       eligibility_esp.find_age
       eligibility_esp.set_age
       eligibility_esp.answer_current_smoker
@@ -648,7 +651,7 @@ feature 'A visitor to the site', metadata: :participant do
     end
 
     scenario 'enters duplicate email, sees error message' do
-      eligibility_esp.eligibility_page
+      visit eligibility_esp.eligibility_page
       eligibility_esp.find_age
       eligibility_esp.set_age
       eligibility_esp.answer_current_smoker
@@ -663,7 +666,7 @@ feature 'A visitor to the site', metadata: :participant do
     end
 
     scenario 'enters duplicate phone number, sees error message' do
-      eligibility_esp.eligibility_page
+      visit eligibility_esp.eligibility_page
       eligibility_esp.find_age
       eligibility_esp.set_age
       eligibility_esp.answer_current_smoker
@@ -679,7 +682,7 @@ feature 'A visitor to the site', metadata: :participant do
 
     scenario 'fills out eligibility, is eligible, consents,' \
        'is able to use the app with unconfirmed email' do
-      eligibility_esp.eligibility_page
+      visit eligibility_esp.eligibility_page
       eligibility_esp.find_age
       eligibility_esp.set_age
       eligibility_esp.answer_current_smoker
@@ -708,7 +711,7 @@ feature 'A visitor to the site', metadata: :participant do
     end
 
     scenario 'sees invalid formatting in age field on eligibility form' do
-      eligibility_esp.eligibility_page
+      visit eligibility_esp.eligibility_page
       within('.form-group', text: '¿Cuántos años tiene?') do
         expect(page).to_not have_css('.ng-invalid-pattern')
         find('input[type = tel]').set('h')
@@ -718,7 +721,7 @@ feature 'A visitor to the site', metadata: :participant do
 
     scenario 'sees invalid formatting in zip code field when entering less than 5 ' \
        'digits on eligibility form' do
-      eligibility_esp.eligibility_page
+      visit eligibility_esp.eligibility_page
       within('.form-group', text: '¿Cuál es su código postal?') do
         expect(page).to_not have_css('.ng-invalid-minlength')
         find('input[type = tel]').set('33')
@@ -729,7 +732,7 @@ feature 'A visitor to the site', metadata: :participant do
 
     scenario 'sees invalid formatting in zip code field when entering more than 5 ' \
        'digits on eligibility form' do
-      eligibility_esp.eligibility_page
+      visit eligibility_esp.eligibility_page
       within('.form-group', text: '¿Cuál es su código postal?') do
         expect(page).to_not have_css('.ng-invalid-minlength')
         find('input[type = tel]').set('33333333')
@@ -739,7 +742,7 @@ feature 'A visitor to the site', metadata: :participant do
     end
 
     scenario 'sees invalid formatting in email field on eligibility form' do
-      eligibility_esp.eligibility_page
+      visit eligibility_esp.eligibility_page
       within('.form-group', text: 'Email') do
         expect(page).to_not have_css('.ng-invalid-email')
         find('input[type = email]').set('2')
@@ -750,7 +753,7 @@ feature 'A visitor to the site', metadata: :participant do
     end
 
     scenario 'sees invalid formatting in phone number field on eligibility form' do
-      eligibility_esp.eligibility_page
+      visit eligibility_esp.eligibility_page
       within('.form-group', text: 'Teléfono') do
         expect(page).to_not have_css('.ng-invalid-pattern')
         find('input[type = tel]').set('33')
@@ -761,7 +764,7 @@ feature 'A visitor to the site', metadata: :participant do
     end
 
     scenario 'sees invalid formatting in password field on eligibility form' do
-      eligibility_esp.eligibility_page
+      visit eligibility_esp.eligibility_page
       within('.form-group', text: 'Contraseña') do
         expect(page).to_not have_css('.ng-invalid-minlength')
         find('input[type = password]').set('2')

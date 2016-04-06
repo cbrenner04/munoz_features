@@ -1,11 +1,19 @@
 require './lib/pages/participants/eligibility'
 
 def eligibility_eng
-  @eligibility_eng ||= Participants::Eligibility.new(locale: 'english')
+  @eligibility_eng ||= Participants::Eligibility.new(
+    locale: 'english',
+    current_smoker: 'Yes',
+    thinking_of_quitting: 'Yes'
+  )
 end
 
 def eligibility_esp
-  @eligibility_esp ||= Participants::Eligibility.new(locale: 'español')
+  @eligibility_esp ||= Participants::Eligibility.new(
+    locale: 'español',
+    current_smoker: 'Sí',
+    thinking_of_quitting: 'Sí'
+  )
 end
 
 def ptp_101_eligibility
@@ -27,8 +35,7 @@ def ptp_102_eligibility
 end
 
 def ptp_102_elg_age_17
-  @ptp_102_elg_age_17 ||= Participants::Eligibility.new(
-  ptp_102_elg_age_17: '17'
+  @ptp_102_elg_age_17 ||= Participants::Eligibility.new(age: '17')
 end
 
 def ptp_103_eligibility
@@ -37,7 +44,7 @@ def ptp_103_eligibility
     email: ENV['Pt_103_Email'],
     phone: ENV['Pt_103_Phone_Number'],
     password: ENV['Pt_103_Password'],
-    current_smoker: "No"
+    current_smoker: 'No'
   )
 end
 
@@ -47,7 +54,7 @@ def ptp_104_eligibility
     email: ENV['Pt_104_Email'],
     phone: ENV['Pt_104_Phone_Number'],
     password: ENV['Pt_104_Password'],
-    thinking_of_quitting: "No"
+    thinking_of_quitting: 'No'
   )
 end
 
@@ -61,13 +68,11 @@ def ptp_9_eligibility
 end
 
 def ptp_9_elg_age_0
-  @ptp_9_elg_age_0 ||= Participants::Eligibility.new(
-  ptp_9_elg_age_0: '0'
+  @ptp_9_elg_age_0 ||= Participants::Eligibility.new(age: '0')
 end
 
 def ptp_9_elg_age_121
-  @ptp_9_elg_age_121 ||= Participants::Eligibility.new(
-  ptp_9_elg_age_121: '121'
+  @ptp_9_elg_age_121 ||= Participants::Eligibility.new(age: '121')
 end
 
 def ptp_31_eligibility
@@ -131,13 +136,12 @@ def ptp_202_eligibility
     locale: 'español',
     email: ENV['Pt_202_Email'],
     phone: ENV['Pt_202_Phone_Number'],
-    password: ENV['Pt_202_Password'
+    password: ENV['Pt_202_Password']
   )
 end
 
 def ptp_202_elg_age_17
-  @ptp_202_elg_age_17 ||= Participants::Eligibility.new(
-  ptp_202_elg_age_17: '17'
+  @ptp_202_elg_age_17 ||= Participants::Eligibility.new(age: '17')
 end
 
 def ptp_203_eligibility
@@ -146,7 +150,7 @@ def ptp_203_eligibility
     email: ENV['Pt_203_Email'],
     phone: ENV['Pt_203_Phone_Number'],
     password: ENV['Pt_203_Password'],
-    current_smoker: "No"
+    current_smoker: 'No'
   )
 end
 
@@ -156,7 +160,7 @@ def ptp_204_eligibility
     email: ENV['Pt_204_Email'],
     phone: ENV['Pt_204_Phone_Number'],
     password: ENV['Pt_204_Password'],
-    thinking_of_quitting: "Sí"
+    thinking_of_quitting: 'No'
   )
 end
 
@@ -170,13 +174,11 @@ def ptp_10_eligibility
 end
 
 def ptp_10_elg_age_0
-  @ptp_10_elg_age_0 ||= Participants::Eligibility.new(
-  ptp_10_elg_age_0: '0'
+  @ptp_10_elg_age_0 ||= Participants::Eligibility.new(age: '0')
 end
 
 def ptp_10_elg_age_121
-  @ptp_10_elg_age_121 ||= Participants::Eligibility.new(
-  ptp_10_elg_age_121: '121'
+  @ptp_10_elg_age_121 ||= Participants::Eligibility.new(age: '121')
 end
 
 def ptp_33_eligibility
