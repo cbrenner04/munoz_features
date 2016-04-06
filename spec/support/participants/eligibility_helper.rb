@@ -26,8 +26,9 @@ def ptp_102_eligibility
   )
 end
 
-def ptp_202_elg_age_17
-  ptp_202_elg_age_17: '17'
+def ptp_102_elg_age_17
+  @ptp_102_elg_age_17 ||= Participants::Eligibility.new(
+  ptp_102_elg_age_17: '17'
 end
 
 def ptp_103_eligibility
@@ -60,10 +61,12 @@ def ptp_9_eligibility
 end
 
 def ptp_9_elg_age_0
+  @ptp_9_elg_age_0 ||= Participants::Eligibility.new(
   ptp_9_elg_age_0: '0'
 end
 
 def ptp_9_elg_age_121
+  @ptp_9_elg_age_121 ||= Participants::Eligibility.new(
   ptp_9_elg_age_121: '121'
 end
 
@@ -128,11 +131,12 @@ def ptp_202_eligibility
     locale: 'español',
     email: ENV['Pt_202_Email'],
     phone: ENV['Pt_202_Phone_Number'],
-    password: ENV['Pt_202_Password']
+    password: ENV['Pt_202_Password'
   )
 end
 
 def ptp_202_elg_age_17
+  @ptp_202_elg_age_17 ||= Participants::Eligibility.new(
   ptp_202_elg_age_17: '17'
 end
 
@@ -166,10 +170,12 @@ def ptp_10_eligibility
 end
 
 def ptp_10_elg_age_0
+  @ptp_10_elg_age_0 ||= Participants::Eligibility.new(
   ptp_10_elg_age_0: '0'
 end
 
 def ptp_10_elg_age_121
+  @ptp_10_elg_age_121 ||= Participants::Eligibility.new(
   ptp_10_elg_age_121: '121'
 end
 

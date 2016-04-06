@@ -23,9 +23,8 @@ feature 'A visitor to the site', metadata: :participant do
       eligibility_eng.thinking_of_quitting
       eligibility_eng.eligibility_esp.go_to('Español')
       eligibility_eng.find_age
-  
-     # huh?
-      first('input[value = true]').should be_checked
+
+      expect(eligibility_eng).to have_checked_still
     end
 
     scenario 'completes eligibility survey and is eligible' do
@@ -168,17 +167,16 @@ feature 'A visitor to the site', metadata: :participant do
       ptp_9_eligibility.enter_password
       eligibility_eng.submit_disabled
     end
-  
-    # Update to ptp 31
+
     scenario 'does not fill zip code, can submit form' do
       eligibility_eng.eligibility_page
       eligibility_eng.find_age
       eligibility_eng.set_age
       eligibility_eng.answer_current_smoker
       eligibility_eng.thinking_of_quitting
-      eligibility_eng.enter_email
-      eligibility_eng.enter_phone_num
-      eligibility_eng.enter_password
+      ptp_31_eligibility.enter_email
+      ptp_31_eligibility.enter_phone_num
+      ptp_31_eligibility.enter_password
       eligibility_eng.click_submit
 
       expect(eligibility_eng).to be_eligible
@@ -420,7 +418,8 @@ feature 'A visitor to the site', metadata: :participant do
 
       eligibility_esp.go_to('English')
       eligibility_eng.find_age
-      first('input[value = true]').should be_checked
+
+      expect(eligibility_esp).to have_checked_still
     end
 
     scenario 'completes eligibility survey and is eligible' do

@@ -35,6 +35,10 @@ class Participants
       input_age(@age)
     end
 
+    def has_checked_still?
+      has_checked? first('input[value = true]')
+    end
+
 
     def has_questions?
       var = participants.locale('Please answer the following questions to',
@@ -149,7 +153,7 @@ class Participants
                                 'Lo sentimos, hubo un problema. Por favor' \
                                   ' revise sus respuestas ' \
                                   'y vuelva a intentar.')
-      has text? var
+      has_text? var
     end
 
     def has_account_verify?
