@@ -64,7 +64,8 @@ feature 'A visitor to the site', metadata: :participant do
       expect(eligibility_eng).to be_ineligible
     end
 
-    scenario 'completes eligibility survey, is ineligible due to neg response Q2' do
+    scenario 'completes eligibility survey, ' \
+        'is ineligible due to neg response Q2' do
       visit eligibility_eng.eligibility_page
       eligibility_eng.find_age
       eligibility_eng.set_age
@@ -80,7 +81,8 @@ feature 'A visitor to the site', metadata: :participant do
       expect(eligibility_eng).to be_ineligible
     end
 
-    scenario 'completes eligibility survey, is ineligible due to neg response Q3' do
+    scenario 'completes eligibility survey, ' \
+        'is ineligible due to neg response Q3' do
       visit eligibility_eng.eligibility_page
       eligibility_eng.find_age
       eligibility_eng.set_age
@@ -177,7 +179,8 @@ feature 'A visitor to the site', metadata: :participant do
       expect(eligibility_eng).to be_eligible
     end
 
-    scenario 'fills in a SF zip code, sees the drop down for selecting clinic' do
+    scenario 'fills in a SF zip code, ' \
+        'sees the drop down for selecting clinic' do
       visit eligibility_eng.eligibility_page
       eligibility_eng.find_age
       eligibility_eng.set_age
@@ -191,7 +194,8 @@ feature 'A visitor to the site', metadata: :participant do
       expect(eligibility_eng).to have_medical_question
     end
 
-    scenario 'fills in a zip other than SF, does not see the drop down for clinic' do
+    scenario 'fills in a zip other than SF, ' \
+        'does not see the drop down for clinic' do
       visit eligibility_eng.eligibility_page
       eligibility_eng.find_age
       eligibility_eng.set_age
@@ -279,7 +283,7 @@ feature 'A visitor to the site', metadata: :participant do
     end
 
     scenario 'fills out eligibility, is eligible, consents, ' \
-       'can still use app with unconfirmed email' do
+        'can still use app with unconfirmed email' do
       visit eligibility_eng.eligibility_page
       eligibility_eng.find_age
       eligibility_eng.set_age
@@ -325,8 +329,9 @@ feature 'A visitor to the site', metadata: :participant do
       end
     end
 
-    scenario 'sees invalid formatting in zip code field when entering less than 5 ' \
-       'digits on eligibility form' do
+    scenario 'sees invalid formatting in zip code field ' \
+        'when entering less than 5 ' \
+        'digits on eligibility form' do
       visit eligibility_eng.eligibility_page
 
       within('.form-group', text: 'What is your zip code?') do
@@ -337,8 +342,9 @@ feature 'A visitor to the site', metadata: :participant do
       end
     end
 
-    scenario 'sees invalid formatting in zip code field when entering more than 5 ' \
-       'digits on eligibility form' do
+    scenario 'sees invalid formatting in zip code ' \
+        'field when entering more than 5 ' \
+        'digits on eligibility form' do
       visit eligibility_eng.eligibility_page
 
       within('.form-group', text: 'What is your zip code?') do
@@ -360,7 +366,8 @@ feature 'A visitor to the site', metadata: :participant do
       end
     end
 
-    scenario 'sees invalid formatting in phone number field on eligibility form' do
+    scenario 'sees invalid formatting in phone number field ' \
+        'on eligibility form' do
       visit eligibility_eng.eligibility_page
 
       within('.form-group', text: 'Phone Number') do
@@ -445,7 +452,8 @@ feature 'A visitor to the site', metadata: :participant do
       expect(eligibility_esp).to be_ineligible
     end
 
-    scenario 'completes eligibility survey, is ineligible due to neg response Q2' do
+    scenario 'completes eligibility survey, ' \
+        'is ineligible due to neg response Q2' do
       visit eligibility_esp.eligibility_page
       eligibility_esp.find_age
       eligibility_esp.set_age
@@ -461,7 +469,8 @@ feature 'A visitor to the site', metadata: :participant do
       expect(eligibility_esp).to be_ineligible
     end
 
-    scenario 'completes eligibility survey, is ineligible due to neg response Q3' do
+    scenario 'completes eligibility survey, ' \
+        'is ineligible due to neg response Q3' do
       visit eligibility_esp.eligibility_page
       eligibility_esp.find_age
       eligibility_esp.set_age
@@ -559,7 +568,8 @@ feature 'A visitor to the site', metadata: :participant do
       expect(eligibility_esp).to be_eligible
     end
 
-    scenario 'fills in a SF zip code, sees the drop down for selecting a clinic' do
+    scenario 'fills in a SF zip code, ' \
+        'sees the drop down for selecting a clinic' do
       visit eligibility_esp.eligibility_page
       eligibility_esp.find_age
       eligibility_esp.set_age
@@ -574,7 +584,8 @@ feature 'A visitor to the site', metadata: :participant do
                      text: '¿Dónde recibe la mayor parte de su atención médica')
     end
 
-    scenario 'fills in a zip code other than SF, does not see drop down for clinic' do
+    scenario 'fills in a zip code other than SF, ' \
+        'does not see drop down for clinic' do
       visit eligibility_esp.eligibility_page
       eligibility_esp.find_age
       eligibility_esp.set_age
@@ -583,9 +594,9 @@ feature 'A visitor to the site', metadata: :participant do
 
       expect(page)
         .to_not have_content '¿Dónde recibe la mayor parte de su atención médic'
-      
+
       eligibility_esp.enter_chi_zip
-      
+
       expect(page)
         .to_not have_content '¿Dónde recibe la mayor parte de su atención médic'
     end
@@ -698,8 +709,9 @@ feature 'A visitor to the site', metadata: :participant do
       end
     end
 
-    scenario 'sees invalid formatting in zip code field when entering less than 5 ' \
-       'digits on eligibility form' do
+    scenario 'sees invalid formatting in zip code ' \
+        'field when entering less than 5 ' \
+        'digits on eligibility form' do
       visit eligibility_esp.eligibility_page
       within('.form-group', text: '¿Cuál es su código postal?') do
         expect(page).to_not have_css('.ng-invalid-minlength')
@@ -709,8 +721,9 @@ feature 'A visitor to the site', metadata: :participant do
       end
     end
 
-    scenario 'sees invalid formatting in zip code field when entering more than 5 ' \
-       'digits on eligibility form' do
+    scenario 'sees invalid formatting in zip code ' \
+        'field when entering more than 5 ' \
+        'digits on eligibility form' do
       visit eligibility_esp.eligibility_page
       within('.form-group', text: '¿Cuál es su código postal?') do
         expect(page).to_not have_css('.ng-invalid-minlength')
@@ -731,7 +744,8 @@ feature 'A visitor to the site', metadata: :participant do
       end
     end
 
-    scenario 'sees invalid formatting in phone number field on eligibility form' do
+    scenario 'sees invalid formatting in phone ' \
+        'number field on eligibility form' do
       visit eligibility_esp.eligibility_page
       within('.form-group', text: 'Teléfono') do
         expect(page).to_not have_css('.ng-invalid-pattern')

@@ -39,7 +39,6 @@ class Participants
       first('input[value = true]').checked?
     end
 
-
     def has_questions?
       var = participants.locale('Please answer the following questions to',
                                 'Por favor responda las siguientes ' \
@@ -69,11 +68,6 @@ class Participants
     end
 
     def answer_medical_care
-      # x = participants.locale(
-      #   #use private method
-      #   'Where do you get most of your medical care?',
-      #   '¿Dónde recibe la mayor parte de su atención médica?'
-      # )
       y = participants.locale('Ocean Park Health Center',
                               'Centro de Salud Ocean Park')
       within('.form-group', text: medical_question) { select y }
@@ -188,8 +182,8 @@ class Participants
     def thinking_of_quitting_question
       participants.locale('Are you thinking of quitting smoking ' \
                             'within the next 30 days?',
-                         '¿Está pensando en dejar de fumar ' \
-                         'dentro de los próximos 30 días?')
+                          '¿Está pensando en dejar de fumar ' \
+                            'dentro de los próximos 30 días?')
     end
 
     def participants
@@ -199,8 +193,8 @@ class Participants
     def medical_question
       @medical_question ||=
         participants
-          .locale('Where do you get most of your medical care?',
-                  '¿Dónde recibe la mayor parte de su atención médica?')
+        .locale('Where do you get most of your medical care?',
+                '¿Dónde recibe la mayor parte de su atención médica?')
     end
   end
 end
