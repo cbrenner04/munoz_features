@@ -183,18 +183,12 @@ feature 'A visitor to the site', metadata: :participant do
       eligibility_eng.set_age
       eligibility_eng.answer_current_smoker
       eligibility_eng.answer_thinking_of_quitting
-  
-      # What's the difference here? what up with not having content?
-      #create typical has method, just use "not" in comment
-      #or use "no" 
-      expect(page)
-        .to_not have_content 'Where do you get most of your medical care?'
+
+      expect(eligibility_eng).to have_no_medical_question
 
       eligibility_eng.enter_sf_zip
 
-      expect(page)
-        .to have_css('.form-group',
-                     text: 'Where do you get most of your medical care?')
+      expect(eligibility_eng).to have_medical_question
     end
 
     scenario 'fills in a zip other than SF, does not see the drop down for clinic' do

@@ -83,6 +83,10 @@ class Participants
       has_css?('.form-group', text: medical_question)
     end
 
+    def has_no_medical_question?
+      has_no_content? medical_question
+    end
+
     def enter_email
       find('input[type = email]').set(@email)
     end
