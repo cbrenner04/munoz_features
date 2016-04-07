@@ -23,11 +23,11 @@ feature 'A visitor to the site', metadata: :participant do
       eligibility_eng.click_eng
       eligibility_eng.click_con
       eligibility_eng.answer_current_smoker
-      eligibility_eng.thinking_of_quitting
+      eligibility_eng.answer_thinking_of_quitting
       participant_gen_eng.go_to('Español')
-      eligibility_eng.find_age
+      eligibility_esp.find_age
 
-      expect(eligibility_eng).to have_checked_still
+      expect(eligibility_esp).to be_still_checked
     end
 
     scenario 'completes eligibility survey and is eligible' do
@@ -35,7 +35,7 @@ feature 'A visitor to the site', metadata: :participant do
       eligibility_eng.find_age
       eligibility_eng.set_age
       eligibility_eng.answer_current_smoker
-      eligibility_eng.thinking_of_quitting
+      eligibility_eng.answer_thinking_of_quitting
       ptp_101_eligibility.enter_sf_zip
       ptp_101_eligibility.answer_medical_care
       ptp_101_eligibility.enter_email
@@ -53,7 +53,7 @@ feature 'A visitor to the site', metadata: :participant do
       eligibility_eng.find_age
       ptp_102_elg_age_17.set_age
       eligibility_eng.answer_current_smoker
-      eligibility_eng.thinking_of_quitting
+      eligibility_eng.answer_thinking_of_quitting
       ptp_102_eligibility.enter_sf_zip
       ptp_102_eligibility.answer_medical_care
       ptp_102_eligibility.enter_email
@@ -69,7 +69,7 @@ feature 'A visitor to the site', metadata: :participant do
       eligibility_eng.find_age
       eligibility_eng.set_age
       ptp_103_eligibility.answer_current_smoker
-      eligibility_eng.thinking_of_quitting
+      eligibility_eng.answer_thinking_of_quitting
       ptp_103_eligibility.enter_sf_zip
       ptp_103_eligibility.answer_medical_care
       ptp_103_eligibility.enter_email
@@ -85,7 +85,7 @@ feature 'A visitor to the site', metadata: :participant do
       eligibility_eng.find_age
       eligibility_eng.set_age
       eligibility_eng.answer_current_smoker
-      ptp_104_eligibility.thinking_of_quitting
+      ptp_104_eligibility.answer_thinking_of_quitting
       ptp_104_eligibility.enter_sf_zip
       ptp_104_eligibility.answer_medical_care
       ptp_104_eligibility.enter_email
@@ -100,7 +100,7 @@ feature 'A visitor to the site', metadata: :participant do
       visit eligibility_eng.eligibility_page
       eligibility_eng.find_age
       eligibility_eng.answer_current_smoker
-      eligibility_eng.thinking_of_quitting
+      eligibility_eng.answer_thinking_of_quitting
       ptp_9_eligibility.enter_sf_zip
       ptp_9_eligibility.answer_medical_care
       ptp_9_eligibility.enter_email
@@ -114,7 +114,7 @@ feature 'A visitor to the site', metadata: :participant do
       eligibility_eng.find_age
       ptp_9_elg_age_0.set_age
       eligibility_eng.answer_current_smoker
-      eligibility_eng.thinking_of_quitting
+      eligibility_eng.answer_thinking_of_quitting
       ptp_9_eligibility.enter_sf_zip
       ptp_9_eligibility.answer_medical_care
       ptp_9_eligibility.enter_email
@@ -128,7 +128,7 @@ feature 'A visitor to the site', metadata: :participant do
       eligibility_eng.find_age
       ptp_9_elg_age_121.set_age
       eligibility_eng.answer_current_smoker
-      eligibility_eng.thinking_of_quitting
+      eligibility_eng.answer_thinking_of_quitting
       ptp_9_eligibility.enter_sf_zip
       ptp_9_eligibility.answer_medical_care
       ptp_9_eligibility.enter_email
@@ -141,11 +141,7 @@ feature 'A visitor to the site', metadata: :participant do
       visit eligibility_eng.eligibility_page
       eligibility_eng.find_age
       eligibility_eng.set_age
-
-      within('.form-group', text: 'Are you thinking of quitting') do
-        choose 'Yes'
-      end
-
+      eligibility_eng.answer_thinking_of_quitting
       ptp_9_eligibility.enter_sf_zip
       ptp_9_eligibility.answer_medical_care
       ptp_9_eligibility.enter_email
@@ -158,11 +154,7 @@ feature 'A visitor to the site', metadata: :participant do
       visit eligibility_eng.eligibility_page
       eligibility_eng.find_age
       eligibility_eng.set_age
-
-      within('.form-group', text: 'Are you currently a smoker?') do
-        choose 'Yes'
-      end
-
+      eligibility_eng.answer_current_smoker
       ptp_9_eligibility.enter_sf_zip
       ptp_9_eligibility.answer_medical_care
       ptp_9_eligibility.enter_email
@@ -176,7 +168,7 @@ feature 'A visitor to the site', metadata: :participant do
       eligibility_eng.find_age
       eligibility_eng.set_age
       eligibility_eng.answer_current_smoker
-      eligibility_eng.thinking_of_quitting
+      eligibility_eng.answer_thinking_of_quitting
       ptp_31_eligibility.enter_email
       ptp_31_eligibility.enter_phone_num
       ptp_31_eligibility.enter_password
@@ -190,7 +182,7 @@ feature 'A visitor to the site', metadata: :participant do
       eligibility_eng.find_age
       eligibility_eng.set_age
       eligibility_eng.answer_current_smoker
-      eligibility_eng.thinking_of_quitting
+      eligibility_eng.answer_thinking_of_quitting
   
       # What's the difference here? what up with not having content?
       #create typical has method, just use "not" in comment
@@ -210,7 +202,7 @@ feature 'A visitor to the site', metadata: :participant do
       eligibility_eng.find_age
       eligibility_eng.set_age
       eligibility_eng.answer_current_smoker
-      eligibility_eng.thinking_of_quitting
+      eligibility_eng.answer_thinking_of_quitting
 
       expect(page)
         .to_not have_content 'Where do you get most of your medical care?'
@@ -226,7 +218,7 @@ feature 'A visitor to the site', metadata: :participant do
       eligibility_eng.find_age
       eligibility_eng.set_age
       eligibility_eng.answer_current_smoker
-      eligibility_eng.thinking_of_quitting
+      eligibility_eng.answer_thinking_of_quitting
       ptp_25_eligibility.enter_sf_zip
       ptp_25_eligibility.answer_medical_care
       ptp_25_eligibility.enter_phone_num
@@ -239,7 +231,7 @@ feature 'A visitor to the site', metadata: :participant do
       eligibility_eng.find_age
       eligibility_eng.set_age
       eligibility_eng.answer_current_smoker
-      eligibility_eng.thinking_of_quitting
+      eligibility_eng.answer_thinking_of_quitting
       ptp_9_eligibility.enter_sf_zip
       ptp_9_eligibility.answer_medical_care
       ptp_9_eligibility.enter_email
@@ -252,7 +244,7 @@ feature 'A visitor to the site', metadata: :participant do
       eligibility_eng.find_age
       eligibility_eng.set_age
       eligibility_eng.answer_current_smoker
-      eligibility_eng.thinking_of_quitting
+      eligibility_eng.answer_thinking_of_quitting
       ptp_25_eligibility.enter_sf_zip
       ptp_25_eligibility.answer_medical_care
       ptp_25_eligibility.enter_email
@@ -265,7 +257,7 @@ feature 'A visitor to the site', metadata: :participant do
       eligibility_eng.find_age
       eligibility_eng.set_age
       eligibility_eng.answer_current_smoker
-      eligibility_eng.thinking_of_quitting
+      eligibility_eng.answer_thinking_of_quitting
       ptp_152_eligibility.enter_sf_zip
       ptp_152_eligibility.answer_medical_care
       ptp_151_eligibility.enter_email
@@ -281,7 +273,7 @@ feature 'A visitor to the site', metadata: :participant do
       eligibility_eng.find_age
       eligibility_eng.set_age
       eligibility_eng.answer_current_smoker
-      eligibility_eng.thinking_of_quitting
+      eligibility_eng.answer_thinking_of_quitting
       ptp_152_eligibility.enter_sf_zip
       ptp_152_eligibility.answer_medical_care
       ptp_152_eligibility.enter_email
@@ -298,7 +290,7 @@ feature 'A visitor to the site', metadata: :participant do
       eligibility_eng.find_age
       eligibility_eng.set_age
       eligibility_eng.answer_current_smoker
-      eligibility_eng.thinking_of_quitting
+      eligibility_eng.answer_thinking_of_quitting
       ptp_32_eligibility.enter_sf_zip
       ptp_32_eligibility.answer_medical_care
       ptp_32_eligibility.enter_email
@@ -422,7 +414,7 @@ feature 'A visitor to the site', metadata: :participant do
       participant_gen_esp.go_to('English')
       eligibility_eng.find_age
 
-      expect(eligibility_esp).to have_checked_still
+      expect(eligibility_eng).to be_still_checked
     end
 
     scenario 'completes eligibility survey and is eligible' do
@@ -430,7 +422,7 @@ feature 'A visitor to the site', metadata: :participant do
       eligibility_esp.find_age
       eligibility_esp.set_age
       eligibility_esp.answer_current_smoker
-      eligibility_esp.thinking_of_quitting
+      eligibility_esp.answer_thinking_of_quitting
       ptp_201_eligibility.enter_sf_zip
       ptp_201_eligibility.answer_medical_care
       ptp_201_eligibility.enter_email
@@ -448,7 +440,7 @@ feature 'A visitor to the site', metadata: :participant do
       eligibility_esp.find_age
       ptp_202_elg_age_17.set_age
       eligibility_esp.answer_current_smoker
-      eligibility_esp.thinking_of_quitting
+      eligibility_esp.answer_thinking_of_quitting
       ptp_202_eligibility.enter_sf_zip
       ptp_202_eligibility.answer_medical_care
       ptp_202_eligibility.enter_email
@@ -464,7 +456,7 @@ feature 'A visitor to the site', metadata: :participant do
       eligibility_esp.find_age
       eligibility_esp.set_age
       ptp_203_eligibility.answer_current_smoker
-      eligibility_esp.thinking_of_quitting
+      eligibility_esp.answer_thinking_of_quitting
       ptp_203_eligibility.enter_sf_zip
       ptp_203_eligibility.answer_medical_care
       ptp_203_eligibility.enter_email
@@ -480,7 +472,7 @@ feature 'A visitor to the site', metadata: :participant do
       eligibility_esp.find_age
       eligibility_esp.set_age
       eligibility_esp.answer_current_smoker
-      ptp_204_eligibility.thinking_of_quitting
+      ptp_204_eligibility.answer_thinking_of_quitting
       ptp_204_eligibility.enter_sf_zip
       ptp_204_eligibility.answer_medical_care
       ptp_204_eligibility.enter_email
@@ -495,7 +487,7 @@ feature 'A visitor to the site', metadata: :participant do
       visit eligibility_esp.eligibility_page
       eligibility_esp.find_age
       eligibility_esp.answer_current_smoker
-      eligibility_esp.thinking_of_quitting
+      eligibility_esp.answer_thinking_of_quitting
 
       ptp_10_eligibility.enter_sf_zip
       ptp_10_eligibility.answer_medical_care
@@ -511,7 +503,7 @@ feature 'A visitor to the site', metadata: :participant do
       eligibility_esp.find_age
       ptp_10_elg_age_0.set_age
       eligibility_esp.answer_current_smoker
-      eligibility_esp.thinking_of_quitting
+      eligibility_esp.answer_thinking_of_quitting
       ptp_10_eligibility.enter_sf_zip
       ptp_10_eligibility.answer_medical_care
       ptp_10_eligibility.enter_email
@@ -525,7 +517,7 @@ feature 'A visitor to the site', metadata: :participant do
       eligibility_esp.find_age
       ptp_10_elg_age_121.set_age
       eligibility_esp.answer_current_smoker
-      eligibility_esp.thinking_of_quitting
+      eligibility_esp.answer_thinking_of_quitting
       ptp_10_eligibility.enter_sf_zip
       ptp_10_eligibility.answer_medical_care
       ptp_10_eligibility.enter_email
@@ -538,10 +530,7 @@ feature 'A visitor to the site', metadata: :participant do
       visit eligibility_esp.eligibility_page
       eligibility_esp.find_age
       eligibility_esp.set_age
-      within('.form-group', text: '¿Está pensando en dejar de fumar dentro') do
-        choose 'Sí'
-      end
-
+      eligibility_esp.answer_thinking_of_quitting
       ptp_10_eligibility.enter_sf_zip
       ptp_10_eligibility.answer_medical_care
       ptp_10_eligibility.enter_email
@@ -554,10 +543,7 @@ feature 'A visitor to the site', metadata: :participant do
       visit eligibility_esp.eligibility_page
       eligibility_esp.find_age
       eligibility_esp.set_age
-      within('.form-group', text: '¿Fuma usted actualmente?') do
-        choose 'Sí'
-      end
-
+      eligibility_esp.answer_current_smoker
       ptp_10_eligibility.enter_sf_zip
       ptp_10_eligibility.answer_medical_care
       ptp_10_eligibility.enter_email
@@ -571,13 +557,12 @@ feature 'A visitor to the site', metadata: :participant do
       eligibility_esp.find_age
       eligibility_esp.set_age
       eligibility_esp.answer_current_smoker
-      eligibility_esp.thinking_of_quitting
-      eligibility_esp.enter_email
-      eligibility_esp.enter_phone_num
-      eligibility_esp.enter_password
-      eligibility_esp.click_submit
-      expect(page).to have_content 'Usted es eligible para participar en ' \
-                                   'nuestro estudio'
+      eligibility_esp.answer_thinking_of_quitting
+      ptp_33_eligibility.enter_email
+      ptp_33_eligibility.enter_phone_num
+      ptp_33_eligibility.enter_password
+      ptp_33_eligibility.click_submit
+      expect(eligibility_esp).to be_eligible
     end
 
     scenario 'fills in a SF zip code, sees the drop down for selecting a clinic' do
@@ -585,7 +570,7 @@ feature 'A visitor to the site', metadata: :participant do
       eligibility_esp.find_age
       eligibility_esp.set_age
       eligibility_esp.answer_current_smoker
-      eligibility_esp.thinking_of_quitting
+      eligibility_esp.answer_thinking_of_quitting
 
       expect(page)
         .to_not have_content '¿Dónde recibe la mayor parte de su atención médic'
@@ -600,7 +585,7 @@ feature 'A visitor to the site', metadata: :participant do
       eligibility_esp.find_age
       eligibility_esp.set_age
       eligibility_esp.answer_current_smoker
-      eligibility_esp.thinking_of_quitting
+      eligibility_esp.answer_thinking_of_quitting
 
       expect(page)
         .to_not have_content '¿Dónde recibe la mayor parte de su atención médic'
@@ -616,7 +601,7 @@ feature 'A visitor to the site', metadata: :participant do
       eligibility_esp.find_age
       eligibility_esp.set_age
       eligibility_esp.answer_current_smoker
-      eligibility_esp.thinking_of_quitting
+      eligibility_esp.answer_thinking_of_quitting
       ptp_26_eligibility.enter_sf_zip
       ptp_26_eligibility.answer_medical_care
       ptp_26_eligibility.enter_phone_num
@@ -629,7 +614,7 @@ feature 'A visitor to the site', metadata: :participant do
       eligibility_esp.find_age
       eligibility_esp.set_age
       eligibility_esp.answer_current_smoker
-      eligibility_esp.thinking_of_quitting
+      eligibility_esp.answer_thinking_of_quitting
       ptp_26_eligibility.enter_sf_zip
       ptp_26_eligibility.answer_medical_care
       ptp_26_eligibility.enter_email
@@ -642,7 +627,7 @@ feature 'A visitor to the site', metadata: :participant do
       eligibility_esp.find_age
       eligibility_esp.set_age
       eligibility_esp.answer_current_smoker
-      eligibility_esp.thinking_of_quitting
+      eligibility_esp.answer_thinking_of_quitting
       ptp_26_eligibility.enter_sf_zip
       ptp_26_eligibility.answer_medical_care
       ptp_26_eligibility.enter_email
@@ -655,7 +640,7 @@ feature 'A visitor to the site', metadata: :participant do
       eligibility_esp.find_age
       eligibility_esp.set_age
       eligibility_esp.answer_current_smoker
-      eligibility_esp.thinking_of_quitting
+      eligibility_esp.answer_thinking_of_quitting
       ptp_252_eligibility.enter_sf_zip
       ptp_252_eligibility.answer_medical_care
       ptp_251_eligibility.enter_email
@@ -670,7 +655,7 @@ feature 'A visitor to the site', metadata: :participant do
       eligibility_esp.find_age
       eligibility_esp.set_age
       eligibility_esp.answer_current_smoker
-      eligibility_esp.thinking_of_quitting
+      eligibility_esp.answer_thinking_of_quitting
       ptp_252_eligibility.enter_sf_zip
       ptp_252_eligibility.answer_medical_care
       ptp_252_eligibility.enter_email
@@ -686,7 +671,7 @@ feature 'A visitor to the site', metadata: :participant do
       eligibility_esp.find_age
       eligibility_esp.set_age
       eligibility_esp.answer_current_smoker
-      eligibility_esp.thinking_of_quitting
+      eligibility_esp.answer_thinking_of_quitting
       ptp_34_eligibility.enter_sf_zip
       ptp_34_eligibility.answer_medical_care
       ptp_34_eligibility.enter_email

@@ -32,11 +32,11 @@ class Participants
     end
 
     def set_age
-      input_age(@age)
+      first('input[type = tel]').set(@age)
     end
 
-    def has_checked_still?
-      has_checked? first('input[value = true]')
+    def still_checked?
+      first('input[value = true]').checked?
     end
 
 
@@ -120,7 +120,8 @@ class Participants
     end
 
     def click_con
-      click_on 'Continue'
+      var = participants.locale('Continue', 'Continuar')
+      click_on var
     end
 
     def eligible?
@@ -168,7 +169,7 @@ class Participants
     private
 
     def form_item(item)
-      find('.form_group', text: item)
+      find('.form-group', text: item)
     end
 
     def choose_response(response = 'Yes')
@@ -185,10 +186,6 @@ class Participants
                             'within the next 30 days?',
                          '¿Está pensando en dejar de fumar ' \
                          'dentro de los próximos 30 días?')
-    end
-
-    def input_age(age = 25)
-      first('input[value = tel]').set(age)
     end
 
     def participants

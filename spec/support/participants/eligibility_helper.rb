@@ -4,7 +4,8 @@ def eligibility_eng
   @eligibility_eng ||= Participants::Eligibility.new(
     locale: 'english',
     current_smoker: 'Yes',
-    thinking_of_quitting: 'Yes'
+    thinking_of_quitting: 'Yes',
+    age: 25
   )
 end
 
@@ -12,7 +13,8 @@ def eligibility_esp
   @eligibility_esp ||= Participants::Eligibility.new(
     locale: 'español',
     current_smoker: 'Sí',
-    thinking_of_quitting: 'Sí'
+    thinking_of_quitting: 'Sí',
+    age: 25
   )
 end
 
