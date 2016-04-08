@@ -2,17 +2,16 @@
 
 require './lib/zip_codes'
 require './spec/support/participants/consent_helper'
-require './spec/support/participants/eligibility_helper'
 require './spec/support/participants_helper'
 
 feature 'A visitor to the site', metadata: :participant do
   context 'in English' do
     scenario 'switches to Español when consenting' do
       visit eligibility_eng.eligibility_page
-      ptp_35_eligibility.find_age
-      ptp_35_eligibility.set_age
-      ptp_35_eligibility.answer_current_smoker
-      ptp_35_eligibility.thinking_of_quitting
+      eligibility_eng.find_age
+      eligibility_eng.set_age
+      eligibility_eng.answer_current_smoker
+      eligibility_eng.thinking_of_quitting
       ptp_35_eligibility.enter_sf_zip
       ptp_35_eligibility.answer_medical_care
       ptp_35_eligibility.enter_email
@@ -41,10 +40,10 @@ feature 'A visitor to the site', metadata: :participant do
     scenario 'completes eligibility, is eligible, ' \
              'is able to consent immediately' do
       visit eligibility_eng.eligibility_page
-      ptp_36_eligibility.find_age
-      ptp_36_eligibility.set_age
-      ptp_36_eligibility.answer_current_smoker
-      ptp_36_eligibility.thinking_of_quitting
+      eligibility_eng.find_age
+      eligibility_eng.set_age
+      eligibility_eng.answer_current_smoker
+      eligibility_eng.thinking_of_quitting
       ptp_36_eligibility.enter_sf_zip
       ptp_36_eligibility.answer_medical_care
       ptp_36_eligibility.enter_email
@@ -68,8 +67,8 @@ feature 'A visitor to the site', metadata: :participant do
       eligibility_eng.set_age
       eligibility_eng.answer_current_smoker
       eligibility_eng.thinking_of_quitting
-      participant_37.switch_language
-      ptp_37_eligibility.find_age
+      eligibility_eng.switch_language
+      eligibility_eng.find_age
       ptp_37_eligibility.enter_sf_zip
       ptp_37_eligibility.answer_medical_care
       ptp_37_eligibility.enter_email
@@ -141,12 +140,12 @@ feature 'A visitor to the site', metadata: :participant do
       participant_108.go_to_root
       ptp_108_consent.click_stop_smoke_guide
 
-      expect(ptp_108_consent).to have_smoke_guide_visible
+      expect(stop_smoking_guide_eng).to be_visible
 
       participant_108.go_to_root
       ptp_108_consent.click_cig_counter
 
-      expect(ptp_108_consent).to have_cig_counter_visible
+      expect(cigarette_counter_eng).to be_visible
 
       participant_108.go_to_root
       participant_108.go_to('Review Consent')
@@ -160,10 +159,10 @@ feature 'A visitor to the site', metadata: :participant do
   context 'in Español' do
     scenario 'switches to English when consenting' do
       visit eligibility_esp.eligibility_page
-      ptp_38_eligibility.find_age
-      ptp_38_eligibility.set_age
-      ptp_38_eligibility.answer_current_smoker
-      ptp_38_eligibility.thinking_of_quitting
+      eligibility_esp.find_age
+      eligibility_esp.set_age
+      eligibility_esp.answer_current_smoker
+      eligibility_esp.thinking_of_quitting
       ptp_38_eligibility.enter_sf_zip
       ptp_38_eligibility.answer_medical_care
       ptp_38_eligibility.enter_email
@@ -192,10 +191,10 @@ feature 'A visitor to the site', metadata: :participant do
     scenario 'completes eligibility, is eligible,' \
         'is able to consent immediately' do
       visit eligibility_esp.eligibility_page
-      ptp_39_eligibility.find_age
-      ptp_39_eligibility.set_age
-      ptp_39_eligibility.answer_current_smoker
-      ptp_39_eligibility.thinking_of_quitting
+      eligibility_esp.find_age
+      eligibility_esp.set_age
+      eligibility_esp.answer_current_smoker
+      eligibility_esp.thinking_of_quitting
       ptp_39_eligibility.enter_sf_zip
       ptp_39_eligibility.answer_medical_care
       ptp_39_eligibility.enter_email
@@ -293,12 +292,12 @@ feature 'A visitor to the site', metadata: :participant do
       participant_208.go_to_root
       ptp_208_consent.click_stop_smoke_guide
 
-      expect(ptp_208_consent).to have_smoke_guide_visible
+      expect(stop_smoking_guide_esp).to be_visible
 
       participant_208.go_to_root
       ptp_208_consent.click_cig_counter
 
-      expect(ptp_208_consent).to have_cig_counter_visible
+      expect(cigarette_counter_esp).to be_visible
 
       participant_208.go_to_root
       participant_208.go_to('Revise el Consentimiento')

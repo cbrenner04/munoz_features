@@ -1,4 +1,7 @@
 require './lib/pages/participants/eligibility'
+require './lib/pages/participants/consent'
+require './lib/pages/participants/cigarette_counter'
+require './lib/pages/participants/stop_smoking_guide'
 
 def eligibility_eng
   @eligibility_eng ||= Participants::Eligibility.new(
@@ -225,5 +228,43 @@ def ptp_34_eligibility
     email: ENV['Pt_34_Email'],
     phone: ENV['Pt_34_Phone_Number'],
     password: ENV['Pt_34_Password']
+  )
+end
+
+# Methods for Stop Smoking Guide related items
+
+def stop_smoking_guide_eng
+  @stop_smoking_guide_eng ||= Participants::StopSmokingGuide.new(
+    locale: 'english'
+  )
+end
+
+def stop_smoking_guide_esp
+  @stop_smoking_guide_esp ||= Participants::StopSmokingGuide.new(
+    locale: 'español'
+    )
+end
+
+# Methods for Stop Smoking Guide related items
+
+def consent_eng
+  @consent_eng ||= Participants::Consent.new(locale: 'english')
+end
+
+def consent_esp
+  @consent_esp ||= Participants::Consent.new(locale: 'español')
+end
+
+# Methods for Cigarette Counter related items
+
+def cigarette_counter_eng
+  @cigarette_counter_eng ||= Participants::CigaretteCounter.new(
+    locale: 'english'
+  )
+end
+
+def cigarette_counter_esp
+  @cigarette_counter_esp ||= Participants::CigaretteCounter.new(
+    locale: 'español'
   )
 end

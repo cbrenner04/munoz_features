@@ -75,11 +75,6 @@ class Participants
       click_on var
     end
 
-    def has_cig_counter_visible?
-      var = participants.locale('Yesterday', 'Ayer')
-      has_text? var
-    end
-
     private
 
     def participants

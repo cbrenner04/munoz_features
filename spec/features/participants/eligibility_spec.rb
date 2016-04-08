@@ -1,7 +1,6 @@
 # filename: spec/features/participants/eligibility_spec.rb
 
 require './lib/zip_codes.rb'
-require './spec/support/participants/consent_helper'
 require './spec/support/participants/eligibility_helper'
 require './spec/support/participants_helper'
 
@@ -304,12 +303,11 @@ feature 'A visitor to the site', metadata: :participant do
 
       participant_32.navigate_to('Cigarette Counter')
 
-      expect(consent_eng).to have_cig_counter_visible
+      expect(cigarette_counter_eng).to be_visible
 
       participant_32.navigate_to('Stop Smoking Guide')
 
-      # To be placed in the Stop Smoking Guide POM later
-      expect(page).to have_css('a', text: 'Why Should I Quit?')
+      expect(stop_smoking_guide_eng).to be_visible
 
       sleep(2)
       participant_32.go_to('Review Consent')
@@ -651,12 +649,11 @@ feature 'A visitor to the site', metadata: :participant do
 
       participant_34.navigate_to('Guía Para Dejar de Fumar')
 
-      # To be placed in the Stop Smoking Guide POM later
-      expect(page).to have_css('a', text: '¿Por qué debo dejar de fumar?')
+      expect(stop_smoking_guide_esp).to be_visible
 
       participant_34.navigate_to('Contador de Cigarrillos')
 
-      expect(consent_esp).to have_cig_counter_visible
+      expect(cigarette_counter_esp).to be_visible
 
       sleep(2)
       participant_34.go_to('Revise el Consentimiento')
