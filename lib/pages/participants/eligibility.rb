@@ -164,6 +164,102 @@ class Participants
       has_text? var
     end
 
+    def invalid_age
+      var = participants.locale('How old are you?', '¿Cuántos años tiene?')
+      within('.form-group', text: var) do
+
+        expect(page).to_not have_css('.ng-invalid-pattern')
+
+        find('input[type = tel]').set('h')
+
+        expect(page).to have_css('.ng-invalid-pattern')
+      end
+    end
+
+    def less_than_5_zip
+      var = participants.locale('What is your zip code?',
+                                '¿Cuál es su código postal?')
+      within('.form-group', text: var) do
+
+        expect(page).to_not have_css('.ng-invalid-minlength')
+
+        find('input[type = tel]').set('33')
+
+        expect(page).to have_css('.ng-invalid-pattern')
+
+        i = participants.locale('Must be 5 digits to be valid.',
+                                'Debe introducir 5 dígitos para ser válido')
+
+        expect(page).to have_content i
+      end
+    end
+
+    def more_than_5_zip
+      var = participants.locale('What is your zip code?',
+                                '¿Cuál es su código postal?')
+      within('.form-group', text: var) do
+
+        expect(page).to_not have_css('.ng-invalid-minlength')
+
+        find('input[type = tel]').set('333333333')
+
+        expect(page).to have_css('.ng-invalid-pattern')
+
+        i = participants.locale('Must be 5 digits to be valid.',
+                                'Debe introducir 5 dígitos para ser válido')
+
+        expect(page).to have_content i
+      end
+    end
+
+    def invalid_email
+      within('.form-group', text: 'Email') do
+
+        expect(page).to_not have_css('.ng-invalid-email')
+
+        find('input[type = email]').set('2')
+
+        expect(page).to have_css('.ng-invalid-email')
+
+        i = participants.locale('Must be a valid email address.',
+                                'Debe introducir un correo electrónico válido')
+
+        expect(page).to have_content i
+      end
+    end
+
+    def invalid_phone
+      var = participants.locale('Phone Number', 'Teléfono')
+      within('.form-group', text: var) do
+
+        expect(page).to_not have_css('.ng-invalid-pattern')
+
+        find('input[type = tel]').set('33')
+
+        expect(page).to have_css('.ng-invalid-pattern')
+
+        i = participants.locale('Must be 10 digits to be valid.',
+                                'Debe introducir 10 dígitos para ser válido')
+
+        expect(page).to have_content i
+      end
+    end
+
+    def invalid_password
+      var = participants.locale('Password', 'Contraseña')
+      within('.form-group', text: var) do
+
+        expect(page).to_not have_css('.ng-invalid-minlength')
+
+        find('input[type = password]').set('2')
+
+        expect(page).to have_css('.ng-invalid-minlength')
+        i = participants.locale('minimum 8 characters', 'mínimo 8 caracteres')
+
+        expect(page).to have_content i
+      end
+    end
+
     private
 
     def form_item(item)

@@ -33,7 +33,7 @@ feature 'A visitor to the site', metadata: :participant do
 
     scenario 'cannot review consent immediately ' \
                 'following ineligible decision' do
-      visit consent_eng.ineligible_page
+      visit eligibility_eng.ineligible_page
 
       expect(consent_eng).to have_no_consent_link
     end
@@ -184,7 +184,7 @@ feature 'A visitor to the site', metadata: :participant do
 
     scenario 'cannot review consent immediately' \
         'following ineligible decision' do
-      visit consent_esp.ineligible_page
+      visit eligibility_esp.ineligible_page
 
       expect(consent_esp).to have_no_consent_link
     end

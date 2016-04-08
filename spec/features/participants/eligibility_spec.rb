@@ -202,13 +202,11 @@ feature 'A visitor to the site', metadata: :participant do
       eligibility_eng.answer_current_smoker
       eligibility_eng.answer_thinking_of_quitting
 
-      expect(page)
-        .to_not have_content 'Where do you get most of your medical care?'
+      expect(eligibility_eng).to have_no_medical_question
 
       eligibility_eng.enter_chi_zip
 
-      expect(page)
-        .to_not have_content 'Where do you get most of your medical care?'
+      expect(eligibility_eng).to have_no_medical_question
     end
 
     scenario 'does not fill in email, cannot submit form' do
@@ -295,98 +293,63 @@ feature 'A visitor to the site', metadata: :participant do
       ptp_32_eligibility.enter_phone_num
       ptp_32_eligibility.enter_password
       eligibility_eng.click_submit
+      eligibility_eng.click_view_consent
 
-      click_on 'View the consent form'
-      find('h3', text: 'PALO ALTO UNIVERSITY CONSENT')
-      first('.ng-pristine.ng-untouched.ng-invalid.ng-invalid-required').click
-      click_on 'Submit'
+      expect(consent_eng).to be_visible
 
-      expect(page).to have_css('iframe[class = ng-scope]')
+      consent_eng.give_consent
+      consent_eng.click_submit
 
-      navigate_to('Cigarette Counter')
+      expect(consent_eng).to be_submitted
 
-      expect(page).to have_content 'Yesterday'
+      participant_32.navigate_to('Cigarette Counter')
 
-      unless has_css?('.ng-binding', text: 'Stop Smoking Guide')
-        find('.navbar-toggle').click
-      end
-      find('.ng-binding', text: 'Stop Smoking Guide').click
+      expect(consent_eng).to have_cig_counter_visible
+
+      participant_32.navigate_to('Stop Smoking Guide')
+
+      # To be placed in the Stop Smoking Guide POM later
       expect(page).to have_css('a', text: 'Why Should I Quit?')
 
       sleep(2)
-      eligibility_esp.go_to('Review Consent')
-      expect(page).to have_content 'PALO ALTO UNIVERSITY CONSENT TO ' \
-                                   'PARTICIPATE IN A RESEARCH STUDY'
+      participant_32.go_to('Review Consent')
+
+      expect(consent_eng).to be_visible
     end
 
     scenario 'sees invalid formatting in age field on eligibility form' do
       visit eligibility_eng.eligibility_page
-
-      within('.form-group', text: 'How old are you?') do
-        expect(page).to_not have_css('.ng-invalid-pattern')
-        find('input[type = tel]').set('h')
-        expect(page).to have_css('.ng-invalid-pattern')
-      end
+      eligibility_eng.invalid_age
     end
 
     scenario 'sees invalid formatting in zip code field ' \
         'when entering less than 5 ' \
         'digits on eligibility form' do
       visit eligibility_eng.eligibility_page
-
-      within('.form-group', text: 'What is your zip code?') do
-        expect(page).to_not have_css('.ng-invalid-minlength')
-        find('input[type = tel]').set('33')
-        expect(page).to have_css('.ng-invalid-pattern')
-        expect(page).to have_content 'Must be 5 digits to be valid.'
-      end
+      eligibility_eng.less_than_5_zip
     end
 
     scenario 'sees invalid formatting in zip code ' \
         'field when entering more than 5 ' \
         'digits on eligibility form' do
       visit eligibility_eng.eligibility_page
-
-      within('.form-group', text: 'What is your zip code?') do
-        expect(page).to_not have_css('.ng-invalid-minlength')
-        find('input[type = tel]').set('333333333')
-        expect(page).to have_css('.ng-invalid-pattern')
-        expect(page).to have_content 'Must be 5 digits to be valid.'
-      end
+      eligibility_eng.more_than_5_zip
     end
 
     scenario 'sees invalid formatting in email field on eligibility form' do
       visit eligibility_eng.eligibility_page
-
-      within('.form-group', text: 'Email') do
-        expect(page).to_not have_css('.ng-invalid-email')
-        find('input[type = email]').set('2')
-        expect(page).to have_css('.ng-invalid-email')
-        expect(page).to have_content 'Must be a valid email address.'
-      end
+      eligibility_eng.invalid_email
     end
 
     scenario 'sees invalid formatting in phone number field ' \
         'on eligibility form' do
       visit eligibility_eng.eligibility_page
-
-      within('.form-group', text: 'Phone Number') do
-        expect(page).to_not have_css('.ng-invalid-pattern')
-        find('input[type = tel]').set('33')
-        expect(page).to have_css('.ng-invalid-pattern')
-        expect(page).to have_content 'Must be 10 digits to be valid.'
-      end
+      eligibility_eng.invalid_phone
     end
 
     scenario 'sees invalid formatting in password field on eligibility form' do
       visit eligibility_eng.eligibility_page
-
-      within('.form-group', text: 'Password') do
-        expect(page).to_not have_css('.ng-invalid-minlength')
-        find('input[type = password]').set('2')
-        expect(page).to have_css('.ng-invalid-minlength')
-        expect(page).to have_content 'minimum 8 characters'
-      end
+      eligibility_eng.invalid_password
     end
   end
 
@@ -407,11 +370,8 @@ feature 'A visitor to the site', metadata: :participant do
       participant_gen_esp.go_to_root
       eligibility_esp.click_esp
       eligibility_esp.click_con
-
-      within('.form-group', text: '¿Fuma usted actualmente?') do
-        choose 'Sí'
-      end
-
+      eligibility_esp.answer_current_smoker
+      eligibility_esp.answer_thinking_of_quitting
       participant_gen_esp.go_to('English')
       eligibility_eng.find_age
 
@@ -576,12 +536,11 @@ feature 'A visitor to the site', metadata: :participant do
       eligibility_esp.answer_current_smoker
       eligibility_esp.answer_thinking_of_quitting
 
-      expect(page)
-        .to_not have_content '¿Dónde recibe la mayor parte de su atención médic'
+      expect(eligibility_esp).to have_no_medical_question
+
       eligibility_esp.enter_sf_zip
-      expect(page)
-        .to have_css('.form-group',
-                     text: '¿Dónde recibe la mayor parte de su atención médica')
+
+      expect(eligibility_esp).to have_medical_question
     end
 
     scenario 'fills in a zip code other than SF, ' \
@@ -592,13 +551,11 @@ feature 'A visitor to the site', metadata: :participant do
       eligibility_esp.answer_current_smoker
       eligibility_esp.answer_thinking_of_quitting
 
-      expect(page)
-        .to_not have_content '¿Dónde recibe la mayor parte de su atención médic'
+      expect(eligibility_esp).to have_no_medical_question
 
       eligibility_esp.enter_chi_zip
 
-      expect(page)
-        .to_not have_content '¿Dónde recibe la mayor parte de su atención médic'
+      expect(eligibility_esp).to have_no_medical_question
     end
 
     scenario 'does not fill in email, cannot submit form' do
@@ -683,87 +640,63 @@ feature 'A visitor to the site', metadata: :participant do
       ptp_34_eligibility.enter_phone_num
       ptp_34_eligibility.enter_password
       eligibility_esp.click_submit
-      click_on 'Ver el formulario de consentimiento'
-      find('h3', text: 'UNIVERSIDAD DE PALO ALTO CONSENTIMIENTO')
-      first('.ng-pristine.ng-untouched.ng-invalid.ng-invalid-required').click
-      click_on 'Enviar'
-      expect(page).to have_css('iframe[class = ng-scope]')
+      eligibility_esp.click_view_consent
 
-      navigate_to('Guía Para Dejar de Fumar')
+      expect(consent_esp).to be_visible
+
+      first('.ng-pristine.ng-untouched.ng-invalid.ng-invalid-required').click
+      consent_esp.click_submit
+
+      expect(consent_esp).to be_submitted
+
+      participant_34.navigate_to('Guía Para Dejar de Fumar')
+
+      # To be placed in the Stop Smoking Guide POM later
       expect(page).to have_css('a', text: '¿Por qué debo dejar de fumar?')
 
-      navigate_to('Contador de Cigarrillos')
-      expect(page).to have_content 'Ayer'
+      participant_34.navigate_to('Contador de Cigarrillos')
+
+      expect(consent_esp).to have_cig_counter_visible
 
       sleep(2)
-      go_to('Revise el Consentimiento')
-      expect(page).to have_content 'UNIVERSIDAD DE PALO ALTO CONSENTIMIENTO'
+      participant_34.go_to('Revise el Consentimiento')
+
+      expect(consent_esp).to be_visible
     end
 
     scenario 'sees invalid formatting in age field on eligibility form' do
       visit eligibility_esp.eligibility_page
-      within('.form-group', text: '¿Cuántos años tiene?') do
-        expect(page).to_not have_css('.ng-invalid-pattern')
-        find('input[type = tel]').set('h')
-        expect(page).to have_css('.ng-invalid-pattern')
-      end
+      eligibility_esp.invalid_age
     end
 
     scenario 'sees invalid formatting in zip code ' \
         'field when entering less than 5 ' \
         'digits on eligibility form' do
       visit eligibility_esp.eligibility_page
-      within('.form-group', text: '¿Cuál es su código postal?') do
-        expect(page).to_not have_css('.ng-invalid-minlength')
-        find('input[type = tel]').set('33')
-        expect(page).to have_css('.ng-invalid-pattern')
-        expect(page).to have_content 'Debe introducir 5 dígitos para ser válido'
-      end
+      eligibility_esp.less_than_5_zip
     end
 
     scenario 'sees invalid formatting in zip code ' \
         'field when entering more than 5 ' \
         'digits on eligibility form' do
       visit eligibility_esp.eligibility_page
-      within('.form-group', text: '¿Cuál es su código postal?') do
-        expect(page).to_not have_css('.ng-invalid-minlength')
-        find('input[type = tel]').set('33333333')
-        expect(page).to have_css('.ng-invalid-pattern')
-        expect(page).to have_content 'Debe introducir 5 dígitos para ser válido'
-      end
+      eligibility_esp.more_than_5_zip
     end
 
     scenario 'sees invalid formatting in email field on eligibility form' do
       visit eligibility_esp.eligibility_page
-      within('.form-group', text: 'Email') do
-        expect(page).to_not have_css('.ng-invalid-email')
-        find('input[type = email]').set('2')
-        expect(page).to have_css('.ng-invalid-email')
-        expect(page)
-          .to have_content 'Debe introducir un correo electrónico válido'
-      end
+      eligibility_esp.invalid_email
     end
 
     scenario 'sees invalid formatting in phone ' \
         'number field on eligibility form' do
       visit eligibility_esp.eligibility_page
-      within('.form-group', text: 'Teléfono') do
-        expect(page).to_not have_css('.ng-invalid-pattern')
-        find('input[type = tel]').set('33')
-        expect(page).to have_css('.ng-invalid-pattern')
-        expect(page)
-          .to have_content 'Debe introducir 10 dígitos para ser válido'
-      end
+      eligibility_esp.invalid_phone
     end
 
     scenario 'sees invalid formatting in password field on eligibility form' do
       visit eligibility_esp.eligibility_page
-      within('.form-group', text: 'Contraseña') do
-        expect(page).to_not have_css('.ng-invalid-minlength')
-        find('input[type = password]').set('2')
-        expect(page).to have_css('.ng-invalid-minlength')
-        expect(page).to have_content 'mínimo 8 caracteres'
-      end
+      eligibility_esp.invalid_password
     end
   end
 end
