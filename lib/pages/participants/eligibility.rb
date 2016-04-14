@@ -11,9 +11,10 @@ class Participants
       @email ||= eligibility[:email]
       @phone ||= eligibility[:phone]
       @password ||= eligibility[:password]
-      @current_smoker ||= eligibility[:current_smoker]
-      @thinking_of_quitting ||= eligibility[:thinking_of_quitting]
+      @current_smoker ||= eligibility.fetch(:current_smoker, 'Yes')
+      @thinking_of_quitting ||= eligibility.fetch(:thinking_of_quitting, 'Yes')
       @age ||= eligibility[:age]
+      @zip ||= eligibility.fetch(:zip, ZipCodes::SF.sample)
     end
 
     def eligibility_page
@@ -26,7 +27,6 @@ class Participants
       find('.ng-binding', text: var)
     end
 
-    # update to have expect statement
     def visible?
       has_text? participants.locale('How old are you?', '¿Cuántos años tiene?')
     end
@@ -40,31 +40,26 @@ class Participants
     end
 
     def has_questions?
-      var = participants.locale('Please answer the following questions to',
-                                'Por favor responda las siguientes ' \
-                                  'preguntas para determinar si es ' \
-                                  'elegible para participar.')
-      has_text? var
+      has_text? participants.locale('Please answer the following questions to',
+                                    'Por favor responda las siguientes ' \
+                                    'preguntas para determinar si es ' \
+                                    'elegible para participar.')
     end
 
     def answer_current_smoker
       within form_item(current_smoker_question) do
-        choose_response(@current_smoker)
+        choose @current_smoker
       end
     end
 
     def answer_thinking_of_quitting
       within form_item(thinking_of_quitting_question) do
-        choose_response(@thinking_of_quitting)
+        choose @thinking_of_quitting
       end
     end
 
-    def enter_sf_zip
-      all('input[type = tel]')[1].set(ZipCodes::SF.sample)
-    end
-
-    def enter_chi_zip
-      all('input[type = tel]')[1].set(ZipCodes::CHI.sample)
+    def enter_zip
+      all('input[type = tel]')[1].set(@zip)
     end
 
     def answer_medical_care
@@ -98,9 +93,8 @@ class Participants
     end
 
     def click_view_consent
-      var = participants.locale('View the consent form',
-                                'Ver el formulario de consentimiento')
-      click_on var
+      click_on participants.locale('View the consent form',
+                                   'Ver el formulario de consentimiento')
     end
 
     def ineligible_page
@@ -118,27 +112,24 @@ class Participants
     end
 
     def click_con
-      var = participants.locale('Continue', 'Continuar')
-      click_on var
+      click_on participants.locale('Continue', 'Continuar')
     end
 
     def eligible?
-      var = participants.locale('You are eligible to participate',
-                                'Usted es eligible para participar en ' \
-                                  'nuestro estudio')
-      has_text? var
+      has_text? participants.locale('You are eligible to participate',
+                                    'Usted es eligible para participar en ' \
+                                    'nuestro estudio')
     end
 
     def ineligible?
-      var = participants.locale('You are not eligible to participate',
-                                'Lo sentimos. Usted no es elegible para ' \
-                                  'participar en nuestro estudio. Le ' \
-                                  'recomendamos los siguientes 3 recursos ' \
-                                  'para dejar de fumar: ' \
-                                  'espanol.smokefree.gov, 1-800-NO-BUTTS ' \
-                                  '(662-8887) o es.becomeanex.org. Gracias ' \
-                                  'por contestar nuestras preguntas')
-      has_text? var
+      has_text? participants.locale('You are not eligible to participate',
+                                    'Lo sentimos. Usted no es elegible para ' \
+                                    'participar en nuestro estudio. Le ' \
+                                    'recomendamos los siguientes 3 recursos ' \
+                                    'para dejar de fumar: ' \
+                                    'espanol.smokefree.gov, 1-800-NO-BUTTS ' \
+                                    '(662-8887) o es.becomeanex.org. Gracias ' \
+                                    'por contestar nuestras preguntas')
     end
 
     def submit_disabled
@@ -146,128 +137,97 @@ class Participants
     end
 
     def has_error_message?
-      var = participants.locale('Sorry, there was a problem. ' \
-                                  'Please review your ' \
-                                  'responses and try again.',
-                                'Lo sentimos, hubo un problema. Por favor' \
-                                  ' revise sus respuestas ' \
-                                  'y vuelva a intentar.')
-      has_text? var
+      has_text? participants.locale('Sorry, there was a problem. Please ' \
+                                    'review your responses and try again.',
+                                    'Lo sentimos, hubo un problema. Por ' \
+                                    'favor revise sus respuestas y vuelva a ' \
+                                    'intentar.')
     end
 
     def has_account_verify?
-      var = participants.locale('Thank you!  Please check your email to ' \
-                                  'verify your account and continue.',
-                                '¡Gracias! Por favor revise su correo ' \
-                                  'electrónico para verificar su cuenta y ' \
-                                  'continuar.')
-      has_text? var
+      has_text? participants.locale('Thank you!  Please check your email to ' \
+                                    'verify your account and continue.',
+                                    '¡Gracias! Por favor revise su correo ' \
+                                    'electrónico para verificar su cuenta y ' \
+                                    'continuar.')
     end
 
-    def invalid_age
-      var = participants.locale('How old are you?', '¿Cuántos años tiene?')
-      within('.form-group', text: var) do
+    # split `invalid_age`, `less_than_5_zip`, `more_than_5_zip`,
+    # `invalid_email`, `invalid_phone`, and `invalid_password`
+    # They didn't really make sense to me in the specs
+    # and there is a lot of repeated code
 
-        expect(page).to_not have_css('.ng-invalid-pattern')
-
-        find('input[type = tel]').set('h')
-
-        expect(page).to have_css('.ng-invalid-pattern')
-      end
+    def has_empty_age_field?
+      form_item(age_question).has_no_css?('.ng-invalid-pattern')
     end
 
-    def less_than_5_zip
-      var = participants.locale('What is your zip code?',
-                                '¿Cuál es su código postal?')
-      within('.form-group', text: var) do
-
-        expect(page).to_not have_css('.ng-invalid-minlength')
-
-        find('input[type = tel]').set('33')
-
-        expect(page).to have_css('.ng-invalid-pattern')
-
-        i = participants.locale('Must be 5 digits to be valid.',
-                                'Debe introducir 5 dígitos para ser válido')
-
-        expect(page).to have_content i
-      end
+    def has_invalid_age?
+      form_item(age_question).has_css?('.ng-invalid-pattern')
     end
 
-    def more_than_5_zip
-      var = participants.locale('What is your zip code?',
-                                '¿Cuál es su código postal?')
-      within('.form-group', text: var) do
-
-        expect(page).to_not have_css('.ng-invalid-minlength')
-
-        find('input[type = tel]').set('333333333')
-
-        expect(page).to have_css('.ng-invalid-pattern')
-
-        i = participants.locale('Must be 5 digits to be valid.',
-                                'Debe introducir 5 dígitos para ser válido')
-
-        expect(page).to have_content i
-      end
+    def has_empty_zip_field?
+      form_item(zip_question).has_no_css?('.ng-invalid-minlength')
     end
 
-    def invalid_email
-      within('.form-group', text: 'Email') do
-
-        expect(page).to_not have_css('.ng-invalid-email')
-
-        find('input[type = email]').set('2')
-
-        expect(page).to have_css('.ng-invalid-email')
-
-        i = participants.locale('Must be a valid email address.',
-                                'Debe introducir un correo electrónico válido')
-
-        expect(page).to have_content i
-      end
+    def has_invalid_zip?
+      form_item(zip_question).has_css?('.ng-invalid-pattern')
     end
 
-    def invalid_phone
-      var = participants.locale('Phone Number', 'Teléfono')
-      within('.form-group', text: var) do
-
-        expect(page).to_not have_css('.ng-invalid-pattern')
-
-        find('input[type = tel]').set('33')
-
-        expect(page).to have_css('.ng-invalid-pattern')
-
-        i = participants.locale('Must be 10 digits to be valid.',
-                                'Debe introducir 10 dígitos para ser válido')
-
-        expect(page).to have_content i
-      end
+    def has_invalid_zip_alert?
+      has_text? participants
+        .locale('Must be 5 digits to be valid.',
+                'Debe introducir 5 dígitos para ser válido')
     end
 
-    def invalid_password
-      var = participants.locale('Password', 'Contraseña')
-      within('.form-group', text: var) do
+    def has_empty_email_field?
+      form_item('Email').has_no_css?('.ng-invalid-email')
+    end
 
-        expect(page).to_not have_css('.ng-invalid-minlength')
+    def has_invalid_email?
+      form_item('Email').has_css?('.ng-invalid-email')
+    end
 
-        find('input[type = password]').set('2')
+    def has_invalid_email_alert?
+      has_text? participants
+        .locale('Must be a valid email address.',
+                'Debe introducir un correo electrónico válido')
+    end
 
-        expect(page).to have_css('.ng-invalid-minlength')
-        i = participants.locale('minimum 8 characters', 'mínimo 8 caracteres')
+    def phone_question
+      participants.locale('Phone Number', 'Teléfono')
+    end
 
-        expect(page).to have_content i
-      end
+    def has_empty_phone_field?
+      form_item(phone_question).has_no_css?('.ng-invalid-pattern')
+    end
+
+    def has_invalid_phone?
+      form_item(phone_question).has_css?('.ng-invalid-pattern')
+    end
+
+    def has_invalid_phone_alert?
+      has_text? participants
+        .locale('Must be 10 digits to be valid.',
+                'Debe introducir 10 dígitos para ser válido')
+    end
+
+    def has_empty_password_field?
+      form_item(password).has_no_css?('.ng-invalid-minlength')
+    end
+
+    def has_invalid_password?
+      form_item(password).has_css?('.ng-invalid-minlength')
+    end
+
+    def has_invalid_password_alert?
+      has_text? participants
+        .locale('minimum 8 characters', 'mínimo 8 caracteres')
     end
 
     private
 
     def form_item(item)
       find('.form-group', text: item)
-    end
-
-    def choose_response(response = 'Yes')
-      choose response
     end
 
     def current_smoker_question
@@ -287,10 +247,22 @@ class Participants
     end
 
     def medical_question
-      @medical_question ||=
-        participants
+      participants
         .locale('Where do you get most of your medical care?',
                 '¿Dónde recibe la mayor parte de su atención médica?')
+    end
+
+    def age_question
+      participants.locale('How old are you?', '¿Cuántos años tiene?')
+    end
+
+    def zip_question
+      participants.locale('What is your zip code?',
+                          '¿Cuál es su código postal?')
+    end
+
+    def password
+      participants.locale('Password', 'Contraseña')
     end
   end
 end

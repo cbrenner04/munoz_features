@@ -1,14 +1,22 @@
+require './lib/pages/participants'
+
 class Participants
   # Page object for set your quit date.
   class SetYourQuitDate
     include Capybara::DSL
 
-    def visible_in_eng?
-      has_text? 'Your Quit Date:'
+    def initialize(quit_date)
+      @locale ||= quit_date[:locale]
     end
 
-    def visible_in_esp?
-      has_text? 'La Fecha en que Dejará de Fumar'
+    def visible?
+      participants.locale 'Your Quit Date:', 'La Fecha en que Dejará de Fumar'
+    end
+
+    private
+
+    def participants
+      @participants ||= Participants.new(locale: @locale)
     end
   end
 end

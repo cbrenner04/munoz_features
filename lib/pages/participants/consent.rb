@@ -11,9 +11,8 @@ class Participants
     end
 
     def visible?
-      var = participants.locale('PALO ALTO UNIVERSITY CONSENT',
-                                'UNIVERSIDAD DE PALO ALTO CONSENTIMIENTO')
-      has_text? var
+      has_text? participants.locale('PALO ALTO UNIVERSITY CONSENT',
+                                    'UNIVERSIDAD DE PALO ALTO CONSENTIMIENTO')
     end
 
     def give_consent
@@ -36,8 +35,7 @@ class Participants
     end
 
     def click_submit
-      var = participants.locale('Submit', 'Enviar')
-      click_on var
+      click_on participants.locale('Submit', 'Enviar')
     end
 
     def submitted?
@@ -47,15 +45,13 @@ class Participants
     # For those who did not consent
 
     def click_set_quit_date
-      var = participants.locale('Set Your Quit Date',
-                                'Elija la fecha en que dejará de fumar')
-      click_on var
+      click_on participants.locale('Set Your Quit Date',
+                                   'Elija la fecha en que dejará de fumar')
     end
 
     def click_stop_smoke_guide
-      var = participants.locale('Stop Smoking Guide',
-                                'Guía Para Dejar de Fumar')
-      click_on var
+      click_on participants.locale('Stop Smoking Guide',
+                                   'Guía Para Dejar de Fumar')
     end
 
     def has_smoke_guide_visible?
@@ -65,9 +61,8 @@ class Participants
     end
 
     def click_cig_counter
-      var = participants.locale('Cigarette Counter',
-                                'Contador de Cigarrillos')
-      click_on var
+      click_on participants.locale('Cigarette Counter',
+                                   'Contador de Cigarrillos')
     end
 
     private

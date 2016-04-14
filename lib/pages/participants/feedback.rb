@@ -3,7 +3,6 @@ require './lib/pages/participants'
 class Participants
   # page object for Consent
   class Feedback
-    include RSpec::Matchers
     include Capybara::DSL
 
     def initialize(feedback)
@@ -17,9 +16,8 @@ class Participants
     end
 
     def visible?
-      var = participants.locale('How helpful was this app?',
-                                '¿Qué tan útil fue esta aplicación?')
-      has_content? var
+      has_text? participants.locale('How helpful was this app?',
+                                    '¿Qué tan útil fue esta aplicación?')
     end
 
     def feedback_page
@@ -39,24 +37,21 @@ class Participants
       has_css? counter, count: 2
     end
 
-    def click_btn_2
-      all(button)[3].click
+    def make_first_rating
+      sleep(0.25)
+      all(button)[3].click # may parameterize if needed
     end
 
-    def click_btn_16
-      all(button)[17].click
+    def make_second_rating
+      all(button)[17].click # may parameterize if needed
     end
 
-    def counter_1_has_3
-      within first(counter) do
-        expect(page).to have_content '3'
-      end
+    def has_first_rating?
+      first(counter).has_text? '3' # may parameterize if needed
     end
 
-    def counter_2_has_6
-      within all(counter)[1] do
-        expect(page).to have_content '6'
-      end
+    def has_second_rating?
+      all(counter)[1].has_text? '6' # may parameterize if needed
     end
 
     def submit
@@ -73,22 +68,21 @@ class Participants
     end
 
     def has_no_feedback_link?
-      has_no_css? '.ng-binging', text: title
+      has_no_css? 'a', text: title
     end
 
     private
 
     def button
-      @button = '.btn.btn-default'
+      @button ||= '.btn.btn-default'
     end
 
     def counter
-      @counter = '.btn.btn-default.ng-binding.ng-scope.active'
+      @counter ||= '.active'
     end
 
     def title
-      participants.locale('Feedback',
-                          'Comentarios')
+      participants.locale('Feedback', 'Comentarios')
     end
 
     def participants

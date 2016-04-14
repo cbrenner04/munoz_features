@@ -188,7 +188,7 @@ end
 def stop_smoking_guide_esp
   @stop_smoking_guide_esp ||= Participants::StopSmokingGuide.new(
     locale: 'español'
-    )
+  )
 end
 
 # Methods for Cigarette Counter related items

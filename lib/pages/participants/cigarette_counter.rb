@@ -26,14 +26,12 @@ class Participants
     end
 
     def visible?
-      var = participants.locale('How many cigarettes have you smoked?',
-                                '¿Cuántos cigarros ha fumado?')
-      has_text? var
+      has_text? participants.locale('How many cigarettes have you smoked?',
+                                    '¿Cuántos cigarros ha fumado?')
     end
 
     def has_count?
-      button_group.find('input[type = "tel"]')
-        .has_text? @count.to_s
+      button_group.find('input[type = "tel"]').has_text? @count.to_s
     end
 
     def increment_count
@@ -45,11 +43,10 @@ class Participants
     end
 
     def has_count_in_graph?
-      date_format = if @locale == 'english'
-                      @date.strftime('%b %-d')
-                    else
-                      participants.trans_mo("#{@date.strftime('%-d %b.')}")
-                    end
+      date_format = participants.locale(
+        @date.strftime('%b %-d'),
+        participants.trans_mo("#{@date.strftime('%-d %b.')}")
+      )
       find('g', text: date_format).has_text? @count.to_s
     end
 
@@ -69,19 +66,16 @@ class Participants
     end
 
     def set_count
-      find('.pull-left', text: @day)
-        .find('input[type = tel]').set(@count)
+      find('.pull-left', text: @day).find('input[type = tel]').set(@count)
     end
 
     def done
-      btn_text = participants.locale('Done', 'Fijar')
-      find('.btn-default', text: btn_text).click
+      find('.btn-default', text: participants.locale('Done', 'Fijar')).click
     end
 
     def has_home_visible?
-      var = participants.locale('Stop Smoking Guide',
-                                'Guía Para Dejar de Fumar')
-      has_text? var
+      has_text? participants.locale('Stop Smoking Guide',
+                                    'Guía Para Dejar de Fumar')
     end
 
     private

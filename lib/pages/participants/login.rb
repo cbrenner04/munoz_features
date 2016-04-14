@@ -3,7 +3,6 @@ require './lib/pages/participants'
 class Participants
   # page object for Consent
   class Login
-    include RSpec::Matchers
     include Capybara::DSL
 
     def initialize(login)

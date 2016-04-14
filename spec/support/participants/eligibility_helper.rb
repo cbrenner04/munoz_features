@@ -21,6 +21,40 @@ def eligibility_esp
   )
 end
 
+def chicago_eligibility
+  @chicago_eligibility ||= Participants::Eligibility.new(
+    zip: ZipCodes::CHI.sample
+  )
+end
+
+def age_eligibility
+  @age_eligibility ||= Participants::Eligibility.new(age: 'h')
+end
+
+def short_zip_eligibility
+  @short_zip_eligibility ||= Participants::Eligibility.new(zip: 33)
+end
+
+def long_zip_eligibility
+  @long_zip_eligibility ||= Participants::Eligibility.new(
+    zip: 333_333_333
+  )
+end
+
+def bad_email_eligibility
+  @bad_email_eligibility ||= Participants::Eligibility.new(email: 2)
+end
+
+def bad_phone_eligibility
+  @bad_phone_eligibility ||= Participants::Eligibility.new(phone: 33)
+end
+
+def bad_password_eligibility
+  @bad_password_eligibility ||= Participants::Eligibility.new(
+    password: 'asdf'
+  )
+end
+
 def ptp_101_eligibility
   @ptp_101_eligibility ||= Participants::Eligibility.new(
     locale: 'english',
@@ -242,7 +276,7 @@ end
 def stop_smoking_guide_esp
   @stop_smoking_guide_esp ||= Participants::StopSmokingGuide.new(
     locale: 'español'
-    )
+  )
 end
 
 # Methods for Stop Smoking Guide related items

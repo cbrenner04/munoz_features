@@ -10,9 +10,13 @@ def feedback_esp
 end
 
 def stop_smoking_guide_eng
-  @stop_smoking_guide_eng ||= Participants::StopSmokingGuide.new(locale: 'english')
+  @stop_smoking_guide_eng ||= Participants::StopSmokingGuide.new(
+    locale: 'english'
+  )
 end
 
 def stop_smoking_guide_esp
-  @stop_smoking_guide_esp ||= Participants::StopSmokingGuide.new(locale: 'español')
+  @stop_smoking_guide_esp ||= Participants::StopSmokingGuide.new(
+    locale: 'español'
+  )
 end

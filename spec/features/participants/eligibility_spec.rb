@@ -35,7 +35,7 @@ feature 'A visitor to the site', metadata: :participant do
       eligibility_eng.set_age
       eligibility_eng.answer_current_smoker
       eligibility_eng.answer_thinking_of_quitting
-      ptp_101_eligibility.enter_sf_zip
+      ptp_101_eligibility.enter_zip
       ptp_101_eligibility.answer_medical_care
       ptp_101_eligibility.enter_email
       ptp_101_eligibility.enter_phone_num
@@ -53,7 +53,7 @@ feature 'A visitor to the site', metadata: :participant do
       ptp_102_elg_age_17.set_age
       eligibility_eng.answer_current_smoker
       eligibility_eng.answer_thinking_of_quitting
-      ptp_102_eligibility.enter_sf_zip
+      ptp_102_eligibility.enter_zip
       ptp_102_eligibility.answer_medical_care
       ptp_102_eligibility.enter_email
       ptp_102_eligibility.enter_phone_num
@@ -70,7 +70,7 @@ feature 'A visitor to the site', metadata: :participant do
       eligibility_eng.set_age
       ptp_103_eligibility.answer_current_smoker
       eligibility_eng.answer_thinking_of_quitting
-      ptp_103_eligibility.enter_sf_zip
+      ptp_103_eligibility.enter_zip
       ptp_103_eligibility.answer_medical_care
       ptp_103_eligibility.enter_email
       ptp_103_eligibility.enter_phone_num
@@ -87,7 +87,7 @@ feature 'A visitor to the site', metadata: :participant do
       eligibility_eng.set_age
       eligibility_eng.answer_current_smoker
       ptp_104_eligibility.answer_thinking_of_quitting
-      ptp_104_eligibility.enter_sf_zip
+      ptp_104_eligibility.enter_zip
       ptp_104_eligibility.answer_medical_care
       ptp_104_eligibility.enter_email
       ptp_104_eligibility.enter_phone_num
@@ -102,7 +102,7 @@ feature 'A visitor to the site', metadata: :participant do
       eligibility_eng.find_age
       eligibility_eng.answer_current_smoker
       eligibility_eng.answer_thinking_of_quitting
-      ptp_9_eligibility.enter_sf_zip
+      ptp_9_eligibility.enter_zip
       ptp_9_eligibility.answer_medical_care
       ptp_9_eligibility.enter_email
       ptp_9_eligibility.enter_phone_num
@@ -116,7 +116,7 @@ feature 'A visitor to the site', metadata: :participant do
       ptp_9_elg_age_0.set_age
       eligibility_eng.answer_current_smoker
       eligibility_eng.answer_thinking_of_quitting
-      ptp_9_eligibility.enter_sf_zip
+      ptp_9_eligibility.enter_zip
       ptp_9_eligibility.answer_medical_care
       ptp_9_eligibility.enter_email
       ptp_9_eligibility.enter_phone_num
@@ -130,7 +130,7 @@ feature 'A visitor to the site', metadata: :participant do
       ptp_9_elg_age_121.set_age
       eligibility_eng.answer_current_smoker
       eligibility_eng.answer_thinking_of_quitting
-      ptp_9_eligibility.enter_sf_zip
+      ptp_9_eligibility.enter_zip
       ptp_9_eligibility.answer_medical_care
       ptp_9_eligibility.enter_email
       ptp_9_eligibility.enter_phone_num
@@ -143,7 +143,7 @@ feature 'A visitor to the site', metadata: :participant do
       eligibility_eng.find_age
       eligibility_eng.set_age
       eligibility_eng.answer_thinking_of_quitting
-      ptp_9_eligibility.enter_sf_zip
+      ptp_9_eligibility.enter_zip
       ptp_9_eligibility.answer_medical_care
       ptp_9_eligibility.enter_email
       ptp_9_eligibility.enter_phone_num
@@ -156,7 +156,7 @@ feature 'A visitor to the site', metadata: :participant do
       eligibility_eng.find_age
       eligibility_eng.set_age
       eligibility_eng.answer_current_smoker
-      ptp_9_eligibility.enter_sf_zip
+      ptp_9_eligibility.enter_zip
       ptp_9_eligibility.answer_medical_care
       ptp_9_eligibility.enter_email
       ptp_9_eligibility.enter_phone_num
@@ -188,7 +188,7 @@ feature 'A visitor to the site', metadata: :participant do
 
       expect(eligibility_eng).to have_no_medical_question
 
-      eligibility_eng.enter_sf_zip
+      eligibility_eng.enter_zip
 
       expect(eligibility_eng).to have_medical_question
     end
@@ -203,7 +203,7 @@ feature 'A visitor to the site', metadata: :participant do
 
       expect(eligibility_eng).to have_no_medical_question
 
-      eligibility_eng.enter_chi_zip
+      chicago_eligibility.enter_zip
 
       expect(eligibility_eng).to have_no_medical_question
     end
@@ -214,7 +214,7 @@ feature 'A visitor to the site', metadata: :participant do
       eligibility_eng.set_age
       eligibility_eng.answer_current_smoker
       eligibility_eng.answer_thinking_of_quitting
-      ptp_25_eligibility.enter_sf_zip
+      ptp_25_eligibility.enter_zip
       ptp_25_eligibility.answer_medical_care
       ptp_25_eligibility.enter_phone_num
       ptp_25_eligibility.enter_password
@@ -227,7 +227,7 @@ feature 'A visitor to the site', metadata: :participant do
       eligibility_eng.set_age
       eligibility_eng.answer_current_smoker
       eligibility_eng.answer_thinking_of_quitting
-      ptp_9_eligibility.enter_sf_zip
+      ptp_9_eligibility.enter_zip
       ptp_9_eligibility.answer_medical_care
       ptp_9_eligibility.enter_email
       ptp_9_eligibility.enter_password
@@ -240,7 +240,7 @@ feature 'A visitor to the site', metadata: :participant do
       eligibility_eng.set_age
       eligibility_eng.answer_current_smoker
       eligibility_eng.answer_thinking_of_quitting
-      ptp_25_eligibility.enter_sf_zip
+      ptp_25_eligibility.enter_zip
       ptp_25_eligibility.answer_medical_care
       ptp_25_eligibility.enter_email
       ptp_25_eligibility.enter_password
@@ -253,7 +253,7 @@ feature 'A visitor to the site', metadata: :participant do
       eligibility_eng.set_age
       eligibility_eng.answer_current_smoker
       eligibility_eng.answer_thinking_of_quitting
-      ptp_152_eligibility.enter_sf_zip
+      ptp_152_eligibility.enter_zip
       ptp_152_eligibility.answer_medical_care
       ptp_151_eligibility.enter_email
       ptp_152_eligibility.enter_phone_num
@@ -269,7 +269,7 @@ feature 'A visitor to the site', metadata: :participant do
       eligibility_eng.set_age
       eligibility_eng.answer_current_smoker
       eligibility_eng.answer_thinking_of_quitting
-      ptp_152_eligibility.enter_sf_zip
+      ptp_152_eligibility.enter_zip
       ptp_152_eligibility.answer_medical_care
       ptp_152_eligibility.enter_email
       ptp_151_eligibility.enter_phone_num
@@ -286,7 +286,7 @@ feature 'A visitor to the site', metadata: :participant do
       eligibility_eng.set_age
       eligibility_eng.answer_current_smoker
       eligibility_eng.answer_thinking_of_quitting
-      ptp_32_eligibility.enter_sf_zip
+      ptp_32_eligibility.enter_zip
       ptp_32_eligibility.answer_medical_care
       ptp_32_eligibility.enter_email
       ptp_32_eligibility.enter_phone_num
@@ -317,37 +317,70 @@ feature 'A visitor to the site', metadata: :participant do
 
     scenario 'sees invalid formatting in age field on eligibility form' do
       visit eligibility_eng.eligibility_page
-      eligibility_eng.invalid_age
+
+      expect(eligibility_eng).to have_empty_age_field
+
+      age_eligibility.set_age
+
+      expect(eligibility_eng).to have_invalid_age
     end
 
     scenario 'sees invalid formatting in zip code field ' \
-        'when entering less than 5 ' \
-        'digits on eligibility form' do
+             'when entering less than 5 digits on eligibility form' do
       visit eligibility_eng.eligibility_page
-      eligibility_eng.less_than_5_zip
+
+      expect(eligibility_eng).to have_empty_zip_field
+
+      short_zip_eligibility.enter_zip
+
+      expect(eligibility_eng).to have_invalid_zip
+      expect(eligibility_eng).to have_invalid_zip_alert
     end
 
     scenario 'sees invalid formatting in zip code ' \
-        'field when entering more than 5 ' \
-        'digits on eligibility form' do
+             'field when entering more than 5 digits on eligibility form' do
       visit eligibility_eng.eligibility_page
-      eligibility_eng.more_than_5_zip
+
+      expect(eligibility_eng).to have_empty_zip_field
+
+      long_zip_eligibility.enter_zip
+
+      expect(eligibility_eng).to have_invalid_zip
+      expect(eligibility_eng).to have_invalid_zip_alert
     end
 
     scenario 'sees invalid formatting in email field on eligibility form' do
       visit eligibility_eng.eligibility_page
-      eligibility_eng.invalid_email
+
+      expect(eligibility_eng).to have_empty_email_field
+
+      bad_email_eligibility.enter_email
+
+      expect(eligibility_eng).to have_invalid_email
+      expect(eligibility_eng).to have_invalid_email_alert
     end
 
     scenario 'sees invalid formatting in phone number field ' \
         'on eligibility form' do
       visit eligibility_eng.eligibility_page
-      eligibility_eng.invalid_phone
+
+      expect(eligibility_eng).to have_empty_phone_field
+
+      bad_phone_eligibility.enter_phone_num
+
+      expect(eligibility_eng).to have_invalid_phone
+      expect(eligibility_eng).to have_invalid_phone_alert
     end
 
     scenario 'sees invalid formatting in password field on eligibility form' do
       visit eligibility_eng.eligibility_page
-      eligibility_eng.invalid_password
+
+      expect(eligibility_eng).to have_empty_password_field
+
+      bad_password_eligibility.enter_password
+
+      expect(eligibility_eng).to have_invalid_password
+      expect(eligibility_eng).to have_invalid_password_alert
     end
   end
 
@@ -382,7 +415,7 @@ feature 'A visitor to the site', metadata: :participant do
       eligibility_esp.set_age
       eligibility_esp.answer_current_smoker
       eligibility_esp.answer_thinking_of_quitting
-      ptp_201_eligibility.enter_sf_zip
+      ptp_201_eligibility.enter_zip
       ptp_201_eligibility.answer_medical_care
       ptp_201_eligibility.enter_email
       ptp_201_eligibility.enter_phone_num
@@ -400,7 +433,7 @@ feature 'A visitor to the site', metadata: :participant do
       ptp_202_elg_age_17.set_age
       eligibility_esp.answer_current_smoker
       eligibility_esp.answer_thinking_of_quitting
-      ptp_202_eligibility.enter_sf_zip
+      ptp_202_eligibility.enter_zip
       ptp_202_eligibility.answer_medical_care
       ptp_202_eligibility.enter_email
       ptp_202_eligibility.enter_phone_num
@@ -417,7 +450,7 @@ feature 'A visitor to the site', metadata: :participant do
       eligibility_esp.set_age
       ptp_203_eligibility.answer_current_smoker
       eligibility_esp.answer_thinking_of_quitting
-      ptp_203_eligibility.enter_sf_zip
+      ptp_203_eligibility.enter_zip
       ptp_203_eligibility.answer_medical_care
       ptp_203_eligibility.enter_email
       ptp_203_eligibility.enter_phone_num
@@ -434,7 +467,7 @@ feature 'A visitor to the site', metadata: :participant do
       eligibility_esp.set_age
       eligibility_esp.answer_current_smoker
       ptp_204_eligibility.answer_thinking_of_quitting
-      ptp_204_eligibility.enter_sf_zip
+      ptp_204_eligibility.enter_zip
       ptp_204_eligibility.answer_medical_care
       ptp_204_eligibility.enter_email
       ptp_204_eligibility.enter_phone_num
@@ -450,7 +483,7 @@ feature 'A visitor to the site', metadata: :participant do
       eligibility_esp.answer_current_smoker
       eligibility_esp.answer_thinking_of_quitting
 
-      ptp_10_eligibility.enter_sf_zip
+      ptp_10_eligibility.enter_zip
       ptp_10_eligibility.answer_medical_care
 
       ptp_10_eligibility.enter_email
@@ -465,7 +498,7 @@ feature 'A visitor to the site', metadata: :participant do
       ptp_10_elg_age_0.set_age
       eligibility_esp.answer_current_smoker
       eligibility_esp.answer_thinking_of_quitting
-      ptp_10_eligibility.enter_sf_zip
+      ptp_10_eligibility.enter_zip
       ptp_10_eligibility.answer_medical_care
       ptp_10_eligibility.enter_email
       ptp_10_eligibility.enter_phone_num
@@ -479,7 +512,7 @@ feature 'A visitor to the site', metadata: :participant do
       ptp_10_elg_age_121.set_age
       eligibility_esp.answer_current_smoker
       eligibility_esp.answer_thinking_of_quitting
-      ptp_10_eligibility.enter_sf_zip
+      ptp_10_eligibility.enter_zip
       ptp_10_eligibility.answer_medical_care
       ptp_10_eligibility.enter_email
       ptp_10_eligibility.enter_phone_num
@@ -492,7 +525,7 @@ feature 'A visitor to the site', metadata: :participant do
       eligibility_esp.find_age
       eligibility_esp.set_age
       eligibility_esp.answer_thinking_of_quitting
-      ptp_10_eligibility.enter_sf_zip
+      ptp_10_eligibility.enter_zip
       ptp_10_eligibility.answer_medical_care
       ptp_10_eligibility.enter_email
       ptp_10_eligibility.enter_phone_num
@@ -505,7 +538,7 @@ feature 'A visitor to the site', metadata: :participant do
       eligibility_esp.find_age
       eligibility_esp.set_age
       eligibility_esp.answer_current_smoker
-      ptp_10_eligibility.enter_sf_zip
+      ptp_10_eligibility.enter_zip
       ptp_10_eligibility.answer_medical_care
       ptp_10_eligibility.enter_email
       ptp_10_eligibility.enter_phone_num
@@ -536,7 +569,7 @@ feature 'A visitor to the site', metadata: :participant do
 
       expect(eligibility_esp).to have_no_medical_question
 
-      eligibility_esp.enter_sf_zip
+      eligibility_esp.enter_zip
 
       expect(eligibility_esp).to have_medical_question
     end
@@ -551,7 +584,7 @@ feature 'A visitor to the site', metadata: :participant do
 
       expect(eligibility_esp).to have_no_medical_question
 
-      eligibility_esp.enter_chi_zip
+      chicago_eligibility.enter_zip
 
       expect(eligibility_esp).to have_no_medical_question
     end
@@ -562,7 +595,7 @@ feature 'A visitor to the site', metadata: :participant do
       eligibility_esp.set_age
       eligibility_esp.answer_current_smoker
       eligibility_esp.answer_thinking_of_quitting
-      ptp_26_eligibility.enter_sf_zip
+      ptp_26_eligibility.enter_zip
       ptp_26_eligibility.answer_medical_care
       ptp_26_eligibility.enter_phone_num
       ptp_26_eligibility.enter_password
@@ -575,7 +608,7 @@ feature 'A visitor to the site', metadata: :participant do
       eligibility_esp.set_age
       eligibility_esp.answer_current_smoker
       eligibility_esp.answer_thinking_of_quitting
-      ptp_26_eligibility.enter_sf_zip
+      ptp_26_eligibility.enter_zip
       ptp_26_eligibility.answer_medical_care
       ptp_26_eligibility.enter_email
       ptp_26_eligibility.enter_password
@@ -588,7 +621,7 @@ feature 'A visitor to the site', metadata: :participant do
       eligibility_esp.set_age
       eligibility_esp.answer_current_smoker
       eligibility_esp.answer_thinking_of_quitting
-      ptp_26_eligibility.enter_sf_zip
+      ptp_26_eligibility.enter_zip
       ptp_26_eligibility.answer_medical_care
       ptp_26_eligibility.enter_email
       ptp_26_eligibility.enter_password
@@ -601,7 +634,7 @@ feature 'A visitor to the site', metadata: :participant do
       eligibility_esp.set_age
       eligibility_esp.answer_current_smoker
       eligibility_esp.answer_thinking_of_quitting
-      ptp_252_eligibility.enter_sf_zip
+      ptp_252_eligibility.enter_zip
       ptp_252_eligibility.answer_medical_care
       ptp_251_eligibility.enter_email
       ptp_252_eligibility.enter_phone_num
@@ -616,7 +649,7 @@ feature 'A visitor to the site', metadata: :participant do
       eligibility_esp.set_age
       eligibility_esp.answer_current_smoker
       eligibility_esp.answer_thinking_of_quitting
-      ptp_252_eligibility.enter_sf_zip
+      ptp_252_eligibility.enter_zip
       ptp_252_eligibility.answer_medical_care
       ptp_252_eligibility.enter_email
       ptp_251_eligibility.enter_phone_num
@@ -632,7 +665,7 @@ feature 'A visitor to the site', metadata: :participant do
       eligibility_esp.set_age
       eligibility_esp.answer_current_smoker
       eligibility_esp.answer_thinking_of_quitting
-      ptp_34_eligibility.enter_sf_zip
+      ptp_34_eligibility.enter_zip
       ptp_34_eligibility.answer_medical_care
       ptp_34_eligibility.enter_email
       ptp_34_eligibility.enter_phone_num
@@ -663,37 +696,70 @@ feature 'A visitor to the site', metadata: :participant do
 
     scenario 'sees invalid formatting in age field on eligibility form' do
       visit eligibility_esp.eligibility_page
-      eligibility_esp.invalid_age
+
+      expect(eligibility_esp).to have_empty_age_field
+
+      age_eligibility.set_age
+
+      expect(eligibility_esp).to have_invalid_age
+    end
+
+    scenario 'sees invalid formatting in zip code field ' \
+             'when entering less than 5 digits on eligibility form' do
+      visit eligibility_esp.eligibility_page
+
+      expect(eligibility_esp).to have_empty_zip_field
+
+      short_zip_eligibility.enter_zip
+
+      expect(eligibility_esp).to have_invalid_zip
+      expect(eligibility_esp).to have_invalid_zip_alert
     end
 
     scenario 'sees invalid formatting in zip code ' \
-        'field when entering less than 5 ' \
-        'digits on eligibility form' do
+             'field when entering more than 5 digits on eligibility form' do
       visit eligibility_esp.eligibility_page
-      eligibility_esp.less_than_5_zip
-    end
 
-    scenario 'sees invalid formatting in zip code ' \
-        'field when entering more than 5 ' \
-        'digits on eligibility form' do
-      visit eligibility_esp.eligibility_page
-      eligibility_esp.more_than_5_zip
+      expect(eligibility_esp).to have_empty_zip_field
+
+      long_zip_eligibility.enter_zip
+
+      expect(eligibility_esp).to have_invalid_zip
+      expect(eligibility_esp).to have_invalid_zip_alert
     end
 
     scenario 'sees invalid formatting in email field on eligibility form' do
       visit eligibility_esp.eligibility_page
-      eligibility_esp.invalid_email
+
+      expect(eligibility_esp).to have_empty_email_field
+
+      bad_email_eligibility.enter_email
+
+      expect(eligibility_esp).to have_invalid_email
+      expect(eligibility_esp).to have_invalid_email_alert
     end
 
-    scenario 'sees invalid formatting in phone ' \
-        'number field on eligibility form' do
+    scenario 'sees invalid formatting in phone number field ' \
+        'on eligibility form' do
       visit eligibility_esp.eligibility_page
-      eligibility_esp.invalid_phone
+
+      expect(eligibility_esp).to have_empty_phone_field
+
+      bad_phone_eligibility.enter_phone_num
+
+      expect(eligibility_esp).to have_invalid_phone
+      expect(eligibility_esp).to have_invalid_phone_alert
     end
 
     scenario 'sees invalid formatting in password field on eligibility form' do
       visit eligibility_esp.eligibility_page
-      eligibility_esp.invalid_password
+
+      expect(eligibility_esp).to have_empty_password_field
+
+      bad_password_eligibility.enter_password
+
+      expect(eligibility_esp).to have_invalid_password
+      expect(eligibility_esp).to have_invalid_password_alert
     end
   end
 end

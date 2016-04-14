@@ -9,15 +9,12 @@ class Participants
 
   def sign_in
     go_to_root
-    @locale == 'english' ? button = 'Sign in' : button = 'Iniciar sesión'
+    button = locale('Sign in', 'Iniciar sesión')
     unless has_css?('a', text: button)
       find('.navbar-toggle').click
       find('.dropdown-toggle').click
-      if has_text?('Sign out')
-        click_on 'Sign out'
-      else
-        click_on 'Finalizar la sesión'
-      end
+      sign_out = locale('Sign out', 'Finalizar la sesión')
+      click_on sign_out
     end
     click_on button
     fill_in 'participant_email', with: ENV["Pt_#{@pt_id}_Email"]
@@ -28,34 +25,26 @@ class Participants
   # update to add this in to items. This doesn't work
 
   def on_landing_page?
-    if @locale == 'english'
-      find('a', text: 'Stop Smoking Guide')
-    else
-      find('a', text: 'Guía Para Dejar de Fumar')
-    end
+    link_text = locale('Stop Smoking Guide', 'Guía Para Dejar de Fumar')
+    find('a', text: link_text)
   end
 
   # this will only work for Home, Stop Smoking Guide and Cigarette Counter
   def navigate_to(button)
-    unless page.has_css?('.glyphicon.glyphicon-cog')
-      find('.navbar-toggle').click
-    end
+    find('.navbar-toggle').click unless has_css?('.glyphicon.glyphicon-cog')
     find('.ng-binding', text: button).click
   end
 
-  # this will work for set quit date, review consent,
-  # and sign out
+  # this will work for set quit date, review consent, and sign out
   def go_to(button)
-    unless page.has_css?('.glyphicon.glyphicon-cog')
-      find('.navbar-toggle').click
-    end
+    find('.navbar-toggle').click unless has_css?('.glyphicon.glyphicon-cog')
     find('.dropdown-toggle').click
     find('.ng-binding', text: button).click
   end
 
   # This will only work for switching languages
   def switch_language
-    language = @locale == 'english' ? 'Español' : 'English'
+    language = locale('Español', 'English')
     go_to language
   end
 

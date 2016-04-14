@@ -3,7 +3,6 @@ require './lib/pages/participants'
 class Participants
   # page object for Consent
   class StopSmokingGuide
-    include RSpec::Matchers
     include Capybara::DSL
 
     def initialize(guide)
@@ -11,12 +10,6 @@ class Participants
     end
 
     def visible?
-      var = participants.locale('Why Should I Quit?',
-                                '¿Por qué debo dejar de fumar?')
-      has_text? var
-    end
-
-    def has_page_visible?
       has_text? title
     end
 

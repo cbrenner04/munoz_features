@@ -12,7 +12,7 @@ feature 'A visitor to the site', metadata: :participant do
       eligibility_eng.set_age
       eligibility_eng.answer_current_smoker
       eligibility_eng.answer_thinking_of_quitting
-      ptp_35_eligibility.enter_sf_zip
+      ptp_35_eligibility.enter_zip
       ptp_35_eligibility.answer_medical_care
       ptp_35_eligibility.enter_email
       ptp_35_eligibility.enter_phone_num
@@ -44,7 +44,7 @@ feature 'A visitor to the site', metadata: :participant do
       eligibility_eng.set_age
       eligibility_eng.answer_current_smoker
       eligibility_eng.answer_thinking_of_quitting
-      ptp_36_eligibility.enter_sf_zip
+      ptp_36_eligibility.enter_zip
       ptp_36_eligibility.answer_medical_care
       ptp_36_eligibility.enter_email
       ptp_36_eligibility.enter_phone_num
@@ -69,7 +69,7 @@ feature 'A visitor to the site', metadata: :participant do
       eligibility_eng.answer_thinking_of_quitting
       participant_37.switch_language
       eligibility_esp.find_age
-      ptp_37_eligibility.enter_sf_zip
+      ptp_37_eligibility.enter_zip
       ptp_37_eligibility.answer_medical_care
       ptp_37_eligibility.enter_email
       ptp_37_eligibility.enter_phone_num
@@ -163,7 +163,7 @@ feature 'A visitor to the site', metadata: :participant do
       eligibility_esp.set_age
       eligibility_esp.answer_current_smoker
       eligibility_esp.answer_thinking_of_quitting
-      ptp_38_eligibility.enter_sf_zip
+      ptp_38_eligibility.enter_zip
       ptp_38_eligibility.answer_medical_care
       ptp_38_eligibility.enter_email
       ptp_38_eligibility.enter_phone_num
@@ -195,7 +195,7 @@ feature 'A visitor to the site', metadata: :participant do
       eligibility_esp.set_age
       eligibility_esp.answer_current_smoker
       eligibility_esp.answer_thinking_of_quitting
-      ptp_39_eligibility.enter_sf_zip
+      ptp_39_eligibility.enter_zip
       ptp_39_eligibility.answer_medical_care
       ptp_39_eligibility.enter_email
       ptp_39_eligibility.enter_phone_num
@@ -220,7 +220,7 @@ feature 'A visitor to the site', metadata: :participant do
       eligibility_esp.answer_thinking_of_quitting
       participant_40.switch_language
       ptp_40_eligibility.find_age
-      ptp_40_eligibility.enter_sf_zip
+      ptp_40_eligibility.enter_zip
       ptp_40_eligibility.answer_medical_care
       ptp_40_eligibility.enter_email
       ptp_40_eligibility.enter_phone_num

@@ -15,8 +15,16 @@ def cigarette_counter_esp
   )
 end
 
-def set_your_quit_date
-  @set_your_quit_date ||= Participants::SetYourQuitDate.new
+def set_your_quit_date_eng
+  @set_your_quit_date_eng ||= Participants::SetYourQuitDate.new(
+    locale: 'english'
+  )
+end
+
+def set_your_quit_date_esp
+  @set_your_quit_date_esp ||= Participants::SetYourQuitDate.new(
+    locale: 'español'
+  )
 end
 
 def pt_113_cig_counter

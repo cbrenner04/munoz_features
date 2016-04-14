@@ -9,6 +9,7 @@ feature 'An eligible participant', metadata: :participant do
       participant_146.sign_in
       feedback_eng.find_stop_smoking_guide
       feedback_eng.open_with_navbar
+
       expect(feedback_eng).to be_visible
     end
 
@@ -18,18 +19,16 @@ feature 'An eligible participant', metadata: :participant do
 
       expect(feedback_eng).to have_count_0
 
-      feedback_eng.click_btn_2
-      feedback_eng.click_btn_16
+      feedback_eng.make_first_rating
+      feedback_eng.make_second_rating
 
       expect(feedback_eng).to have_count_2
-
-      feedback_eng.counter_1_has_3
-
-      feedback_eng.counter_2_has_6
+      expect(feedback_eng).to have_first_rating
+      expect(feedback_eng).to have_second_rating
 
       feedback_eng.submit
 
-      expect(stop_smoking_guide_eng).to have_page_visible
+      expect(stop_smoking_guide_eng).to be_visible
     end
 
     scenario 'cannot enter rating if one is already entered' do
@@ -56,18 +55,16 @@ feature 'An eligible participant', metadata: :participant do
 
       expect(feedback_esp).to have_count_0
 
-      feedback_esp.click_btn_2
-      feedback_esp.click_btn_16
+      feedback_esp.make_first_rating
+      feedback_esp.make_second_rating
 
       expect(feedback_esp).to have_count_2
-
-      feedback_esp.counter_1_has_3
-
-      feedback_esp.counter_2_has_6
+      expect(feedback_esp).to have_first_rating
+      expect(feedback_esp).to have_second_rating
 
       feedback_esp.submit
 
-      expect(stop_smoking_guide_esp).to have_page_visible
+      expect(stop_smoking_guide_esp).to be_visible
     end
 
     scenario 'cannot enter rating if one is already entered' do

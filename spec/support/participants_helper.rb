@@ -470,4 +470,3 @@ def participant_248
     locale: 'español'
   )
 end
-
