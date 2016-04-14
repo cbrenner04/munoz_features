@@ -1,83 +1,82 @@
 # filename: spec/features/participants/feedback_spec.rb
 
+require './spec/support/participants/feedback_helper'
+require './spec/support/participants_helper'
+
 feature 'An eligible participant', metadata: :participant do
   context 'in English' do
     scenario 'signs in, navigates to the feedback page' do
-      sign_in_pt_en('146')
-      find('a', text: 'Stop Smoking Guide')
-      navigate_to('Feedback')
-      expect(page).to have_content 'How helpful was this app?'
+      participant_146.sign_in
+      feedback_eng.find_stop_smoking_guide
+      feedback_eng.open_with_navbar
+      expect(feedback_eng).to be_visible
     end
 
     scenario 'signs in, rates the application' do
-      sign_in_pt_en('147')
-      visit "#{ENV['Base_URL']}/#/en/feedback"
-      expect(page)
-        .to have_css('.btn.btn-default.ng-binding.ng-scope.active', count: 0)
+      participant_147.sign_in
+      visit feedback_eng.feedback_page
 
-      all('.btn.btn-default')[3].click
-      all('.btn.btn-default')[17].click
-      expect(page)
-        .to have_css('.btn.btn-default.ng-binding.ng-scope.active', count: 2)
+      expect(feedback_eng).to have_count_0
 
-      within first('.btn.btn-default.ng-binding.ng-scope.active') do
-        expect(page).to have_content '3'
-      end
+      feedback_eng.click_btn_2
+      feedback_eng.click_btn_16
 
-      within all('.btn.btn-default.ng-binding.ng-scope.active')[1] do
-        expect(page).to have_content '6'
-      end
+      expect(feedback_eng).to have_count_2
 
-      find('.btn.btn-primary', text: 'Submit').click
-      expect(page).to have_content 'Stop Smoking Guide'
+      feedback_eng.counter_1_has_3
+
+      feedback_eng.counter_2_has_6
+
+      feedback_eng.submit
+
+      expect(stop_smoking_guide_eng).to be_visible
     end
 
     scenario 'cannot enter rating if one is already entered' do
-      sign_in_pt_en('148')
-      find('a', text: 'Stop Smoking Guide')
-      find('.navbar-toggle').click
-      find('.glyphicon.glyphicon-cog')
-      expect(page).to_not have_css('.ng-binging', text: 'Feedback')
+      participant_148.sign_in
+      feedback_eng.find_stop_smoking_guide
+      feedback_eng.click_navbar
+      feedback_eng.find_settings_cog
+
+      expect(feedback_eng).to have_no_feedback_link
     end
   end
 
   context 'in Español' do
     scenario 'signs in, navigates to the feedback page' do
-      sign_in_pt_es('246')
-      find('a', text: 'Guía Para Dejar de Fumar')
-      navigate_to('Comentarios')
-      expect(page).to have_content '¿Qué tan útil fue esta aplicación?'
+      participant_246.sign_in
+      feedback_esp.find_stop_smoking_guide
+      feedback_esp.open_with_navbar
+      expect(feedback_esp).to be_visible
     end
 
     scenario 'signs in, rates the application' do
-      sign_in_pt_es('247')
-      visit "#{ENV['Base_URL']}/#/es/feedback"
-      expect(page)
-        .to have_css('.btn.btn-default.ng-binding.ng-scope.active', count: 0)
+      participant_247.sign_in
+      visit feedback_esp.feedback_page
 
-      all('.btn.btn-default')[3].click
-      all('.btn.btn-default')[17].click
-      expect(page)
-        .to have_css('.btn.btn-default.ng-binding.ng-scope.active', count: 2)
+      expect(feedback_esp).to have_count_0
 
-      within first('.btn.btn-default.ng-binding.ng-scope.active') do
-        expect(page).to have_content '3'
-      end
+      feedback_esp.click_btn_2
+      feedback_esp.click_btn_16
 
-      within all('.btn.btn-default.ng-binding.ng-scope.active')[1] do
-        expect(page).to have_content '6'
-      end
+      expect(feedback_esp).to have_count_2
 
-      find('.btn.btn-primary', text: 'Enviar').click
-      expect(page).to have_content 'Guía Para Dejar de Fumar'
+      feedback_esp.counter_1_has_3
+
+      feedback_esp.counter_2_has_6
+
+      feedback_esp.submit
+
+      expect(stop_smoking_guide_esp).to be_visible
     end
 
     scenario 'cannot enter rating if one is already entered' do
-      sign_in_pt_es('248')
-      find('a', text: 'Guía Para Dejar de Fumar')
-      find('.navbar-toggle').click
-      find('.glyphicon.glyphicon-cog')
-      expect(page).to_not have_css('.ng-binging', text: 'Comentarios')
+      participant_248.sign_in
+      feedback_esp.find_stop_smoking_guide
+      feedback_esp.click_navbar
+      feedback_esp.find_settings_cog
+
+      expect(feedback_esp).to have_no_feedback_link
     end
   end
 end

@@ -301,11 +301,11 @@ feature 'A visitor to the site', metadata: :participant do
 
       expect(consent_eng).to be_submitted
 
-      participant_32.navigate_to('Cigarette Counter')
+      cigarette_counter_eng.open_with_navbar
 
       expect(cigarette_counter_eng).to be_visible
 
-      participant_32.navigate_to('Stop Smoking Guide')
+      stop_smoking_guide_eng.open_with_navbar
 
       expect(stop_smoking_guide_eng).to be_visible
 
@@ -647,11 +647,11 @@ feature 'A visitor to the site', metadata: :participant do
 
       expect(consent_esp).to be_submitted
 
-      participant_34.navigate_to('Guía Para Dejar de Fumar')
+      stop_smoking_guide_esp.open_with_navbar
 
       expect(stop_smoking_guide_esp).to be_visible
 
-      participant_34.navigate_to('Contador de Cigarrillos')
+      cigarette_counter_esp.open_with_navbar
 
       expect(cigarette_counter_esp).to be_visible
 

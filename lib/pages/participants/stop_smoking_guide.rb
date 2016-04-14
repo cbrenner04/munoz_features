@@ -16,10 +16,19 @@ class Participants
       has_text? var
     end
 
+    def open_with_navbar
+      participants.navigate_to(title)
+    end
+
     private
 
     def participants
       @participants ||= Participants.new(locale: @locale)
+    end
+
+    def title
+      participants.locale('Stop Smoking Guider',
+                          'Guía Para Dejar de Fumar')
     end
   end
 end

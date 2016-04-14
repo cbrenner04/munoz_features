@@ -11,7 +11,7 @@ feature 'A visitor to the site', metadata: :participant do
       eligibility_eng.find_age
       eligibility_eng.set_age
       eligibility_eng.answer_current_smoker
-      eligibility_eng.thinking_of_quitting
+      eligibility_eng.answer_thinking_of_quitting
       ptp_35_eligibility.enter_sf_zip
       ptp_35_eligibility.answer_medical_care
       ptp_35_eligibility.enter_email
@@ -43,7 +43,7 @@ feature 'A visitor to the site', metadata: :participant do
       eligibility_eng.find_age
       eligibility_eng.set_age
       eligibility_eng.answer_current_smoker
-      eligibility_eng.thinking_of_quitting
+      eligibility_eng.answer_thinking_of_quitting
       ptp_36_eligibility.enter_sf_zip
       ptp_36_eligibility.answer_medical_care
       ptp_36_eligibility.enter_email
@@ -66,9 +66,9 @@ feature 'A visitor to the site', metadata: :participant do
       eligibility_eng.find_age
       eligibility_eng.set_age
       eligibility_eng.answer_current_smoker
-      eligibility_eng.thinking_of_quitting
-      eligibility_eng.switch_language
-      eligibility_eng.find_age
+      eligibility_eng.answer_thinking_of_quitting
+      participant_37.switch_language
+      eligibility_esp.find_age
       ptp_37_eligibility.enter_sf_zip
       ptp_37_eligibility.answer_medical_care
       ptp_37_eligibility.enter_email
@@ -162,7 +162,7 @@ feature 'A visitor to the site', metadata: :participant do
       eligibility_esp.find_age
       eligibility_esp.set_age
       eligibility_esp.answer_current_smoker
-      eligibility_esp.thinking_of_quitting
+      eligibility_esp.answer_thinking_of_quitting
       ptp_38_eligibility.enter_sf_zip
       ptp_38_eligibility.answer_medical_care
       ptp_38_eligibility.enter_email
@@ -194,7 +194,7 @@ feature 'A visitor to the site', metadata: :participant do
       eligibility_esp.find_age
       eligibility_esp.set_age
       eligibility_esp.answer_current_smoker
-      eligibility_esp.thinking_of_quitting
+      eligibility_esp.answer_thinking_of_quitting
       ptp_39_eligibility.enter_sf_zip
       ptp_39_eligibility.answer_medical_care
       ptp_39_eligibility.enter_email
@@ -217,7 +217,7 @@ feature 'A visitor to the site', metadata: :participant do
       eligibility_esp.find_age
       eligibility_esp.set_age
       eligibility_esp.answer_current_smoker
-      eligibility_esp.thinking_of_quitting
+      eligibility_esp.answer_thinking_of_quitting
       participant_40.switch_language
       ptp_40_eligibility.find_age
       ptp_40_eligibility.enter_sf_zip

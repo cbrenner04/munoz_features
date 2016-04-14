@@ -18,9 +18,11 @@ class Participants
     end
 
     def open
-      var = participants.locale('Cigarette Counter',
-                                'Contador de Cigarrillos')
-      click_on var
+      click_on title
+    end
+
+    def open_with_navbar
+      participants.navigate_to(title)
     end
 
     def visible?
@@ -83,6 +85,11 @@ class Participants
     end
 
     private
+
+    def title
+      participants.locale('Cigarette Counter',
+                          'Contador de Cigarrillos')
+    end
 
     def button_group
       find('.pull-left', text: @day)

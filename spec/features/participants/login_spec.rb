@@ -1,6 +1,6 @@
 # filename: spec/features/participants/login_spec.rb
 
-scenario 'A visitor to the site', metadata: :participant do
+feature 'A visitor to the site', metadata: :participant do
   before do
     visit ENV['Base_URL']
   end
@@ -326,7 +326,7 @@ feature 'A visitor to the site', metadata: :participant do
       within first('.notification_schedule_row') do
         three = Date.today + 90
         expect(page).to have_content "#{three.strftime('%B %d, %Y')}"
-      end`
+      end
 
       row = all('.notification_schedule_row')
       within row[1] do
@@ -368,6 +368,8 @@ feature 'A visitor to the site', metadata: :participant do
   end
 end
 
+
+# Use resize where 'sign in user' is above instead of this method.
 def sign_in_user
   page.driver.browser.manage.window.resize_to(1280, 743)
   visit "#{ENV['Base_URL']}/admin"

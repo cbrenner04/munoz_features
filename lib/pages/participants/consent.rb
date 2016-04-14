@@ -52,11 +52,6 @@ class Participants
       click_on var
     end
 
-    def has_quit_date_visible?
-      var = participants.locale('We', 'Mi')
-      has_css?('a', text: var)
-    end
-
     def click_stop_smoke_guide
       var = participants.locale('Stop Smoking Guide',
                                 'Guía Para Dejar de Fumar')
