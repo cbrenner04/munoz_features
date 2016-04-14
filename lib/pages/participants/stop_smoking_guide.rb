@@ -16,6 +16,10 @@ class Participants
       has_text? var
     end
 
+    def has_page_visible?
+      has_text? title
+    end
+
     def open_with_navbar
       participants.navigate_to(title)
     end
@@ -27,7 +31,7 @@ class Participants
     end
 
     def title
-      participants.locale('Stop Smoking Guider',
+      participants.locale('Stop Smoking Guide',
                           'Guía Para Dejar de Fumar')
     end
   end

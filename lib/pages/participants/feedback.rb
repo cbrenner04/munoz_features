@@ -54,13 +54,14 @@ class Participants
     end
 
     def counter_2_has_6
-      within first(counter)[1] do
+      within all(counter)[1] do
         expect(page).to have_content '6'
       end
     end
 
     def submit
-      find('.btn.btn-primary', text: 'Submit').click
+      var = participants.locale('Submit', 'Enviar')
+      find('.btn.btn-primary', text: var).click
     end
 
     def click_navbar
@@ -72,17 +73,17 @@ class Participants
     end
 
     def has_no_feedback_link?
-      has_no_css('.ng-binging', text: title)
+      has_no_css? '.ng-binging', text: title
     end
 
     private
 
     def button
-      var = '.btn.btn-default'
+      @button = '.btn.btn-default'
     end
 
     def counter
-      var = '.btn.btn-default.ng-binding.ng-scope.active'
+      @counter = '.btn.btn-default.ng-binding.ng-scope.active'
     end
 
     def title

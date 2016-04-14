@@ -29,7 +29,7 @@ feature 'An eligible participant', metadata: :participant do
 
       feedback_eng.submit
 
-      expect(stop_smoking_guide_eng).to be_visible
+      expect(stop_smoking_guide_eng).to have_page_visible
     end
 
     scenario 'cannot enter rating if one is already entered' do
@@ -67,7 +67,7 @@ feature 'An eligible participant', metadata: :participant do
 
       feedback_esp.submit
 
-      expect(stop_smoking_guide_esp).to be_visible
+      expect(stop_smoking_guide_esp).to have_page_visible
     end
 
     scenario 'cannot enter rating if one is already entered' do
