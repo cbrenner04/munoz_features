@@ -22,6 +22,14 @@ class Participants
     click_on button
   end
 
+  def fill_in_ptp_email
+      fill_in 'participant_email', with: ENV["Pt_#{@pt_id}_Email"]
+  end
+
+  def fill_in_ptp_password
+      fill_in 'participant_password', with: ENV["Pt_#{@pt_id}_Password"]
+  end
+
   # update to add this in to items. This doesn't work
 
   def on_landing_page?
