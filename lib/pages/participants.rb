@@ -23,11 +23,17 @@ class Participants
   end
 
   def fill_in_ptp_email
-      fill_in 'participant_email', with: ENV["Pt_#{@pt_id}_Email"]
+    fill_in 'participant_email', with: ENV["Pt_#{@pt_id}_Email"]
   end
 
   def fill_in_ptp_password
-      fill_in 'participant_password', with: ENV["Pt_#{@pt_id}_Password"]
+    fill_in 'participant_password', with: ENV["Pt_#{@pt_id}_Password"]
+  end
+
+  def phone_confirmation
+    var = participants.locale('en', 'es')
+    "#{ENV['Base_URL']}/confirm_phone?locale=#{var}&" \
+      "token=#{ptp_confirm_env}"
   end
 
   # update to add this in to items. This doesn't work
@@ -70,5 +76,11 @@ class Participants
 
   def go_to_root
     visit ENV['Base_URL']
+  end
+
+  private
+
+  def ptp_confirm_env
+    @ptp_confirm_env ||= ENV["Pt_#{@pt_id}_Confirmation"]
   end
 end

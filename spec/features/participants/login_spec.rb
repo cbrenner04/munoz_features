@@ -2,17 +2,18 @@
 
 require './spec/support/participants/login_helper'
 require './spec/support/participants_helper'
+require './spec/support/users_helper'
 
 feature 'A visitor to the site', metadata: :participant do
   before do
-    visit ENV['Base_URL']
+    participant_generic.go_to_root
   end
 
   context 'is English speaking' do
     scenario 'is a registered participant and signs in' do
       participant_112.sign_in
 
-      expect(login_eng).to be_sign_in_successful
+      expect(login_eng).to have_home_visible
     end
 
     scenario 'is not a registered participant, cannot sign in' do
@@ -24,26 +25,22 @@ feature 'A visitor to the site', metadata: :participant do
     scenario 'is a registered participant and request password reset' do
       login_eng.click_sign_in
       login_eng.find_sign_in
-      click_on 'Forgot your password?'
+      login_eng.click_forgot_pw
       participant_110.fill_in_ptp_email
-      click_on 'Send me reset password instructions'
+      login_eng.click_send_pw_instructions
 
-      expect(page).to have_content 'You will receive an email with ' \
-                                   'instructions on how to reset your ' \
-                                   'password in a few minutes.'
+      expect(login_eng).to have_pw_reset_confirm_message
     end
 
     scenario "uses 'Didn't receive confirmation instructions?'" do
       login_eng.click_sign_in
       login_eng.find_sign_in
-      click_on "Didn't receive confirmation instructions?"
-      find('h2', text: 'Resend confirmation instructions')
+      login_eng.click_did_not_receive_confirm_instructions
+      login_eng.find_resend_confirm_instructions
       participant_5.fill_in_ptp_email
-      click_on 'Resend confirmation instructions'
+      login_eng.click_resend_confirm_instructions
 
-      expect(page).to have_content 'You will receive an email with ' \
-                                   'instructions for how to confirm your ' \
-                                   'email address in a few minutes.'
+      expect(login_eng).to have_email_confirm_message
     end
 
     scenario 'is a registered participant who locks their account' do
@@ -54,60 +51,57 @@ feature 'A visitor to the site', metadata: :participant do
         participant_fake_eng.fill_in_ptp_password
         login_eng.click_sign_in
 
-        expect(page).to have_content 'Invalid email or password.'
+        expect(login_eng).to have_invalid_email_pw
       end
 
       participant_105.fill_in_ptp_email
       participant_fake_eng.fill_in_ptp_password
       login_eng.click_sign_in
 
-      expect(page).to have_content 'You have one more attempt before your ' \
-                                   'account is locked.'
+      expect(login_eng).to have_lock_warning
 
       participant_105.fill_in_ptp_email
       participant_fake_eng.fill_in_ptp_password
       login_eng.click_sign_in
 
-      expect(page).to have_content 'Your account is locked.'
+      expect(login_eng).to have_account_locked
     end
 
     scenario "uses 'Didn't receive unlock instructions?'" do
       login_eng.click_sign_in
       login_eng.find_sign_in
-      click_on "Didn't receive unlock instructions?"
-      find('h2', text: 'Resend unlock instructions')
+      login_eng.click_did_not_receive_unlock_instructions
+      login_eng.find_resend_unlock_instructions
       participant_6.fill_in_ptp_email
-      click_on 'Resend unlock instructions'
+      login_eng.click_resend_unlock_instructions
 
-      expect(page).to have_content 'You will receive an email with ' \
-                                   'instructions for how to unlock your ' \
-                                   'account in a few minutes.'
+      expect(login_eng).to have_resend_unlock_message
     end
 
     scenario 'signs in, signs out' do
       participant_111.sign_in
       login_eng.click_navbar
       login_eng.click_dropdown
-      click_on 'Sign out'
+      login_eng.click_sign_out
 
-      expect(page).to have_css('a', text: 'Sign in')
+      expect(login_eng).to have_login_page_visisble
     end
 
     scenario 'signs in, goes to a tool, navigates home using brand link' do
       participant_111.sign_in
       visit cigarette_counter_eng.landing_page
-      find('.navbar-brand.ng-binding').click
+      login_eng.click_home_icon
 
-      expect(page).to have_content 'Stop Smoking Guide'
+      expect(login_eng).to have_home_visible
     end
 
     scenario 'signs in, goes to a tool, navigates home using Home link' do
       participant_111.sign_in
       visit cigarette_counter_eng.landing_page
       login_eng.click_navbar
-      click_on 'Home'
+      login_eng.click_home_btn
 
-      expect(page).to have_content 'Stop Smoking Guide'
+      expect(login_eng).to have_home_visible
 
       participant_111.go_to('Sign out')
     end
@@ -119,93 +113,86 @@ feature 'A visitor to the site', metadata: :participant do
     scenario 'is a registered participant and signs in in Español' do
       participant_212.sign_in
 
-      find('a', text: 'Guía Para Dejar de Fumar')
+      expect(login_esp).to have_home_visible
     end
 
     scenario 'is not a registered participant, cannot sign in' do
       participant_fake_esp.sign_in
 
-      expect(page).to have_content 'Email o contraseña no válidos.'
+      expect(login_eng).to be_sign_in_unsuccessful
     end
 
     scenario 'is a registered participant and requests password reset' do
-      click_on 'Iniciar sesión'
-      find('h2', text: 'Iniciar sesión')
-      click_on '¿Ha olvidado su contraseña?'
-      fill_in 'participant_email', with: ENV['Pt_210_Email']
-      click_on 'Envíeme las instrucciones para cambiar mi contraseña'
+      login_esp.click_sign_in
+      login_esp.find_sign_in
+      login_esp.click_forgot_pw
+      participant_210.fill_in_ptp_email
+      login_esp.click_send_pw_instructions
 
-      expect(page).to have_content 'Recibirá un correo con instrucciones ' \
-                                   'sobre cómo cambiar su contraseña en ' \
-                                   'unos pocos minutos.'
+      expect(login_esp).to have_pw_reset_confirm_message
     end
 
     scenario "uses 'Didn't receive confirmation instructions?'" do
-      click_on 'Iniciar sesión'
-      find('h2', text: 'Iniciar sesión')
-      click_on '¿No ha recibido las instrucciones de confirmación?'
-      find('h2', text: 'Reenviar instrucciones de confirmación')
-      fill_in 'participant_email', with: ENV['Pt_8_Email']
-      click_on 'Reenviar instrucciones de confirmación'
+      login_esp.click_sign_in
+      login_esp.find_sign_in
+      login_esp.click_did_not_receive_confirm_instructions
+      login_esp.find_resend_confirm_instructions
+      participant_8.fill_in_ptp_email
+      login_esp.click_resend_confirm_instructions
 
-      expect(page).to have_content 'Va a recibir un email con ' \
-                                   'instrucciones sobre cómo confirmar su ' \
-                                   'cuenta en unos minutos.'
+      expect(login_esp).to have_email_confirm_message
     end
 
     scenario 'is a registered participant who locks their account' do
-      click_on 'Iniciar sesión'
-      find('h2', text: 'Iniciar sesión')
+      login_esp.click_sign_in
+      login_esp.find_sign_in
       18.times do
-        fill_in 'participant_email', with: ENV['Pt_205_Email']
+        participant_205.fill_in_ptp_email
         participant_fake_esp.fill_in_ptp_password
-        click_on 'Iniciar sesión'
+        login_esp.click_sign_in
 
-        expect(page).to have_content 'Email o contraseña no válidos.'
+        expect(login_esp).to have_invalid_email_pw
       end
 
-      fill_in 'participant_email', with: ENV['Pt_205_Email']
+      participant_205.fill_in_ptp_email
       participant_fake_esp.fill_in_ptp_password
-      click_on 'Iniciar sesión'
+      login_esp.click_sign_in
 
-      expect(page).to have_content 'Tiene un intento más antes de que su ' \
-                                   'cuenta sea bloqueada.'
+      expect(login_esp).to have_lock_warning
 
-      fill_in 'participant_email', with: ENV['Pt_205_Email']
+      participant_205.fill_in_ptp_email
       participant_fake_esp.fill_in_ptp_password
-      click_on 'Iniciar sesión'
+      login_esp.click_sign_in
 
-      expect(page).to have_content 'Su cuenta está bloqueada.'
+      expect(login_esp).to have_account_locked
     end
 
     scenario "uses 'Didn't receive unlock instructions?'" do
-      click_on 'Iniciar sesión'
-      find('h2', text: 'Iniciar sesión')
-      click_on 'No ha recibido instrucciones para desbloquear?'
-      find('h2', text: 'Reenviar instrucciones para desbloquear')
-      fill_in 'participant_email', with: ENV['Pt_7_Email']
-      click_on 'Reenviar instrucciones para desbloquear'
+      login_esp.click_sign_in
+      login_esp.find_sign_in
+      login_esp.click_did_not_receive_unlock_instructions
+      login_esp.find_resend_unlock_instructions
+      participant_7.fill_in_ptp_email
+      login_esp.click_resend_unlock_instructions
 
-      expect(page).to have_content 'Vas a recibir instrucciones para ' \
-                                   'desbloquear tu cuenta en unos pocos ' \
-                                   'minutos.'
+      expect(login_esp).to have_resend_unlock_message
     end
 
     scenario 'signs in, signs out' do
       participant_211.sign_in
       login_esp.click_navbar
       login_esp.click_dropdown
-      click_on 'Finalizar la sesión'
+      login_esp.click_sign_out
 
-      expect(page).to have_css('a', text: 'Iniciar sesión')
+      expect(login_esp).to have_login_page_visisble
     end
 
     scenario 'signs in, visits Google, returns to app, sees correct home page' do
       participant_211.sign_in
-      find('a', text: 'Guía Para Dejar de Fumar')
+      login_esp.find_stop_smoking_guide
       visit 'https://www.google.com'
       find('.content')
-      visit ENV['Base_URL']
+      participant_211.go_to_root
 
       expect(page).to have_content 'Guía Para Dejar de Fumar'
     end
@@ -213,7 +200,7 @@ feature 'A visitor to the site', metadata: :participant do
     scenario 'signs in, navigates to another page, uses brand link, ' \
        'sees correct home' do
       participant_211.sign_in
-      click_on 'Guía Para Dejar de Fumar'
+      login_esp.click_stop_smoking_guide
       find('h3', text: 'Guía Para Dejar de Fumar')
       find('.navbar-brand').click
 
@@ -222,78 +209,71 @@ feature 'A visitor to the site', metadata: :participant do
 
     scenario 'signs in, goes to a tool, navigates home using brand link' do
       participant_211.sign_in
-      visit "#{ENV['Base_URL']}/#/es/cigarette-count"
-      find('.navbar-brand.ng-binding').click
+      visit cigarette_counter_esp.landing_page
+      login_esp.click_home_icon
 
-      expect(page).to have_content 'Guía Para Dejar de Fumar'
+      expect(login_esp).to have_home_visible
     end
 
     scenario 'signs in, goes to a tool, navigates home using Home link' do
       participant_211.sign_in
-      visit "#{ENV['Base_URL']}/#/es/cigarette-count"
+      visit cigarette_counter_esp.landing_page
       login_esp.click_navbar
-      click_on 'Inicio'
+      login_esp.click_home_btn
 
-      expect(page).to have_content 'Guía Para Dejar de Fumar'
+      expect(login_esp).to have_home_visible
     end
   end
 end
 
 feature 'A visitor to the site', metadata: :participant do
   before do
-    visit ENV['Base_URL']
+    participant_generic.go_to_root
   end
 
   after do
-    page.driver.browser.manage.window.resize_to(360, 591)
+    user_1.resize_to_mobile
   end
 
   context 'in English' do
     scenario 'confirms phone' do
-      visit "#{ENV['Base_URL']}/confirm_phone?locale=en&" \
-            "token=#{ENV['Pt_29_Confirmation']}"
+      visit participant_29.phone_confirmation
       sleep(2)
-      expect(page).to have_content 'Thank you for confirming your phone number.'
+
+      expect(login_eng).to have_confirm_message
+
       participant_29.sign_in
-      find('a', text: 'Stop Smoking Guide')
+
+      expect(login_eng).to have_home_visible
+
       participant_29.go_to('Sign out')
 
-      sign_in_user
-      within('.nav.nav-pills.nav-stacked') do
-        click_on 'Participant phones'
-      end
+      user_1.sign_in
+      user_1.resize_to_desktop
+      user_1.click_on_ptp_phones
 
-      within('.participant_phone_row', text: '3128404100') do
-        time = Time.now - 2 * 60 * 60
-
-        expect(page).to have_content "#{time.strftime('%B %d, %Y %H')}"
-      end
+      login_user_eng.phone_confirm_time
     end
   end
 
   context 'in Español' do
     scenario 'confirms phone' do
-      visit "#{ENV['Base_URL']}/confirm_phone?locale=es&" \
-            "token=#{ENV['Pt_30_Confirmation']}"
+      visit participant_30.phone_confirmation
       sleep(2)
 
-      expect(page)
-        .to have_content 'Gracias por confirmar su número de teléfono.'
+      expect(login_esp).to have_confirm_message
 
       participant_30.sign_in
-      find('a', text: 'Guía Para Dejar de Fumar')
+
+      expect(login_esp).to have_home_visible
+
       participant_30.go_to('Finalizar la sesión')
 
-      sign_in_user
-      within('.nav.nav-pills.nav-stacked') do
-        click_on 'Participant phones'
-      end
+      user_1.sign_in
+      user_1.resize_to_desktop
+      user_1.click_on_ptp_phones
 
-      within('.participant_phone_row', text: '3128404101') do
-        time = Time.now - 2 * 60 * 60
-
-        expect(page).to have_content "#{time.strftime('%B %d, %Y %H')}"
-      end
+      login_user_esp.phone_confirm_time
     end
   end
 end
@@ -301,107 +281,65 @@ end
 feature 'A visitor to the site', metadata: :participant do
   context 'is English speaking' do
     scenario 'confirms email' do
-      visit "#{ENV['Base_URL']}/en/participants/confirmation?" \
-            "confirmation_token=#{ENV['Pt_3_Confirmation']}"
+      visit participant_3.phone_confirmation
 
-      expect(page)
-        .to have_content 'Your email address has been successfully confirmed.'
+      expect(login_eng).to have_confirmation
 
-      fill_in 'participant_email', with: ENV['Pt_3_Email']
-      fill_in 'participant_password', with: ENV['Pt_3_Password']
-      click_on 'Sign in'
+      participant_3.fill_in_ptp_email
+      participant_3.fill_in_ptp_password
+      login_eng.click_sign_in
 
-      expect(page).to have_css('a', text: 'Stop Smoking Guide')
+      expect(login_eng).to have_home_visible
     end
   end
 
   context 'is Spanish speaking' do
     scenario 'confirms email' do
-      visit "#{ENV['Base_URL']}/es/participants/confirmation?" \
-            "confirmation_token=#{ENV['Pt_4_Confirmation']}"
+      visit participant_4.phone_confirmation
 
-      expect(page)
-        .to have_content 'Tu cuenta ha sido confirmada satisfactoriamente.'
+      expect(login_esp).to have_confirmation
 
-      fill_in 'participant_email', with: ENV['Pt_4_Email']
-      fill_in 'participant_password', with: ENV['Pt_4_Password']
-      click_on 'Iniciar sesión'
-      find('a', text: 'Guía Para Dejar de Fumar')
+      participant_3.fill_in_ptp_email
+      participant_3.fill_in_ptp_password
+      login_esp.click_sign_in
+
+      expect(login_esp).to have_home_visible
     end
   end
 end
 
 feature 'A visitor to the site', metadata: :participant do
   after do
-    page.driver.browser.manage.window.resize_to(360, 591)
+    user_1.resize_to_mobile
   end
 
   context 'is English speaking' do
     scenario 'gets notifications scheduled' do
       participant_156.sign_in
-      find('a', text: 'Stop Smoking Guide')
+      login_eng.find_stop_smoking_guide
       participant_156.go_to('Sign out')
 
-      sign_in_user
-      visit "#{ENV['Base_URL']}/admin/notification_schedule"
-      within first('.notification_schedule_row') do
-        three = Date.today + 90
-
-        expect(page).to have_content "#{three.strftime('%B %d, %Y')}"
-      end
-
-      row = all('.notification_schedule_row')
-      within row[1] do
-        two = Date.today + 60
-
-        expect(page).to have_content "#{two.strftime('%B %d, %Y')}"
-      end
-
-      within row[2] do
-        one = Date.today + 30
-
-        expect(page).to have_content "#{one.strftime('%B %d, %Y')}"
-      end
+      user_1.sign_in
+      user_1.resize_to_desktop
+      visit user_1.notification_sched_page
+      login_user_eng.reminder_90_days
+      login_user_eng.reminder_60_days
+      login_user_eng.reminder_30_days
     end
   end
 
   context 'is Spanish speaking' do
     scenario 'gets notifications scheduled' do
       participant_256.sign_in
-      find('a', text: 'Guía Para Dejar de Fumar')
+      login_esp.find_stop_smoking_guide
       participant_256.go_to('Finalizar la sesión')
 
-      sign_in_user
-      visit "#{ENV['Base_URL']}/admin/notification_schedule"
-      within first('.notification_schedule_row') do
-        three = Date.today + 90
-
-        expect(page).to have_content "#{three.strftime('%B %d, %Y')}"
-      end
-
-      row = all('.notification_schedule_row')
-      within row[1] do
-        two = Date.today + 60
-
-        expect(page).to have_content "#{two.strftime('%B %d, %Y')}"
-      end
-
-      within row[2] do
-        one = Date.today + 30
-
-        expect(page).to have_content "#{one.strftime('%B %d, %Y')}"
-      end
+      user_1.sign_in
+      user_1.resize_to_desktop
+      visit user_1.notification_sched_page
+      login_user_esp.reminder_90_days
+      login_user_esp.reminder_60_days
+      login_user_esp.reminder_30_days
     end
   end
-end
-
-
-# Use resize where 'sign in user' is above instead of this method.
-def sign_in_user
-  page.driver.browser.manage.window.resize_to(1280, 743)
-  visit "#{ENV['Base_URL']}/admin"
-  fill_in 'user_email', with: ENV['User_1_Email']
-  fill_in 'user_password', with: ENV['User_1_Password']
-  click_on 'Sign in'
-  find('h1', text: 'Site Administration')
 end

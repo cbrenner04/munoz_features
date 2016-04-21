@@ -9,6 +9,18 @@ def login_esp
   @login_esp ||= Participants::Login.new(locale: 'español')
 end
 
+def login_user_eng
+  @login_user ||= Users::Login.new(
+    locale: 'english'
+  )
+end
+
+def login_user_esp
+  @login_user ||= Users::Login.new(
+    locale: 'español'
+  )
+end
+
 def cigarette_counter_eng
   @cigarette_counter_eng ||= Participants::CigaretteCounter.new(
     locale: 'english'
