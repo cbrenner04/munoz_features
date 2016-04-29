@@ -1,5 +1,6 @@
 require './lib/pages/participants/login'
 require './lib/pages/participants/cigarette_counter'
+require './lib/pages/users/login'
 
 def login_eng
   @login_eng ||= Participants::Login.new(locale: 'english')
@@ -10,13 +11,13 @@ def login_esp
 end
 
 def login_user_eng
-  @login_user ||= Users::Login.new(
+  @login_user_eng ||= Users::Login.new(
     locale: 'english'
   )
 end
 
 def login_user_esp
-  @login_user ||= Users::Login.new(
+  @login_user_esp ||= Users::Login.new(
     locale: 'español'
   )
 end

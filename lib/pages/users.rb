@@ -26,4 +26,8 @@ class Users
       click_on 'Participant phones'
     end
   end
+
+  def locale(a, b)
+    @locale == 'english' ? a : b
+  end
 end

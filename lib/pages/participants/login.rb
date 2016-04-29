@@ -1,9 +1,9 @@
 require './lib/pages/participants'
-require './lib/pages/users'
 
 class Participants
-  # page object for Consent
+  # page object for Login
   class Login
+    include RSpec::Matchers
     include Capybara::DSL
 
     def initialize(login)
@@ -11,9 +11,7 @@ class Participants
     end
 
     def has_home_visible?
-      has_css?('a',
-        text: participants.locale('Stop Smoking Guide',
-                                       'Guía Para Dejar de Fumar'))
+      has_css?('a', text: smoke_guide_locale)
     end
 
     def sign_in_unsuccessful?
@@ -49,7 +47,7 @@ class Participants
 
     def click_send_pw_instructions
       click_on participants.locale('Send me reset password instructions',
-                                   'Envíeme las instrucciones para' \
+                                   'Envíeme las instrucciones para ' \
                                       'cambiar mi contraseña')
     end
 
@@ -68,10 +66,10 @@ class Participants
                                      'de confirmación?')
     end
 
-    def find_resend_confirm_instructions
-      find('h2', text: participants.locale('Resend confirmation instructions',
-                                           'Reenviar instrucciones ' \
-                                             'de confirmación'))
+    def has_resend_confirm_instructions?
+      has_css?('h2', text: participants.locale('Resend confirmation instructions',
+                                               'Reenviar instrucciones ' \
+                                                 'de confirmación'))
     end
 
     def click_resend_confirm_instructions
@@ -113,8 +111,8 @@ class Participants
                                      'para desbloquear?')
     end
 
-    def find_resend_unlock_instructions
-      find('h2', text:
+    def has_resend_unlock_instructions?
+      has_css?('h2', text:
         participants.locale('Resend unlock instructions',
                             'Reenviar instrucciones para desbloquear'))
     end
@@ -145,7 +143,7 @@ class Participants
       click_on participants.locale('Home', 'Inicio')
     end
 
-    def has_confirmation
+    def has_email_confirmation?
       has_content? participants.locale(
         'Your email address has been successfully confirmed.',
         'Tu cuenta ha sido confirmada satisfactoriamente.')
@@ -157,52 +155,34 @@ class Participants
         'Gracias por confirmar su número de teléfono.')
     end
 
-    def find_stop_smoking_guide
-      find('a', text: participants.locale('Stop Smoking Guide',
-                                          'Guía Para Dejar de Fumar'))
+    def has_stop_smoking_guide?
+      has_css?('a', text: smoke_guide_locale)
     end
 
     def click_stop_smoking_guide
-      click_on participants.locale('Stop Smoking Guide',
-                                   'Guía Para Dejar de Fumar')
+      click_on smoke_guide_locale
     end
 
-    # User related methods
-
-    def phone_confirm_time
-      within('.participant_phone_row', text: phone_num) do
-        time = Time.now - 2 * 60 * 60
-
-        expect(page).to have_content "#{time.strftime('%B %d, %Y %H')}"
-      end
+    def visit_google
+      visit 'https://www.google.com'
     end
 
-    def reminder_90_days
-      within first('.notification_schedule_row') do
-        three = Date.today + 90
-
-        expect(page).to have_content "#{three.strftime('%B %d, %Y')}"
-      end
+    def has_google_content?
+      has_css?('.content')
     end
 
-    def reminder_60_days
-      row = all('.notification_schedule_row')
-      within row[1] do
-        two = Date.today + 60
-
-        expect(page).to have_content "#{two.strftime('%B %d, %Y')}"
-      end
+    def has_stop_smoking_guide_head?
+      has_css?('h3', text: smoke_guide_locale)
     end
 
-    def reminder_30_days
-      row = all('.notification_schedule_row')
-      within row[2] do
-        one = Date.today + 30
-
-        expect(page).to have_content "#{one.strftime('%B %d, %Y')}"
-      end
+    def click_navbar_brand
+      find('.navbar-brand').click
     end
 
+    def has_cig_counter_link?
+      has_content? participants.locale('Cigarette Counter',
+                                       'Contador de Cigarrillos')
+    end
 
     private
 
@@ -210,12 +190,9 @@ class Participants
       @participants ||= Participants.new(locale: @locale)
     end
 
-    def users
-      @users ||= Users.new
-    end
-
-    def phone_num
-      @phone_num ||= users.locale('3128404100', '3128404101')
+    def smoke_guide_locale
+      @smoke_guide_locale ||= participants.locale('Stop Smoking Guide',
+                                                  'Guía Para Dejar de Fumar')
     end
   end
 end

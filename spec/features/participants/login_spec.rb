@@ -17,7 +17,7 @@ feature 'A visitor to the site', metadata: :participant do
     end
 
     scenario 'is not a registered participant, cannot sign in' do
-      participant_fake_eng.sign_in
+      participant_fake.sign_in
 
       expect(login_eng).to be_sign_in_unsuccessful
     end
@@ -36,7 +36,9 @@ feature 'A visitor to the site', metadata: :participant do
       login_eng.click_sign_in
       login_eng.find_sign_in
       login_eng.click_did_not_receive_confirm_instructions
-      login_eng.find_resend_confirm_instructions
+
+      expect(login_eng).to have_resend_confirm_instructions
+
       participant_5.fill_in_ptp_email
       login_eng.click_resend_confirm_instructions
 
@@ -48,20 +50,20 @@ feature 'A visitor to the site', metadata: :participant do
       login_eng.find_sign_in
       18.times do
         participant_105.fill_in_ptp_email
-        participant_fake_eng.fill_in_ptp_password
+        participant_fake.fill_in_ptp_password
         login_eng.click_sign_in
 
         expect(login_eng).to have_invalid_email_pw
       end
 
       participant_105.fill_in_ptp_email
-      participant_fake_eng.fill_in_ptp_password
+      participant_fake.fill_in_ptp_password
       login_eng.click_sign_in
 
       expect(login_eng).to have_lock_warning
 
       participant_105.fill_in_ptp_email
-      participant_fake_eng.fill_in_ptp_password
+      participant_fake.fill_in_ptp_password
       login_eng.click_sign_in
 
       expect(login_eng).to have_account_locked
@@ -71,7 +73,9 @@ feature 'A visitor to the site', metadata: :participant do
       login_eng.click_sign_in
       login_eng.find_sign_in
       login_eng.click_did_not_receive_unlock_instructions
-      login_eng.find_resend_unlock_instructions
+
+      expect(login_eng).to have_resend_unlock_instructions
+
       participant_6.fill_in_ptp_email
       login_eng.click_resend_unlock_instructions
 
@@ -84,7 +88,33 @@ feature 'A visitor to the site', metadata: :participant do
       login_eng.click_dropdown
       login_eng.click_sign_out
 
-      expect(login_eng).to have_login_page_visisble
+      expect(login_eng).to have_login_page_visible
+    end
+
+    scenario 'signs in, visits Google, returns to app, sees correct home page' do
+      participant_111.sign_in
+
+      expect(login_eng).to have_stop_smoking_guide
+
+      login_eng.visit_google
+
+      expect(login_eng).to have_google_content
+
+      participant_111.go_to_root
+
+      expect(login_eng).to have_home_visible
+    end
+
+    scenario 'signs in, navigates to another page, uses brand link, ' \
+       'sees correct home' do
+      participant_111.sign_in
+      login_eng.click_stop_smoking_guide
+
+      expect(login_eng).to have_stop_smoking_guide_head
+
+      login_eng.click_navbar_brand
+
+      expect(login_eng).to have_cig_counter_link
     end
 
     scenario 'signs in, goes to a tool, navigates home using brand link' do
@@ -117,10 +147,12 @@ feature 'A visitor to the site', metadata: :participant do
     end
 
     scenario 'is not a registered participant, cannot sign in' do
-      participant_fake_esp.sign_in
+      participant_fake.sign_in
 
       expect(login_eng).to be_sign_in_unsuccessful
     end
+
+    # Manual testing shows no resend confirmation message. Not sure how the English version is running.
 
     scenario 'is a registered participant and requests password reset' do
       login_esp.click_sign_in
@@ -136,7 +168,9 @@ feature 'A visitor to the site', metadata: :participant do
       login_esp.click_sign_in
       login_esp.find_sign_in
       login_esp.click_did_not_receive_confirm_instructions
-      login_esp.find_resend_confirm_instructions
+
+      expect(login_esp).to have_resend_confirm_instructions
+
       participant_8.fill_in_ptp_email
       login_esp.click_resend_confirm_instructions
 
@@ -148,20 +182,20 @@ feature 'A visitor to the site', metadata: :participant do
       login_esp.find_sign_in
       18.times do
         participant_205.fill_in_ptp_email
-        participant_fake_esp.fill_in_ptp_password
+        participant_fake.fill_in_ptp_password
         login_esp.click_sign_in
 
         expect(login_esp).to have_invalid_email_pw
       end
 
       participant_205.fill_in_ptp_email
-      participant_fake_esp.fill_in_ptp_password
+      participant_fake.fill_in_ptp_password
       login_esp.click_sign_in
 
       expect(login_esp).to have_lock_warning
 
       participant_205.fill_in_ptp_email
-      participant_fake_esp.fill_in_ptp_password
+      participant_fake.fill_in_ptp_password
       login_esp.click_sign_in
 
       expect(login_esp).to have_account_locked
@@ -171,7 +205,9 @@ feature 'A visitor to the site', metadata: :participant do
       login_esp.click_sign_in
       login_esp.find_sign_in
       login_esp.click_did_not_receive_unlock_instructions
-      login_esp.find_resend_unlock_instructions
+
+      expect(login_esp).to have_resend_unlock_instructions
+
       participant_7.fill_in_ptp_email
       login_esp.click_resend_unlock_instructions
 
@@ -183,28 +219,35 @@ feature 'A visitor to the site', metadata: :participant do
       login_esp.click_navbar
       login_esp.click_dropdown
       login_esp.click_sign_out
+      sleep(2)
 
-      expect(login_esp).to have_login_page_visisble
+      expect(login_esp).to have_login_page_visible
     end
 
     scenario 'signs in, visits Google, returns to app, sees correct home page' do
       participant_211.sign_in
-      login_esp.find_stop_smoking_guide
-      visit 'https://www.google.com'
-      find('.content')
+
+      expect(login_esp).to have_stop_smoking_guide
+
+      login_esp.visit_google
+
+      expect(login_esp).to have_google_content
+
       participant_211.go_to_root
 
-      expect(page).to have_content 'Guía Para Dejar de Fumar'
+      expect(login_esp).to have_home_visible
     end
 
     scenario 'signs in, navigates to another page, uses brand link, ' \
        'sees correct home' do
       participant_211.sign_in
       login_esp.click_stop_smoking_guide
-      find('h3', text: 'Guía Para Dejar de Fumar')
-      find('.navbar-brand').click
 
-      expect(page).to have_content 'Contador de Cigarrillos'
+      expect(login_esp).to have_stop_smoking_guide_head
+
+      login_esp.click_navbar_brand
+
+      expect(login_esp).to have_cig_counter_link
     end
 
     scenario 'signs in, goes to a tool, navigates home using brand link' do
@@ -281,9 +324,9 @@ end
 feature 'A visitor to the site', metadata: :participant do
   context 'is English speaking' do
     scenario 'confirms email' do
-      visit participant_3.phone_confirmation
+      visit participant_3.email_confirmation
 
-      expect(login_eng).to have_confirmation
+      expect(login_eng).to have_email_confirmation
 
       participant_3.fill_in_ptp_email
       participant_3.fill_in_ptp_password
@@ -295,9 +338,9 @@ feature 'A visitor to the site', metadata: :participant do
 
   context 'is Spanish speaking' do
     scenario 'confirms email' do
-      visit participant_4.phone_confirmation
+      visit participant_4.email_confirmation
 
-      expect(login_esp).to have_confirmation
+      expect(login_esp).to have_email_confirmation
 
       participant_3.fill_in_ptp_email
       participant_3.fill_in_ptp_password
@@ -316,7 +359,9 @@ feature 'A visitor to the site', metadata: :participant do
   context 'is English speaking' do
     scenario 'gets notifications scheduled' do
       participant_156.sign_in
-      login_eng.find_stop_smoking_guide
+
+      expect(login_eng).to have_stop_smoking_guide
+
       participant_156.go_to('Sign out')
 
       user_1.sign_in
@@ -331,7 +376,9 @@ feature 'A visitor to the site', metadata: :participant do
   context 'is Spanish speaking' do
     scenario 'gets notifications scheduled' do
       participant_256.sign_in
-      login_esp.find_stop_smoking_guide
+
+      expect(login_esp).to have_stop_smoking_guide
+
       participant_256.go_to('Finalizar la sesión')
 
       user_1.sign_in

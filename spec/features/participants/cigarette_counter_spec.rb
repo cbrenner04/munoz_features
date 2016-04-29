@@ -40,7 +40,7 @@ feature 'Cigarette Counter', metadata: :participant do
 
       participant_132.go_to('Set Your Quit Date')
 
-      expect(set_your_quit_date_eng).to be_visible
+      expect(quit_date_eng).to be_visible
     end
 
     scenario 'sees yesterday\'s cigarette count' do
@@ -210,7 +210,7 @@ feature 'Cigarette Counter', metadata: :participant do
 
       participant_213.go_to('Elija la fecha en que dejará de fumar')
 
-      expect(set_your_quit_date_esp).to be_visible
+      expect(quit_date_esp).to be_visible
     end
 
     scenario 'sees yesterday\'s cigarette count' do

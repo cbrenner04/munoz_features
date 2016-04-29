@@ -1,7 +1,7 @@
 # filename: ./spec/support/participants/cigerette_counter.rb
 
 require './lib/pages/participants/cigarette_counter'
-require './lib/pages/participants/set_your_quit_date'
+require './lib/pages/participants/quit_date'
 
 def cigarette_counter_eng
   @cigarette_counter_eng ||= Participants::CigaretteCounter.new(
@@ -15,14 +15,14 @@ def cigarette_counter_esp
   )
 end
 
-def set_your_quit_date_eng
-  @set_your_quit_date_eng ||= Participants::SetYourQuitDate.new(
+def quit_date_eng
+  @quit_date_eng ||= Participants::QuitDate.new(
     locale: 'english'
   )
 end
 
-def set_your_quit_date_esp
-  @set_your_quit_date_esp ||= Participants::SetYourQuitDate.new(
+def quit_date_esp
+  @squit_date_esp ||= Participants::QuitDate.new(
     locale: 'español'
   )
 end
