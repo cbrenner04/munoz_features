@@ -5,7 +5,7 @@ require './spec/support/participants/quit_date_helper'
 require './spec/support/participants_helper'
 
 feature 'A registered and consented participant signs in',
-         metadata: :participant do
+        metadata: :participant do
   context 'in English' do
     scenario 'navigates to Your Quit Date' do
       participant_133.sign_in
@@ -40,48 +40,46 @@ feature 'A registered and consented participant signs in',
       participant_135.sign_in
       visit quit_date_eng.quit_date_page
 
-      expect(quit_date_eng).to have_todays_date_highlighted
+      expect(quit_date_eng).to be_on_current_month
 
-      quit_date_eng.view_today
+      expect(quit_date_eng).to have_todays_date_highlighted
     end
 
     scenario 'navigates to previous month within Your Quit Date' do
       participant_136.sign_in
       visit quit_date_eng.quit_date_page
 
-      expect(quit_date_eng).to have_todays_date_highlighted
+      expect(quit_date_eng).to be_on_current_month
 
       quit_date_eng.click_previous_month
 
-      expect(quit_date_eng).to have_previous_month_in_quit_date
+      expect(quit_date_eng).to have_previous_month_visible
     end
 
     scenario 'navigates to next month within Your Quit Date' do
       participant_137.sign_in
       visit quit_date_eng.quit_date_page
 
-      expect(quit_date_eng).to have_todays_date_highlighted
+      expect(quit_date_eng).to be_on_current_month
 
       quit_date_eng.click_next_month
-      quit_date_eng.pick_next_month_date
 
-      expect(quit_date_eng).to have_next_month_in_quit_date
+      expect(quit_date_eng).to have_next_month_visible
     end
 
     scenario 'navigates back to Today from another month' do
       participant_137.sign_in
       visit quit_date_eng.quit_date_page
 
-      expect(quit_date_eng).to have_todays_date_highlighted
+      expect(quit_date_eng).to be_on_current_month
 
       quit_date_eng.click_next_month
-      quit_date_eng.pick_next_month_date
 
-      expect(quit_date_eng).to have_next_month_in_quit_date
+      expect(quit_date_eng).to have_next_month_visible
 
       quit_date_eng.click_today_btn
 
-      expect(quit_date_eng).to have_todays_date_highlighted
+      expect(quit_date_eng).to be_on_current_month
     end
 
     scenario 'sets a Quit Date', :date do
@@ -93,25 +91,36 @@ feature 'A registered and consented participant signs in',
       expect(quit_date_eng).to have_tomorrows_date_highlighted
     end
 
-    scenario 'sets initial Quit Date, does not see link to quit date on main page' do
+    scenario 'sets initial Quit Date, sees no link to quit date on main page' do
       participant_149.sign_in
+
+      expect(quit_date_eng).to have_root_visible
+
+      expect(quit_date_eng).to have_set_quit_date_in_root
+
       quit_date_eng.click_navbar
       quit_date_eng.click_dropdown_toggle
 
-      expect(quit_date_eng.dropdown).to have_set_quit_date_in_dropdown
+      expect(quit_date_eng).to_not have_set_quit_date_in_dropdown
 
-      quit_date_eng.click_navbar_set_quit_date
+      quit_date_eng.click_navbar
+      quit_date_eng.click_set_quit_date
       quit_date_eng.locate_tomorrow
 
       quit_date_eng.select_tomorrow
 
-      expect(quit_date_eng).to has_tomorrow_header
+      expect(quit_date_eng).to have_tomorrow_header
 
       participant_149.go_to_root
 
-      expect(quit_date_eng).to has_root_visible
+      expect(quit_date_eng).to have_root_visible
 
       expect(quit_date_eng).to_not have_set_quit_date_in_root
+
+      quit_date_eng.click_navbar
+      quit_date_eng.click_dropdown_toggle
+
+      expect(quit_date_eng).to have_set_quit_date_in_dropdown
     end
 
     scenario 'sets a Quit Date, chooses Done to return to home page' do
@@ -127,7 +136,7 @@ feature 'A registered and consented participant signs in',
       expect(quit_date_eng).to have_stop_smoking_guide
     end
 
-    scenario 'has a Quit Date set, cannot access Quit Date except through navbar' do
+    scenario 'has a Quit Date set, cannot access except through navbar' do
       participant_150.sign_in
 
       expect(quit_date_eng).to_not have_set_quit_date_in_root
@@ -269,7 +278,6 @@ feature 'A registered and consented participant signs in',
       find('.ng-binding',
            text: trans_mo("#{Date.today.strftime('%b. %Y')}"))
       quit_date_esp.click_next_month
-      quit_date_esp.pick_next_month_date
 
       expect(page)
         .to have_css('.ng-binding',
@@ -282,7 +290,6 @@ feature 'A registered and consented participant signs in',
       find('.ng-binding',
            text: trans_mo("#{Date.today.strftime('%b. %Y')}"))
       find('a', text: 'Sig.').click
-      quit_date_esp.pick_next_month_date
       find('.ng-binding',
            text: trans_mo("#{next_month.strftime('%b. %Y')}"))
       find('a', text: 'Hoy').click

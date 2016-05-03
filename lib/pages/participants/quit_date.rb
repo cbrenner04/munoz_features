@@ -21,24 +21,27 @@ class Participants
     end
 
     def visible?
-      has_content? participants.locale 'Your Quit Date:', 'La Fecha en que Dejará de Fumar'
+      has_content? page_title
     end
 
     def click_set_quit_date
+      sleep(1)
       click_on participants.locale('Set Your Quit Date',
                                    'Elija la fecha en que dejará de fumar')
     end
 
     def has_quit_date_calendar?
-      has_css?('.ng-binding.ng-scope', text: participants.locale('We', "Mi"))
+      has_css?('.ng-binding.ng-scope', text: participants.locale('We', 'Mi'))
+    end
+
+    def on_current_month?
+      today = Date.today.strftime(participants.locale('%b %Y', '%b. %Y'))
+      has_css?('.ng-binding',
+               text: participants.locale(today, participants.trans_mo(today)))
     end
 
     def has_todays_date_highlighted?
-      has_css?('.ng-binding', text: "#{Date.today.strftime('%b %Y')}")
-    end
-
-    def view_today
-      dateviewer.view_day("#{Date.today}")
+      dateviewer.view_day(Date.today.to_s)
     end
 
     def click_previous_month
@@ -53,42 +56,33 @@ class Participants
       find('a', text: 'Today').click
     end
 
-    def has_previous_month_in_quit_date?
-      last_month = Date.today - 30
-      expect(page)
-        .to have_css('.ng-binding', text:
-          participants.locale(last_month, trans_mo(last_month)))
+    def has_previous_month_visible?
+      has_css?('.ng-binding',
+               text: participants.locale(last_month,
+                                         participants.trans_mo(last_month)))
     end
 
-    def pick_next_month_date
-      d = Date.parse("#{Date.today}")
-      num = d.mday
-      if num.between?(30, 31)
-        next_month = Date.today + 27
-      else
-        next_month = Date.today + 32
-      end
-    end
-
-    def has_next_month_in_quit_date?
-      has_css?('.ng-binding', text: participants.locale(next_month,
-                                                        trans_mo(next_month)))
+    def has_next_month_visible?
+      has_css?('.ng-binding',
+               text: participants.locale(next_month,
+                                         participants.trans_mo(next_month)))
     end
 
     def locate_tomorrow
-      tomorrow
-      unless page.has_css?('.ng-binding', text: "#{tomorrow.strftime('%b %Y')}")
+      t = tomorrow.strftime(participants.locale('%b %Y', '%b. %Y'))
+      unless has_css?('.ng-binding',
+                      text: participants.locale(t, participants.trans_mo(t)))
         find('a', text: 'Next').click
       end
     end
 
     def select_tomorrow
-      datepicker.select_day("#{tomorrow}")
+      datepicker.select_day(tomorrow.to_s)
     end
 
     def has_tomorrows_date_highlighted?
       has_css?('.text-right.ng-binding.ng-scope.success',
-                               text: "#{tomorrow.strftime('%-d')}")
+               text: tomorrow.strftime('%-d'))
     end
 
     def click_navbar
@@ -99,20 +93,17 @@ class Participants
       find('.dropdown-toggle').click
     end
 
-    def dropdown
-      @dropdown = '.dropdown-menu'
-    end
+    # def dropdown
+    #   @dropdown ||= '.dropdown-menu'
+    # end
 
     def has_set_quit_date_in_dropdown?
-      has_css?('.ng-binding', text: 'Set Your Quit Date')
-    end
-
-    def click_set_quit_date
-      find('a', text: 'Set Your Quit Date').click
+      find('.dropdown-menu').has_css?('.ng-binding', text: 'Set Your Quit Date')
     end
 
     def has_tomorrow_header?
-      has_css?('h3', text: "#{tomorrow.strftime('%B %-d, %Y')}")
+      has_css?('h3', text: page_title)
+      has_css?('h3', text: tomorrow.strftime('%-d'))
     end
 
     def has_root_visible?
@@ -137,24 +128,31 @@ class Participants
 
     private
 
-    #def done_btn
-      #@done_btn = ('.btn.btn-default', text: 'Done')
-    #end
+    # def done_btn
+    #   @done_btn = ('.btn.btn-default', text: 'Done')
+    # end
+
+    def page_title
+      @page_title ||= participants.locale 'Your Quit Date:',
+                                          'La Fecha en que Dejará de Fumar:'
+    end
 
     def tomorrow
-      @tomorrow = Date.today + 1
+      @tomorrow ||= Date.today + 1
     end
 
     def yesterday
-      @yesterday = Date.today - 1
+      @yesterday ||= Date.today - 1
     end
 
     def last_month
-      @last_month = "#{last_month.strftime('%b %Y')}"
+      @last_month ||=
+        Date.today.prev_month.strftime(participants.locale('%b %Y', '%b. %Y'))
     end
 
     def next_month
-      @next_month = "#{next_month.strftime('%b %Y')}"
+      @next_month ||=
+        Date.today.next_month.strftime(participants.locale('%b %Y', '%b. %Y'))
     end
 
     def participants
