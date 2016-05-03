@@ -13,7 +13,7 @@ class Participants
 
     def quit_date_page
       var = participants.locale('en', 'es')
-      "#{ENV['Base_URL']}/#{var}/quit-date"
+      "#{ENV['Base_URL']}/#/#{var}/quit-date"
     end
 
     def has_set_quit_date_visible?
@@ -29,12 +29,8 @@ class Participants
                                    'Elija la fecha en que dejará de fumar')
     end
 
-    def has_quit_date_calendar_in_eng?
-      has_css?('.ng-binding.ng-scope', text: 'We')
-    end
-
-    def has_quit_date_calendar_in_esp?
-      has_css?('.ng-binding.ng-scope', text: 'Mi')
+    def has_quit_date_calendar?
+      has_css?('.ng-binding.ng-scope', text: participants.locale('We', "Mi"))
     end
 
     def has_todays_date_highlighted?

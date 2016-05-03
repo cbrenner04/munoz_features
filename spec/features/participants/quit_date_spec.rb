@@ -18,18 +18,18 @@ feature 'A registered and consented participant signs in',
       participant_134.sign_in
       visit quit_date_eng.quit_date_page
 
-      expect(quit_date_eng).to have_quit_date_calendar_in_eng
+      expect(quit_date_eng).to have_quit_date_calendar
 
       participant_134.go_to('Español')
 
-      expect(quit_date_esp).to have_quit_date_calendar_in_esp
+      expect(quit_date_esp).to have_quit_date_calendar
     end
 
     scenario 'navigates to Cigarette Counter from Set Your Quit Date' do
       participant_134.sign_in
       visit quit_date_eng.quit_date_page
 
-      expect(quit_date_eng).to have_quit_date_calendar_in_eng
+      expect(quit_date_eng).to have_quit_date_calendar
 
       participant_134.navigate_to('Cigarette Counter')
 
@@ -42,7 +42,7 @@ feature 'A registered and consented participant signs in',
 
       expect(quit_date_eng).to have_todays_date_highlighted
 
-      quit_date_eng.view_day
+      quit_date_eng.view_today
     end
 
     scenario 'navigates to previous month within Your Quit Date' do
@@ -51,7 +51,7 @@ feature 'A registered and consented participant signs in',
 
       expect(quit_date_eng).to have_todays_date_highlighted
 
-      quit_date_esp.click_previous_month
+      quit_date_eng.click_previous_month
 
       expect(quit_date_eng).to have_previous_month_in_quit_date
     end
