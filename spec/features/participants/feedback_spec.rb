@@ -1,7 +1,6 @@
 # filename: spec/features/participants/feedback_spec.rb
 
 require './spec/support/participants/feedback_helper'
-require './spec/support/participants_helper'
 
 feature 'An eligible participant', metadata: :participant do
   context 'in English' do

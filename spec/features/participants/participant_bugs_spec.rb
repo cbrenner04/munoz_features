@@ -1,7 +1,6 @@
 # filename: spec/features/participants/participant_bugs_spec.rb
 
-require './spec/support/participants_helper'
-require './spec/support/participants/stop_smoking_guide_helper'
+require './spec/support/participants/participant_bugs_helper'
 
 feature 'A registered and consented participant signs in',
         metadata: :participant do
@@ -24,17 +23,17 @@ feature 'A registered and consented participant signs in',
 
       participant_121.go_to('Español')
 
-      expect(stop_smoking_guide_esp).to have_why_quit_3_title
+      expect(stop_smoking_guide_esp).to have_how_to_quit_3_title
 
-      expect(stop_smoking_guide_esp).to have_why_quit_body_3
+      expect(stop_smoking_guide_esp).to have_how_to_quit_body_3
 
       stop_smoking_guide_esp.click_next
 
-      expect(stop_smoking_guide_esp).to have_how_to_quit_guide_visible
+      expect(stop_smoking_guide_esp).to have_what_if_guide_visible
 
-      expect(stop_smoking_guide_esp).to have_how_to_quit_1_title
+      expect(stop_smoking_guide_esp).to have_what_if_1_title
 
-      expect(stop_smoking_guide_esp).to have_how_to_quit_body
+      expect(stop_smoking_guide_esp).to have_what_if_body
     end
   end
 
@@ -57,17 +56,17 @@ feature 'A registered and consented participant signs in',
 
       participant_225.go_to('English')
 
-      expect(stop_smoking_guide_eng).to have_why_quit_3_title
+      expect(stop_smoking_guide_eng).to have_how_to_quit_3_title
 
-      expect(stop_smoking_guide_eng).to have_why_quit_body_3
+      expect(stop_smoking_guide_eng).to have_how_to_quit_body_3
 
       stop_smoking_guide_eng.click_next
 
-      expect(stop_smoking_guide_eng).to have_how_to_quit_guide_visible
+      expect(stop_smoking_guide_eng).to have_what_if_guide_visible
 
-      expect(stop_smoking_guide_eng).to have_how_to_quit_1_title
+      expect(stop_smoking_guide_eng).to have_what_if_1_title
 
-      expect(stop_smoking_guide_eng).to have_how_to_quit_body
+      expect(stop_smoking_guide_eng).to have_what_if_body
     end
   end
 end

@@ -26,8 +26,7 @@ class Participants
 
     def click_set_quit_date
       sleep(1)
-      click_on participants.locale('Set Your Quit Date',
-                                   'Elija la fecha en que dejará de fumar')
+      click_on set_your_quit_date
     end
 
     def has_quit_date_calendar?
@@ -35,7 +34,7 @@ class Participants
     end
 
     def on_current_month?
-      today = Date.today.strftime(participants.locale('%b %Y', '%b. %Y'))
+      today = Date.today.strftime(std_month_year)
       has_css?('.ng-binding',
                text: participants.locale(today, participants.trans_mo(today)))
     end
@@ -45,15 +44,15 @@ class Participants
     end
 
     def click_previous_month
-      find('a', text: participants.locale('Prev.', 'Volver')).click
+      find('a', text: prev_btn).click
     end
 
     def click_next_month
-      find('a', text: participants.locale('Next', 'Sig.')).click
+      find('a', text: next_btn).click
     end
 
     def click_today_btn
-      find('a', text: 'Today').click
+      find('a', text: today_btn).click
     end
 
     def has_previous_month_visible?
@@ -69,10 +68,42 @@ class Participants
     end
 
     def locate_tomorrow
-      t = tomorrow.strftime(participants.locale('%b %Y', '%b. %Y'))
+      t = tomorrow.strftime(std_month_year)
       unless has_css?('.ng-binding',
                       text: participants.locale(t, participants.trans_mo(t)))
-        find('a', text: 'Next').click
+        find('a', text: next_btn).click
+      end
+    end
+
+    def locate_yesterday
+      y = yesterday.strftime(std_month_year)
+      unless has_css?('.ng-binding',
+                      text: participants.locale(y, participants.trans_mo(y)))
+        find('a', text: prev_btn).click
+      end
+    end
+
+    def locate_two_days_away
+      d = two_days_away.strftime(std_month_year)
+      unless has_css?('.ng-binding',
+                      text: participants.locale(d, participants.trans_mo(d)))
+        find('a', text: next_btn).click
+      end
+    end
+
+    def locate_beyond_4_wks_away
+      w = beyond_4_wks_away.strftime(std_month_year)
+      unless has_css?('.ng-binding',
+                      text: participants.locale(w, participants.trans_mo(w)))
+        find('a', text: next_btn).click
+      end
+    end
+
+    def locate_under_4_wks_away
+      w = under_4_wks_away.strftime(std_month_year)
+      unless has_css?('.ng-binding',
+                      text: participants.locale(w, participants.trans_mo(w)))
+        find('a', text: prev_btn).click
       end
     end
 
@@ -80,9 +111,45 @@ class Participants
       datepicker.select_day(tomorrow.to_s)
     end
 
+    def select_yesterday
+      datepicker.select_day(yesterday.to_s)
+    end
+
+    def select_two_days_away
+      datepicker.select_day(two_days_away.to_s)
+    end
+
+    def select_beyond_4_wks_away
+      datepicker.select_day(beyond_4_wks_away.to_s)
+    end
+
+    def select_under_4_wks_away
+      datepicker.select_day(under_4_wks_away.to_s)
+    end
+
     def has_tomorrows_date_highlighted?
       has_css?('.text-right.ng-binding.ng-scope.success',
                text: tomorrow.strftime('%-d'))
+    end
+
+    def has_yesterdays_date_highlighted?
+      has_css?('.text-right.ng-binding.ng-scope.success',
+               text: yesterday.strftime('%-d'))
+    end
+
+    def has_two_days_away_date_highlighted?
+      has_css?('.text-right.ng-binding.ng-scope.success',
+               text: two_days_away.strftime('%-d'))
+    end
+
+    def has_beyond_4_wks_away_date_highlighted?
+      has_css?('.text-right.ng-binding.ng-scope.success',
+               text: beyond_4_wks_away.strftime('%-d'))
+    end
+
+    def has_under_4_wks_away_date_highlighted?
+      has_css?('.text-right.ng-binding.ng-scope.success',
+               text: under_4_wks_away.strftime('%-d'))
     end
 
     def click_navbar
@@ -98,7 +165,7 @@ class Participants
     # end
 
     def has_set_quit_date_in_dropdown?
-      find('.dropdown-menu').has_css?('.ng-binding', text: 'Set Your Quit Date')
+      find('.dropdown-menu').has_css?('.ng-binding', text: set_your_quit_date)
     end
 
     def has_tomorrow_header?
@@ -106,24 +173,31 @@ class Participants
       has_css?('h3', text: tomorrow.strftime('%-d'))
     end
 
+    def has_tomorrow_header_full_month?
+      has_css?('h3', text: page_title)
+      has_css?('h3', text: tomorrow.strftime('%B %-d'))
+    end
+
     def has_root_visible?
-      has_css?('a', text: 'Cigarette Counter')
+      has_css?('a', text: participants.locale('Cigarette Counter',
+                                              'Contador de Cigarrillos'))
     end
 
     def has_set_quit_date_in_root?
-      has_css?('a', text: 'Set Your Quit Date')
+      has_css?('a', text: set_your_quit_date)
     end
 
     def has_done_btn?
-      has_css?('.btn.btn-default', text: 'Done')
+      has_css?('.btn.btn-default', text: done)
     end
 
     def click_done
-      find('.btn.btn-default', text: 'Done').click
+      find('.btn.btn-default', text: done).click
     end
 
     def has_stop_smoking_guide?
-      has_content? 'Stop Smoking Guide'
+      has_content? participants.locale('Stop Smoking Guide',
+                                       'Guía Para Dejar de Fumar')
     end
 
     private
@@ -133,8 +207,14 @@ class Participants
     # end
 
     def page_title
-      @page_title ||= participants.locale 'Your Quit Date:',
-                                          'La Fecha en que Dejará de Fumar:'
+      @page_title ||= participants.locale 'Your Quit Date',
+                                          'La Fecha en que Dejará de Fumar'
+    end
+
+    def set_your_quit_date
+      @set_your_quit_date ||= participants.locale('Set Your Quit Date',
+                                                  'Elija la fecha en ' \
+                                                    'que dejará de fumar')
     end
 
     def tomorrow
@@ -145,14 +225,30 @@ class Participants
       @yesterday ||= Date.today - 1
     end
 
+    def two_days_away
+      @two_days_away ||= Date.today + 2
+    end
+
+    def beyond_4_wks_away
+      @beyond_4_wks_away ||= Date.today + 30
+    end
+
+    def under_4_wks_away
+      @under_4_wks_away ||= Date.today + 25
+    end
+
+    def std_month_year
+      @std_month_year ||= participants.locale('%b %Y', '%b. %Y')
+    end
+
     def last_month
       @last_month ||=
-        Date.today.prev_month.strftime(participants.locale('%b %Y', '%b. %Y'))
+        Date.today.prev_month.strftime(std_month_year)
     end
 
     def next_month
       @next_month ||=
-        Date.today.next_month.strftime(participants.locale('%b %Y', '%b. %Y'))
+        Date.today.next_month.strftime(std_month_year)
     end
 
     def participants
@@ -165,6 +261,22 @@ class Participants
 
     def dateviewer
       @dateviewer ||= DateViewer.new
+    end
+
+    def today_btn
+      @today_btn ||= participants.locale('Today', 'Hoy')
+    end
+
+    def next_btn
+      @next_btn ||= participants.locale('Next', 'Sig.')
+    end
+
+    def prev_btn
+      @prev_btn ||= participants.locale('Prev.', 'Volver')
+    end
+
+    def done
+      @done ||= participants.locale('Done', 'Fijar')
     end
   end
 end

@@ -1,5 +1,5 @@
 # filename: ./spec/support/participants_helper.rb
-
+=begin
 require './lib/pages/participants'
 
 def participant_generic
@@ -991,3 +991,4 @@ end
 #    locale: 'español'
 #  )
 #end
+=end

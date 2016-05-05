@@ -1,6 +1,5 @@
 # filename: spec/features/participants/stop_smoking_guide_spec.rb
 
-require './spec/support/participants_helper'
 require './spec/support/participants/stop_smoking_guide_helper'
 
 feature 'A registered and consented participant signs in',

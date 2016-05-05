@@ -2,7 +2,6 @@
 
 # require objects with datepicking and viewing methods
 require './spec/support/participants/quit_date_helper'
-require './spec/support/participants_helper'
 
 feature 'A registered and consented participant signs in',
         metadata: :participant do
@@ -149,24 +148,18 @@ feature 'A registered and consented participant signs in',
     scenario 'cannot set a Quit Date in the past', :date do
       participant_134.sign_in
       visit quit_date_eng.quit_date_page
-      yesterday = Date.today - 1
-      unless page.has_css?('.ng-binding',
-                           text: "#{yesterday.strftime('%b %Y')}")
-        find('a', text: 'Prev.').click
-      end
+      quit_date_eng.locate_yesterday
 
-      datepicker.select_day("#{yesterday}")
+      quit_date_eng.select_yesterday
+
       sleep(2)
-      expect(page).to_not have_css('.text-right.ng-binding.ng-scope.success',
-                                   text: "#{yesterday.strftime('%-d')}")
-      tomorrow = Date.today + 1
-      unless page.has_css?('.ng-binding',
-                           text: "#{tomorrow.strftime('%b %Y')}")
-        find('a', text: 'Next').click
-      end
+
+      expect(quit_date_eng).to_not have_yesterdays_date_highlighted
+
+      quit_date_eng.locate_tomorrow
       quit_date_eng.select_tomorrow
-      expect(page).to have_css('.text-right.ng-binding.ng-scope.success',
-                               text: "#{tomorrow.strftime('%-d')}")
+
+      expect(quit_date_eng).to have_tomorrows_date_highlighted
     end
 
     scenario 'sees Quit Date highlighted' do
@@ -174,8 +167,7 @@ feature 'A registered and consented participant signs in',
       visit quit_date_eng.quit_date_page
       quit_date_eng.locate_tomorrow
 
-      expect(page).to have_css('.text-right.ng-binding.ng-scope.success',
-                               text: "#{tomorrow.strftime('%-d')}")
+      expect(quit_date_eng).to have_tomorrows_date_highlighted
     end
 
     scenario 'sees Quit Date at the top of page' do
@@ -183,8 +175,7 @@ feature 'A registered and consented participant signs in',
       visit quit_date_eng.quit_date_page
       quit_date_eng.locate_tomorrow
 
-      expect(page)
-        .to have_css('h3', text: "Date: #{tomorrow.strftime('%B %-d')}")
+      expect(quit_date_eng).to have_tomorrow_header_full_month
     end
 
     scenario 'updates a Quit Date', :date do
@@ -192,40 +183,29 @@ feature 'A registered and consented participant signs in',
       visit quit_date_eng.quit_date_page
       quit_date_eng.locate_tomorrow
 
-      find('.text-right.ng-binding.ng-scope.success',
-           text: "#{tomorrow.strftime('%-d')}")
-      two_days = Date.today + 2
-      unless page.has_css?('.ng-binding', text: "#{two_days.strftime('%b %Y')}")
-        find('a', text: 'Next').click
-      end
+      expect(quit_date_eng).to have_tomorrows_date_highlighted
 
-      datepicker.select_day("#{two_days}")
-      expect(page).to have_css('.text-right.ng-binding.ng-scope.success',
-                               text: "#{two_days.strftime('%-d')}")
+      quit_date_eng.locate_two_days_away
+      quit_date_eng.select_two_days_away
+
+      expect(quit_date_eng).to have_two_days_away_date_highlighted
     end
 
     scenario 'cannot set a quit date more than 4 weeks from today', :date do
       participant_133.sign_in
       visit quit_date_eng.quit_date_page
-      beyond_four_wks = Date.today + 30
-      unless page.has_css?('.ng-binding',
-                           text: "#{beyond_four_wks.strftime('%b %Y')}")
-        find('a', text: 'Next').click
-      end
+      quit_date_eng.locate_beyond_4_wks_away
 
-      datepicker.select_day("#{beyond_four_wks}")
+      quit_date_eng.select_beyond_4_wks_away
+
       sleep(2)
-      expect(page).to_not have_css('.text-right.ng-binding.ng-scope.success',
-                                   text: "#{beyond_four_wks.strftime('%-d')}")
 
-      under_four_wks = Date.today + 25
-      unless page.has_css?('.ng-binding',
-                           text: "#{under_four_wks.strftime('%b %Y')}")
-        find('a', text: 'Prev').click
-      end
-      datepicker.select_day("#{under_four_wks}")
-      expect(page).to have_css('.text-right.ng-binding.ng-scope.success',
-                               text: "#{under_four_wks.strftime('%-d')}")
+      expect(quit_date_eng).to_not have_beyond_4_wks_away_date_highlighted
+
+      quit_date_eng.locate_under_4_wks_away
+      quit_date_eng.select_under_4_wks_away
+
+      expect(quit_date_eng).to have_under_4_wks_away_date_highlighted
     end
   end
 
@@ -235,226 +215,203 @@ feature 'A registered and consented participant signs in',
     scenario 'navigates to Your Quit Date' do
       participant_233.sign_in
       quit_date_esp.click_set_quit_date
-      expect(page).to have_css '.previous'
+
+      expect(quit_date_esp).to have_set_quit_date_visible
     end
 
     scenario 'switches to English while in Your Quit Date' do
       participant_234.sign_in
       visit quit_date_esp.quit_date_page
-      find('.ng-binding.ng-scope', text: 'Mi')
+
+      expect(quit_date_esp).to have_quit_date_calendar
+
       participant_234.go_to('English')
-      expect(page).to have_css('.ng-binding.ng-scope', text: 'We')
+
+      expect(quit_date_eng).to have_quit_date_calendar
     end
 
     scenario 'navigates to Cigarette Counter from Set Your Quit Date' do
       participant_234.sign_in
       visit quit_date_esp.quit_date_page
-      find('.ng-binding.ng-scope', text: 'Mi')
+
+      expect(quit_date_esp).to have_quit_date_calendar
+
       participant_234.navigate_to('Contador de Cigarrillos')
-      expect(page).to have_css('.pull-left', text: 'Ayer')
+
+      expect(cigarette_counter_esp).to be_visible
     end
 
     scenario "sees today's date highlighted" do
       participant_235.sign_in
       visit quit_date_esp.quit_date_page
-      find('.ng-binding',
-           text: trans_mo("#{Date.today.strftime('%b. %Y')}"))
-      quit_date_esp.view_day
+
+      expect(quit_date_esp).to be_on_current_month
+
+      expect(quit_date_esp).to have_todays_date_highlighted
     end
 
     scenario 'navigates to previous month within Your Quit Date' do
       participant_236.sign_in
       visit quit_date_esp.quit_date_page
-      find('.ng-binding',
-           text: trans_mo("#{Date.today.strftime('%b. %Y')}"))
+
+      expect(quit_date_esp).to be_on_current_month
+
       quit_date_esp.click_previous_month
 
-      expect(quit_date_esp).to have_previous_month_in_quit_date
+      expect(quit_date_esp).to have_previous_month_visible
     end
 
     scenario 'navigates to next month within Your Quit Date' do
       participant_237.sign_in
       visit quit_date_esp.quit_date_page
-      find('.ng-binding',
-           text: trans_mo("#{Date.today.strftime('%b. %Y')}"))
+
+      expect(quit_date_esp).to be_on_current_month
+
       quit_date_esp.click_next_month
 
-      expect(page)
-        .to have_css('.ng-binding',
-                     text: trans_mo("#{next_month.strftime('%b. %Y')}"))
+      expect(quit_date_esp).to have_next_month_visible
     end
 
     scenario 'navigates back to Today from another month' do
       participant_237.sign_in
       visit quit_date_esp.quit_date_page
-      find('.ng-binding',
-           text: trans_mo("#{Date.today.strftime('%b. %Y')}"))
-      find('a', text: 'Sig.').click
-      find('.ng-binding',
-           text: trans_mo("#{next_month.strftime('%b. %Y')}"))
-      find('a', text: 'Hoy').click
-      expect(page)
-        .to have_css('.ng-binding',
-                     text: trans_mo("#{Date.today.strftime('%b. %Y')}"))
+
+      expect(quit_date_esp).to be_on_current_month
+
+      quit_date_esp.click_next_month
+
+      expect(quit_date_esp).to have_next_month_visible
+
+      quit_date_esp.click_today_btn
+
+      expect(quit_date_esp).to be_on_current_month
     end
 
     scenario 'sees Quit Date highlighted' do
       participant_241.sign_in
       visit quit_date_esp.quit_date_page
-      tom = Date.today + 1
-      unless page.has_css?('.ng-binding',
-                           text: trans_mo("#{tom.strftime('%b. %Y')}"))
-        find('a', text: 'Sig.').click
-      end
+      quit_date_esp.locate_tomorrow
 
-      expect(page).to have_css('.text-right.ng-binding.ng-scope.success',
-                               text: "#{tom.strftime('%-d')}")
+      expect(quit_date_esp).to have_tomorrows_date_highlighted
     end
 
     scenario 'sees Quit Date at the top of page' do
       participant_241.sign_in
       visit quit_date_esp.quit_date_page
-      tom = Date.today + 1
-      unless page.has_css?('.ng-binding',
-                           text: trans_mo("#{tom.strftime('%b. %Y')}"))
-        find('a', text: 'Sig.').click
-      end
+      quit_date_esp.locate_tomorrow
 
-      expect(page)
-        .to have_css('h3', text: "Dejará de Fumar: #{tom.strftime('%-d')}")
+      expect(quit_date_esp).to have_tomorrow_header
     end
 
     scenario 'sets a Quit Date' do
       participant_239.sign_in
       visit quit_date_esp.quit_date_page
-      tom = Date.today + 1
-      unless page.has_css?('.ng-binding',
-                           text: trans_mo("#{tom.strftime('%b. %Y')}"))
-        find('a', text: 'Sig.').click
-      end
-
+      quit_date_esp.locate_tomorrow
       quit_date_esp.select_tomorrow
-      expect(page).to have_css('.text-right.ng-binding.ng-scope.success',
-                               text: "#{tom.strftime('%-d')}")
+
+      expect(quit_date_esp).to have_tomorrows_date_highlighted
     end
 
     scenario 'sets initial Quit Date, does not see link to quit date on main page' do
       participant_249.sign_in
-      find('.navbar-toggle').click
-      find('.dropdown-toggle').click
-      expect('.dropdown-menu')
-        .to_not have_css('.ng-binding',
-                         text: 'Elija la fecha en que dejará de fumar')
 
-      find('a', text: 'Elija la fecha en que dejará de fumar').click
-      tom = Date.today + 1
-      unless page.has_css?('.ng-binding',
-                           text: trans_mo("#{tom.strftime('%b. %Y')}"))
-        find('a', text: 'Sig.').click
-      end
+      expect(quit_date_esp).to have_root_visible
+
+      expect(quit_date_esp).to have_set_quit_date_in_root
+
+      quit_date_esp.click_navbar
+      quit_date_esp.click_dropdown_toggle
+
+      expect(quit_date_esp).to_not have_set_quit_date_in_dropdown
+
+      quit_date_esp.click_navbar
+      quit_date_esp.click_set_quit_date
+      quit_date_esp.locate_tomorrow
 
       quit_date_esp.select_tomorrow
-      find('h3', text: "#{tom.strftime('%-d')}")
+
+      expect(quit_date_esp).to have_tomorrow_header
 
       participant_249.go_to_root
-      find('a', text: 'Contador de Cigarrillos')
-      expect(page).to_not have_content 'Elija la fecha en que dejará de fumar'
+
+      expect(quit_date_esp).to have_root_visible
+
+      expect(quit_date_esp).to_not have_set_quit_date_in_root
+
+      quit_date_esp.click_navbar
+      quit_date_esp.click_dropdown_toggle
+
+      expect(quit_date_esp).to have_set_quit_date_in_dropdown
     end
 
     scenario 'sets a Quit Date, chooses Done to return to home page' do
       participant_254.sign_in
       visit quit_date_esp.quit_date_page
-      expect(page).to_not have_css('.btn.btn-default', text: 'Done')
-      tomorrow = Date.today + 1
-      unless page.has_css?('.ng-binding',
-                           text: trans_mo("#{tomorrow.strftime('%b. %Y')}"))
-        find('a', text: 'Sig.').click
-      end
 
+      expect(quit_date_esp).to_not have_done_btn
+
+      quit_date_esp.locate_tomorrow
       quit_date_esp.select_tomorrow
-      find('.btn.btn-default', text: 'Fijar').click
-      expect(page).to have_content 'Guía Para Dejar de Fumar'
+      quit_date_esp.click_done
+
+      expect(quit_date_esp).to have_stop_smoking_guide
     end
 
     scenario 'has a Quit Date set, cannot access Quit Date except through navbar' do
       participant_250.sign_in
-      expect(page)
-        .to_not have_css('a', text: 'Elija la fecha en que dejará de fumar')
+
+      expect(quit_date_esp).to_not have_set_quit_date_in_root
+
       participant_250.go_to('Elija la fecha en que dejará de fumar')
-      tomorrow = Date.today + 1
-      expect(page).to have_css('h3', text: "#{tomorrow.strftime('%-d')}")
+
+      expect(quit_date_esp).to have_tomorrow_header
     end
 
     scenario 'cannot set a Quit Date in the past' do
       participant_234.sign_in
       visit quit_date_esp.quit_date_page
-      yes = Date.today - 1
-      unless page.has_css?('.ng-binding',
-                           text: trans_mo("#{yes.strftime('%b. %Y')}"))
-        find('a', text: 'Volver').click
-      end
+      quit_date_esp.locate_yesterday
 
-      datepicker.select_day("#{yes}")
+      quit_date_esp.select_yesterday
+
       sleep(2)
-      expect(page).to_not have_css('.text-right.ng-binding.ng-scope.success',
-                                   text: "#{yes.strftime('%-d')}")
-      tom = Date.today + 1
-      unless page.has_css?('.ng-binding',
-                           text: trans_mo("#{tom.strftime('%b. %Y')}"))
-        find('a', text: 'Sig.').click
-      end
+
+      expect(quit_date_esp).to_not have_yesterdays_date_highlighted
+
+      quit_date_esp.locate_tomorrow
       quit_date_esp.select_tomorrow
-      expect(page).to have_css('.text-right.ng-binding.ng-scope.success',
-                               text: "#{tom.strftime('%-d')}")
+
+      expect(quit_date_esp).to have_tomorrows_date_highlighted
     end
 
     scenario 'updates a Quit Date' do
       participant_242.sign_in
       visit quit_date_esp.quit_date_page
-      tom = Date.today + 1
-      unless page.has_css?('.ng-binding',
-                           text: trans_mo("#{tom.strftime('%b. %Y')}"))
-        find('a', text: 'Sig.').click
-      end
+      quit_date_esp.locate_tomorrow
 
-      find('.text-right.ng-binding.ng-scope.success',
-           text: "#{tom.strftime('%-d')}")
-      two_day = Date.today + 2
-      unless page
-             .has_css?('.ng-binding',
-                       text: trans_mo("#{two_day.strftime('%b. %Y')}"))
-        find('a', text: 'Sig.').click
-      end
+      expect(quit_date_esp).to have_tomorrows_date_highlighted
 
-      datepicker.select_day("#{two_day}")
-      expect(page).to have_css('.text-right.ng-binding.ng-scope.success',
-                               text: "#{two_day.strftime('%-d')}")
+      quit_date_esp.locate_two_days_away
+      quit_date_esp.select_two_days_away
+
+      expect(quit_date_esp).to have_two_days_away_date_highlighted
     end
 
     scenario 'cannot set a quit date more than 4 weeks from today' do
       participant_233.sign_in
       visit quit_date_esp.quit_date_page
-      beyond_four_wks = Date.today + 30
-      unless page
-             .has_css?('.ng-binding',
-                       text: trans_mo("#{beyond_four_wks.strftime('%b. %Y')}"))
-        find('a', text: 'Sig.').click
-      end
+      quit_date_esp.locate_beyond_4_wks_away
 
-      datepicker.select_day("#{beyond_four_wks}")
+      quit_date_esp.select_beyond_4_wks_away
+
       sleep(2)
-      expect(page).to_not have_css('.text-right.ng-binding.ng-scope.success',
-                                   text: "#{beyond_four_wks.strftime('%-d')}")
 
-      under_four_wks = Date.today + 25
-      unless page
-             .has_css?('.ng-binding',
-                       text: trans_mo("#{under_four_wks.strftime('%b. %Y')}"))
-        find('a', text: 'Volver').click
-      end
-      datepicker.select_day("#{under_four_wks}")
-      expect(page).to have_css('.text-right.ng-binding.ng-scope.success',
-                               text: "#{under_four_wks.strftime('%-d')}")
+      expect(quit_date_esp).to_not have_beyond_4_wks_away_date_highlighted
+
+      quit_date_esp.locate_under_4_wks_away
+      quit_date_esp.select_under_4_wks_away
+
+      expect(quit_date_esp).to have_under_4_wks_away_date_highlighted
     end
   end
 end

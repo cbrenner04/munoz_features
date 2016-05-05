@@ -1,6 +1,5 @@
 # filename: spec/features/participants/cigarette_counter.rb
 
-require './spec/support/participants_helper'
 require './spec/support/participants/cigarette_counter_helper'
 
 feature 'Cigarette Counter', metadata: :participant do

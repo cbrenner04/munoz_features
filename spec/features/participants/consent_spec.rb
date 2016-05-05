@@ -1,8 +1,7 @@
 # filename: spec/features/participants/consent_spec.rb
 
-require './lib/zip_codes'
+require './lib/pages/participants/zip_codes'
 require './spec/support/participants/consent_helper'
-require './spec/support/participants_helper'
 
 feature 'A visitor to the site', metadata: :participant do
   context 'in English' do
@@ -135,7 +134,8 @@ feature 'A visitor to the site', metadata: :participant do
 
       ptp_108_consent.click_set_quit_date
 
-      expect(ptp_108_consent).to have_quit_date_visible
+      sleep(2)
+      expect(quit_date_eng).to be_visible
 
       participant_108.go_to_root
       ptp_108_consent.click_stop_smoke_guide
@@ -287,7 +287,7 @@ feature 'A visitor to the site', metadata: :participant do
 
       ptp_208_consent.click_set_quit_date
 
-      expect(ptp_208_consent).to have_quit_date_visible
+      expect(quit_date_esp).to be_visible
 
       participant_208.go_to_root
       ptp_208_consent.click_stop_smoke_guide

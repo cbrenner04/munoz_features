@@ -89,6 +89,11 @@ class Participants
                                        'Cómo dejar de fumar página 1 cuerpo')
     end
 
+    def has_how_to_quit_body_3?
+      has_content? participants.locale('How to quit page 3 body',
+                                       'Cómo dejar de fumar página 3 cuerpo')
+    end
+
     def has_what_if_1_title?
       has_css?('h4', text: participants.locale('What if? page 1 title',
                                                '¿Y sí? página 1 título'))
@@ -147,12 +152,6 @@ class Participants
       has_content? participants.locale('Why Quit? page 1 body',
                                        '¿Por qué dejar de fumar? ' \
                                          'página 1 cuerpo')
-    end
-
-    def has_why_quit_body_3?
-      has_content? participants.locale('Why Quit? page 3 body',
-                                       '¿Por qué dejar de fumar? ' \
-                                         'página 3 cuerpo')
     end
 
     private

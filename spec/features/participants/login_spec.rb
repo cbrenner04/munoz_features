@@ -1,7 +1,6 @@
 # filename: spec/features/participants/login_spec.rb
 
 require './spec/support/participants/login_helper'
-require './spec/support/participants_helper'
 require './spec/support/users_helper'
 
 feature 'A visitor to the site', metadata: :participant do

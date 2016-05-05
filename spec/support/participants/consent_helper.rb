@@ -2,6 +2,7 @@ require './lib/pages/participants/consent'
 require './lib/pages/participants/eligibility'
 require './lib/pages/participants/cigarette_counter'
 require './lib/pages/participants/stop_smoking_guide'
+require './lib/pages/participants/quit_date'
 
 def consent_eng
   @consent_eng ||= Participants::Consent.new(locale: 'english')
@@ -201,6 +202,130 @@ end
 
 def cigarette_counter_esp
   @cigarette_counter_esp ||= Participants::CigaretteCounter.new(
+    locale: 'español'
+  )
+end
+
+# Methods for Quit Date related items
+
+def quit_date_eng
+  @quit_date_eng ||= Participants::QuitDate.new(locale: 'english')
+end
+
+def quit_date_esp
+  @quit_date_esp ||= Participants::QuitDate.new(locale: 'español')
+end
+
+# Participants POM methods
+
+def participant_35
+  @participant_35 ||= Participants.new(
+    pt_id: 35,
+    locale: 'english'
+  )
+end
+
+def participant_36
+  @participant_36 ||= Participants.new(
+    pt_id: 36,
+    locale: 'english'
+  )
+end
+
+def participant_37
+  @participant_37 ||= Participants.new(
+    pt_id: 37,
+    locale: 'english'
+  )
+end
+
+def participant_106
+  @participant_106 ||= Participants.new(
+    pt_id: 106,
+    locale: 'english'
+  )
+end
+
+def participant_107
+  @participant_107 ||= Participants.new(
+    pt_id: 107,
+    locale: 'english'
+  )
+end
+
+def participant_108
+  @participant_108 ||= Participants.new(
+    pt_id: 108,
+    locale: 'english'
+  )
+end
+
+def participant_109
+  @participant_109 ||= Participants.new(
+    pt_id: 109,
+    locale: 'english'
+  )
+end
+
+def participant_131
+  @participant_131 ||= Participants.new(
+    pt_id: 131,
+    locale: 'english'
+  )
+end
+
+def participant_38
+  @participant_38 ||= Participants.new(
+    pt_id: 38,
+    locale: 'español'
+  )
+end
+
+def participant_39
+  @participant_39 ||= Participants.new(
+    pt_id: 39,
+    locale: 'español'
+  )
+end
+
+def participant_40
+  @participant_40 ||= Participants.new(
+    pt_id: 40,
+    locale: 'español'
+  )
+end
+
+def participant_206
+  @participant_206 ||= Participants.new(
+    pt_id: 206,
+    locale: 'español'
+  )
+end
+
+def participant_207
+  @participant_207 ||= Participants.new(
+    pt_id: 207,
+    locale: 'español'
+  )
+end
+
+def participant_208
+  @participant_208 ||= Participants.new(
+    pt_id: 208,
+    locale: 'español'
+  )
+end
+
+def participant_209
+  @participant_209 ||= Participants.new(
+    pt_id: 209,
+    locale: 'español'
+  )
+end
+
+def participant_231
+  @participant_231 ||= Participants.new(
+    pt_id: 231,
     locale: 'español'
   )
 end

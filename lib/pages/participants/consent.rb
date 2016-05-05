@@ -54,12 +54,6 @@ class Participants
                                    'Guía Para Dejar de Fumar')
     end
 
-    def has_smoke_guide_visible?
-      var = participants.locale('Why Should I Quit?',
-                                '¿Por qué debo dejar de fumar?')
-      has_css?('a', text: var)
-    end
-
     def click_cig_counter
       click_on participants.locale('Cigarette Counter',
                                    'Contador de Cigarrillos')

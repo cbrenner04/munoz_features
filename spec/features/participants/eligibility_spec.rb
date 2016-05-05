@@ -1,8 +1,7 @@
 # filename: spec/features/participants/eligibility_spec.rb
 
-require './lib/zip_codes.rb'
+require './lib/pages/participants/zip_codes'
 require './spec/support/participants/eligibility_helper'
-require './spec/support/participants_helper'
 
 feature 'A visitor to the site', metadata: :participant do
   context 'in English' do
