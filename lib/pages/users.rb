@@ -1,3 +1,4 @@
+# Page object for Users
 class Users
   include Capybara::DSL
 

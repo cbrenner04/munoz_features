@@ -7,7 +7,7 @@ class Users
     include Capybara::DSL
 
     def initialize(login)
-          @locale ||= login[:locale]
+      @locale ||= login[:locale]
     end
 
     def phone_confirm_time
@@ -55,4 +55,3 @@ class Users
     end
   end
 end
-

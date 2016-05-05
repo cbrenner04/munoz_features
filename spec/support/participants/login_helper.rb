@@ -38,7 +38,7 @@ end
 
 def participant_generic
   @participant_113 ||= Participants.new(
-    pt_id: 'gen',
+    pt_id: 'gen'
   )
 end
 
@@ -119,7 +119,7 @@ def participant_156
   )
 end
 
-#Spanish
+# Spanish
 
 def participant_212
   @participant_212 ||= Participants.new(

@@ -3,7 +3,7 @@
 require './spec/support/participants/stop_smoking_guide_helper'
 
 feature 'A registered and consented participant signs in',
-         metadata: :participant do
+        metadata: :participant do
   context 'in English' do
     scenario 'navigates to the Stop Smoking Guide menu' do
       participant_117.sign_in

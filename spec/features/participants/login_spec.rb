@@ -90,7 +90,8 @@ feature 'A visitor to the site', metadata: :participant do
       expect(login_eng).to have_login_page_visible
     end
 
-    scenario 'signs in, visits Google, returns to app, sees correct home page' do
+    scenario 'signs in, visits Google, returns to app, ' \
+       'sees correct home page' do
       participant_111.sign_in
 
       expect(login_eng).to have_stop_smoking_guide
@@ -150,8 +151,6 @@ feature 'A visitor to the site', metadata: :participant do
 
       expect(login_eng).to be_sign_in_unsuccessful
     end
-
-    # Manual testing shows no resend confirmation message. Not sure how the English version is running.
 
     scenario 'is a registered participant and requests password reset' do
       login_esp.click_sign_in
@@ -223,7 +222,8 @@ feature 'A visitor to the site', metadata: :participant do
       expect(login_esp).to have_login_page_visible
     end
 
-    scenario 'signs in, visits Google, returns to app, sees correct home page' do
+    scenario 'signs in, visits Google, returns to app, ' \
+       'sees correct home page' do
       participant_211.sign_in
 
       expect(login_esp).to have_stop_smoking_guide

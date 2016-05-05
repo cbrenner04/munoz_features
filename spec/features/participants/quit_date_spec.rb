@@ -312,7 +312,8 @@ feature 'A registered and consented participant signs in',
       expect(quit_date_esp).to have_tomorrows_date_highlighted
     end
 
-    scenario 'sets initial Quit Date, does not see link to quit date on main page' do
+    scenario 'sets initial Quit Date, ' \
+       'does not see link to quit date on main page' do
       participant_249.sign_in
 
       expect(quit_date_esp).to have_root_visible
@@ -357,7 +358,8 @@ feature 'A registered and consented participant signs in',
       expect(quit_date_esp).to have_stop_smoking_guide
     end
 
-    scenario 'has a Quit Date set, cannot access Quit Date except through navbar' do
+    scenario 'has a Quit Date set, ' \
+       'cannot access Quit Date except through navbar' do
       participant_250.sign_in
 
       expect(quit_date_esp).to_not have_set_quit_date_in_root

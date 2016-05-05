@@ -16,8 +16,8 @@ class Participants
 
     def sign_in_unsuccessful?
       has_content?('a',
-        text: participants.locale('Invalid email or password',
-                                  'Email o contraseña no válidos.'))
+                   text: participants.locale('Invalid email or password',
+                                             'Email o contraseña no válidos.'))
     end
 
     def click_sign_in
@@ -42,7 +42,7 @@ class Participants
 
     def click_forgot_pw
       click_on participants.locale('Forgot your password?',
-                                  '¿Ha olvidado su contraseña?')
+                                   '¿Ha olvidado su contraseña?')
     end
 
     def click_send_pw_instructions
@@ -67,7 +67,8 @@ class Participants
     end
 
     def has_resend_confirm_instructions?
-      has_css?('h2', text: participants.locale('Resend confirmation instructions',
+      has_css?('h2', text: participants.locale('Resend confirmation ' \
+                                                 'instructions',
                                                'Reenviar instrucciones ' \
                                                  'de confirmación'))
     end

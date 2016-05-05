@@ -169,9 +169,9 @@ class Participants
 
     def what_if_i_start_smoking_again
       @what_if_i_start_smoking_again = participants.
-        locale(
-          'What if I Start Smoking Again',
-          '¿Y si empiezo a fumar de nuevo?')
+                                       locale(
+                                         'What if I Start Smoking Again',
+                                         '¿Y si empiezo a fumar de nuevo?')
     end
 
     def why_should_i_quit
