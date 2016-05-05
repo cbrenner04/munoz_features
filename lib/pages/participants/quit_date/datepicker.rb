@@ -9,7 +9,7 @@ class DatePicker
       day_less_than_10(num)
     elsif num.between?(30, 31) ||
           num >= 23 && page.has_text?("#{num}", count: 2)
-      day_greater_than_23
+      day_greater_than_23(num)
     else
       find('.text-right.ng-binding.ng-scope', text: "#{num}").click
     end

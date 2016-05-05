@@ -107,7 +107,7 @@ describe 'Admin signs in', type: :feature, metadata: :user do
     files = Dir.glob("#{@download_dir}/**")
     File.size(files.last).should be > 0
     csv_data = CSV.read(files.last)
-    csv_data.include?(Participants::HEADER).should == true
+    csv_data.include?(ParticipantsCSV::HEADER).should == true
   end
 
   it "navigates to 'Participant app ratings - export', " \

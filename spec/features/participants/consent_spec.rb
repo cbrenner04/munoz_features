@@ -1,321 +1,308 @@
 # filename: spec/features/participants/consent_spec.rb
 
-require_relative '../../../lib/zip_codes.rb'
+require './lib/pages/participants/zip_codes'
+require './spec/support/participants/consent_helper'
 
-describe 'A visitor to the site', type: :feature, metadata: :participant do
+feature 'A visitor to the site', metadata: :participant do
   context 'in English' do
-    it 'switches to Español when consenting' do
-      visit "#{ENV['Base_URL']}/en/pages/application#/en/eligibility"
-      find('.ng-binding', text: 'How old are you?')
-      first('input[type = tel]').set('25')
-      q = ['Are you currently a smoker?',
-           'Are you thinking of quitting smoking within the next 30 days?']
-      q.zip(%w(Yes Yes)).each do |ques, answ|
-        within('.form-group', text: ques) do
-          choose answ
-        end
-      end
+    scenario 'switches to Español when consenting' do
+      visit eligibility_eng.eligibility_page
+      eligibility_eng.find_age
+      eligibility_eng.set_age
+      eligibility_eng.answer_current_smoker
+      eligibility_eng.answer_thinking_of_quitting
+      ptp_35_eligibility.enter_zip
+      ptp_35_eligibility.answer_medical_care
+      ptp_35_eligibility.enter_email
+      ptp_35_eligibility.enter_phone_num
+      ptp_35_eligibility.enter_password
+      eligibility_eng.click_submit
+      eligibility_eng.click_view_consent
 
-      page.all('input[type = tel]')[1].set(ZipCodes::SF.sample)
-      within('.form-group',
-             text: 'Where do you get most of your medical care?') do
-        select 'Ocean Park Health Center'
-      end
+      expect(consent_eng).to be_visible
 
-      find('input[type = email]').set(ENV['Pt_35_Email'])
-      page.all('input[type = tel]')[2].set(ENV['Pt_35_Phone_Number'])
-      find('input[type = password]').set(ENV['Pt_35_Password'])
-      find('input[type = submit]').click
-      click_on 'View the consent form'
-      find('h3', text: 'PALO ALTO UNIVERSITY CONSENT')
-      first('.ng-pristine.ng-untouched.ng-invalid.ng-invalid-required').click
-      go_to('Español')
+      consent_eng.give_consent
+      participant_35.switch_language
 
-      expect(page).to have_content 'UNIVERSIDAD DE PALO ALTO CONSENTIMIENTO'
-      find('input[value = true]').should be_checked
+      expect(consent_esp).to be_visible
+
+      expect(consent_esp).to have_consent_response
     end
 
-    it 'cannot review consent immediately following ineligible decision' do
-      visit "#{ENV['Base_URL']}" \
-            '/en/pages/application#/en/eligibility-result?isEligible=false'
-      expect { click_on 'View the consent form' }.to raise_error
+    scenario 'cannot review consent immediately ' \
+                'following ineligible decision' do
+      visit eligibility_eng.ineligible_page
+
+      expect(consent_eng).to have_no_consent_link
     end
 
-    it 'completes eligibility, is eligible, is able to consent immediately' do
-      visit "#{ENV['Base_URL']}/en/pages/application#/en/eligibility"
-      find('.ng-binding', text: 'How old are you?')
-      first('input[type = tel]').set('25')
-      q = ['Are you currently a smoker?',
-           'Are you thinking of quitting smoking within the next 30 days?']
-      q.zip(%w(Yes Yes)).each do |ques, answ|
-        within('.form-group', text: ques) do
-          choose answ
-        end
-      end
+    scenario 'completes eligibility, is eligible, ' \
+             'is able to consent immediately' do
+      visit eligibility_eng.eligibility_page
+      eligibility_eng.find_age
+      eligibility_eng.set_age
+      eligibility_eng.answer_current_smoker
+      eligibility_eng.answer_thinking_of_quitting
+      ptp_36_eligibility.enter_zip
+      ptp_36_eligibility.answer_medical_care
+      ptp_36_eligibility.enter_email
+      ptp_36_eligibility.enter_phone_num
+      ptp_36_eligibility.enter_password
+      eligibility_eng.click_submit
+      eligibility_eng.click_view_consent
 
-      page.all('input[type = tel]')[1].set(ZipCodes::SF.sample)
-      within('.form-group',
-             text: 'Where do you get most of your medical care?') do
-        select 'Ocean Park Health Center'
-      end
+      expect(consent_eng).to be_visible
 
-      find('input[type = email]').set(ENV['Pt_36_Email'])
-      page.all('input[type = tel]')[2].set(ENV['Pt_36_Phone_Number'])
-      find('input[type = password]').set(ENV['Pt_36_Password'])
-      find('input[type = submit]').click
-      click_on 'View the consent form'
-      find('h3', text: 'PALO ALTO UNIVERSITY CONSENT')
-      first('.ng-pristine.ng-untouched.ng-invalid.ng-invalid-required').click
-      click_on 'Submit'
-      expect(page).to have_css('iframe[class = ng-scope]')
+      consent_eng.give_consent
+      consent_eng.click_submit
+
+      expect(consent_eng).to be_submitted
     end
 
-    it 'switches to Español while filling in eligibility, ' \
+    scenario 'switches to Español while filling in eligibility, ' \
        'is eligible, sees consent form in Español' do
-      visit "#{ENV['Base_URL']}/en/pages/application#/en/eligibility"
-      find('.ng-binding', text: 'How old are you?')
-      first('input[type = tel]').set('25')
-      q = ['Are you currently a smoker?',
-           'Are you thinking of quitting smoking within the next 30 days?']
-      q.zip(%w(Yes Yes)).each do |ques, answ|
-        within('.form-group', text: ques) do
-          choose answ
-        end
-      end
+      visit eligibility_eng.eligibility_page
+      eligibility_eng.find_age
+      eligibility_eng.set_age
+      eligibility_eng.answer_current_smoker
+      eligibility_eng.answer_thinking_of_quitting
+      participant_37.switch_language
+      eligibility_esp.find_age
+      ptp_37_eligibility.enter_zip
+      ptp_37_eligibility.answer_medical_care
+      ptp_37_eligibility.enter_email
+      ptp_37_eligibility.enter_phone_num
+      ptp_37_eligibility.enter_password
+      eligibility_esp.click_submit
+      eligibility_esp.click_view_consent
 
-      go_to('Español')
-      find('.ng-binding', text: '¿Cuántos años tiene?')
-      page.all('input[type = tel]')[1].set(ZipCodes::SF.sample)
-      within('.form-group',
-             text: '¿Dónde recibe la mayor parte de su atención médica?') do
-        select 'Centro de Salud Ocean Park'
-      end
-
-      find('input[type = email]').set(ENV['Pt_37_Email'])
-      page.all('input[type = tel]')[2].set(ENV['Pt_37_Phone_Number'])
-      find('input[type = password]').set(ENV['Pt_37_Password'])
-      find('input[type = submit]').click
-      click_on 'Ver el formulario de consentimiento'
-      find('h3', text: 'UNIVERSIDAD DE PALO ALTO CONSENTIMIENTO')
+      expect(consent_esp).to be_visible
     end
 
-    it 'signs in and consents to participate' do
-      visit ENV['Base_URL']
-      click_on 'Sign in'
-      fill_in 'participant_email', with: ENV['Pt_106_Email']
-      fill_in 'participant_password', with: ENV['Pt_106_Password']
-      click_on 'Sign in'
-      find('h3', text: 'PALO ALTO UNIVERSITY CONSENT')
-      first('.ng-pristine.ng-untouched.ng-invalid.ng-invalid-required').click
-      find('.btn.btn-primary', text: 'Submit').click
-      expect(page).to have_css('iframe[class = ng-scope]')
+    scenario 'signs in and consents to participate' do
+      participant_106.sign_in
+
+      expect(consent_eng).to be_visible
+
+      consent_eng.give_consent
+      consent_eng.click_submit
+
+      expect(consent_eng).to be_submitted
     end
 
-    it 'signs in and does not consent to participate' do
-      visit ENV['Base_URL']
-      unless page.has_css?('a', text: 'Sign in')
-        find('.navbar-toggle').click
-        find('.dropdown-toggle').click
-        page.has_text?('Sign out')
-        click_on 'Sign out'
-      end
-      click_on 'Sign in'
-      fill_in 'participant_email', with: ENV['Pt_107_Email']
-      fill_in 'participant_password', with: ENV['Pt_107_Password']
-      click_on 'Sign in'
-      find('h3', text: 'PALO ALTO UNIVERSITY CONSENT')
-      page.all('.ng-pristine.ng-untouched.ng-invalid')[1].click
-      find('.btn.btn-primary', text: 'Submit').click
-      expect(page).to have_css('iframe[class = ng-scope]')
+    scenario 'signs in and does not consent to participate' do
+      participant_107.sign_in
+
+      expect(consent_eng).to be_visible
+
+      consent_eng.decline_consent
+      consent_eng.click_submit
+
+      expect(consent_eng).to be_submitted
     end
 
-    it 'reviews consent form' do
-      sign_in_pt_en('109')
-      go_to('Review Consent')
-      expect(page).to have_content 'PALO ALTO UNIVERSITY CONSENT'
+    scenario 'reviews consent form' do
+      participant_109.sign_in
+
+      expect(participant_109).to be_on_landing_page
+
+      participant_109.go_to('Review Consent')
+
+      expect(consent_eng).to be_visible
     end
 
-    it 'switches to Español when reviewing consent form' do
-      sign_in_pt_en('131')
-      go_to('Review Consent')
-      find('h2', text: 'PALO ALTO UNIVERSITY CONSENT')
+    scenario 'switches to Español when reviewing consent form' do
+      participant_131.sign_in
+
+      expect(participant_131).to be_on_landing_page
+      participant_131.go_to('Review Consent')
+
+      expect(consent_eng).to be_visible
+
       sleep(2)
-      go_to('Español')
-      expect(page).to have_content 'UNIVERSIDAD DE PALO ALTO CONSENTIMIENTO'
+      participant_131.switch_language
+
+      expect(consent_esp).to be_visible
     end
 
-    it 'is a participant who did not give consent, can still use app' do
-      sign_in_pt_en('108')
-      click_on 'Set Your Quit Date'
-      expect(page).to have_css('.ng-binding.ng-scope', text: 'We')
+    # Will return once objects for other parts of the app are complete.
 
-      visit ENV['Base_URL']
-      click_on 'Stop Smoking Guide'
-      expect(page).to have_css('a', text: 'Why Should I Quit?')
+    scenario 'is a participant who did not give consent, can still use app' do
+      participant_108.sign_in
 
-      visit ENV['Base_URL']
-      click_on 'Cigarette Counter'
-      expect(page).to have_content 'Yesterday'
+      expect(participant_108).to be_on_landing_page
 
-      visit ENV['Base_URL']
-      go_to('Review Consent')
-      expect(page).to have_content 'PALO ALTO UNIVERSITY CONSENT'
+      ptp_108_consent.click_set_quit_date
+
+      sleep(2)
+      expect(quit_date_eng).to be_visible
+
+      participant_108.go_to_root
+      ptp_108_consent.click_stop_smoke_guide
+
+      expect(stop_smoking_guide_eng).to be_visible
+
+      participant_108.go_to_root
+      ptp_108_consent.click_cig_counter
+
+      expect(cigarette_counter_eng).to be_visible
+
+      participant_108.go_to_root
+      participant_108.go_to('Review Consent')
+
+      expect(consent_eng).to be_visible
     end
   end
 
+  # Spanish
+
   context 'in Español' do
-    it 'switches to English when consenting' do
-      visit "#{ENV['Base_URL']}/es/pages/application#/es/eligibility"
-      find('.ng-binding', text: '¿Cuántos años tiene?')
-      first('input[type = tel]').set('25')
-      q = ['¿Fuma usted actualmente?',
-           '¿Está pensando en dejar de fumar dentro de los próximos 30 días?']
-      q.zip(%w(Sí Sí)).each do |ques, answ|
-        within('.form-group', text: ques) do
-          choose answ
-        end
-      end
+    scenario 'switches to English when consenting' do
+      visit eligibility_esp.eligibility_page
+      eligibility_esp.find_age
+      eligibility_esp.set_age
+      eligibility_esp.answer_current_smoker
+      eligibility_esp.answer_thinking_of_quitting
+      ptp_38_eligibility.enter_zip
+      ptp_38_eligibility.answer_medical_care
+      ptp_38_eligibility.enter_email
+      ptp_38_eligibility.enter_phone_num
+      ptp_38_eligibility.enter_password
+      eligibility_esp.click_submit
+      eligibility_esp.click_view_consent
 
-      page.all('input[type = tel]')[1].set(ZipCodes::SF.sample)
-      within('.form-group',
-             text: '¿Dónde recibe la mayor parte de su atención médica?') do
-        select 'Centro de Salud Ocean Park'
-      end
+      expect(consent_esp).to be_visible
 
-      find('input[type = email]').set(ENV['Pt_38_Email'])
-      page.all('input[type = tel]')[2].set(ENV['Pt_38_Phone_Number'])
-      find('input[type = password]').set(ENV['Pt_38_Password'])
-      find('input[type = submit]').click
-      click_on 'Ver el formulario de consentimiento'
-      find('h3', text: 'UNIVERSIDAD DE PALO ALTO CONSENTIMIENTO')
-      first('.ng-pristine.ng-untouched.ng-invalid.ng-invalid-required').click
-      go_to('English')
+      consent_esp.give_consent
+      participant_38.switch_language
 
-      expect(page).to have_content 'PALO ALTO UNIVERSITY CONSENT'
+      expect(consent_eng).to be_visible
 
-      find('input[value = true]').should be_checked
+      expect(consent_eng).to have_consent_response
     end
 
-    it 'cannot review consent immediately following ineligible decision' do
-      visit "#{ENV['Base_URL']}" \
-            '/es/pages/application#/es/eligibility-result?isEligible=false'
-      expect(page)
-        .to_not have_css('a', text: 'Ver el formulario de consentimiento')
+    scenario 'cannot review consent immediately' \
+        'following ineligible decision' do
+      visit eligibility_esp.ineligible_page
+
+      expect(consent_esp).to have_no_consent_link
     end
 
-    it 'completes eligibility, is eligible, is able to consent immediately' do
-      visit "#{ENV['Base_URL']}/es/pages/application#/es/eligibility"
-      find('.ng-binding', text: '¿Cuántos años tiene?')
-      first('input[type = tel]').set('25')
-      q = ['¿Fuma usted actualmente?',
-           '¿Está pensando en dejar de fumar dentro de los próximos 30 días?']
-      q.zip(%w(Sí Sí)).each do |ques, answ|
-        within('.form-group', text: ques) do
-          choose answ
-        end
-      end
+    scenario 'completes eligibility, is eligible,' \
+        'is able to consent immediately' do
+      visit eligibility_esp.eligibility_page
+      eligibility_esp.find_age
+      eligibility_esp.set_age
+      eligibility_esp.answer_current_smoker
+      eligibility_esp.answer_thinking_of_quitting
+      ptp_39_eligibility.enter_zip
+      ptp_39_eligibility.answer_medical_care
+      ptp_39_eligibility.enter_email
+      ptp_39_eligibility.enter_phone_num
+      ptp_39_eligibility.enter_password
+      eligibility_esp.click_submit
+      eligibility_esp.click_view_consent
 
-      page.all('input[type = tel]')[1].set(ZipCodes::SF.sample)
-      within('.form-group',
-             text: '¿Dónde recibe la mayor parte de su atención médica?') do
-        select 'Centro de Salud Ocean Park'
-      end
+      expect(consent_esp).to be_visible
 
-      find('input[type = email]').set(ENV['Pt_39_Email'])
-      page.all('input[type = tel]')[2].set(ENV['Pt_39_Phone_Number'])
-      find('input[type = password]').set(ENV['Pt_39_Password'])
-      find('input[type = submit]').click
-      click_on 'Ver el formulario de consentimiento'
-      find('h3', text: 'UNIVERSIDAD DE PALO ALTO CONSENTIMIENTO')
-      first('.ng-pristine.ng-untouched.ng-invalid.ng-invalid-required').click
-      click_on 'Enviar'
-      expect(page).to have_css('iframe[class = ng-scope]')
+      consent_esp.give_consent
+      consent_esp.click_submit
+
+      expect(consent_esp).to be_submitted
     end
 
-    it 'switches to English while filling in eligibility, ' \
+    scenario 'switches to English while filling in eligibility, ' \
        'is eligible, sees consent form in English' do
-      visit "#{ENV['Base_URL']}/es/pages/application#/es/eligibility"
-      find('.ng-binding', text: '¿Cuántos años tiene?')
-      first('input[type = tel]').set('25')
-      q = ['¿Fuma usted actualmente?',
-           '¿Está pensando en dejar de fumar dentro de los próximos 30 días?']
-      q.zip(%w(Sí Sí)).each do |ques, answ|
-        within('.form-group', text: ques) do
-          choose answ
-        end
-      end
+      visit eligibility_esp.eligibility_page
+      eligibility_esp.find_age
+      eligibility_esp.set_age
+      eligibility_esp.answer_current_smoker
+      eligibility_esp.answer_thinking_of_quitting
+      participant_40.switch_language
+      ptp_40_eligibility.find_age
+      ptp_40_eligibility.enter_zip
+      ptp_40_eligibility.answer_medical_care
+      ptp_40_eligibility.enter_email
+      ptp_40_eligibility.enter_phone_num
+      ptp_40_eligibility.enter_password
+      eligibility_eng.click_submit
+      eligibility_eng.click_view_consent
 
-      go_to('English')
-      find('.ng-binding', text: 'How old are you?')
-      page.all('input[type = tel]')[1].set(ZipCodes::SF.sample)
-      within('.form-group',
-             text: 'Where do you get most of your medical care?') do
-        select 'Ocean Park Health Center'
-      end
-
-      find('input[type = email]').set(ENV['Pt_40_Email'])
-      page.all('input[type = tel]')[2].set(ENV['Pt_40_Phone_Number'])
-      find('input[type = password]').set(ENV['Pt_40_Password'])
-      find('input[type = submit]').click
-      click_on 'View the consent form'
-      find('h3', text: 'PALO ALTO UNIVERSITY CONSENT')
+      expect(consent_eng).to be_visible
     end
 
-    it 'signs in and consents to participate' do
-      visit ENV['Base_URL']
-      click_on 'Iniciar sesión'
-      fill_in 'participant_email', with: ENV['Pt_206_Email']
-      fill_in 'participant_password', with: ENV['Pt_206_Password']
-      click_on 'Iniciar sesión'
-      find('h3', text: 'UNIVERSIDAD DE PALO ALTO CONSENTIMIENTO')
-      first('.ng-pristine.ng-untouched.ng-invalid.ng-invalid-required').click
-      find('.btn.btn-primary', text: 'Enviar').click
-      expect(page).to have_css('iframe[class = ng-scope]')
+    scenario 'signs in and consents to participate' do
+      participant_206.sign_in
+
+      expect(consent_esp).to be_visible
+
+      consent_esp.give_consent
+      consent_esp.click_submit
+
+      expect(consent_esp).to be_submitted
     end
 
-    it 'signs in and does not consent to participate' do
-      visit ENV['Base_URL']
-      click_on 'Iniciar sesión'
-      fill_in 'participant_email', with: ENV['Pt_207_Email']
-      fill_in 'participant_password', with: ENV['Pt_207_Password']
-      click_on 'Iniciar sesión'
-      find('h3', text: 'UNIVERSIDAD DE PALO ALTO CONSENTIMIENTO')
-      page.all('.ng-pristine.ng-untouched.ng-invalid')[1].click
-      find('.btn.btn-primary', text: 'Enviar').click
-      expect(page).to have_css('iframe[class = ng-scope]')
+    scenario 'signs in and does not consent to participate' do
+      participant_207.sign_in
+
+      expect(consent_esp).to be_visible
+
+      consent_esp.decline_consent
+      consent_esp.click_submit
+
+      expect(consent_esp).to be_submitted
     end
 
-    it 'reviews consent form' do
-      sign_in_pt_es('209')
-      go_to('Revise el Consentimiento')
-      expect(page).to have_content 'UNIVERSIDAD DE PALO ALTO CONSENTIMIENTO'
+    scenario 'reviews consent form' do
+      participant_209.sign_in
+
+      expect(participant_209).to be_on_landing_page
+
+      participant_209.go_to('Revise el Consentimiento')
+
+      expect(consent_esp).to be_visible
     end
 
-    it 'switches to English when reviewing the consent form' do
-      sign_in_pt_es('231')
-      go_to('Revise el Consentimiento')
-      find('h2', text: 'UNIVERSIDAD DE PALO ALTO CONSENTIMIENTO')
+    scenario 'switches to Español when reviewing consent form' do
+      participant_231.sign_in
+
+      expect(participant_231).to be_on_landing_page
+
+      participant_231.go_to('Revise el Consentimiento')
+
+      expect(consent_esp).to be_visible
+
       sleep(2)
-      go_to('English')
-      expect(page).to have_content 'PALO ALTO UNIVERSITY CONSENT'
+      participant_231.switch_language
+
+      expect(consent_eng).to be_visible
     end
 
-    it 'is a participant who did not give consent, can still use app' do
-      sign_in_pt_es('208')
-      click_on 'Elija la fecha en que dejará de fumar'
-      expect(page).to have_css('.ng-binding.ng-scope', text: 'Mi')
+    # Will return once objects for other parts of the app are complete.
 
-      visit "#{ENV['Base_URL']}"
-      click_on 'Guía Para Dejar de Fumar'
-      expect(page).to have_css('a', text: '¿Por qué debo dejar de fumar?')
+    scenario 'is a participant who did not give consent, can still use app' do
+      participant_208.sign_in
 
-      visit "#{ENV['Base_URL']}"
-      click_on 'Contador de Cigarrillos'
-      expect(page).to have_content 'Ayer'
+      expect(participant_208).to be_on_landing_page
 
-      visit "#{ENV['Base_URL']}"
-      go_to('Revise el Consentimiento')
-      expect(page).to have_content 'UNIVERSIDAD DE PALO ALTO CONSENTIMIENTO'
+      ptp_208_consent.click_set_quit_date
+
+      expect(quit_date_esp).to be_visible
+
+      participant_208.go_to_root
+      ptp_208_consent.click_stop_smoke_guide
+
+      expect(stop_smoking_guide_esp).to be_visible
+
+      participant_208.go_to_root
+      ptp_208_consent.click_cig_counter
+
+      expect(cigarette_counter_esp).to be_visible
+
+      participant_208.go_to_root
+      participant_208.go_to('Revise el Consentimiento')
+
+      expect(consent_esp).to be_visible
     end
   end
 end

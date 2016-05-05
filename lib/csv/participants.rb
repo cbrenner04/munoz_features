@@ -1,5 +1,5 @@
 # Expected headers for participants.csv compared to actual in csv_spec.rb.
-module Participants
+module ParticipantsCSV
   HEADER = ['Id', 'Email', 'Reset password sent at',
             'Remember created at', 'Sign in count', 'Current sign in at',
             'Last sign in at', 'Current sign in ip', 'Last sign in ip',

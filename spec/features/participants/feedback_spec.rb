@@ -1,83 +1,78 @@
 # filename: spec/features/participants/feedback_spec.rb
 
-describe 'An eligible participant', type: :feature, metadata: :participant do
+require './spec/support/participants/feedback_helper'
+
+feature 'An eligible participant', metadata: :participant do
   context 'in English' do
-    it 'signs in, navigates to the feedback page' do
-      sign_in_pt_en('146')
-      find('a', text: 'Stop Smoking Guide')
-      navigate_to('Feedback')
-      expect(page).to have_content 'How helpful was this app?'
+    scenario 'signs in, navigates to the feedback page' do
+      participant_146.sign_in
+      feedback_eng.find_stop_smoking_guide
+      feedback_eng.open_with_navbar
+
+      expect(feedback_eng).to be_visible
     end
 
-    it 'signs in, rates the application' do
-      sign_in_pt_en('147')
-      visit "#{ENV['Base_URL']}/#/en/feedback"
-      expect(page)
-        .to have_css('.btn.btn-default.ng-binding.ng-scope.active', count: 0)
+    scenario 'signs in, rates the application' do
+      participant_147.sign_in
+      visit feedback_eng.feedback_page
 
-      page.all('.btn.btn-default')[3].click
-      page.all('.btn.btn-default')[17].click
-      expect(page)
-        .to have_css('.btn.btn-default.ng-binding.ng-scope.active', count: 2)
+      expect(feedback_eng).to have_count_0
 
-      within first('.btn.btn-default.ng-binding.ng-scope.active') do
-        expect(page).to have_content '3'
-      end
+      feedback_eng.make_first_rating
+      feedback_eng.make_second_rating
 
-      within page.all('.btn.btn-default.ng-binding.ng-scope.active')[1] do
-        expect(page).to have_content '6'
-      end
+      expect(feedback_eng).to have_count_2
+      expect(feedback_eng).to have_first_rating
+      expect(feedback_eng).to have_second_rating
 
-      find('.btn.btn-primary', text: 'Submit').click
-      expect(page).to have_content 'Stop Smoking Guide'
+      feedback_eng.submit
+
+      expect(stop_smoking_guide_eng).to be_visible
     end
 
-    it 'cannot enter rating if one is already entered' do
-      sign_in_pt_en('148')
-      find('a', text: 'Stop Smoking Guide')
-      find('.navbar-toggle').click
-      find('.glyphicon.glyphicon-cog')
-      expect(page).to_not have_css('.ng-binging', text: 'Feedback')
+    scenario 'cannot enter rating if one is already entered' do
+      participant_148.sign_in
+      feedback_eng.find_stop_smoking_guide
+      feedback_eng.click_navbar
+      feedback_eng.find_settings_cog
+
+      expect(feedback_eng).to have_no_feedback_link
     end
   end
 
   context 'in Español' do
-    it 'signs in, navigates to the feedback page' do
-      sign_in_pt_es('246')
-      find('a', text: 'Guía Para Dejar de Fumar')
-      navigate_to('Comentarios')
-      expect(page).to have_content '¿Qué tan útil fue esta aplicación?'
+    scenario 'signs in, navigates to the feedback page' do
+      participant_246.sign_in
+      feedback_esp.find_stop_smoking_guide
+      feedback_esp.open_with_navbar
+      expect(feedback_esp).to be_visible
     end
 
-    it 'signs in, rates the application' do
-      sign_in_pt_es('247')
-      visit "#{ENV['Base_URL']}/#/es/feedback"
-      expect(page)
-        .to have_css('.btn.btn-default.ng-binding.ng-scope.active', count: 0)
+    scenario 'signs in, rates the application' do
+      participant_247.sign_in
+      visit feedback_esp.feedback_page
 
-      page.all('.btn.btn-default')[3].click
-      page.all('.btn.btn-default')[17].click
-      expect(page)
-        .to have_css('.btn.btn-default.ng-binding.ng-scope.active', count: 2)
+      expect(feedback_esp).to have_count_0
 
-      within first('.btn.btn-default.ng-binding.ng-scope.active') do
-        expect(page).to have_content '3'
-      end
+      feedback_esp.make_first_rating
+      feedback_esp.make_second_rating
 
-      within page.all('.btn.btn-default.ng-binding.ng-scope.active')[1] do
-        expect(page).to have_content '6'
-      end
+      expect(feedback_esp).to have_count_2
+      expect(feedback_esp).to have_first_rating
+      expect(feedback_esp).to have_second_rating
 
-      find('.btn.btn-primary', text: 'Enviar').click
-      expect(page).to have_content 'Guía Para Dejar de Fumar'
+      feedback_esp.submit
+
+      expect(stop_smoking_guide_esp).to be_visible
     end
 
-    it 'cannot enter rating if one is already entered' do
-      sign_in_pt_es('248')
-      find('a', text: 'Guía Para Dejar de Fumar')
-      find('.navbar-toggle').click
-      find('.glyphicon.glyphicon-cog')
-      expect(page).to_not have_css('.ng-binging', text: 'Comentarios')
+    scenario 'cannot enter rating if one is already entered' do
+      participant_248.sign_in
+      feedback_esp.find_stop_smoking_guide
+      feedback_esp.click_navbar
+      feedback_esp.find_settings_cog
+
+      expect(feedback_esp).to have_no_feedback_link
     end
   end
 end

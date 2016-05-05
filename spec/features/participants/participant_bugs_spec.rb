@@ -1,46 +1,72 @@
 # filename: spec/features/participants/participant_bugs_spec.rb
 
-describe 'A registered and consented participant signs in',
-         type: :feature, metadata: :participant do
+require './spec/support/participants/participant_bugs_helper'
+
+feature 'A registered and consented participant signs in',
+        metadata: :participant do
   context 'in English' do
-    it 'switches language at the end of a stop smoking guide, navigates to ' \
-       'the next guide, sees the correct text' do
-      sign_in_pt_en('121')
-      visit "#{ENV['Base_URL']}/#/en/stop-smoking-guide"
-      click_on 'How Can I Quit?'
-      find('h4', text: 'How to quit page 1 title')
-      find('a', text: 'Next').click
-      find('h4', text: 'How to quit page 2 title')
-      find('a', text: 'Next').click
-      find('h4', text: 'How to quit page 3 title')
-      go_to('Español')
-      find('h4', text: 'Cómo dejar de fumar página 3 título')
-      find('.ng-binding', text: 'Cómo dejar de fumar página 3 cuerpo')
-      find('a', text: 'Sig.').click
-      expect(page).to have_css('h3', text: '¿Y si empiezo a fumar de nuevo?')
-      expect(page).to have_css('h4', text: '¿Y sí? página 1 título')
-      expect(page).to have_content '¿Y sí? página 1 cuerpo'
+    scenario 'switches language at the end of a stop smoking guide, ' \
+       'navigates to the next guide, sees the correct text' do
+      participant_121.sign_in
+      visit stop_smoking_guide_eng.stop_smoking_guide_page
+      stop_smoking_guide_eng.click_how_can_i_quit
+
+      expect(stop_smoking_guide_eng).to have_how_to_quit_1_title
+
+      stop_smoking_guide_eng.click_next
+
+      expect(stop_smoking_guide_eng).to have_how_to_quit_2_title
+
+      stop_smoking_guide_eng.click_next
+
+      expect(stop_smoking_guide_eng).to have_how_to_quit_3_title
+
+      participant_121.go_to('Español')
+
+      expect(stop_smoking_guide_esp).to have_how_to_quit_3_title
+
+      expect(stop_smoking_guide_esp).to have_how_to_quit_body_3
+
+      stop_smoking_guide_esp.click_next
+
+      expect(stop_smoking_guide_esp).to have_what_if_guide_visible
+
+      expect(stop_smoking_guide_esp).to have_what_if_1_title
+
+      expect(stop_smoking_guide_esp).to have_what_if_body
     end
   end
 
   context 'in Español' do
-    it 'switches language at the end of a stop smoking guide, navigates to ' \
-       'the next guide, sees the correct text' do
-      sign_in_pt_es('225')
-      visit "#{ENV['Base_URL']}/#/es/stop-smoking-guide"
-      click_on '¿Por qué debo dejar de fumar?'
-      find('h4', text: '¿Por qué dejar de fumar? página 1 título')
-      find('a', text: 'Sig.').click
-      find('h4', text: '¿Por qué dejar de fumar? página 2 título')
-      find('a', text: 'Sig.').click
-      find('h4', text: '¿Por qué dejar de fumar? página 3 título')
-      go_to('English')
-      find('h4', text: 'Why Quit? page 3 title')
-      find('.ng-binding', text: 'Why Quit? page 3 body')
-      find('a', text: 'Next').click
-      expect(page).to have_css('h3', text: 'How Can I Quit')
-      expect(page).to have_css('h4', text: 'How to quit page 1 title')
-      expect(page).to have_content 'How to quit page 1 body'
+    scenario 'switches language at the end of a stop smoking guide, ' \
+       'navigates to the next guide, sees the correct text' do
+      participant_225.sign_in
+      visit stop_smoking_guide_esp.stop_smoking_guide_page
+      stop_smoking_guide_esp.click_how_can_i_quit
+
+      expect(stop_smoking_guide_esp).to have_how_to_quit_1_title
+
+      stop_smoking_guide_esp.click_next
+
+      expect(stop_smoking_guide_esp).to have_how_to_quit_2_title
+
+      stop_smoking_guide_esp.click_next
+
+      expect(stop_smoking_guide_esp).to have_how_to_quit_3_title
+
+      participant_225.go_to('English')
+
+      expect(stop_smoking_guide_eng).to have_how_to_quit_3_title
+
+      expect(stop_smoking_guide_eng).to have_how_to_quit_body_3
+
+      stop_smoking_guide_eng.click_next
+
+      expect(stop_smoking_guide_eng).to have_what_if_guide_visible
+
+      expect(stop_smoking_guide_eng).to have_what_if_1_title
+
+      expect(stop_smoking_guide_eng).to have_what_if_body
     end
   end
 end
