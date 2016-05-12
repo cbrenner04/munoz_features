@@ -7,7 +7,7 @@ feature 'A registered and consented participant signs in',
         metadata: :participant do
   context 'in English' do
     scenario 'navigates to Your Quit Date' do
-      participant_133.sign_in
+      participant_160.sign_in
       quit_date_eng.click_set_quit_date
 
       expect(quit_date_eng).to have_set_quit_date_visible
@@ -213,7 +213,7 @@ feature 'A registered and consented participant signs in',
 
   context 'in Español' do
     scenario 'navigates to Your Quit Date' do
-      participant_233.sign_in
+      participant_260.sign_in
       quit_date_esp.click_set_quit_date
 
       expect(quit_date_esp).to have_set_quit_date_visible

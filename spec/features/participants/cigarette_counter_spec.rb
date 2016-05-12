@@ -251,7 +251,6 @@ feature 'Cigarette Counter', metadata: :participant do
 
       # failing due to hidden text
       # expect(pt_22_cig_counter).to have_count
-      sleep(1)
 
       expect(pt_22_cig_counter).to have_count_in_graph
     end

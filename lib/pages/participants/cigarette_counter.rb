@@ -45,7 +45,7 @@ class Participants
     def has_count_in_graph?
       date_format = participants.locale(
         @date.strftime('%b %-d'),
-        participants.trans_mo("#{@date.strftime('%-d %b.')}")
+        participants.trans_mo(@date.strftime('%-d %b.'))
       )
       find('g', text: date_format).has_text? @count.to_s
     end

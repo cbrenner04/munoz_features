@@ -23,6 +23,8 @@ RSpec.configure do |config|
   config.expect_with :rspec do |c|
     c.syntax = [:should, :expect]
   end
+  config.example_status_persistence_file_path = 'spec/examples.txt'
+  config.run_all_when_everything_filtered = true
   config.profile_examples = 10
   config.register_ordering(:global) do |list|
     list.sort_by do |group|
@@ -53,7 +55,7 @@ end
 
 # capybara-screenshot configuration options
 Capybara::Screenshot.register_filename_prefix_formatter(:rspec) do |example|
-  "#{example.description.tr(' ', '-').gsub(/^.*\/spec\//, '')}"
+  example.description.tr(' ', '-').gsub(/^.*\/spec\//, '')
 end
 Capybara::Screenshot.autosave_on_failure = true
 Capybara::Screenshot.prune_strategy = :keep_last_run
