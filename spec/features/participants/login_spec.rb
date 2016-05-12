@@ -4,9 +4,7 @@ require './spec/support/participants/login_helper'
 require './spec/support/users_helper'
 
 feature 'A visitor to the site', metadata: :participant do
-  before do
-    participant_generic.go_to_root
-  end
+  background { participant_generic.go_to_root }
 
   context 'is English speaking' do
     scenario 'is a registered participant and signs in' do
@@ -42,30 +40,6 @@ feature 'A visitor to the site', metadata: :participant do
       login_eng.click_resend_confirm_instructions
 
       expect(login_eng).to have_email_confirm_message
-    end
-
-    scenario 'is a registered participant who locks their account' do
-      login_eng.click_sign_in
-      login_eng.find_sign_in
-      18.times do
-        participant_105.fill_in_ptp_email
-        participant_fake.fill_in_ptp_password
-        login_eng.click_sign_in
-
-        expect(login_eng).to have_invalid_email_pw
-      end
-
-      participant_105.fill_in_ptp_email
-      participant_fake.fill_in_ptp_password
-      login_eng.click_sign_in
-
-      expect(login_eng).to have_lock_warning
-
-      participant_105.fill_in_ptp_email
-      participant_fake.fill_in_ptp_password
-      login_eng.click_sign_in
-
-      expect(login_eng).to have_account_locked
     end
 
     scenario "uses 'Didn't receive unlock instructions?'" do
@@ -173,30 +147,6 @@ feature 'A visitor to the site', metadata: :participant do
       login_esp.click_resend_confirm_instructions
 
       expect(login_esp).to have_email_confirm_message
-    end
-
-    scenario 'is a registered participant who locks their account' do
-      login_esp.click_sign_in
-      login_esp.find_sign_in
-      18.times do
-        participant_205.fill_in_ptp_email
-        participant_fake.fill_in_ptp_password
-        login_esp.click_sign_in
-
-        expect(login_esp).to have_invalid_email_pw
-      end
-
-      participant_205.fill_in_ptp_email
-      participant_fake.fill_in_ptp_password
-      login_esp.click_sign_in
-
-      expect(login_esp).to have_lock_warning
-
-      participant_205.fill_in_ptp_email
-      participant_fake.fill_in_ptp_password
-      login_esp.click_sign_in
-
-      expect(login_esp).to have_account_locked
     end
 
     scenario "uses 'Didn't receive unlock instructions?'" do

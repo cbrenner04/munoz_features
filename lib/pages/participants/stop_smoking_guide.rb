@@ -157,26 +157,26 @@ class Participants
     private
 
     def how_to_help_someone
-      @how_to_help_someone = participants.locale('How Do I Help Someone Quit?',
-                                                 '¿Cómo puedo ayudar ' \
-                                                   'a alguien dejar de fumar?')
+      @how_to_help_someone ||=
+        participants.locale('How Do I Help Someone Quit?',
+                            '¿Cómo puedo ayudar a alguien dejar de fumar?')
     end
 
     def how_can_i_quit
-      @how_can_i_quit = participants.locale('How Can I Quit?',
-                                            '¿Cómo puedo dejar de fumar?')
+      @how_can_i_quit ||=
+        participants.locale('How Can I Quit?', '¿Cómo puedo dejar de fumar?')
     end
 
     def what_if_i_start_smoking_again
-      @what_if_i_start_smoking_again = participants.
-                                       locale(
-                                         'What if I Start Smoking Again',
-                                         '¿Y si empiezo a fumar de nuevo?')
+      @what_if_i_start_smoking_again ||=
+        participants.locale('What if I Start Smoking Again',
+                            '¿Y si empiezo a fumar de nuevo?')
     end
 
     def why_should_i_quit
-      @why_should_i_quit = participants.locale('Why Should I Quit?',
-                                               '¿Por qué debo dejar de fumar?')
+      @why_should_i_quit ||=
+        participants.locale('Why Should I Quit?',
+                            '¿Por qué debo dejar de fumar?')
     end
 
     def participants

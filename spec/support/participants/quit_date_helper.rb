@@ -100,6 +100,13 @@ def participant_142
   )
 end
 
+def participant_160
+  @participant_160 ||= Participants.new(
+    pt_id: 160,
+    locale: 'english'
+  )
+end
+
 def participant_254
   @participant_254 ||= Participants.new(
     pt_id: 254,
@@ -175,6 +182,13 @@ end
 def participant_242
   @participant_242 ||= Participants.new(
     pt_id: 242,
+    locale: 'español'
+  )
+end
+
+def participant_260
+  @participant_260 ||= Participants.new(
+    pt_id: 260,
     locale: 'español'
   )
 end

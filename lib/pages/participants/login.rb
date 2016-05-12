@@ -15,9 +15,9 @@ class Participants
     end
 
     def sign_in_unsuccessful?
-      has_content?('a',
-                   text: participants.locale('Invalid email or password',
-                                             'Email o contraseña no válidos.'))
+      has_css?('.alert',
+               text: participants.locale('Invalid email or password',
+                                         'Email o contraseña no válidos.'))
     end
 
     def click_sign_in
@@ -147,13 +147,15 @@ class Participants
     def has_email_confirmation?
       has_content? participants.locale(
         'Your email address has been successfully confirmed.',
-        'Tu cuenta ha sido confirmada satisfactoriamente.')
+        'Tu cuenta ha sido confirmada satisfactoriamente.'
+      )
     end
 
     def has_confirm_message?
       has_content? participants.locale(
         'Thank you for confirming your phone number.',
-        'Gracias por confirmar su número de teléfono.')
+        'Gracias por confirmar su número de teléfono.'
+      )
     end
 
     def has_stop_smoking_guide?
