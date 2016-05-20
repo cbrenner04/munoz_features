@@ -1,13 +1,36 @@
+# filename: lib/pages/users.rb
+
 # Page object for Users
 class Users
   include Capybara::DSL
 
-  def sign_in
-    visit "#{ENV['Base_URL']}/admin"
-    fill_in 'user_email', with: ENV['User_1_Email']
-    fill_in 'user_password', with: ENV['User_1_Password']
+  def initialize(users_arry)
+    @user_id ||= users_arry[:user_id]
+    @locale ||= users_arry[:locale]
+  end
+
+  def user_sign_in_page
+    "#{ENV['Base_URL']}/admin"
+  end
+
+  def fill_in_email
+    fill_in 'user_email', with: ENV["User_#{@user_id}_Email"]
+  end
+
+  def bad_password
+    fill_in 'user_password', with: 'whoops'
+  end
+
+  def click_sign_in
     click_on 'Sign in'
-    find('h1', text: 'Site Administration')
+  end
+
+  def sign_in
+    visit user_sign_in_page
+    fill_in_email
+    fill_in 'user_password', with: ENV["User_#{@user_id}_Password"]
+    click_sign_in
+    # find('h1', text: 'Site Administration')
   end
 
   def notification_sched_page

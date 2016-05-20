@@ -1,62 +1,68 @@
 # filename: spec/features/users/landing_page_spec.rb
 
-describe 'A visitor to the site', type: :feature, metadata: :user do
-  before do
-    visit "#{ENV['Base_URL']}/admin"
+require './spec/support/users_helper.rb'
+require './lib/pages/users/login'
+
+def user_login
+  @user_login ||= Users::Login.new(
+    locale: 'english'
+  )
+end
+
+feature 'A visitor to the site', metadata: :user do
+  scenario 'is a registered users' do
+    user_1.sign_in
+
+    expect(user_login).to have_admin_page_visible
   end
 
-  it 'is a registered users' do
-    fill_in 'user_email', with: ENV['User_1_Email']
-    fill_in 'user_password', with: ENV['User_1_Password']
-    click_on 'Sign in'
-    expect(page).to have_css('h1', text: 'Site Administration')
+  scenario 'is not a registered user, cannot sign in' do
+    user_fake.sign_in
+
+    expect(user_login).to have_invalid_email_or_password
   end
 
-  it 'is not a registered user, cannot sign in' do
-    fill_in 'user_email', with: 'fake@example.com'
-    fill_in 'user_password', with: 'fake password'
-    click_on 'Sign in'
-    expect(page).to have_content 'Invalid email or password'
+  scenario 'is a registered user and resets their password' do
+    visit user_2.user_sign_in_page
+    user_login.click_forgot_password
+    user_2.fill_in_email
+    user_login.click_send_pw_instructions
+
+    expect(user_login).to have_pw_instructions_sent_message
   end
 
-  it 'is a registered user and resets their password' do
-    click_on 'Forgot your password?'
-    fill_in 'user_email', with: ENV['User_2_Email']
-    click_on 'Send me reset password instructions'
-    expect(page).to have_content 'You will receive an email with ' \
-                                 'instructions on how to reset your ' \
-                                 'password in a few minutes.'
-  end
-
-  it 'is a registered user who locks their account' do
+  scenario 'is a registered user who locks their account' do
     18.times do
-      fill_in 'user_email', with: ENV['User_3_Email']
-      fill_in 'user_password', with: 'whoops'
-      click_on 'Sign in'
-      expect(page).to have_content 'Invalid email or password.'
+      visit user_3.user_sign_in_page
+      user_3.fill_in_email
+      user_3.bad_password
+      user_3.click_sign_in
+      expect(user_login).to have_invalid_email_or_password
     end
+    user_3.fill_in_email
+    user_3.bad_password
+    user_3.click_sign_in
+    expect(user_login).to have_account_will_lock_warning
+    user_3.fill_in_email
+    user_3.bad_password
+    user_3.click_sign_in
 
-    fill_in 'user_email', with: ENV['User_3_Email']
-    fill_in 'user_password', with: 'whoops'
-    click_on 'Sign in'
-    expect(page).to have_content 'You have one more attempt before your ' \
-                                 'account is locked.'
-
-    fill_in 'user_email', with: ENV['User_3_Email']
-    fill_in 'user_password', with: 'whoops'
-    click_on 'Sign in'
-    expect(page).to have_content 'Your account is locked.'
+    expect(user_login).to have_account_is_locked_message
   end
 
-  it "uses 'Didn't receive unlock instructions?'" do
-    click_on 'Sign in'
-    find('h2', text: 'Sign in')
-    click_on "Didn't receive unlock instructions?"
-    find('h2', text: 'Resend unlock instructions')
-    fill_in 'user_email', with: ENV['User_4_Email']
-    click_on 'Resend unlock instructions'
-    expect(page).to have_content 'You will receive an email with ' \
-                                 'instructions for how to unlock your ' \
-                                 'account in a few minutes.'
+  scenario "uses 'Didn't receive unlock instructions?'" do
+    visit user_4.user_sign_in_page
+    user_4.click_sign_in
+
+    expect(user_login).to have_sign_in_header
+
+    user_login.click_didnt_receive_unlock_instructions
+
+    expect(user_login).to have_resend_unlock_instructions_header
+
+    user_4.fill_in_email
+    user_login.click_resend_unlock_instructions
+
+    expect(user_login).to have_unlock_instructions_sent_message
   end
 end
