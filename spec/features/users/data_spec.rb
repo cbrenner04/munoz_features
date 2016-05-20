@@ -1,74 +1,47 @@
 # filename: ./spec/features/users/data_spec.rb
 
-describe 'A user signs in', type: :feature, metadata: :user do
-  before do
-    visit "#{ENV['Base_URL']}/admin"
-    fill_in 'user_email', with: ENV['User_1_Email']
-    fill_in 'user_password', with: ENV['User_1_Password']
-    click_on 'Sign in'
-    expect(page).to have_css('h1', text: 'Site Administration')
+require './spec/support/users_helper.rb'
+require './lib/pages/users/data'
+
+def user_data
+  @user_data ||= Users::Data.new
+end
+
+feature 'A user signs in', metadata: :user do
+  background do
+    user_1.sign_in
   end
 
-  it 'sees an ineligible participant flagged accordingly' do
-    within('.nav.nav-pills.nav-stacked') do
-      click_on 'Eligibility statuses'
-    end
+  scenario 'sees an ineligible participant flagged accordingly' do
+    user_data.click_eligibility_statuses
+    user_data.click_is_eligible
+    user_data.click_ineligible_participant
 
-    find('.header', text: 'Is eligible').click
-    within first('.eligibility_status_row') do
-      expect(page).to have_css '.label.label-danger'
-      find('a', text: 'Participant').click
-    end
-
-    expect(page).to have_content 'participant999@example.com'
+    expect(user_data).to have_flagged_ineligible_ptp
   end
 
-  it 'sees an eligible participant flagged accordingly' do
-    within('.nav.nav-pills.nav-stacked') do
-      click_on 'Eligibility statuses'
-    end
+  scenario 'sees an eligible participant flagged accordingly' do
+    user_data.click_eligibility_statuses
+    user_data.click_is_eligible
+    user_data.click_eligible_participant
 
-    find('.header', text: 'Is eligible')
-    within('.eligibility_status_row', text: '992716000') do
-      expect(page).to have_css '.label.label-success'
-      find('a', text: 'Participant').click
-    end
-
-    expect(page).to have_content 'participant144@example.com'
+    expect(user_data).to have_flagged_eligible_ptp
   end
 
-  it 'sees a non-consented participant flagged accordingly' do
-    within('.nav.nav-pills.nav-stacked') do
-      click_on 'Consent responses'
-    end
+  scenario 'sees a non-consented participant flagged accordingly' do
+    user_data.click_consent_responses
 
-    find('.header', text: 'Is consented').click
-    within first('.consent_response_row') do
-      expect(page).to have_css '.label.label-danger'
-      find('a', text: 'Participant').click
-    end
+    user_data.click_is_consented
+    user_data.click_non_consented_ptp
 
-    expect(page).to have_content 'participant208@example.com'
+    expect(user_data).to have_flagged_non_consented_ptp
   end
 
-  it 'sees a consented participant flagged accordingly' do
-    within('.nav.nav-pills.nav-stacked') do
-      click_on 'Consent responses'
-    end
+  scenario 'sees a consented participant flagged accordingly' do
+    user_data.click_consent_responses
+    user_data.iterate_to_find_consented
+    user_data.click_consented_ptp
 
-    x = 0
-    until x == 5
-      find('.header', text: 'Responded at').click
-      yesterday = Date.today - 1
-      break if page.has_css?('.responded_at_field.datetime_type',
-                             text: "#{yesterday.strftime('%B %d')}")
-      x += 1
-    end
-
-    within first('.consent_response_row') do
-      find('a', text: 'Participant').click
-    end
-
-    expect(page).to have_content 'participant19@example.com'
+    expect(user_data).to have_flagged_consented_ptp
   end
 end

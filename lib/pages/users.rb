@@ -30,7 +30,6 @@ class Users
     fill_in_email
     fill_in 'user_password', with: ENV["User_#{@user_id}_Password"]
     click_sign_in
-    # find('h1', text: 'Site Administration')
   end
 
   def notification_sched_page

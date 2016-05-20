@@ -68,36 +68,6 @@ class Users
                    'password in a few minutes.'
     end
 
-    def has_account_will_lock_warning?
-      has_content? 'You have one more attempt before your account is locked.'
-    end
-
-    def has_account_is_locked_message?
-      has_content? 'Your account is locked.'
-    end
-
-    def has_sign_in_header?
-      has_css?('h2', text: 'Sign in')
-    end
-
-    def click_didnt_receive_unlock_instructions
-      click_on "Didn't receive unlock instructions?"
-    end
-
-    def has_resend_unlock_instructions_header?
-      has_css?('h2', text: 'Resend unlock instructions')
-    end
-
-    def click_resend_unlock_instructions
-      click_on 'Resend unlock instructions'
-    end
-
-    def has_unlock_instructions_sent_message?
-      has_content? 'You will receive an email with ' \
-                   'instructions for how to unlock your ' \
-                   'account in a few minutes.'
-    end
-
     private
 
     def phone_num
