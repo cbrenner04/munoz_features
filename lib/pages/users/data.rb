@@ -68,7 +68,7 @@ class Users
         find('.header', text: 'Responded at').click
         yesterday = Date.today - 1
         break if page.has_css?('.responded_at_field.datetime_type',
-                               text: "#{yesterday.strftime('%B %d')}")
+                               text: yesterday.strftime('%B %d').to_s)
         x += 1
       end
     end
