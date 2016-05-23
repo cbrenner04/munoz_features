@@ -1,38 +1,30 @@
 # filename: ./spec/features/users/user_bugs_spec.rb
 
-describe 'A user signs in', type: :feature, metadata: :user do
-  before do
-    visit "#{ENV['Base_URL']}/admin"
-    fill_in 'user_email', with: ENV['User_1_Email']
-    fill_in 'user_password', with: ENV['User_1_Password']
-    click_on 'Sign in'
-    expect(page).to have_css('h1', text: 'Site Administration')
+require './spec/support/users_helper.rb'
+require './lib/pages/users/user_bugs'
+
+def user_bugs
+  @user_bugs ||= Users::Bugs.new
+end
+
+feature 'A user signs in', metadata: :user do
+  background do
+    user_1.sign_in
   end
 
-  it 'sees responses to health clinic questions' do
-    within('.nav.nav-pills.nav-stacked') do
-      click_on 'Eligibility questions'
-    end
+  scenario 'sees responses to health clinic questions' do
+    user_bugs.click_eligibility_questions
+    user_bugs.click_medical_treatment_icon
+    user_bugs.click_eligibility_responses
 
-    within('.eligibility_question_row', text: 'Where do you get') do
-      find('.icon-info-sign').click
-    end
+    expect(user_bugs).to have_eligibility_responses_visible
 
-    find('.well', text: 'Where do you get most of your medical care?')
-    eligibility_question = find('.breadcrumb').find('.active').text
+    user_bugs.click_answer_field
+    user_bugs.click_eligibility_question_icon
+    user_bugs.click_eligibility_answer
 
-    within('.nav.nav-pills.nav-stacked') do
-      click_on 'Eligibility responses'
-    end
+    expect(user_bugs).to have_eligibility_answer_visible
 
-    find('h1', text: 'List of Eligibility responses')
-    first('.answer_field').click
-    within first('.eligibility_response_row', text: eligibility_question) do
-      find('.icon-info-sign').click
-    end
-
-    find('a', text: 'EligibilityAnswer').click
-    find('h1', text: 'Details for Eligibility answer')
-    expect(page).to have_css('.well', text: 'Chinatown')
+    expect(user_bugs).to have_chinatown
   end
 end
