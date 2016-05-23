@@ -30,14 +30,14 @@ class Users
     end
 
     def click_eligible_participant
-      within('.eligibility_status_row', text: '992716000') do
+      within('.eligibility_status_row', text: '105787489') do
         expect(page).to have_css '.label.label-success'
         find('a', text: 'Participant').click
       end
     end
 
     def has_flagged_eligible_ptp?
-      has_content? 'participant144@example.com'
+      has_content? 'participant107@example.com'
     end
 
     def click_consent_responses
@@ -52,6 +52,7 @@ class Users
 
     def click_non_consented_ptp
       within first('.consent_response_row') do
+        sleep(2)
         expect(page).to have_css '.label.label-danger'
         find('a', text: 'Participant').click
       end
@@ -78,7 +79,7 @@ class Users
       end
     end
 
-    def has_flagged_consented_ptpt?
+    def has_flagged_consented_ptp?
       has_content? 'participant19@example.com'
     end
   end
