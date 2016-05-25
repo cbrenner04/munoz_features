@@ -1,6 +1,6 @@
 require './lib/pages/participants'
 
-class Participants
+module Participants
   # page object for Consent
   class Consent
     include RSpec::Matchers
@@ -11,8 +11,8 @@ class Participants
     end
 
     def visible?
-      has_text? participants.locale('PALO ALTO UNIVERSITY CONSENT',
-                                    'UNIVERSIDAD DE PALO ALTO CONSENTIMIENTO')
+      has_text? participant.locale('PALO ALTO UNIVERSITY CONSENT',
+                                   'UNIVERSIDAD DE PALO ALTO CONSENTIMIENTO')
     end
 
     def give_consent
@@ -28,14 +28,14 @@ class Participants
     end
 
     def has_no_consent_link?
-      var = participants.locale('View the consent form',
-                                'Ver el formulario de consentimiento')
+      var = participant.locale('View the consent form',
+                               'Ver el formulario de consentimiento')
       expect { click_on var }
         .to raise_error(Capybara::ElementNotFound)
     end
 
     def click_submit
-      click_on participants.locale('Submit', 'Enviar')
+      click_on participant.locale('Submit', 'Enviar')
     end
 
     def submitted?
@@ -45,24 +45,24 @@ class Participants
     # For those who did not consent
 
     def click_set_quit_date
-      click_on participants.locale('Set Your Quit Date',
-                                   'Elija la fecha en que dejará de fumar')
+      click_on participant.locale('Set Your Quit Date',
+                                  'Elija la fecha en que dejará de fumar')
     end
 
     def click_stop_smoke_guide
-      click_on participants.locale('Stop Smoking Guide',
-                                   'Guía Para Dejar de Fumar')
+      click_on participant.locale('Stop Smoking Guide',
+                                  'Guía Para Dejar de Fumar')
     end
 
     def click_cig_counter
-      click_on participants.locale('Cigarette Counter',
-                                   'Contador de Cigarrillos')
+      click_on participant.locale('Cigarette Counter',
+                                  'Contador de Cigarrillos')
     end
 
     private
 
-    def participants
-      @participants ||= Participants.new(locale: @locale)
+    def participant
+      @participant ||= Participant.new(locale: @locale)
     end
   end
 end

@@ -1,6 +1,6 @@
 require './lib/pages/participants'
 
-class Participants
+module Participants
   # page object for Consent
   class ParticipantsBugs
     include Capybara::DSL
@@ -11,8 +11,8 @@ class Participants
 
     private
 
-    def participants
-      @participants ||= Participants.new(locale: @locale)
+    def participant
+      @participant ||= Participant.new(locale: @locale)
     end
   end
 end

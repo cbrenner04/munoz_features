@@ -1,6 +1,6 @@
 require './lib/pages/participants'
 
-class Participants
+module Participants
   # Page object for Cigarette Counter page
   class CigaretteCounter
     include Capybara::DSL
@@ -13,7 +13,7 @@ class Participants
     end
 
     def landing_page
-      var = participants.locale('en', 'es')
+      var = participant.locale('en', 'es')
       "#{ENV['Base_URL']}/#/#{var}/cigarette-count"
     end
 
@@ -22,12 +22,12 @@ class Participants
     end
 
     def open_with_navbar
-      participants.navigate_to(title)
+      participant.navigate_to(title)
     end
 
     def visible?
-      has_text? participants.locale('How many cigarettes have you smoked?',
-                                    '¿Cuántos cigarros ha fumado?')
+      has_text? participant.locale('How many cigarettes have you smoked?',
+                                   '¿Cuántos cigarros ha fumado?')
     end
 
     def has_count?
@@ -43,9 +43,9 @@ class Participants
     end
 
     def has_count_in_graph?
-      date_format = participants.locale(
+      date_format = participant.locale(
         @date.strftime('%b %-d'),
-        participants.trans_mo(@date.strftime('%-d %b.'))
+        participant.trans_mo(@date.strftime('%-d %b.'))
       )
       find('g', text: date_format).has_text? @count.to_s
     end
@@ -70,19 +70,19 @@ class Participants
     end
 
     def done
-      find('.btn-default', text: participants.locale('Done', 'Fijar')).click
+      find('.btn-default', text: participant.locale('Done', 'Fijar')).click
     end
 
     def has_home_visible?
-      has_text? participants.locale('Stop Smoking Guide',
-                                    'Guía Para Dejar de Fumar')
+      has_text? participant.locale('Stop Smoking Guide',
+                                   'Guía Para Dejar de Fumar')
     end
 
     private
 
     def title
-      participants.locale('Cigarette Counter',
-                          'Contador de Cigarrillos')
+      participant.locale('Cigarette Counter',
+                         'Contador de Cigarrillos')
     end
 
     def button_group
@@ -93,8 +93,8 @@ class Participants
       button_group.find('.btn-default', text: symbol).click
     end
 
-    def participants
-      @participants ||= Participants.new(locale: @locale)
+    def participant
+      @participant ||= Participant.new(locale: @locale)
     end
   end
 end

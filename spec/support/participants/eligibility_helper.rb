@@ -304,148 +304,148 @@ def cigarette_counter_esp
 end
 
 def participant_gen_eng
-  @participant_gen_eng ||= Participants.new(locale: 'english')
+  @participant_gen_eng ||= Participant.new(locale: 'english')
 end
 
 def participant_gen_esp
-  @participant_gen_esp ||= Participants.new(locale: 'español')
+  @participant_gen_esp ||= Participant.new(locale: 'español')
 end
 
 def participant_101
-  @participant_101 ||= Participants.new(
+  @participant_101 ||= Participant.new(
     pt_id: 101,
     locale: 'english'
   )
 end
 
 def participant_102
-  @participant_102 ||= Participants.new(
+  @participant_102 ||= Participant.new(
     pt_id: 102,
     locale: 'english'
   )
 end
 
 def participant_103
-  @participant_103 ||= Participants.new(
+  @participant_103 ||= Participant.new(
     pt_id: 103,
     locale: 'english'
   )
 end
 
 def participant_104
-  @participant_104 ||= Participants.new(
+  @participant_104 ||= Participant.new(
     pt_id: 104,
     locale: 'english'
   )
 end
 
 def participant_9
-  @participant_9 ||= Participants.new(
+  @participant_9 ||= Participant.new(
     pt_id: 9,
     locale: 'english'
   )
 end
 
 def participant_31
-  @participant_31 ||= Participants.new(
+  @participant_31 ||= Participant.new(
     pt_id: 31,
     locale: 'english'
   )
 end
 
 def participant_25
-  @participant_25 ||= Participants.new(
+  @participant_25 ||= Participant.new(
     pt_id: 25,
     locale: 'english'
   )
 end
 
 def participant_151
-  @participant_151 ||= Participants.new(
+  @participant_151 ||= Participant.new(
     pt_id: 151,
     locale: 'english'
   )
 end
 
 def participant_152
-  @participant_152 ||= Participants.new(
+  @participant_152 ||= Participant.new(
     pt_id: 152,
     locale: 'english'
   )
 end
 
 def participant_32
-  @participant_32 ||= Participants.new(
+  @participant_32 ||= Participant.new(
     pt_id: 32,
     locale: 'english'
   )
 end
 
 def participant_201
-  @participant_201 ||= Participants.new(
+  @participant_201 ||= Participant.new(
     pt_id: 201,
     locale: 'español'
   )
 end
 
 def participant_202
-  @participant_202 ||= Participants.new(
+  @participant_202 ||= Participant.new(
     pt_id: 202,
     locale: 'español'
   )
 end
 
 def participant_203
-  @participant_203 ||= Participants.new(
+  @participant_203 ||= Participant.new(
     pt_id: 203,
     locale: 'español'
   )
 end
 
 def participant_204
-  @participant_204 ||= Participants.new(
+  @participant_204 ||= Participant.new(
     pt_id: 204,
     locale: 'español'
   )
 end
 
 def participant_10
-  @participant_10 ||= Participants.new(
+  @participant_10 ||= Participant.new(
     pt_id: 10,
     locale: 'español'
   )
 end
 
 def participant_33
-  @participant_33 ||= Participants.new(
+  @participant_33 ||= Participant.new(
     pt_id: 33,
     locale: 'español'
   )
 end
 
 def participant_26
-  @participant_26 ||= Participants.new(
+  @participant_26 ||= Participant.new(
     pt_id: 26,
     locale: 'español'
   )
 end
 
 def participant_251
-  @participant_251 ||= Participants.new(
+  @participant_251 ||= Participant.new(
     pt_id: 251,
     locale: 'español'
   )
 end
 
 def participant_252
-  @participant_252 ||= Participants.new(
+  @participant_252 ||= Participant.new(
     pt_id: 252,
     locale: 'español'
   )
 end
 
 def participant_34
-  @participant_34 ||= Participants.new(
+  @participant_34 ||= Participant.new(
     pt_id: 34,
     locale: 'español'
   )

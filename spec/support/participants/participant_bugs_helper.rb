@@ -15,14 +15,14 @@ end
 # Participants POM methods
 
 def participant_121
-  @participant_121 ||= Participants.new(
+  @participant_121 ||= Participant.new(
     pt_id: 121,
     locale: 'english'
   )
 end
 
 def participant_225
-  @participant_225 ||= Participants.new(
+  @participant_225 ||= Participant.new(
     pt_id: 225,
     locale: 'español'
   )

@@ -2,7 +2,7 @@
 
 require './lib/pages/users'
 
-class Users
+module Users
   # page object for Login
   class Data
     include RSpec::Matchers

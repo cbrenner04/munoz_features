@@ -24,42 +24,42 @@ end
 # Participants POM methods
 
 def participant_146
-  @participant_146 ||= Participants.new(
+  @participant_146 ||= Participant.new(
     pt_id: 146,
     locale: 'english'
   )
 end
 
 def participant_147
-  @participant_147 ||= Participants.new(
+  @participant_147 ||= Participant.new(
     pt_id: 147,
     locale: 'english'
   )
 end
 
 def participant_148
-  @participant_148 ||= Participants.new(
+  @participant_148 ||= Participant.new(
     pt_id: 148,
     locale: 'english'
   )
 end
 
 def participant_246
-  @participant_246 ||= Participants.new(
+  @participant_246 ||= Participant.new(
     pt_id: 246,
     locale: 'español'
   )
 end
 
 def participant_247
-  @participant_247 ||= Participants.new(
+  @participant_247 ||= Participant.new(
     pt_id: 247,
     locale: 'español'
   )
 end
 
 def participant_248
-  @participant_248 ||= Participants.new(
+  @participant_248 ||= Participant.new(
     pt_id: 248,
     locale: 'español'
   )

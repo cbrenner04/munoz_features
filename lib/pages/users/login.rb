@@ -2,7 +2,7 @@
 
 require './lib/pages/users'
 
-class Users
+module Users
   # page object for Login
   class Login
     include RSpec::Matchers
@@ -71,11 +71,11 @@ class Users
     private
 
     def phone_num
-      @phone_num ||= users.locale('3128404100', '3128404101')
+      @phone_num ||= user.locale('3128404100', '3128404101')
     end
 
-    def users
-      @users ||= Users.new(locale: @locale)
+    def user
+      @user ||= User.new(locale: @locale)
     end
   end
 end

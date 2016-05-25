@@ -2,7 +2,7 @@
 
 require './lib/pages/users'
 
-class Users
+module Users
   # page object for Login
   class Bugs
     include RSpec::Matchers
@@ -13,8 +13,6 @@ class Users
         click_on 'Eligibility questions'
       end
     end
-
-
 
     def click_eligibility_responses
       within('.nav.nav-pills.nav-stacked') do

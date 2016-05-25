@@ -1,7 +1,7 @@
 # filename: lib/pages/users.rb
 
 # Page object for Users
-class Users
+class User
   include Capybara::DSL
 
   def initialize(users_arry)
