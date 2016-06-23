@@ -12,13 +12,15 @@ end
 
 def login_user_eng
   @login_user_eng ||= Users::Login.new(
-    locale: 'english'
+    locale: 'english',
+    user_id: 1
   )
 end
 
 def login_user_esp
   @login_user_esp ||= Users::Login.new(
-    locale: 'español'
+    locale: 'español',
+    user_id: 1
   )
 end
 

@@ -1,3 +1,5 @@
+# filenmae: lib/pages/users/login.rb
+
 require './lib/pages/users'
 
 class Users
@@ -44,6 +46,28 @@ class Users
       end
     end
 
+    def has_admin_page_visible?
+      has_content? 'Site Administration'
+    end
+
+    def has_invalid_email_or_password?
+      has_text? 'Invalid email or password'
+    end
+
+    def click_forgot_password
+      click_on 'Forgot your password?'
+    end
+
+    def click_send_pw_instructions
+      click_on 'Send me reset password instructions'
+    end
+
+    def has_pw_instructions_sent_message?
+      have_content 'You will receive an email with ' \
+                   'instructions on how to reset your ' \
+                   'password in a few minutes.'
+    end
+
     private
 
     def phone_num
@@ -51,7 +75,7 @@ class Users
     end
 
     def users
-      @users ||= Users.new
+      @users ||= Users.new(locale: @locale)
     end
   end
 end
