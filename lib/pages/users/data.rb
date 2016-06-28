@@ -9,7 +9,7 @@ module Users
     include Capybara::DSL
 
     def click_eligibility_statuses
-      within('.nav.nav-pills.nav-stacked') do
+      within nav_option do
         click_on 'Eligibility statuses'
       end
     end
@@ -21,7 +21,7 @@ module Users
     def click_ineligible_participant
       within first('.eligibility_status_row') do
         expect(page).to have_css '.label.label-danger'
-        find('a', text: 'Participant').click
+        click_participant
       end
     end
 
@@ -32,7 +32,7 @@ module Users
     def click_eligible_participant
       within('.eligibility_status_row', text: '105787489') do
         expect(page).to have_css '.label.label-success'
-        find('a', text: 'Participant').click
+        click_participant
       end
     end
 
@@ -41,7 +41,7 @@ module Users
     end
 
     def click_consent_responses
-      within('.nav.nav-pills.nav-stacked') do
+      within nav_option do
         click_on 'Consent responses'
       end
     end
@@ -53,8 +53,9 @@ module Users
     def click_non_consented_ptp
       within first('.consent_response_row') do
         sleep(2)
-        expect(page).to have_css '.label.label-danger'
-        find('a', text: 'Participant').click
+        # The below expect statement cannot be found, but is there.
+        expect(page).to have_css '.label .label-danger'
+        click_participant
       end
     end
 
@@ -75,12 +76,22 @@ module Users
 
     def click_consented_ptp
       within first('.consent_response_row') do
-        find('a', text: 'Participant').click
+        click_participant
       end
     end
 
     def has_flagged_consented_ptp?
       has_content? 'participant19@example.com'
+    end
+
+    private
+
+    def nav_option
+      first('.nav.nav-pills.nav-stacked')
+    end
+
+    def click_participant
+      find('a', text: 'Participant').click
     end
   end
 end

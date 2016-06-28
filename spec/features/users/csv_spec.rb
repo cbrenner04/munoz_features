@@ -14,8 +14,8 @@ def check_file(file, headers)
   csv_data.include?(headers).should == true
 end
 
-describe 'Admin downloads, checks csv', type: :feature, metadata: :user do
-  before(:all) do
+feature 'Admin downloads, checks csv', :browser, metadata: :user do
+  background(:all) do
     @download_dir = File.join(Dir.pwd, UUID.new.generate)
     FileUtils.mkdir_p @download_dir
 
@@ -37,47 +37,47 @@ describe 'Admin downloads, checks csv', type: :feature, metadata: :user do
     FileUtils.rm_rf @download_dir
   end
 
-  it 'for Consent responses' do
+  scenario 'for Consent responses' do
     check_file('consent_response', ConsentResponses::HEADER)
   end
 
-  it 'for Daily cigarette counts' do
+  scenario 'for Daily cigarette counts' do
     check_file('daily_cigarette_count', DailyCigaretteCount::HEADER)
   end
 
-  it 'for Eligibility responses' do
+  scenario 'for Eligibility responses' do
     check_file('eligibility_response', EligibilityResponses::HEADER)
   end
 
-  it 'for Eligibility statuses' do
+  scenario 'for Eligibility statuses' do
     check_file('eligibility_status', EligibilityStatuses::HEADER)
   end
 
-  it 'for Language choices' do
+  scenario 'for Language choices' do
     check_file('language_choice', LanguageChoices::HEADER)
   end
 
-  it 'for Page views' do
+  scenario 'for Page views' do
     check_file('page_view', PageView::HEADER)
   end
 
-  it 'for Participants' do
+  scenario 'for Participants' do
     check_file('participant', ParticipantsCSV::HEADER)
   end
 
-  it 'for Participant app ratings' do
+  scenario 'for Participant app ratings' do
     check_file('participant_app_rating', ParticipantAppRatings::HEADER)
   end
 
-  it 'for Participant phones' do
+  scenario 'for Participant phones' do
     check_file('participant_phone', ParticipantPhones::HEADER)
   end
 
-  it 'for Quit dates' do
+  scenario 'for Quit dates' do
     check_file('quit_date', QuitDates::HEADER)
   end
 
-  it 'for Sms records' do
+  scenario 'for Sms records' do
     check_file('sms_record', SmsRecords::HEADER)
   end
 end

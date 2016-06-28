@@ -9,13 +9,13 @@ module Users
     include Capybara::DSL
 
     def click_eligibility_questions
-      within('.nav.nav-pills.nav-stacked') do
+      within nav_option do
         click_on 'Eligibility questions'
       end
     end
 
     def click_eligibility_responses
-      within('.nav.nav-pills.nav-stacked') do
+      within nav_option do
         click_on 'Eligibility responses'
       end
       find('.well', text: 'Where do you get most of your medical care?')
@@ -24,7 +24,7 @@ module Users
 
     def click_medical_treatment_icon
       within('.eligibility_question_row', text: 'Where do you get') do
-        find('.icon-info-sign').click
+        click_icon
       end
     end
 
@@ -38,7 +38,7 @@ module Users
 
     def click_eligibility_question_icon
       within first('.eligibility_response_row', text: @eligibility_question) do
-        find('.icon-info-sign').click
+        click_icon
       end
     end
 
@@ -52,6 +52,16 @@ module Users
 
     def has_chinatown?
       has_css?('.well', text: 'Chinatown')
+    end
+
+    private
+
+    def nav_option
+      first('.nav.nav-pills.nav-stacked')
+    end
+
+    def click_icon
+      find('.icon-info-sign').click
     end
   end
 end
