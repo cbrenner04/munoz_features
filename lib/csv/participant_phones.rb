@@ -16,5 +16,5 @@ module ParticipantPhones
             'Created at [Participant]', 'Updated at [Participant]',
             'Uuid [Participant]', 'Id [Sms records]',
             'Resource path [Sms records]', 'Created at [Sms records]',
-            'Updated at [Sms records]']
+            'Updated at [Sms records]'].freeze
 end

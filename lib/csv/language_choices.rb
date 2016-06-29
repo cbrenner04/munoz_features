@@ -11,5 +11,5 @@ module LanguageChoices
             'Unconfirmed email [Participant]',
             'Failed attempts [Participant]', 'Unlock token [Participant]',
             'Locked at [Participant]', 'Created at [Participant]',
-            'Updated at [Participant]', 'Uuid [Participant]']
+            'Updated at [Participant]', 'Uuid [Participant]'].freeze
 end

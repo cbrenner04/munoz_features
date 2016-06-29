@@ -1,7 +1,5 @@
 # filenmae: lib/pages/users/login.rb
 
-require './lib/pages/users'
-
 module Users
   # page object for Login
   class Login
@@ -13,36 +11,38 @@ module Users
     end
 
     def phone_confirm_time
+      phone_num = @locale == 'english' ? '3128404100' : '3128404101'
       within('.participant_phone_row', text: phone_num) do
-        time = Time.now - 2 * 60 * 60
+        time = Time.now - 2 * ONE_HOUR
 
         expect(page).to have_content time.strftime('%B %d, %Y %H')
       end
     end
 
+    ONE_HOUR = 60 * 60
+    TODAY = Date.today
+
     def reminder_90_days
       within first('.notification_schedule_row') do
-        three = Date.today + 90
+        ninety_days_date = TODAY + 90
 
-        expect(page).to have_content three.strftime('%B %d, %Y')
+        expect(page).to have_content ninety_days_date.strftime('%B %d, %Y')
       end
     end
 
     def reminder_60_days
-      row = all('.notification_schedule_row')
       within row[1] do
-        two = Date.today + 60
+        sixty_days_date = TODAY + 60
 
-        expect(page).to have_content two.strftime('%B %d, %Y')
+        expect(page).to have_content sixty_days_date.strftime('%B %d, %Y')
       end
     end
 
     def reminder_30_days
-      row = all('.notification_schedule_row')
       within row[2] do
-        one = Date.today + 30
+        thirty_days_date = TODAY + 30
 
-        expect(page).to have_content one.strftime('%B %d, %Y')
+        expect(page).to have_content thirty_days_date.strftime('%B %d, %Y')
       end
     end
 
@@ -70,12 +70,8 @@ module Users
 
     private
 
-    def phone_num
-      @phone_num ||= user.locale('3128404100', '3128404101')
-    end
-
-    def user
-      @user ||= User.new(locale: @locale)
+    def row
+      all('.notification_schedule_row')
     end
   end
 end

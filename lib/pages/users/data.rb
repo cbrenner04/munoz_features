@@ -52,11 +52,12 @@ module Users
 
     def click_non_consented_ptp
       within first('.consent_response_row') do
-        sleep(2)
-        # The below expect statement cannot be found, but is there.
-        expect(page).to have_css '.label .label-danger'
         click_participant
       end
+    end
+
+    def not_consented?
+      first('.consent_response_row').has_css? '.label.label-danger'
     end
 
     def has_flagged_non_consented_ptp?
@@ -65,11 +66,11 @@ module Users
 
     def iterate_to_find_consented
       x = 0
-      until x == 5
+      until x == 5 # this seems excessive, probably just 2 needed
         find('.header', text: 'Responded at').click
         yesterday = Date.today - 1
         break if page.has_css?('.responded_at_field.datetime_type',
-                               text: yesterday.strftime('%B %d').to_s)
+                               text: yesterday.strftime('%B %d'))
         x += 1
       end
     end

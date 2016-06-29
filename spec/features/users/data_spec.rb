@@ -31,8 +31,11 @@ feature 'A user signs in', metadata: :user do
   scenario 'sees a non-consented participant flagged accordingly' do
     user_data.click_consent_responses
     user_data.click_is_consented
+
+    expect(user_data).to be_not_consented
+
     user_data.click_non_consented_ptp
-    # Despite being correct, this expect statement will throw error. See POM.
+
     expect(user_data).to have_flagged_non_consented_ptp
   end
 
