@@ -8,10 +8,10 @@ class DateViewer
     if num.between?(1, 9)
       day_less_than_10(num)
     elsif num.between?(30, 31) ||
-          num >= 23 && page.has_text?("#{num}", count: 2)
-      day_greater_than_23
+          num >= 23 && has_text?(num, count: 2)
+      day_greater_than_23(num)
     else
-      find('.text-right.ng-binding.ng-scope', text: "#{num}")
+      find('.text-right.ng-binding.ng-scope', text: num)
         .native.style('font-weight').should == 'bold'
     end
   end
@@ -20,7 +20,7 @@ class DateViewer
 
   # Find the first day with today's date's number
   def first_day(num)
-    first('.text-right.ng-binding.ng-scope', text: "#{num}")
+    first('.text-right.ng-binding.ng-scope', text: num)
   end
 
   # Day is either 1 - 9
@@ -31,7 +31,7 @@ class DateViewer
       unusual_day_2(num)
     elsif num == 3
       unusual_day_3(num)
-    elsif num.between?(4, 9) && page.has_text?("2#{num}", count: 2)
+    elsif num.between?(4, 9) && has_text?("2#{num}", count: 2)
       calendar_date(num, 1)
     else
       first_day(num).native.style('font-weight').should == 'bold'
@@ -40,7 +40,7 @@ class DateViewer
 
   # Day is 23 or greater
   def day_greater_than_23(num)
-    if num >= 23 && page.has_text?("#{num}", count: 2)
+    if num >= 23 && has_text?(num, count: 2)
       calendar_date(num, 1)
     else
       first_day(num).native.style('font-weight').should eq('bold')
@@ -63,7 +63,7 @@ class DateViewer
 
   # Day is the 2nd
   def unusual_day_2(num)
-    if page.has_no_text?('29', count: 2)
+    if has_no_text?('29', count: 2)
       february(num)
     else
       not_february(num)
@@ -94,35 +94,35 @@ class DateViewer
 
   # Find the last day with today's date's number
   def last_date_text(num)
-    last_date = page.all('.text-right.ng-binding.ng-scope', text: "#{num}").last
+    last_date = all('.text-right.ng-binding.ng-scope', text: num).last
     last_date.text
   end
 
   # Day is the 3rd, and it's March
   def one_30_last(num)
-    page.has_no_text?('30', count: 2) && last_date_text(num).to_i == 30
+    has_no_text?('30', count: 2) && last_date_text(num).to_i == 30
   end
 
   # Day is the 3rd, and it's January
   def one_30_not_last(num)
-    page.has_no_text?('30', count: 2) && last_date_text(num).to_i != 30
+    has_no_text?('30', count: 2) && last_date_text(num).to_i != 30
   end
 
   # Day is the 3rd, first choice is the 30th, second choice is not the 31st
   def two_30_one_31_last(num)
-    page.has_text?('30', count: 2) && page.has_text?('31', count: 1) &&
+    has_text?('30', count: 2) && has_text?('31', count: 1) &&
       last_date_text(num).to_i == 31
   end
 
   # Day is the 3rd, first choice is the 30th, second choice is the 31st
   def two_30_one_31_not_last(num)
-    page.has_text?('30', count: 2) && page.has_text?('31', count: 1) &&
+    has_text?('30', count: 2) && has_text?('31', count: 1) &&
       last_date_text(num).to_i != 31
   end
 
   # Day is the 3rd, first choice is the 30th, second choice is the 31st
   def two_30_two_31
-    page.has_text?('30', count: 2) && page.has_text?('31', count: 2)
+    has_text?('30', count: 2) && has_text?('31', count: 2)
   end
 
   # Day is the 3rd, first choice is the 23rd
@@ -161,7 +161,7 @@ class DateViewer
 
   # select the date
   def calendar_date(num, y)
-    selection = page.all('.text-right.ng-binding.ng-scope', text: "#{num}")[y]
+    selection = all('.text-right.ng-binding.ng-scope', text: num)[y]
     selection.native.style('font-weight').should == 'bold'
   end
 end

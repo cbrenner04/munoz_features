@@ -11,5 +11,6 @@ module SmsRecords
             'Phone number type [Participant phone]',
             'Phone number validation status [Participant phone]',
             'Phone number lookup errors [Participant phone]',
-            'Created at [Participant phone]', 'Updated at [Participant phone]']
+            'Created at [Participant phone]',
+            'Updated at [Participant phone]'].freeze
 end

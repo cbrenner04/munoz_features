@@ -14,5 +14,5 @@ module EligibilityResponses
             'Uuid [Participant]', 'Value [Answer]', 'Label [Answer]',
             'Position [Answer]', 'Code [Question]', 'Language [Question]',
             'Answer type [Question]', 'Body [Question]', 'Position [Question]',
-            'Required [Question]', 'Help [Question]']
+            'Required [Question]', 'Help [Question]'].freeze
 end

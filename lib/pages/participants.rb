@@ -1,5 +1,5 @@
 # page object for Participants
-class Participants
+class Participant
   include Capybara::DSL
 
   def initialize(participants_arry)

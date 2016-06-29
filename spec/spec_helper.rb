@@ -50,7 +50,7 @@ Capybara.configure do |config|
     Selenium::WebDriver::Firefox::Binary.path = ENV['firefox_path']
     Capybara::Selenium::Driver.new(app, browser: browser)
   end
-  config.save_and_open_page_path = 'screenshots/'
+  config.save_path = "#{ENV['Path']}/munoz_features/screenshots/"
 end
 
 # capybara-screenshot configuration options

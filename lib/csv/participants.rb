@@ -51,5 +51,5 @@ module ParticipantsCSV
             'Created at [Participant phone]', 'Updated at [Participant phone]',
             'Id [Quit dates]', 'Date [Quit dates]', 'Selected at [Quit dates]',
             'Uuid [Quit dates]', 'Created at [Quit dates]',
-            'Updated at [Quit dates]']
+            'Updated at [Quit dates]'].freeze
 end

@@ -1,6 +1,6 @@
 require './lib/pages/participants'
 
-class Participants
+module Participants
   # page object for Consent
   class Feedback
     include Capybara::DSL
@@ -10,23 +10,23 @@ class Participants
     end
 
     def find_stop_smoking_guide
-      var = participants.locale('Stop Smoking Guide',
-                                'Guía Para Dejar de Fumar')
+      var = participant.locale('Stop Smoking Guide',
+                               'Guía Para Dejar de Fumar')
       find('a', text: var)
     end
 
     def visible?
-      has_text? participants.locale('How helpful was this app?',
-                                    '¿Qué tan útil fue esta aplicación?')
+      has_text? participant.locale('How helpful was this app?',
+                                   '¿Qué tan útil fue esta aplicación?')
     end
 
     def feedback_page
-      var = participants.locale('en', 'es')
+      var = participant.locale('en', 'es')
       "#{ENV['Base_URL']}/#/#{var}/feedback"
     end
 
     def open_with_navbar
-      participants.navigate_to(title)
+      participant.navigate_to(title)
     end
 
     def has_count_0?
@@ -55,7 +55,7 @@ class Participants
     end
 
     def submit
-      var = participants.locale('Submit', 'Enviar')
+      var = participant.locale('Submit', 'Enviar')
       find('.btn.btn-primary', text: var).click
     end
 
@@ -82,11 +82,11 @@ class Participants
     end
 
     def title
-      participants.locale('Feedback', 'Comentarios')
+      participant.locale('Feedback', 'Comentarios')
     end
 
-    def participants
-      @participants ||= Participants.new(locale: @locale)
+    def participant
+      @participant ||= Participant.new(locale: @locale)
     end
   end
 end

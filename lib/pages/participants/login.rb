@@ -1,6 +1,6 @@
 require './lib/pages/participants'
 
-class Participants
+module Participants
   # page object for Login
   class Login
     include RSpec::Matchers
@@ -16,16 +16,16 @@ class Participants
 
     def sign_in_unsuccessful?
       has_css?('.alert',
-               text: participants.locale('Invalid email or password',
-                                         'Email o contraseña no válidos.'))
+               text: participant.locale('Invalid email or password',
+                                        'Email o contraseña no válidos.'))
     end
 
     def click_sign_in
-      click_on participants.locale('Sign in', 'Iniciar sesión')
+      click_on participant.locale('Sign in', 'Iniciar sesión')
     end
 
     def find_sign_in
-      find('h2', text: participants.locale('Sign in', 'Iniciar sesión'))
+      find('h2', text: participant.locale('Sign in', 'Iniciar sesión'))
     end
 
     def click_navbar
@@ -41,118 +41,118 @@ class Participants
     end
 
     def click_forgot_pw
-      click_on participants.locale('Forgot your password?',
-                                   '¿Ha olvidado su contraseña?')
+      click_on participant.locale('Forgot your password?',
+                                  '¿Ha olvidado su contraseña?')
     end
 
     def click_send_pw_instructions
-      click_on participants.locale('Send me reset password instructions',
-                                   'Envíeme las instrucciones para ' \
-                                      'cambiar mi contraseña')
+      click_on participant.locale('Send me reset password instructions',
+                                  'Envíeme las instrucciones para ' \
+                                    'cambiar mi contraseña')
     end
 
     def has_pw_reset_confirm_message?
-      has_content? participants.locale('You will receive an email with ' \
-                                         'instructions on how to reset your ' \
-                                         'password in a few minutes.',
-                                       'Recibirá un correo con instrucciones ' \
-                                         'sobre cómo cambiar su contraseña ' \
-                                         'en unos pocos minutos.')
+      has_content? participant.locale('You will receive an email with ' \
+                                       'instructions on how to reset your ' \
+                                       'password in a few minutes.',
+                                      'Recibirá un correo con instrucciones ' \
+                                       'sobre cómo cambiar su contraseña ' \
+                                       'en unos pocos minutos.')
     end
 
     def click_did_not_receive_confirm_instructions
-      click_on participants.locale("Didn't receive confirmation instructions?",
-                                   '¿No ha recibido las instrucciones ' \
-                                     'de confirmación?')
+      click_on participant.locale("Didn't receive confirmation instructions?",
+                                  '¿No ha recibido las instrucciones ' \
+                                    'de confirmación?')
     end
 
     def has_resend_confirm_instructions?
-      has_css?('h2', text: participants.locale('Resend confirmation ' \
-                                                 'instructions',
-                                               'Reenviar instrucciones ' \
-                                                 'de confirmación'))
+      has_css?('h2', text: participant.locale('Resend confirmation ' \
+                                               'instructions',
+                                              'Reenviar instrucciones ' \
+                                               'de confirmación'))
     end
 
     def click_resend_confirm_instructions
-      click_on participants.locale('Resend confirmation instructions',
-                                   'Reenviar instrucciones de confirmación')
+      click_on participant.locale('Resend confirmation instructions',
+                                  'Reenviar instrucciones de confirmación')
     end
 
     def has_email_confirm_message?
-      has_content? participants.locale('You will receive an email with ' \
-                                         'instructions for how to confirm ' \
-                                         'your email address in ' \
-                                         'a few minutes.',
-                                       'Va a recibir un email con ' \
-                                         'instrucciones sobre cómo ' \
-                                         'confirmar su cuenta ' \
-                                         'en unos minutos.')
+      has_content? participant.locale('You will receive an email with ' \
+                                       'instructions for how to confirm ' \
+                                       'your email address in ' \
+                                       'a few minutes.',
+                                      'Va a recibir un email con ' \
+                                       'instrucciones sobre cómo ' \
+                                       'confirmar su cuenta ' \
+                                       'en unos minutos.')
     end
 
     def has_invalid_email_pw?
-      has_content? participants.locale('Invalid email or password.',
-                                       'Email o contraseña no válidos.')
+      has_content? participant.locale('Invalid email or password.',
+                                      'Email o contraseña no válidos.')
     end
 
     def has_lock_warning?
-      has_content? participants.locale('You have one more attempt before ' \
-                                         'your account is locked.',
-                                       'Tiene un intento más antes de que ' \
-                                         'su cuenta sea bloqueada.')
+      has_content? participant.locale('You have one more attempt before ' \
+                                       'your account is locked.',
+                                      'Tiene un intento más antes de que ' \
+                                       'su cuenta sea bloqueada.')
     end
 
     def has_account_locked?
-      has_content? participants.locale('Your account is locked.',
-                                       'Su cuenta está bloqueada.')
+      has_content? participant.locale('Your account is locked.',
+                                      'Su cuenta está bloqueada.')
     end
 
     def click_did_not_receive_unlock_instructions
-      click_on participants.locale("Didn't receive unlock instructions?",
-                                   'No ha recibido instrucciones ' \
-                                     'para desbloquear?')
+      click_on participant.locale("Didn't receive unlock instructions?",
+                                  'No ha recibido instrucciones ' \
+                                    'para desbloquear?')
     end
 
     def has_resend_unlock_instructions?
       has_css?('h2', text:
-        participants.locale('Resend unlock instructions',
-                            'Reenviar instrucciones para desbloquear'))
+        participant.locale('Resend unlock instructions',
+                           'Reenviar instrucciones para desbloquear'))
     end
 
     def click_resend_unlock_instructions
-      click_on participants.locale('Resend unlock instructions',
-                                   'Reenviar instrucciones para desbloquear')
+      click_on participant.locale('Resend unlock instructions',
+                                  'Reenviar instrucciones para desbloquear')
     end
 
     def has_resend_unlock_message?
-      has_content? participants.locale('You will receive an email with ' \
-                                         'instructions for how to unlock ' \
-                                         'your account in a few minutes.',
-                                       'Vas a recibir instrucciones para ' \
-                                         'desbloquear tu cuenta en unos ' \
-                                         'pocos minutos.')
+      has_content? participant.locale('You will receive an email with ' \
+                                       'instructions for how to unlock ' \
+                                       'your account in a few minutes.',
+                                      'Vas a recibir instrucciones para ' \
+                                       'desbloquear tu cuenta en unos ' \
+                                       'pocos minutos.')
     end
 
     def click_sign_out
-      click_on participants.locale('Sign out', 'Finalizar la sesión')
+      click_on participant.locale('Sign out', 'Finalizar la sesión')
     end
 
     def has_login_page_visible?
-      has_css?('a', text: participants.locale('Sign in', 'Iniciar sesión'))
+      has_css?('a', text: participant.locale('Sign in', 'Iniciar sesión'))
     end
 
     def click_home_btn
-      click_on participants.locale('Home', 'Inicio')
+      click_on participant.locale('Home', 'Inicio')
     end
 
     def has_email_confirmation?
-      has_content? participants.locale(
+      has_content? participant.locale(
         'Your email address has been successfully confirmed.',
         'Tu cuenta ha sido confirmada satisfactoriamente.'
       )
     end
 
     def has_confirm_message?
-      has_content? participants.locale(
+      has_content? participant.locale(
         'Thank you for confirming your phone number.',
         'Gracias por confirmar su número de teléfono.'
       )
@@ -183,19 +183,19 @@ class Participants
     end
 
     def has_cig_counter_link?
-      has_content? participants.locale('Cigarette Counter',
-                                       'Contador de Cigarrillos')
+      has_content? participant.locale('Cigarette Counter',
+                                      'Contador de Cigarrillos')
     end
 
     private
 
-    def participants
-      @participants ||= Participants.new(locale: @locale)
+    def participant
+      @participant ||= Participant.new(locale: @locale)
     end
 
     def smoke_guide_locale
-      @smoke_guide_locale ||= participants.locale('Stop Smoking Guide',
-                                                  'Guía Para Dejar de Fumar')
+      @smoke_guide_locale ||= participant.locale('Stop Smoking Guide',
+                                                 'Guía Para Dejar de Fumar')
     end
   end
 end

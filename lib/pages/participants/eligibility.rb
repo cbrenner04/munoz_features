@@ -1,6 +1,6 @@
 require './lib/pages/participants'
 
-class Participants
+module Participants
   # page object for Eligibility
   class Eligibility
     include RSpec::Matchers
@@ -18,17 +18,17 @@ class Participants
     end
 
     def eligibility_page
-      var = participants.locale('en', 'es')
+      var = participant.locale('en', 'es')
       "#{ENV['Base_URL']}/#{var}/pages/application#/#{var}/eligibility"
     end
 
     def find_age
-      var = participants.locale('How old are you?', '¿Cuántos años tiene?')
+      var = participant.locale('How old are you?', '¿Cuántos años tiene?')
       find('.ng-binding', text: var)
     end
 
     def visible?
-      has_text? participants.locale('How old are you?', '¿Cuántos años tiene?')
+      has_text? participant.locale('How old are you?', '¿Cuántos años tiene?')
     end
 
     def set_age
@@ -40,8 +40,8 @@ class Participants
     end
 
     def has_questions?
-      has_text? participants.locale('Please answer the following questions to',
-                                    'Por favor responda las siguientes ' \
+      has_text? participant.locale('Please answer the following questions to',
+                                   'Por favor responda las siguientes ' \
                                     'preguntas para determinar si es ' \
                                     'elegible para participar.')
     end
@@ -63,8 +63,8 @@ class Participants
     end
 
     def answer_medical_care
-      y = participants.locale('Ocean Park Health Center',
-                              'Centro de Salud Ocean Park')
+      y = participant.locale('Ocean Park Health Center',
+                             'Centro de Salud Ocean Park')
       within('.form-group', text: medical_question) { select y }
     end
 
@@ -93,12 +93,12 @@ class Participants
     end
 
     def click_view_consent
-      click_on participants.locale('View the consent form',
-                                   'Ver el formulario de consentimiento')
+      click_on participant.locale('View the consent form',
+                                  'Ver el formulario de consentimiento')
     end
 
     def ineligible_page
-      var = participants.locale('en', 'es')
+      var = participant.locale('en', 'es')
       "#{ENV['Base_URL']}" \
         "/#{var}/pages/application#/#{var}/eligibility-result?isEligible=false"
     end
@@ -112,18 +112,18 @@ class Participants
     end
 
     def click_con
-      click_on participants.locale('Continue', 'Continuar')
+      click_on participant.locale('Continue', 'Continuar')
     end
 
     def eligible?
-      has_text? participants.locale('You are eligible to participate',
-                                    'Usted es eligible para participar en ' \
+      has_text? participant.locale('You are eligible to participate',
+                                   'Usted es eligible para participar en ' \
                                     'nuestro estudio')
     end
 
     def ineligible?
-      has_text? participants.locale('You are not eligible to participate',
-                                    'Lo sentimos. Usted no es elegible para ' \
+      has_text? participant.locale('You are not eligible to participate',
+                                   'Lo sentimos. Usted no es elegible para ' \
                                     'participar en nuestro estudio. Le ' \
                                     'recomendamos los siguientes 3 recursos ' \
                                     'para dejar de fumar: ' \
@@ -137,17 +137,17 @@ class Participants
     end
 
     def has_error_message?
-      has_text? participants.locale('Sorry, there was a problem. Please ' \
+      has_text? participant.locale('Sorry, there was a problem. Please ' \
                                     'review your responses and try again.',
-                                    'Lo sentimos, hubo un problema. Por ' \
+                                   'Lo sentimos, hubo un problema. Por ' \
                                     'favor revise sus respuestas y vuelva a ' \
                                     'intentar.')
     end
 
     def has_account_verify?
-      has_text? participants.locale('Thank you!  Please check your email to ' \
+      has_text? participant.locale('Thank you!  Please check your email to ' \
                                     'verify your account and continue.',
-                                    '¡Gracias! Por favor revise su correo ' \
+                                   '¡Gracias! Por favor revise su correo ' \
                                     'electrónico para verificar su cuenta y ' \
                                     'continuar.')
     end
@@ -174,7 +174,7 @@ class Participants
     end
 
     def has_invalid_zip_alert?
-      has_text? participants
+      has_text? participant
         .locale('Must be 5 digits to be valid.',
                 'Debe introducir 5 dígitos para ser válido')
     end
@@ -188,13 +188,13 @@ class Participants
     end
 
     def has_invalid_email_alert?
-      has_text? participants
+      has_text? participant
         .locale('Must be a valid email address.',
                 'Debe introducir un correo electrónico válido')
     end
 
     def phone_question
-      participants.locale('Phone Number', 'Teléfono')
+      participant.locale('Phone Number', 'Teléfono')
     end
 
     def has_empty_phone_field?
@@ -206,7 +206,7 @@ class Participants
     end
 
     def has_invalid_phone_alert?
-      has_text? participants
+      has_text? participant
         .locale('Must be 10 digits to be valid.',
                 'Debe introducir 10 dígitos para ser válido')
     end
@@ -220,7 +220,7 @@ class Participants
     end
 
     def has_invalid_password_alert?
-      has_text? participants
+      has_text? participant
         .locale('minimum 8 characters', 'mínimo 8 caracteres')
     end
 
@@ -231,38 +231,38 @@ class Participants
     end
 
     def current_smoker_question
-      participants.locale('Are you currently a smoker?',
-                          '¿Fuma usted actualmente?')
+      participant.locale('Are you currently a smoker?',
+                         '¿Fuma usted actualmente?')
     end
 
     def thinking_of_quitting_question
-      participants.locale('Are you thinking of quitting smoking ' \
-                            'within the next 30 days?',
-                          '¿Está pensando en dejar de fumar ' \
-                            'dentro de los próximos 30 días?')
+      participant.locale('Are you thinking of quitting smoking ' \
+                           'within the next 30 days?',
+                         '¿Está pensando en dejar de fumar ' \
+                           'dentro de los próximos 30 días?')
     end
 
-    def participants
-      @participants ||= Participants.new(locale: @locale)
+    def participant
+      @participant ||= Participant.new(locale: @locale)
     end
 
     def medical_question
-      participants
+      participant
         .locale('Where do you get most of your medical care?',
                 '¿Dónde recibe la mayor parte de su atención médica?')
     end
 
     def age_question
-      participants.locale('How old are you?', '¿Cuántos años tiene?')
+      participant.locale('How old are you?', '¿Cuántos años tiene?')
     end
 
     def zip_question
-      participants.locale('What is your zip code?',
-                          '¿Cuál es su código postal?')
+      participant.locale('What is your zip code?',
+                         '¿Cuál es su código postal?')
     end
 
     def password
-      participants.locale('Password', 'Contraseña')
+      participant.locale('Password', 'Contraseña')
     end
   end
 end

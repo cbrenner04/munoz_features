@@ -17,5 +17,5 @@ module ConsentResponses
             'Body [Consent form]', 'Consent label [Consent form]',
             'Non consent label [Consent form]', 'Footer [Consent form]',
             'Created at [Consent form]', 'Updated at [Consent form]',
-            'Header [Consent form]']
+            'Header [Consent form]'].freeze
 end

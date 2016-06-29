@@ -2,7 +2,7 @@ require './lib/pages/participants'
 require './lib/pages/participants/quit_date/datepicker'
 require './lib/pages/participants/quit_date/dateviewer'
 
-class Participants
+module Participants
   # Page object for set your quit date.
   class QuitDate
     include Capybara::DSL
@@ -12,7 +12,7 @@ class Participants
     end
 
     def quit_date_page
-      var = participants.locale('en', 'es')
+      var = participant.locale('en', 'es')
       "#{ENV['Base_URL']}/#/#{var}/quit-date"
     end
 
@@ -30,13 +30,13 @@ class Participants
     end
 
     def has_quit_date_calendar?
-      has_css?('.ng-binding.ng-scope', text: participants.locale('We', 'Mi'))
+      has_css?('.ng-binding.ng-scope', text: participant.locale('We', 'Mi'))
     end
 
     def on_current_month?
       today = Date.today.strftime(std_month_year)
       has_css?('.ng-binding',
-               text: participants.locale(today, participants.trans_mo(today)))
+               text: participant.locale(today, participant.trans_mo(today)))
     end
 
     def has_todays_date_highlighted?
@@ -57,20 +57,20 @@ class Participants
 
     def has_previous_month_visible?
       has_css?('.ng-binding',
-               text: participants.locale(last_month,
-                                         participants.trans_mo(last_month)))
+               text: participant.locale(last_month,
+                                        participant.trans_mo(last_month)))
     end
 
     def has_next_month_visible?
       has_css?('.ng-binding',
-               text: participants.locale(next_month,
-                                         participants.trans_mo(next_month)))
+               text: participant.locale(next_month,
+                                        participant.trans_mo(next_month)))
     end
 
     def locate_tomorrow
       t = tomorrow.strftime(std_month_year)
       unless has_css?('.ng-binding',
-                      text: participants.locale(t, participants.trans_mo(t)))
+                      text: participant.locale(t, participant.trans_mo(t)))
         find('a', text: next_btn).click
       end
     end
@@ -78,7 +78,7 @@ class Participants
     def locate_yesterday
       y = yesterday.strftime(std_month_year)
       unless has_css?('.ng-binding',
-                      text: participants.locale(y, participants.trans_mo(y)))
+                      text: participant.locale(y, participant.trans_mo(y)))
         find('a', text: prev_btn).click
       end
     end
@@ -86,7 +86,7 @@ class Participants
     def locate_two_days_away
       d = two_days_away.strftime(std_month_year)
       unless has_css?('.ng-binding',
-                      text: participants.locale(d, participants.trans_mo(d)))
+                      text: participant.locale(d, participant.trans_mo(d)))
         find('a', text: next_btn).click
       end
     end
@@ -94,7 +94,7 @@ class Participants
     def locate_beyond_4_wks_away
       w = beyond_4_wks_away.strftime(std_month_year)
       unless has_css?('.ng-binding',
-                      text: participants.locale(w, participants.trans_mo(w)))
+                      text: participant.locale(w, participant.trans_mo(w)))
         find('a', text: next_btn).click
       end
     end
@@ -102,7 +102,7 @@ class Participants
     def locate_under_4_wks_away
       w = under_4_wks_away.strftime(std_month_year)
       unless has_css?('.ng-binding',
-                      text: participants.locale(w, participants.trans_mo(w)))
+                      text: participant.locale(w, participant.trans_mo(w)))
         find('a', text: prev_btn).click
       end
     end
@@ -179,8 +179,8 @@ class Participants
     end
 
     def has_root_visible?
-      has_css?('a', text: participants.locale('Cigarette Counter',
-                                              'Contador de Cigarrillos'))
+      has_css?('a', text: participant.locale('Cigarette Counter',
+                                             'Contador de Cigarrillos'))
     end
 
     def has_set_quit_date_in_root?
@@ -196,8 +196,8 @@ class Participants
     end
 
     def has_stop_smoking_guide?
-      has_content? participants.locale('Stop Smoking Guide',
-                                       'Guía Para Dejar de Fumar')
+      has_content? participant.locale('Stop Smoking Guide',
+                                      'Guía Para Dejar de Fumar')
     end
 
     private
@@ -207,14 +207,14 @@ class Participants
     # end
 
     def page_title
-      @page_title ||= participants.locale 'Your Quit Date',
-                                          'La Fecha en que Dejará de Fumar'
+      @page_title ||= participant.locale 'Your Quit Date',
+                                         'La Fecha en que Dejará de Fumar'
     end
 
     def set_your_quit_date
-      @set_your_quit_date ||= participants.locale('Set Your Quit Date',
-                                                  'Elija la fecha en ' \
-                                                    'que dejará de fumar')
+      @set_your_quit_date ||= participant.locale('Set Your Quit Date',
+                                                 'Elija la fecha en ' \
+                                                   'que dejará de fumar')
     end
 
     def tomorrow
@@ -238,7 +238,7 @@ class Participants
     end
 
     def std_month_year
-      @std_month_year ||= participants.locale('%b %Y', '%b. %Y')
+      @std_month_year ||= participant.locale('%b %Y', '%b. %Y')
     end
 
     def last_month
@@ -251,8 +251,8 @@ class Participants
         Date.today.next_month.strftime(std_month_year)
     end
 
-    def participants
-      @participants ||= Participants.new(locale: @locale)
+    def participant
+      @participant ||= Participant.new(locale: @locale)
     end
 
     def datepicker
@@ -264,19 +264,19 @@ class Participants
     end
 
     def today_btn
-      @today_btn ||= participants.locale('Today', 'Hoy')
+      @today_btn ||= participant.locale('Today', 'Hoy')
     end
 
     def next_btn
-      @next_btn ||= participants.locale('Next', 'Sig.')
+      @next_btn ||= participant.locale('Next', 'Sig.')
     end
 
     def prev_btn
-      @prev_btn ||= participants.locale('Prev.', 'Volver')
+      @prev_btn ||= participant.locale('Prev.', 'Volver')
     end
 
     def done
-      @done ||= participants.locale('Done', 'Fijar')
+      @done ||= participant.locale('Done', 'Fijar')
     end
   end
 end
