@@ -7,7 +7,7 @@ require './spec/support/participants/eligibility_helper'
 feature 'A visitor to the site', metadata: :participant do
   context 'in English' do
     scenario 'switches to Español when filling out eligibility' do
-      visit eligibility_eng.eligibility_page
+      participant_100.sign_in
       eligibility_eng.answer_current_smoker
       eligibility_eng.answer_thinking_of_quitting
       participant_gen_eng.go_to('Español')
@@ -17,7 +17,7 @@ feature 'A visitor to the site', metadata: :participant do
     end
 
     scenario 'completes eligibility survey and is eligible' do
-      visit eligibility_eng.eligibility_page
+      participant_101.sign_in
       eligibility_eng.find_age
       eligibility_eng.set_age
       eligibility_eng.answer_current_smoker
@@ -31,7 +31,7 @@ feature 'A visitor to the site', metadata: :participant do
     end
 
     scenario 'completes eligibility survey and is ineligible due to age' do
-      visit eligibility_eng.eligibility_page
+      participant_102.sign_in
       eligibility_eng.find_age
       ptp_102_elg_age_17.set_age
       eligibility_eng.answer_current_smoker
@@ -46,7 +46,7 @@ feature 'A visitor to the site', metadata: :participant do
 
     scenario 'completes eligibility survey, ' \
              'is ineligible due to neg response Q2' do
-      visit eligibility_eng.eligibility_page
+      participant_103.sign_in
       eligibility_eng.find_age
       eligibility_eng.set_age
       ptp_103_eligibility.answer_current_smoker
@@ -61,7 +61,7 @@ feature 'A visitor to the site', metadata: :participant do
 
     scenario 'completes eligibility survey, ' \
              'is ineligible due to neg response Q3' do
-      visit eligibility_eng.eligibility_page
+      participant_104.sign_in
       eligibility_eng.find_age
       eligibility_eng.set_age
       eligibility_eng.answer_current_smoker
@@ -75,7 +75,7 @@ feature 'A visitor to the site', metadata: :participant do
     end
 
     scenario 'does not fill in age, cannot submit form' do
-      visit eligibility_eng.eligibility_page
+      participant_9.sign_in
       eligibility_eng.find_age
       eligibility_eng.answer_current_smoker
       eligibility_eng.answer_thinking_of_quitting
@@ -87,7 +87,7 @@ feature 'A visitor to the site', metadata: :participant do
     end
 
     scenario 'fills in an age below the lower bound, cannot submit form' do
-      visit eligibility_eng.eligibility_page
+      participant_9.sign_in
       eligibility_eng.find_age
       ptp_9_elg_age_0.set_age
       eligibility_eng.answer_current_smoker
@@ -100,7 +100,7 @@ feature 'A visitor to the site', metadata: :participant do
     end
 
     scenario 'fills in an age above the upper bound, cannot submit form' do
-      visit eligibility_eng.eligibility_page
+      participant_9.sign_in
       eligibility_eng.find_age
       ptp_9_elg_age_121.set_age
       eligibility_eng.answer_current_smoker
@@ -113,7 +113,7 @@ feature 'A visitor to the site', metadata: :participant do
     end
 
     scenario 'does not fill in Q2, cannot submit form' do
-      visit eligibility_eng.eligibility_page
+      participant_9.sign_in
       eligibility_eng.find_age
       eligibility_eng.set_age
       eligibility_eng.answer_thinking_of_quitting
@@ -125,7 +125,7 @@ feature 'A visitor to the site', metadata: :participant do
     end
 
     scenario 'does not fill in Q3, cannot submit form' do
-      visit eligibility_eng.eligibility_page
+      participant_9.sign_in
       eligibility_eng.find_age
       eligibility_eng.set_age
       eligibility_eng.answer_current_smoker
@@ -137,7 +137,7 @@ feature 'A visitor to the site', metadata: :participant do
     end
 
     scenario 'does not fill zip code, can submit form' do
-      visit eligibility_eng.eligibility_page
+      participant_31.sign_in
       eligibility_eng.find_age
       eligibility_eng.set_age
       eligibility_eng.answer_current_smoker
@@ -150,7 +150,7 @@ feature 'A visitor to the site', metadata: :participant do
 
     scenario 'fills in a SF zip code, ' \
              'sees the drop down for selecting clinic' do
-      visit eligibility_eng.eligibility_page
+      participant_301.sign_in
       eligibility_eng.find_age
       eligibility_eng.set_age
       eligibility_eng.answer_current_smoker
@@ -165,7 +165,7 @@ feature 'A visitor to the site', metadata: :participant do
 
     scenario 'fills in a zip other than SF, ' \
              'does not see the drop down for clinic' do
-      visit eligibility_eng.eligibility_page
+      participant_302.sign_in
       eligibility_eng.find_age
       eligibility_eng.set_age
       eligibility_eng.answer_current_smoker
@@ -179,7 +179,7 @@ feature 'A visitor to the site', metadata: :participant do
     end
 
     scenario 'does not fill in phone number, cannot submit form' do
-      visit eligibility_eng.eligibility_page
+      participant_9.sign_in
       eligibility_eng.find_age
       eligibility_eng.set_age
       eligibility_eng.answer_current_smoker
@@ -191,7 +191,7 @@ feature 'A visitor to the site', metadata: :participant do
     end
 
     scenario 'enters a duplicate phone number, sees error message' do
-      visit eligibility_eng.eligibility_page
+      participant_152.sign_in
       eligibility_eng.find_age
       eligibility_eng.set_age
       eligibility_eng.answer_current_smoker
@@ -205,7 +205,7 @@ feature 'A visitor to the site', metadata: :participant do
     end
 
     scenario 'fills out eligibility, is eligible, consents, can use app' do
-      visit eligibility_eng.eligibility_page
+      participant_32.sign_in
       eligibility_eng.find_age
       eligibility_eng.set_age
       eligibility_eng.answer_current_smoker
@@ -238,7 +238,7 @@ feature 'A visitor to the site', metadata: :participant do
     end
 
     scenario 'sees invalid formatting in age field on eligibility form' do
-      visit eligibility_eng.eligibility_page
+      participant_9.sign_in
 
       expect(eligibility_eng).to have_empty_age_field
 
@@ -249,7 +249,7 @@ feature 'A visitor to the site', metadata: :participant do
 
     scenario 'sees invalid formatting in zip code field ' \
              'when entering less than 5 digits on eligibility form' do
-      visit eligibility_eng.eligibility_page
+      participant_9.sign_in
 
       expect(eligibility_eng).to have_empty_zip_field
 
@@ -261,8 +261,7 @@ feature 'A visitor to the site', metadata: :participant do
 
     scenario 'sees invalid formatting in zip code ' \
              'field when entering more than 5 digits on eligibility form' do
-      visit eligibility_eng.eligibility_page
-
+      participant_9.sign_in
       expect(eligibility_eng).to have_empty_zip_field
 
       long_zip_eligibility.enter_zip
@@ -273,7 +272,7 @@ feature 'A visitor to the site', metadata: :participant do
 
     scenario 'sees invalid formatting in phone number field ' \
              'on eligibility form' do
-      visit eligibility_eng.eligibility_page
+      participant_9.sign_in
 
       expect(eligibility_eng).to have_empty_phone_field
 
@@ -288,7 +287,7 @@ feature 'A visitor to the site', metadata: :participant do
 
   context 'in Español' do
     scenario 'switches to English when filling out eligibility' do
-      visit eligibility_esp.eligibility_page
+      participant_200.sign_in
       eligibility_esp.answer_current_smoker
       eligibility_esp.answer_thinking_of_quitting
       participant_gen_esp.go_to('English')
@@ -298,7 +297,7 @@ feature 'A visitor to the site', metadata: :participant do
     end
 
     scenario 'completes eligibility survey and is eligible' do
-      visit eligibility_esp.eligibility_page
+      participant_201.sign_in
       eligibility_esp.find_age
       eligibility_esp.set_age
       eligibility_esp.answer_current_smoker
@@ -312,7 +311,7 @@ feature 'A visitor to the site', metadata: :participant do
     end
 
     scenario 'completes eligibility survey and is ineligible due to age' do
-      visit eligibility_esp.eligibility_page
+      participant_202.sign_in
       eligibility_esp.find_age
       ptp_202_elg_age_17.set_age
       eligibility_esp.answer_current_smoker
@@ -327,7 +326,7 @@ feature 'A visitor to the site', metadata: :participant do
 
     scenario 'completes eligibility survey, ' \
              'is ineligible due to neg response Q2' do
-      visit eligibility_esp.eligibility_page
+      participant_203.sign_in
       eligibility_esp.find_age
       eligibility_esp.set_age
       ptp_203_eligibility.answer_current_smoker
@@ -342,7 +341,7 @@ feature 'A visitor to the site', metadata: :participant do
 
     scenario 'completes eligibility survey, ' \
              'is ineligible due to neg response Q3' do
-      visit eligibility_esp.eligibility_page
+      participant_204.sign_in
       eligibility_esp.find_age
       eligibility_esp.set_age
       eligibility_esp.answer_current_smoker
@@ -356,7 +355,7 @@ feature 'A visitor to the site', metadata: :participant do
     end
 
     scenario 'does not fill in age, cannot submit form' do
-      visit eligibility_esp.eligibility_page
+      participant_10.sign_in
       eligibility_esp.find_age
       eligibility_esp.answer_current_smoker
       eligibility_esp.answer_thinking_of_quitting
@@ -368,7 +367,7 @@ feature 'A visitor to the site', metadata: :participant do
     end
 
     scenario 'fills in an age below the lower bound, cannot submit form' do
-      visit eligibility_esp.eligibility_page
+      participant_10.sign_in
       eligibility_esp.find_age
       ptp_10_elg_age_0.set_age
       eligibility_esp.answer_current_smoker
@@ -381,7 +380,7 @@ feature 'A visitor to the site', metadata: :participant do
     end
 
     scenario 'fills in an age above the upper bound, cannot submit form' do
-      visit eligibility_esp.eligibility_page
+      participant_10.sign_in
       eligibility_esp.find_age
       ptp_10_elg_age_121.set_age
       eligibility_esp.answer_current_smoker
@@ -394,7 +393,7 @@ feature 'A visitor to the site', metadata: :participant do
     end
 
     scenario 'does not fill in Q2, cannot submit form' do
-      visit eligibility_esp.eligibility_page
+      participant_10.sign_in
       eligibility_esp.find_age
       eligibility_esp.set_age
       eligibility_esp.answer_thinking_of_quitting
@@ -406,7 +405,7 @@ feature 'A visitor to the site', metadata: :participant do
     end
 
     scenario 'does not fill in Q3, cannot submit form' do
-      visit eligibility_esp.eligibility_page
+      participant_10.sign_in
       eligibility_esp.find_age
       eligibility_esp.set_age
       eligibility_esp.answer_current_smoker
@@ -418,7 +417,7 @@ feature 'A visitor to the site', metadata: :participant do
     end
 
     scenario 'does not fill in zip code, can submit form' do
-      visit eligibility_esp.eligibility_page
+      participant_33.sign_in
       eligibility_esp.find_age
       eligibility_esp.set_age
       eligibility_esp.answer_current_smoker
@@ -431,7 +430,7 @@ feature 'A visitor to the site', metadata: :participant do
 
     scenario 'fills in a SF zip code, sees the drop down for ' \
              'selecting a clinic' do
-      visit eligibility_esp.eligibility_page
+      participant_401.sign_in
       eligibility_esp.find_age
       eligibility_esp.set_age
       eligibility_esp.answer_current_smoker
@@ -446,7 +445,7 @@ feature 'A visitor to the site', metadata: :participant do
 
     scenario 'fills in a zip code other than SF, ' \
              'does not see drop down for clinic' do
-      visit eligibility_esp.eligibility_page
+      participant_402.sign_in
       eligibility_esp.find_age
       eligibility_esp.set_age
       eligibility_esp.answer_current_smoker
@@ -460,7 +459,7 @@ feature 'A visitor to the site', metadata: :participant do
     end
 
     scenario 'does not fill in phone number, cannot submit form' do
-      visit eligibility_esp.eligibility_page
+      participant_26.sign_in
       eligibility_esp.find_age
       eligibility_esp.set_age
       eligibility_esp.answer_current_smoker
@@ -471,7 +470,7 @@ feature 'A visitor to the site', metadata: :participant do
       expect(eligibility_esp).to have_submit_disabled
     end
     scenario 'enters duplicate phone number, sees error message' do
-      visit eligibility_esp.eligibility_page
+      participant_252.sign_in
       eligibility_esp.find_age
       eligibility_esp.set_age
       eligibility_esp.answer_current_smoker
@@ -485,7 +484,7 @@ feature 'A visitor to the site', metadata: :participant do
     end
 
     scenario 'fills out eligibility, is eligible, consents, can use app' do
-      visit eligibility_esp.eligibility_page
+      participant_34.sign_in
       eligibility_esp.find_age
       eligibility_esp.set_age
       eligibility_esp.answer_current_smoker
@@ -518,6 +517,7 @@ feature 'A visitor to the site', metadata: :participant do
     end
 
     scenario 'sees invalid formatting in age field on eligibility form' do
+      participant_10.sign_in
       visit eligibility_esp.eligibility_page
 
       expect(eligibility_esp).to have_empty_age_field
@@ -529,6 +529,7 @@ feature 'A visitor to the site', metadata: :participant do
 
     scenario 'sees invalid formatting in zip code field ' \
              'when entering less than 5 digits on eligibility form' do
+      participant_10.sign_in
       visit eligibility_esp.eligibility_page
 
       expect(eligibility_esp).to have_empty_zip_field
@@ -541,6 +542,7 @@ feature 'A visitor to the site', metadata: :participant do
 
     scenario 'sees invalid formatting in zip code ' \
              'field when entering more than 5 digits on eligibility form' do
+      participant_10.sign_in
       visit eligibility_esp.eligibility_page
 
       expect(eligibility_esp).to have_empty_zip_field
@@ -553,6 +555,7 @@ feature 'A visitor to the site', metadata: :participant do
 
     scenario 'sees invalid formatting in phone number field ' \
              'on eligibility form' do
+      participant_10.sign_in
       visit eligibility_esp.eligibility_page
 
       expect(eligibility_esp).to have_empty_phone_field
