@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # filename: ./spec/support/participants/cigerette_counter.rb
 
 require './lib/pages/participants/cigarette_counter'

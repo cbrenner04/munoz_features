@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require './lib/pages/participants/login'
 require './lib/pages/participants/cigarette_counter'
 require './lib/pages/users/login'

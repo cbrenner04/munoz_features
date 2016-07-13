@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # filename: lib/pages/users.rb
 
 # Page object for Users

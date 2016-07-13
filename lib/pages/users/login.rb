@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # filenmae: lib/pages/users/login.rb
 
 module Users

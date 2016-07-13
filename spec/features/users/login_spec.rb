@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # filename: spec/features/users/landing_page_spec.rb
 
 require './spec/support/users_helper.rb'

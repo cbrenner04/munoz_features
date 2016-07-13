@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # Expected headers for participants.csv compared to actual in csv_spec.rb.
 module ParticipantsCSV
   HEADER = ['Id', 'Email', 'Reset password sent at',
@@ -5,7 +6,7 @@ module ParticipantsCSV
             'Last sign in at', 'Current sign in ip', 'Last sign in ip',
             'Confirmation token', 'Confirmed at', 'Confirmation sent at',
             'Unconfirmed email', 'Failed attempts', 'Unlock token',
-            'Locked at', 'Created at', 'Updated at', 'Uuid',
+            'Locked at', 'Created at', 'Updated at', 'Uuid', 'Provider', 'Uid',
             'Id [Consent response]', 'Responded at [Consent response]',
             'Is consented [Consent response]', 'Uuid [Consent response]',
             'Created at [Consent response]', 'Updated at [Consent response]',

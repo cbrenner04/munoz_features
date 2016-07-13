@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require './lib/pages/participants'
 
 module Participants
@@ -111,7 +112,7 @@ module Participants
       click_on 'Español'
     end
 
-    def click_con
+    def continue
       click_on participant.locale('Continue', 'Continuar')
     end
 
@@ -132,7 +133,7 @@ module Participants
                                     'por contestar nuestras preguntas')
     end
 
-    def submit_disabled
+    def has_submit_disabled?
       find('input[type = submit]')[:disabled].should eq 'true'
     end
 
@@ -151,11 +152,6 @@ module Participants
                                     'electrónico para verificar su cuenta y ' \
                                     'continuar.')
     end
-
-    # split `invalid_age`, `less_than_5_zip`, `more_than_5_zip`,
-    # `invalid_email`, `invalid_phone`, and `invalid_password`
-    # They didn't really make sense to me in the specs
-    # and there is a lot of repeated code
 
     def has_empty_age_field?
       form_item(age_question).has_no_css?('.ng-invalid-pattern')

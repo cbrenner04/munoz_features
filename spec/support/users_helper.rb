@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # filename: spec/features/support/users_helper
 
 require './lib/pages/users'

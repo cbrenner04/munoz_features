@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # page object for Participants
 class Participant
   include Capybara::DSL
@@ -5,6 +6,17 @@ class Participant
   def initialize(participants_arry)
     @pt_id ||= participants_arry[:pt_id]
     @locale ||= participants_arry[:locale]
+  end
+
+  def go_to_sign_in
+    go_to_root
+    button = locale('Sign in', 'Iniciar sesión')
+    click_on button
+  end
+
+  def click_on_sign_up
+    link = locale('Sign up', 'Registrarse')
+    click_on link
   end
 
   def sign_in
@@ -17,8 +29,8 @@ class Participant
       click_on sign_out
     end
     click_on button
-    fill_in 'participant_email', with: ENV["Pt_#{@pt_id}_Email"]
-    fill_in 'participant_password', with: ENV["Pt_#{@pt_id}_Password"]
+    fill_in_ptp_email
+    fill_in_ptp_password
     click_on button
   end
 

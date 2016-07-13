@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require './lib/pages/participants'
 
 module Participants
@@ -16,7 +17,11 @@ module Participants
     end
 
     def give_consent
-      find('#consent-yes').click
+      if @locale == 'español'
+        first('.ng-pristine.ng-untouched.ng-invalid.ng-invalid-required').click
+      else
+        find('#consent-yes').click
+      end
     end
 
     def decline_consent

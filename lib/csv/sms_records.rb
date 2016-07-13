@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # Expected headers for sms_records.csv compared to actual in csv_spec.rb.
 module SmsRecords
   HEADER = ['Id', 'Resource path', 'Created at', 'Updated at',

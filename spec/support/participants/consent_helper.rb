@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require './lib/pages/participants/consent'
 require './lib/pages/participants/eligibility'
 require './lib/pages/participants/cigarette_counter'

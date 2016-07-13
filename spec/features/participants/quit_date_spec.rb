@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # filename: spec/features/participants/quit_date_spec.rb
 
 # require objects with datepicking and viewing methods

@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # filename: spec/features/participants/stop_smoking_guide_spec.rb
 
 require './spec/support/participants/stop_smoking_guide_helper'

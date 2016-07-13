@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require './lib/pages/participants/stop_smoking_guide'
 
 def stop_smoking_guide_eng

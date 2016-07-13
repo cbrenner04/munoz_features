@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # Expected headers for page_view.csv compared to actual in csv_spec.rb.
 module PageView
   HEADER = ['Id', 'Occurred at', 'Viewport width', 'Viewport height',
@@ -12,5 +13,6 @@ module PageView
             'Unconfirmed email [Participant]', 'Failed attempts [Participant]',
             'Unlock token [Participant]', 'Locked at [Participant]',
             'Created at [Participant]', 'Updated at [Participant]',
-            'Uuid [Participant]'].freeze
+            'Uuid [Participant]', 'Provider [Participant]',
+            'Uid [Participant]'].freeze
 end

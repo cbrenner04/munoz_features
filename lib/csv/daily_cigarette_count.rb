@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # Expected headers for daily_cigarette_count.csv compared to actual in
 # csv_spec.rb
 module DailyCigaretteCount
@@ -12,5 +13,6 @@ module DailyCigaretteCount
             'Unconfirmed email [Participant]',
             'Failed attempts [Participant]', 'Unlock token [Participant]',
             'Locked at [Participant]', 'Created at [Participant]',
-            'Updated at [Participant]', 'Uuid [Participant]'].freeze
+            'Updated at [Participant]', 'Uuid [Participant]',
+            'Provider [Participant]', 'Uid [Participant]'].freeze
 end

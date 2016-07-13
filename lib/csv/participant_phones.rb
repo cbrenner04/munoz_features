@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # Expected headers for participant_phones.csv compared to actual in csv_spec.rb
 module ParticipantPhones
   HEADER = ['Id', 'Phone number', 'Confirmation token', 'Confirmed at',
@@ -14,7 +15,8 @@ module ParticipantPhones
             'Unconfirmed email [Participant]', 'Failed attempts [Participant]',
             'Unlock token [Participant]', 'Locked at [Participant]',
             'Created at [Participant]', 'Updated at [Participant]',
-            'Uuid [Participant]', 'Id [Sms records]',
+            'Uuid [Participant]', 'Provider [Participant]',
+            'Uid [Participant]', 'Id [Sms records]',
             'Resource path [Sms records]', 'Created at [Sms records]',
             'Updated at [Sms records]'].freeze
 end

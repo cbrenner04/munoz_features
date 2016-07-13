@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # Expected headers for participant_app_ratings.csv compared to actual in
 # csv_spec.rb.
 module ParticipantAppRatings
@@ -12,5 +13,6 @@ module ParticipantAppRatings
             'Unconfirmed email [Participant]', 'Failed attempts [Participant]',
             'Unlock token [Participant]', 'Locked at [Participant]',
             'Created at [Participant]', 'Updated at [Participant]',
-            'Uuid [Participant]'].freeze
+            'Uuid [Participant]', 'Provider [Participant]',
+            'Uid [Participant]'].freeze
 end

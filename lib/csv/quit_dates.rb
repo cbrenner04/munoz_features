@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # Expected headers for quit_dates.csv compared to actual in csv_spec.rb.
 module QuitDates
   HEADER = ['Id', 'Date', 'Selected at', 'Uuid', 'Created at', 'Updated at',
@@ -11,5 +12,6 @@ module QuitDates
             'Unconfirmed email [Participant]',
             'Failed attempts [Participant]', 'Unlock token [Participant]',
             'Locked at [Participant]', 'Created at [Participant]',
-            'Updated at [Participant]', 'Uuid [Participant]'].freeze
+            'Updated at [Participant]', 'Uuid [Participant]',
+            'Provider [Participant]', 'Uid [Participant]'].freeze
 end

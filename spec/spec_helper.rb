@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # filename: spec/spec_helper.rb
 
 require 'rspec'
@@ -44,7 +45,7 @@ end
 
 # Capybara configuration options
 Capybara.configure do |config|
-  config.default_wait_time = 5
+  config.default_max_wait_time = 1
   config.default_driver = :selenium
   config.register_driver :selenium do |app|
     Selenium::WebDriver::Firefox::Binary.path = ENV['firefox_path']

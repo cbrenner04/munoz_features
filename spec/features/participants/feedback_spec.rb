@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # filename: spec/features/participants/feedback_spec.rb
 
 require './spec/support/participants/feedback_helper'

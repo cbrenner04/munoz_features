@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # object for dateviewing methods
 class DateViewer
   include Capybara::DSL

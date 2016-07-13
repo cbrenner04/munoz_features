@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # object for datepicking methods
 class DatePicker
   include Capybara::DSL

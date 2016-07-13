@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require './lib/pages/participants/stop_smoking_guide'
 require './lib/pages/participants/cigarette_counter'
 require './lib/pages/participants/quit_date'

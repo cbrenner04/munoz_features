@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # filenmae: lib/pages/users/data.rb
 
 require './lib/pages/users'

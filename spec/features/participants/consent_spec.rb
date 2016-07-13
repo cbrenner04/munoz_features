@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # filename: spec/features/participants/consent_spec.rb
 
 require './lib/pages/participants/zip_codes'
@@ -13,9 +14,7 @@ feature 'A visitor to the site', metadata: :participant do
       eligibility_eng.answer_thinking_of_quitting
       ptp_35_eligibility.enter_zip
       ptp_35_eligibility.answer_medical_care
-      ptp_35_eligibility.enter_email
       ptp_35_eligibility.enter_phone_num
-      ptp_35_eligibility.enter_password
       eligibility_eng.click_submit
       eligibility_eng.click_view_consent
 
@@ -30,7 +29,7 @@ feature 'A visitor to the site', metadata: :participant do
     end
 
     scenario 'cannot review consent immediately ' \
-                'following ineligible decision' do
+             'following ineligible decision' do
       visit eligibility_eng.ineligible_page
 
       expect(consent_eng).to have_no_consent_link
@@ -45,9 +44,7 @@ feature 'A visitor to the site', metadata: :participant do
       eligibility_eng.answer_thinking_of_quitting
       ptp_36_eligibility.enter_zip
       ptp_36_eligibility.answer_medical_care
-      ptp_36_eligibility.enter_email
       ptp_36_eligibility.enter_phone_num
-      ptp_36_eligibility.enter_password
       eligibility_eng.click_submit
       eligibility_eng.click_view_consent
 
@@ -60,7 +57,7 @@ feature 'A visitor to the site', metadata: :participant do
     end
 
     scenario 'switches to Español while filling in eligibility, ' \
-       'is eligible, sees consent form in Español' do
+             'is eligible, sees consent form in Español' do
       visit eligibility_eng.eligibility_page
       eligibility_eng.find_age
       eligibility_eng.set_age
@@ -70,9 +67,7 @@ feature 'A visitor to the site', metadata: :participant do
       eligibility_esp.find_age
       ptp_37_eligibility.enter_zip
       ptp_37_eligibility.answer_medical_care
-      ptp_37_eligibility.enter_email
       ptp_37_eligibility.enter_phone_num
-      ptp_37_eligibility.enter_password
       eligibility_esp.click_submit
       eligibility_esp.click_view_consent
 
@@ -125,8 +120,6 @@ feature 'A visitor to the site', metadata: :participant do
       expect(consent_esp).to be_visible
     end
 
-    # Will return once objects for other parts of the app are complete.
-
     scenario 'is a participant who did not give consent, can still use app' do
       participant_108.sign_in
 
@@ -165,9 +158,7 @@ feature 'A visitor to the site', metadata: :participant do
       eligibility_esp.answer_thinking_of_quitting
       ptp_38_eligibility.enter_zip
       ptp_38_eligibility.answer_medical_care
-      ptp_38_eligibility.enter_email
       ptp_38_eligibility.enter_phone_num
-      ptp_38_eligibility.enter_password
       eligibility_esp.click_submit
       eligibility_esp.click_view_consent
 
@@ -197,9 +188,7 @@ feature 'A visitor to the site', metadata: :participant do
       eligibility_esp.answer_thinking_of_quitting
       ptp_39_eligibility.enter_zip
       ptp_39_eligibility.answer_medical_care
-      ptp_39_eligibility.enter_email
       ptp_39_eligibility.enter_phone_num
-      ptp_39_eligibility.enter_password
       eligibility_esp.click_submit
       eligibility_esp.click_view_consent
 
@@ -222,9 +211,7 @@ feature 'A visitor to the site', metadata: :participant do
       ptp_40_eligibility.find_age
       ptp_40_eligibility.enter_zip
       ptp_40_eligibility.answer_medical_care
-      ptp_40_eligibility.enter_email
       ptp_40_eligibility.enter_phone_num
-      ptp_40_eligibility.enter_password
       eligibility_eng.click_submit
       eligibility_eng.click_view_consent
 

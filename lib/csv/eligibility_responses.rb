@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # Expected headers for eligibility_responses.csv compared to actual in
 # csv_spec.rb.
 module EligibilityResponses
@@ -11,7 +12,8 @@ module EligibilityResponses
             'Unconfirmed email [Participant]', 'Failed attempts [Participant]',
             'Unlock token [Participant]', 'Locked at [Participant]',
             'Created at [Participant]', 'Updated at [Participant]',
-            'Uuid [Participant]', 'Value [Answer]', 'Label [Answer]',
+            'Uuid [Participant]', 'Provider [Participant]',
+            'Uid [Participant]', 'Value [Answer]', 'Label [Answer]',
             'Position [Answer]', 'Code [Question]', 'Language [Question]',
             'Answer type [Question]', 'Body [Question]', 'Position [Question]',
             'Required [Question]', 'Help [Question]'].freeze
