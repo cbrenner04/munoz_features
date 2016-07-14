@@ -21,17 +21,11 @@ class Participant
 
   def sign_in
     go_to_root
-    button = locale('Sign in', 'Iniciar sesión')
-    unless has_css?('a', text: button)
-      find('.navbar-toggle').click
-      find('.dropdown-toggle').click
-      sign_out = locale('Sign out', 'Finalizar la sesión')
-      click_on sign_out
-    end
-    click_on button
+    sign_out unless has_css?('a', text: locale('Sign in', 'Iniciar sesión'))
+    click_sign_in
     fill_in_ptp_email
     fill_in_ptp_password
-    click_on button
+    click_sign_in
   end
 
   def fill_in_ptp_email
@@ -90,11 +84,28 @@ class Participant
       .gsub('Dec', 'Dic')
   end
 
-  def locale(a, b)
-    @locale == 'english' ? a : b
+  def locale(english, spanish)
+    @locale == 'english' ? english : spanish
   end
 
   def go_to_root
     visit ENV['Base_URL']
+  end
+
+  private
+
+  def click_sign_in
+    button = locale('Sign in', 'Iniciar sesión')
+    click_on button
+  end
+
+  def sign_out
+    find('.navbar-toggle').click
+    find('.dropdown-toggle').click
+    click_on locale('Sign out', 'Finalizar la sesión')
+  rescue Capybara::ElementNotFound
+    # sometimes the previous participant is not the same
+    # language as the current participant
+    click_on locale('Finalizar la sesión', 'Sign out')
   end
 end

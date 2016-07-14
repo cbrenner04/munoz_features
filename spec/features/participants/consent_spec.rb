@@ -7,7 +7,7 @@ require './spec/support/participants/consent_helper'
 feature 'A visitor to the site', metadata: :participant do
   context 'in English' do
     scenario 'switches to Español when consenting' do
-      visit eligibility_eng.eligibility_page
+      participant_35.sign_in
       eligibility_eng.find_age
       eligibility_eng.set_age
       eligibility_eng.answer_current_smoker
@@ -37,7 +37,7 @@ feature 'A visitor to the site', metadata: :participant do
 
     scenario 'completes eligibility, is eligible, ' \
              'is able to consent immediately' do
-      visit eligibility_eng.eligibility_page
+      participant_36.sign_in
       eligibility_eng.find_age
       eligibility_eng.set_age
       eligibility_eng.answer_current_smoker
@@ -58,7 +58,7 @@ feature 'A visitor to the site', metadata: :participant do
 
     scenario 'switches to Español while filling in eligibility, ' \
              'is eligible, sees consent form in Español' do
-      visit eligibility_eng.eligibility_page
+      participant_37.sign_in
       eligibility_eng.find_age
       eligibility_eng.set_age
       eligibility_eng.answer_current_smoker
@@ -151,7 +151,7 @@ feature 'A visitor to the site', metadata: :participant do
 
   context 'in Español' do
     scenario 'switches to English when consenting' do
-      visit eligibility_esp.eligibility_page
+      participant_38.sign_in
       eligibility_esp.find_age
       eligibility_esp.set_age
       eligibility_esp.answer_current_smoker
@@ -173,15 +173,15 @@ feature 'A visitor to the site', metadata: :participant do
     end
 
     scenario 'cannot review consent immediately' \
-        'following ineligible decision' do
+             'following ineligible decision' do
       visit eligibility_esp.ineligible_page
 
       expect(consent_esp).to have_no_consent_link
     end
 
     scenario 'completes eligibility, is eligible,' \
-        'is able to consent immediately' do
-      visit eligibility_esp.eligibility_page
+             'is able to consent immediately' do
+      participant_39.sign_in
       eligibility_esp.find_age
       eligibility_esp.set_age
       eligibility_esp.answer_current_smoker
@@ -201,8 +201,8 @@ feature 'A visitor to the site', metadata: :participant do
     end
 
     scenario 'switches to English while filling in eligibility, ' \
-       'is eligible, sees consent form in English' do
-      visit eligibility_esp.eligibility_page
+             'is eligible, sees consent form in English' do
+      participant_40.sign_in
       eligibility_esp.find_age
       eligibility_esp.set_age
       eligibility_esp.answer_current_smoker

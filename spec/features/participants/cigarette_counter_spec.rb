@@ -248,11 +248,13 @@ feature 'Cigarette Counter', metadata: :participant do
       expect(participant_22).to be_on_landing_page
 
       visit pt_22_cig_counter.landing_page
+
+      expect(pt_22_cig_counter).to be_visible
+
       pt_22_cig_counter.decrement_count
 
       # failing due to hidden text
       # expect(pt_22_cig_counter).to have_count
-
       expect(pt_22_cig_counter).to have_count_in_graph
     end
 

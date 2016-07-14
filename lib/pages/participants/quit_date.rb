@@ -69,41 +69,26 @@ module Participants
     end
 
     def locate_tomorrow
-      t = tomorrow.strftime(std_month_year)
-      unless has_css?('.ng-binding',
-                      text: participant.locale(t, participant.trans_mo(t)))
-        find('a', text: next_btn).click
-      end
+      click_next(tomorrow.strftime(std_month_year))
     end
 
     def locate_yesterday
-      y = yesterday.strftime(std_month_year)
-      unless has_css?('.ng-binding',
-                      text: participant.locale(y, participant.trans_mo(y)))
-        find('a', text: prev_btn).click
-      end
+      click_next(yesterday.strftime(std_month_year))
     end
 
     def locate_two_days_away
-      d = two_days_away.strftime(std_month_year)
-      unless has_css?('.ng-binding',
-                      text: participant.locale(d, participant.trans_mo(d)))
-        find('a', text: next_btn).click
-      end
+      click_next(two_days_away.strftime(std_month_year))
     end
 
     def locate_beyond_4_wks_away
-      w = beyond_4_wks_away.strftime(std_month_year)
-      unless has_css?('.ng-binding',
-                      text: participant.locale(w, participant.trans_mo(w)))
-        find('a', text: next_btn).click
-      end
+      click_next(beyond_4_wks_away.strftime(std_month_year))
     end
 
     def locate_under_4_wks_away
-      w = under_4_wks_away.strftime(std_month_year)
+      date = under_4_wks_away.strftime(std_month_year)
       unless has_css?('.ng-binding',
-                      text: participant.locale(w, participant.trans_mo(w)))
+                      text: participant
+                              .locale(date, participant.trans_mo(date)))
         find('a', text: prev_btn).click
       end
     end
@@ -161,10 +146,6 @@ module Participants
       find('.dropdown-toggle').click
     end
 
-    # def dropdown
-    #   @dropdown ||= '.dropdown-menu'
-    # end
-
     def has_set_quit_date_in_dropdown?
       find('.dropdown-menu').has_css?('.ng-binding', text: set_your_quit_date)
     end
@@ -202,10 +183,6 @@ module Participants
     end
 
     private
-
-    # def done_btn
-    #   @done_btn = ('.btn.btn-default', text: 'Done')
-    # end
 
     def page_title
       @page_title ||= participant.locale 'Your Quit Date',
@@ -250,6 +227,14 @@ module Participants
     def next_month
       @next_month ||=
         Date.today.next_month.strftime(std_month_year)
+    end
+
+    def click_next(date)
+      unless has_css?('.ng-binding',
+                      text: participant
+                              .locale(date, participant.trans_mo(date)))
+        find('a', text: next_btn).click
+      end
     end
 
     def participant

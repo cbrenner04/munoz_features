@@ -66,13 +66,13 @@ module Users
     end
 
     def iterate_to_find_consented
-      x = 0
-      until x == 5 # this seems excessive, probably just 2 needed
+      counter = 0
+      until counter == 5 # this seems excessive, probably just 2 needed
         find('.header', text: 'Responded at').click
         yesterday = Date.today - 1
         break if page.has_css?('.responded_at_field.datetime_type',
                                text: yesterday.strftime('%B %d'))
-        x += 1
+        counter += 1
       end
     end
 

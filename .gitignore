@@ -42,3 +42,4 @@ screenshots/
 output/
 spec/examples.txt
 dump.rdb
+config.reek

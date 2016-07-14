@@ -44,6 +44,7 @@ module Participants
     end
 
     def has_count_in_graph?
+      sleep(1) # doesn't wait for update
       date_format = participant.locale(
         @date.strftime('%b %-d'),
         participant.trans_mo(@date.strftime('%-d %b.'))

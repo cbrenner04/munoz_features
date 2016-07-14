@@ -32,7 +32,7 @@ module Participants
     end
 
     def has_how_to_help_someone_visible?
-      has_css?('h3', how_to_help_someone)
+      has_css?('h3', text: how_to_help_someone)
     end
 
     def has_how_to_help_1_title?
@@ -134,25 +134,25 @@ module Participants
     def has_why_quit_1_title?
       has_css?('h4', text: participant.locale('Why Quit? page 1 title',
                                               '¿Por qué dejar de fumar? ' \
-                                               'página 1 título'))
+                                              'página 1 título'))
     end
 
     def has_why_quit_2_title?
       has_css?('h4', text: participant.locale('Why Quit? page 2 title',
                                               '¿Por qué dejar de fumar? ' \
-                                               'página 2 título'))
+                                              'página 2 título'))
     end
 
     def has_why_quit_3_title?
       has_css?('h4', text: participant.locale('Why Quit? page 3 title',
                                               '¿Por qué dejar de fumar? ' \
-                                                'página 3 título'))
+                                              'página 3 título'))
     end
 
     def has_why_quit_body?
       has_content? participant.locale('Why Quit? page 1 body',
                                       '¿Por qué dejar de fumar? ' \
-                                        'página 1 cuerpo')
+                                      'página 1 cuerpo')
     end
 
     private

@@ -237,7 +237,7 @@ feature 'A visitor to the site', metadata: :participant do
 
       participant_29.sign_in
 
-      expect(login_eng).to have_home_visible
+      expect(eligibility_eng).to be_visible
 
       participant_29.go_to('Sign out')
 
@@ -258,7 +258,7 @@ feature 'A visitor to the site', metadata: :participant do
 
       participant_30.sign_in
 
-      expect(login_esp).to have_home_visible
+      expect(eligibility_esp).to be_visible
 
       participant_30.go_to('Finalizar la sesión')
 
@@ -282,7 +282,7 @@ feature 'A visitor to the site', metadata: :participant do
       participant_3.fill_in_ptp_password
       login_eng.click_sign_in
 
-      expect(login_eng).to have_home_visible
+      expect(eligibility_eng).to be_visible
     end
   end
 
@@ -292,11 +292,11 @@ feature 'A visitor to the site', metadata: :participant do
 
       expect(login_esp).to have_email_confirmation
 
-      participant_3.fill_in_ptp_email
-      participant_3.fill_in_ptp_password
+      participant_4.fill_in_ptp_email
+      participant_4.fill_in_ptp_password
       login_esp.click_sign_in
 
-      expect(login_esp).to have_home_visible
+      expect(eligibility_esp).to be_visible
     end
   end
 end

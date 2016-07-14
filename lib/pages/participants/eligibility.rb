@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 require './lib/pages/participants'
+require './lib/pages/participants/zip_codes'
 
 module Participants
   # page object for Eligibility
@@ -64,9 +65,9 @@ module Participants
     end
 
     def answer_medical_care
-      y = participant.locale('Ocean Park Health Center',
-                             'Centro de Salud Ocean Park')
-      within('.form-group', text: medical_question) { select y }
+      medical_unit = participant.locale('Ocean Park Health Center',
+                                        'Centro de Salud Ocean Park')
+      within('.form-group', text: medical_question) { select medical_unit }
     end
 
     def has_medical_question?
@@ -91,6 +92,7 @@ module Participants
 
     def click_submit
       find('input[type = submit]').click
+      sleep(1) # the app takes awhile to think
     end
 
     def click_view_consent

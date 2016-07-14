@@ -1,6 +1,7 @@
 # frozen_string_literal: true
-require './lib/pages/participants/login'
 require './lib/pages/participants/cigarette_counter'
+require './lib/pages/participants/eligibility'
+require './lib/pages/participants/login'
 require './lib/pages/users/login'
 
 def login_eng
@@ -34,6 +35,24 @@ end
 def cigarette_counter_esp
   @cigarette_counter_esp ||= Participants::CigaretteCounter.new(
     locale: 'español'
+  )
+end
+
+def eligibility_eng
+  @eligibility_eng ||= Participants::Eligibility.new(
+    locale: 'english',
+    current_smoker: 'Yes',
+    thinking_of_quitting: 'Yes',
+    age: 25
+  )
+end
+
+def eligibility_esp
+  @eligibility_esp ||= Participants::Eligibility.new(
+    locale: 'español',
+    current_smoker: 'Sí',
+    thinking_of_quitting: 'Sí',
+    age: 25
   )
 end
 
