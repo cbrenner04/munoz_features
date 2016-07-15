@@ -188,6 +188,19 @@ module Participants
                                       'Contador de Cigarrillos')
     end
 
+    def click_read_more
+      click_on participant.locale('Read more...', 'Lee mas...')
+    end
+
+    def has_more_info?
+      has_content? participant.locale('We hope to use this information ' \
+                                        'to build improved technology-based ' \
+                                        'smoking cessation tools.',
+                                      'Esperamos usar esta información para ' \
+                                        'crear herramientas mejoradas ' \
+                                        'para dejar de fumar.')
+    end
+
     private
 
     def participant
