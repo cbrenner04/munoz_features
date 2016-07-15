@@ -340,3 +340,23 @@ feature 'A visitor to the site', metadata: :participant do
     end
   end
 end
+
+feature 'A visitor to the site', metadata: :participant do
+  background { participant_generic.go_to_root }
+
+  context 'is English speaking' do
+    scenario 'clicks on Read More' do
+      login_eng.click_read_more
+
+      expect(login_eng).to have_more_info
+    end
+  end
+
+  context 'is Spanish speaking' do
+    scenario 'clicks on Read More' do
+      login_esp.click_read_more
+
+      expect(login_esp).to have_more_info
+    end
+  end
+end
